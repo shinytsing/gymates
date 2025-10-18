@@ -3,6 +3,11 @@ import 'package:flutter/services.dart';
 import '../../theme/gymates_theme.dart';
 import '../../animations/gymates_animations.dart';
 import '../achievements/achievements_page.dart';
+import 'edit_profile_page.dart';
+import '../settings/settings_page.dart';
+import '../../shared/models/mock_data.dart';
+import '../help/help_page.dart';
+import '../about/about_page.dart';
 
 /// 👤 我的页 ProfilePage - 现代化用户个人中心
 /// 
@@ -445,32 +450,13 @@ class _ProfilePageState extends State<ProfilePage>
               padding: const EdgeInsets.symmetric(horizontal: GymatesTheme.spacing16),
               child: Column(
                 children: [
+                  _buildAchievementsShowcase(),
+                  const SizedBox(height: GymatesTheme.spacing16),
                   _buildFunctionCard(
-                    '我的训练数据',
-                    '查看详细的训练记录和进度',
-                    Icons.analytics_outlined,
-                    () => _openTrainingData(),
-                  ),
-                  const SizedBox(height: GymatesTheme.spacing12),
-                  _buildFunctionCard(
-                    '我的成就',
-                    '查看你的成就和徽章',
-                    Icons.emoji_events,
-                    () => _openAchievements(),
-                  ),
-                  const SizedBox(height: GymatesTheme.spacing12),
-                  _buildFunctionCard(
-                    '我的社区',
-                    '管理你的帖子和互动',
-                    Icons.people_outline,
-                    () => _openMyCommunity(),
-                  ),
-                  const SizedBox(height: GymatesTheme.spacing12),
-                  _buildFunctionCard(
-                    '消息中心',
-                    '查看系统通知和消息',
-                    Icons.notifications_outlined,
-                    () => _openMessageCenter(),
+                    '设置',
+                    '应用设置和账户管理',
+                    Icons.settings_outlined,
+                    () => _openSettings(),
                   ),
                 ],
               ),
@@ -478,6 +464,96 @@ class _ProfilePageState extends State<ProfilePage>
           ),
         );
       },
+    );
+  }
+
+  Widget _buildAchievementsShowcase() {
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        _openAchievements();
+      },
+      child: Container(
+        padding: const EdgeInsets.all(GymatesTheme.spacing20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(GymatesTheme.radius16),
+          boxShadow: GymatesTheme.softShadow,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.orange.withOpacity(0.8),
+                        Colors.amber.withOpacity(0.8),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(GymatesTheme.radius8),
+                  ),
+                  child: const Icon(
+                    Icons.emoji_events,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: GymatesTheme.spacing12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        '我的成就',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: GymatesTheme.lightTextPrimary,
+                        ),
+                      ),
+                      const SizedBox(height: GymatesTheme.spacing4),
+                      Text(
+                        '查看你的成就和徽章',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: GymatesTheme.lightTextSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 16,
+                  color: GymatesTheme.lightTextSecondary,
+                ),
+              ],
+            ),
+            const SizedBox(height: GymatesTheme.spacing16),
+            // 成就展示
+            Row(
+              children: [
+                Expanded(
+                  child: _buildAchievementItem('连续训练7天', Icons.local_fire_department, Colors.orange, true),
+                ),
+                const SizedBox(width: GymatesTheme.spacing12),
+                Expanded(
+                  child: _buildAchievementItem('力量提升', Icons.fitness_center, Colors.blue, true),
+                ),
+                const SizedBox(width: GymatesTheme.spacing12),
+                Expanded(
+                  child: _buildAchievementItem('有氧达人', Icons.directions_run, Colors.green, false),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -500,25 +576,27 @@ class _ProfilePageState extends State<ProfilePage>
           child: Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(GymatesTheme.spacing12),
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
                   color: GymatesTheme.primaryColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(GymatesTheme.radius12),
+                  borderRadius: BorderRadius.circular(GymatesTheme.radius8),
                 ),
                 child: Icon(
                   icon,
                   color: GymatesTheme.primaryColor,
-                  size: 24,
+                  size: 20,
                 ),
               ),
-              const SizedBox(width: GymatesTheme.spacing16),
+              const SizedBox(width: GymatesTheme.spacing12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       title,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      style: const TextStyle(
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: GymatesTheme.lightTextPrimary,
                       ),
@@ -526,17 +604,18 @@ class _ProfilePageState extends State<ProfilePage>
                     const SizedBox(height: GymatesTheme.spacing4),
                     Text(
                       subtitle,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      style: const TextStyle(
+                        fontSize: 14,
                         color: GymatesTheme.lightTextSecondary,
                       ),
                     ),
                   ],
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.arrow_forward_ios,
-                color: GymatesTheme.lightTextSecondary,
                 size: 16,
+                color: GymatesTheme.lightTextSecondary,
               ),
             ],
           ),
@@ -544,17 +623,158 @@ class _ProfilePageState extends State<ProfilePage>
       ),
     );
   }
+  void _editProfile() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditProfilePage(user: _convertToMockUser(_userProfile)),
+      ),
+    );
+  }
+
+  MockUser _convertToMockUser(UserProfile profile) {
+    return MockUser(
+      id: '1',
+      name: profile.name,
+      avatar: profile.avatar,
+      bio: profile.bio,
+      age: 25,
+      location: profile.location,
+      isVerified: profile.isVerified,
+      followers: profile.followers,
+      following: profile.following,
+      posts: profile.posts,
+      joinDate: profile.joinDate,
+      workoutDays: profile.workoutDays,
+      caloriesBurned: profile.caloriesBurned,
+      achievements: profile.achievements,
+      rating: 4.8,
+      preferences: ['力量训练', '有氧运动'],
+      goal: '增肌',
+      experience: '中级',
+      workoutTime: '60分钟',
+      distance: '5公里',
+      isOnline: true,
+    );
+  }
+
+  void _openTrainingData() {
+    // 移除训练数据页面
+  }
+
+  void _openAchievements() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AchievementsPage(),
+      ),
+    );
+  }
+
+  void _openMyCommunity() {
+    // 移除社区页面
+  }
+
+  void _openMessageCenter() {
+    // 移除消息中心页面
+  }
+
+  void _openSettings() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SettingsPage(),
+      ),
+    );
+  }
+
+  void _openHelp() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HelpPage(),
+      ),
+    );
+  }
+
+  void _openAbout() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AboutPage(),
+      ),
+    );
+  }
+
+  void _logout() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('退出登录'),
+        content: const Text('确定要退出登录吗？'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('取消'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              // TODO: 执行退出登录
+            },
+            child: const Text(
+              '确定',
+              style: TextStyle(color: GymatesTheme.errorColor),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAchievementItem(String title, IconData icon, Color color, bool isUnlocked) {
+    return Container(
+      padding: const EdgeInsets.all(GymatesTheme.spacing12),
+      decoration: BoxDecoration(
+        color: isUnlocked ? color.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(GymatesTheme.radius8),
+      ),
+      child: Column(
+        children: [
+          Icon(
+            icon,
+            color: isUnlocked ? color : Colors.grey,
+            size: 20,
+          ),
+          const SizedBox(height: GymatesTheme.spacing8),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: isUnlocked ? color : Colors.grey,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _formatNumber(int number) {
+    if (number >= 1000000) {
+      return '${(number / 1000000).toStringAsFixed(1)}M';
+    } else if (number >= 1000) {
+      return '${(number / 1000).toStringAsFixed(1)}K';
+    }
+    return number.toString();
+  }
 
   Widget _buildSettingsSection() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: GymatesTheme.spacing16),
       child: Column(
         children: [
-          _buildSettingsItem(
-            '设置',
-            Icons.settings_outlined,
-            () => _openSettings(),
-          ),
           _buildSettingsItem(
             '帮助与反馈',
             Icons.help_outline,
@@ -565,18 +785,12 @@ class _ProfilePageState extends State<ProfilePage>
             Icons.info_outline,
             () => _openAbout(),
           ),
-          _buildSettingsItem(
-            '退出登录',
-            Icons.logout,
-            () => _logout(),
-            isDestructive: true,
-          ),
         ],
       ),
     );
   }
 
-  Widget _buildSettingsItem(String title, IconData icon, VoidCallback onTap, {bool isDestructive = false}) {
+  Widget _buildSettingsItem(String title, IconData icon, VoidCallback onTap) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -596,24 +810,21 @@ class _ProfilePageState extends State<ProfilePage>
             children: [
               Icon(
                 icon,
-                color: isDestructive 
-                    ? GymatesTheme.errorColor 
-                    : GymatesTheme.lightTextSecondary,
+                color: GymatesTheme.lightTextSecondary,
                 size: 24,
               ),
               const SizedBox(width: GymatesTheme.spacing16),
               Expanded(
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  style: const TextStyle(
+                    fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: isDestructive 
-                        ? GymatesTheme.errorColor 
-                        : GymatesTheme.lightTextPrimary,
+                    color: GymatesTheme.lightTextPrimary,
                   ),
                 ),
               ),
-              Icon(
+              const Icon(
                 Icons.arrow_forward_ios,
                 color: GymatesTheme.lightTextSecondary,
                 size: 16,
@@ -621,91 +832,6 @@ class _ProfilePageState extends State<ProfilePage>
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  String _formatNumber(int number) {
-    if (number >= 1000000) {
-      return '${(number / 1000000).toStringAsFixed(1)}M';
-    } else if (number >= 1000) {
-      return '${(number / 1000).toStringAsFixed(1)}K';
-    }
-    return number.toString();
-  }
-
-  void _editProfile() {
-    // TODO: 打开编辑资料页面
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('编辑资料'),
-        content: Text('编辑个人资料功能'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('确定'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _openTrainingData() {
-    // TODO: 打开训练数据页面
-  }
-
-  void _openAchievements() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const AchievementsPage(),
-      ),
-    );
-  }
-
-  void _openMyCommunity() {
-    // TODO: 打开我的社区页面
-  }
-
-  void _openMessageCenter() {
-    // TODO: 打开消息中心页面
-  }
-
-  void _openSettings() {
-    // TODO: 打开设置页面
-  }
-
-  void _openHelp() {
-    // TODO: 打开帮助页面
-  }
-
-  void _openAbout() {
-    // TODO: 打开关于页面
-  }
-
-  void _logout() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('退出登录'),
-        content: Text('确定要退出登录吗？'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('取消'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              // TODO: 执行退出登录
-            },
-            child: Text(
-              '确定',
-              style: TextStyle(color: GymatesTheme.errorColor),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -726,7 +852,7 @@ class UserProfile {
   final int caloriesBurned;
   final int achievements;
 
-  UserProfile({
+  const UserProfile({
     required this.name,
     required this.avatar,
     required this.bio,
