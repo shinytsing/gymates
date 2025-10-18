@@ -31,6 +31,12 @@ class _CommunityPageState extends State<CommunityPage>
   late Animation<double> _contentAnimation;
 
   String _activeTab = 'following';
+  
+  // 筛选相关状态
+  String? _selectedGender;
+  String? _selectedCity;
+  String? _selectedTimeRange;
+  bool _isFilterActive = false;
 
   @override
   void initState() {
@@ -129,6 +135,200 @@ class _CommunityPageState extends State<CommunityPage>
     // TODO: 刷新帖子列表
   }
 
+  void _showFilterModal() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setModalState) => Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
+          padding: EdgeInsets.only(
+            left: 16,
+            right: 16,
+            top: 16,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 拖拽指示器
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE5E7EB),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              
+              const SizedBox(height: 20),
+              
+              // 标题
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    '筛选条件',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF1F2937),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      setModalState(() {
+                        _selectedGender = null;
+                        _selectedCity = null;
+                        _selectedTimeRange = null;
+                      });
+                    },
+                    child: const Text(
+                      '重置',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF6B7280),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              
+              const SizedBox(height: 20),
+              
+              // 性别筛选
+              _buildFilterSection(
+                '性别',
+                ['全部', '男', '女'],
+                _selectedGender,
+                (value) => setModalState(() => _selectedGender = value),
+              ),
+              
+              const SizedBox(height: 20),
+              
+              // 城市筛选
+              _buildFilterSection(
+                '城市',
+                ['全部', '北京', '上海', '广州', '深圳', '杭州', '成都', '武汉', '西安'],
+                _selectedCity,
+                (value) => setModalState(() => _selectedCity = value),
+              ),
+              
+              const SizedBox(height: 20),
+              
+              // 发布时间筛选
+              _buildFilterSection(
+                '发布时间',
+                ['全部', '今天', '本周', '本月', '三个月内'],
+                _selectedTimeRange,
+                (value) => setModalState(() => _selectedTimeRange = value),
+              ),
+              
+              const SizedBox(height: 30),
+              
+              // 确认按钮
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _isFilterActive = _selectedGender != null || 
+                                       _selectedCity != null || 
+                                       _selectedTimeRange != null;
+                    });
+                    Navigator.pop(context);
+                    _applyFilters();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: GymatesTheme.primaryColor,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Text(
+                    '应用筛选',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFilterSection(String title, List<String> options, String? selectedValue, Function(String) onChanged) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF1F2937),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: options.map((option) {
+            final isSelected = selectedValue == option;
+            return GestureDetector(
+              onTap: () => onChanged(option),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: isSelected ? GymatesTheme.primaryColor : const Color(0xFFF3F4F6),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: isSelected ? GymatesTheme.primaryColor : const Color(0xFFE5E7EB),
+                    width: 1,
+                  ),
+                ),
+                child: Text(
+                  option,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: isSelected ? Colors.white : const Color(0xFF6B7280),
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
+  void _applyFilters() {
+    // TODO: 实现筛选逻辑
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('已应用筛选条件'),
+        backgroundColor: const Color(0xFF10B981),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
@@ -189,32 +389,14 @@ class _CommunityPageState extends State<CommunityPage>
                       ),
                       Row(
                         children: [
-                          // 搜索按钮
-                          _buildHeaderButton(
-                            Icons.search,
-                            () {
-                              HapticFeedback.lightImpact();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('搜索功能待实现'),
-                                  backgroundColor: Color(0xFF6366F1),
-                                ),
-                              );
-                            },
-                          ),
-                          const SizedBox(width: 12),
                           // 筛选按钮
                           _buildHeaderButton(
                             Icons.filter_list,
                             () {
                               HapticFeedback.lightImpact();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('筛选功能待实现'),
-                                  backgroundColor: Color(0xFF6366F1),
-                                ),
-                              );
+                              _showFilterModal();
                             },
+                            isActive: _isFilterActive,
                           ),
                         ],
                       ),
@@ -234,15 +416,19 @@ class _CommunityPageState extends State<CommunityPage>
     );
   }
 
-  Widget _buildHeaderButton(IconData icon, VoidCallback onTap) {
+  Widget _buildHeaderButton(IconData icon, VoidCallback onTap, {bool isActive = false}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: const Color(0xFFF3F4F6),
+          color: isActive ? GymatesTheme.primaryColor.withOpacity(0.1) : const Color(0xFFF3F4F6),
           borderRadius: BorderRadius.circular(20),
+          border: isActive ? Border.all(
+            color: GymatesTheme.primaryColor,
+            width: 1,
+          ) : null,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.05),
@@ -254,7 +440,7 @@ class _CommunityPageState extends State<CommunityPage>
         child: Icon(
           icon,
           size: 20,
-          color: GymatesTheme.lightTextSecondary,
+          color: isActive ? GymatesTheme.primaryColor : GymatesTheme.lightTextSecondary,
         ),
       ),
     );
@@ -372,21 +558,6 @@ class _CommunityPageState extends State<CommunityPage>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 快速操作
-        _buildQuickActions(),
-        
-        const SizedBox(height: 16),
-        
-        // 话题标签
-        _buildTopicTags(),
-        
-        const SizedBox(height: 16),
-        
-        // 挑战卡片
-        _buildChallengeCards(),
-        
-        const SizedBox(height: 16),
-        
         // 动态列表
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

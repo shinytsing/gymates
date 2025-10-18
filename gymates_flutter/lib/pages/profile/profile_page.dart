@@ -636,6 +636,7 @@ class _ProfilePageState extends State<ProfilePage>
     return MockUser(
       id: '1',
       name: profile.name,
+      username: profile.name.toLowerCase().replaceAll(' ', ''),
       avatar: profile.avatar,
       bio: profile.bio,
       age: 25,

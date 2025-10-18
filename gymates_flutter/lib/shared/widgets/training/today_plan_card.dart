@@ -5,6 +5,8 @@ import '../../../animations/gymates_animations.dart';
 import '../../../routes/app_routes.dart';
 import '../../../shared/models/mock_data.dart';
 import '../../../pages/training/training_detail_page.dart';
+import '../../../pages/training/training_page.dart';
+import 'exercise_completion_animation.dart';
 
 /// 🏋️‍♀️ 今日训练计划卡片 - TodayPlanCard
 /// 
@@ -388,15 +390,7 @@ class _TodayPlanCardState extends State<TodayPlanCard>
         child: ElevatedButton(
           onPressed: () {
             HapticFeedback.lightImpact();
-            // 导航到训练详情页
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TrainingDetailPage(
-                  trainingPlan: MockDataProvider.trainingPlans.first,
-                ),
-              ),
-            );
+            _startTraining();
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF6366F1),
@@ -424,6 +418,151 @@ class _TodayPlanCardState extends State<TodayPlanCard>
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  /// 开始训练
+  void _startTraining() {
+    if (MockDataProvider.trainingPlans.isNotEmpty) {
+      final plan = MockDataProvider.trainingPlans.first;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TrainingSessionPage(trainingPlan: plan),
+        ),
+      );
+    }
+  }
+
+  void _showExerciseDemo() {
+    // 显示动作完成动画演示
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        height: MediaQuery.of(context).size.height * 0.8,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: Column(
+          children: [
+            // 拖拽指示器
+            Container(
+              margin: const EdgeInsets.only(top: 8),
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: const Color(0xFFE5E7EB),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            
+            // 标题
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      '动作完成演示',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: GymatesTheme.lightTextPrimary,
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).pop(),
+                    child: const Icon(
+                      Icons.close,
+                      color: Color(0xFF6B7280),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            
+            // 动作完成动画
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: MockDataProvider.exercises.take(3).map((exercise) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: ExerciseCompletionAnimation(
+                        exercise: exercise,
+                        onCompleted: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('${exercise.name} 完成！'),
+                              backgroundColor: const Color(0xFF10B981),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+            
+            // 底部按钮
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  top: BorderSide(
+                    color: Color(0xFFE5E7EB),
+                    width: 1,
+                  ),
+                ),
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    // 导航到训练详情页
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TrainingDetailPage(
+                          trainingPlan: MockDataProvider.trainingPlans.first,
+                        ),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF6366F1),
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shadowColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Text(
+                    '开始正式训练',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

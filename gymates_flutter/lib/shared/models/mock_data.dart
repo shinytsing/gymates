@@ -25,6 +25,8 @@ class MockUser {
   final String workoutTime;
   final String distance;
   final bool isOnline;
+  final bool isFollowing;
+  final String username;
 
   MockUser({
     required this.id,
@@ -48,6 +50,8 @@ class MockUser {
     required this.workoutTime,
     required this.distance,
     this.isOnline = false,
+    this.isFollowing = false,
+    required this.username,
   });
 }
 
@@ -90,6 +94,13 @@ class MockTrainingPlan {
   final String image;
   final bool isCompleted;
   final double progress;
+  final String trainingMode; // 训练模式：五分化、三分化、推拉等
+  final List<String> targetMuscles; // 目标肌群
+  final List<MockExercise> exerciseDetails; // 详细动作信息
+  final String suitableFor; // 适合人群
+  final int weeklyFrequency; // 每周训练次数
+  final DateTime createdAt;
+  final DateTime? lastCompleted;
 
   MockTrainingPlan({
     required this.id,
@@ -102,6 +113,87 @@ class MockTrainingPlan {
     required this.image,
     required this.isCompleted,
     required this.progress,
+    this.trainingMode = '五分化',
+    this.targetMuscles = const [],
+    this.exerciseDetails = const [],
+    this.suitableFor = '中级训练者',
+    this.weeklyFrequency = 3,
+    required this.createdAt,
+    this.lastCompleted,
+  });
+}
+
+class MockExercise {
+  final String id;
+  final String name;
+  final String description;
+  final String muscleGroup;
+  final String difficulty;
+  final String equipment;
+  final String imageUrl;
+  final String videoUrl;
+  final List<String> instructions;
+  final List<String> tips;
+  final int sets;
+  final int reps;
+  final double weight;
+  final int restTime; // 休息时间（秒）
+  final bool isCompleted;
+  final DateTime? completedAt;
+  final double maxRM; // 最大重复次数重量
+  final String notes;
+  final int calories; // 消耗卡路里
+
+  MockExercise({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.muscleGroup,
+    required this.difficulty,
+    required this.equipment,
+    required this.imageUrl,
+    required this.videoUrl,
+    required this.instructions,
+    required this.tips,
+    required this.sets,
+    required this.reps,
+    required this.weight,
+    required this.restTime,
+    this.isCompleted = false,
+    this.completedAt,
+    this.maxRM = 0.0,
+    this.notes = '',
+    this.calories = 50,
+  });
+}
+
+class MockTrainingMode {
+  final String id;
+  final String name;
+  final String description;
+  final String icon;
+  final String color;
+  final List<String> targetMuscles;
+  final String difficulty;
+  final String suitableFor;
+  final int weeklyFrequency;
+  final int estimatedDuration;
+  final List<String> benefits;
+  final bool isRecommended;
+
+  MockTrainingMode({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.icon,
+    required this.color,
+    required this.targetMuscles,
+    required this.difficulty,
+    required this.suitableFor,
+    required this.weeklyFrequency,
+    required this.estimatedDuration,
+    required this.benefits,
+    this.isRecommended = false,
   });
 }
 
@@ -217,6 +309,7 @@ class MockDataProvider {
     MockUser(
       id: '1',
       name: '陈雨晨',
+      username: 'chenyuchen',
       avatar: 'https://images.unsplash.com/photo-1541338784564-51087dabc0de?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRnZXNzJTIwd29tYW4lMjB0cmFpbmluZyUyMGV4ZXJjaXNlfGVufDF8fHx8MTc1OTUzMDkxMnww&ixlib=rb-4.1.0&q=80&w=400',
       bio: '热爱运动的设计师，希望找到一起坚持健身的伙伴！每周至少4次训练，追求健康生活方式。',
       age: 25,
@@ -240,6 +333,7 @@ class MockDataProvider {
     MockUser(
       id: '2',
       name: '张健康',
+      username: 'zhangjiankang',
       avatar: 'https://images.unsplash.com/photo-1607286908165-b8b6a2874fc4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRnZXNzJTIwcG9ydHJhaXQlMjBhdGhsZXRlJTIwd29ya291dHxlbnwxfHx8fDE3NTk1MzA5MTV8MA&ixlib=rb-4.1.0&q=80&w=400',
       bio: '健身教练，专注力量训练5年+。喜欢挑战自己，也乐于帮助健身新手。',
       age: 28,
@@ -263,6 +357,7 @@ class MockDataProvider {
     MockUser(
       id: '3',
       name: '李小雅',
+      username: 'lixiaoya',
       avatar: 'https://images.unsplash.com/photo-1669989179336-b2234d2878df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRnZXNzJTIwZ3ltJTIwd29ya291dCUyMG1vdGl2YXRpb258ZW58MXx8fHwxNzU5NTMwOTA5fDA&ixlib=rb-4.1.0&q=80&w=400',
       bio: '刚开始健身的大学生，希望找到耐心的健身伙伴一起进步。',
       age: 23,
@@ -327,6 +422,176 @@ class MockDataProvider {
     ),
   ];
 
+  static final List<MockTrainingMode> trainingModes = [
+    MockTrainingMode(
+      id: '1',
+      name: '五分化训练',
+      description: '每天专注训练一个肌群，适合有经验的训练者',
+      icon: '🏋️‍♂️',
+      color: '#6366F1',
+      targetMuscles: ['胸肌', '背部', '腿部', '肩部', '手臂'],
+      difficulty: '高级',
+      suitableFor: '有经验训练者',
+      weeklyFrequency: 5,
+      estimatedDuration: 60,
+      benefits: ['肌肉充分恢复', '训练强度高', '专注度强'],
+      isRecommended: true,
+    ),
+    MockTrainingMode(
+      id: '2',
+      name: '三分化训练',
+      description: '推拉腿训练模式，平衡训练与恢复',
+      icon: '💪',
+      color: '#10B981',
+      targetMuscles: ['推肌群', '拉肌群', '腿部'],
+      difficulty: '中级',
+      suitableFor: '中级训练者',
+      weeklyFrequency: 3,
+      estimatedDuration: 75,
+      benefits: ['恢复时间充足', '训练效率高', '适合大部分人群'],
+      isRecommended: true,
+    ),
+    MockTrainingMode(
+      id: '3',
+      name: '推拉训练',
+      description: '推拉动作交替，适合时间有限的训练者',
+      icon: '🔄',
+      color: '#F59E0B',
+      targetMuscles: ['推肌群', '拉肌群'],
+      difficulty: '中级',
+      suitableFor: '时间有限者',
+      weeklyFrequency: 4,
+      estimatedDuration: 45,
+      benefits: ['时间灵活', '动作简单', '容易坚持'],
+      isRecommended: false,
+    ),
+    MockTrainingMode(
+      id: '4',
+      name: '全身训练',
+      description: '每次训练全身肌群，适合初学者',
+      icon: '🌟',
+      color: '#8B5CF6',
+      targetMuscles: ['全身'],
+      difficulty: '初级',
+      suitableFor: '初学者',
+      weeklyFrequency: 3,
+      estimatedDuration: 50,
+      benefits: ['简单易学', '全身发展', '恢复快速'],
+      isRecommended: false,
+    ),
+  ];
+
+  static final List<MockExercise> exercises = [
+    MockExercise(
+      id: '1',
+      name: '卧推',
+      description: '经典胸部训练动作，发展胸肌厚度',
+      muscleGroup: '胸部',
+      difficulty: '中级',
+      equipment: '杠铃',
+      imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400',
+      videoUrl: 'https://example.com/bench-press.mp4',
+      instructions: [
+        '平躺在卧推凳上，双脚踩地',
+        '握住杠铃，双手间距略宽于肩',
+        '缓慢下降至胸部，然后推起',
+        '保持核心稳定，动作流畅'
+      ],
+      tips: [
+        '保持肩胛骨稳定',
+        '控制下降速度',
+        '呼吸配合动作'
+      ],
+      sets: 4,
+      reps: 8,
+      weight: 60.0,
+      restTime: 120,
+      maxRM: 80.0,
+      calories: 60,
+    ),
+    MockExercise(
+      id: '2',
+      name: '深蹲',
+      description: '腿部训练之王，发展下肢力量',
+      muscleGroup: '腿部',
+      difficulty: '中级',
+      equipment: '杠铃',
+      imageUrl: 'https://images.unsplash.com/photo-1534258936925-c58bed479fcb?w=400',
+      videoUrl: 'https://example.com/squat.mp4',
+      instructions: [
+        '双脚与肩同宽站立',
+        '杠铃放在肩膀上',
+        '下蹲至大腿平行地面',
+        '起身至起始位置'
+      ],
+      tips: [
+        '保持背部挺直',
+        '膝盖与脚尖方向一致',
+        '重心在脚后跟'
+      ],
+      sets: 4,
+      reps: 10,
+      weight: 80.0,
+      restTime: 180,
+      maxRM: 100.0,
+      calories: 80,
+    ),
+    MockExercise(
+      id: '3',
+      name: '硬拉',
+      description: '全身复合动作，发展后链肌群',
+      muscleGroup: '背部',
+      difficulty: '高级',
+      equipment: '杠铃',
+      imageUrl: 'https://images.unsplash.com/photo-1581009146145-b84efcf1dbf6?w=400',
+      videoUrl: 'https://example.com/deadlift.mp4',
+      instructions: [
+        '双脚与肩同宽站立',
+        '弯腰握住杠铃',
+        '保持背部挺直，拉起杠铃',
+        '杠铃贴近身体上升'
+      ],
+      tips: [
+        '保持核心稳定',
+        '杠铃轨迹垂直',
+        '避免圆背'
+      ],
+      sets: 3,
+      reps: 5,
+      weight: 100.0,
+      restTime: 240,
+      maxRM: 120.0,
+      calories: 100,
+    ),
+    MockExercise(
+      id: '4',
+      name: '引体向上',
+      description: '背部训练经典动作',
+      muscleGroup: '背部',
+      difficulty: '中级',
+      equipment: '单杠',
+      imageUrl: 'https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=400',
+      videoUrl: 'https://example.com/pullup.mp4',
+      instructions: [
+        '双手握住单杠，宽握',
+        '身体悬垂，核心收紧',
+        '拉起身体至下巴过杠',
+        '缓慢下降至起始位置'
+      ],
+      tips: [
+        '避免摆动',
+        '控制下降速度',
+        '肩胛骨主动收缩'
+      ],
+      sets: 3,
+      reps: 8,
+      weight: 0.0,
+      restTime: 120,
+      maxRM: 0.0,
+      calories: 40,
+    ),
+  ];
+
   static final List<MockTrainingPlan> trainingPlans = [
     MockTrainingPlan(
       id: '1',
@@ -339,6 +604,12 @@ class MockDataProvider {
       image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWlnaHQlMjB0cmFpbmluZyUyMGd5bSUyMHdvcmtvdXR8ZW58MXx8fHwxNzU5NTMwOTE4fDA&ixlib=rb-4.1.0&q=80&w=400',
       isCompleted: false,
       progress: 0.0,
+      trainingMode: '五分化',
+      targetMuscles: ['胸部', '背部', '腿部', '肩部'],
+      exerciseDetails: exercises,
+      suitableFor: '中级训练者',
+      weeklyFrequency: 5,
+      createdAt: DateTime.now().subtract(const Duration(days: 7)),
     ),
     MockTrainingPlan(
       id: '2',
@@ -351,6 +622,13 @@ class MockDataProvider {
       image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b2dhJTIwd29ya291dCUyMGV4ZXJjaXNlfGVufDF8fHx8MTc1OTUzMDkxOXww&ixlib=rb-4.1.0&q=80&w=400',
       isCompleted: true,
       progress: 1.0,
+      trainingMode: '全身训练',
+      targetMuscles: ['全身'],
+      exerciseDetails: [],
+      suitableFor: '初学者',
+      weeklyFrequency: 3,
+      createdAt: DateTime.now().subtract(const Duration(days: 3)),
+      lastCompleted: DateTime.now().subtract(const Duration(days: 1)),
     ),
   ];
 

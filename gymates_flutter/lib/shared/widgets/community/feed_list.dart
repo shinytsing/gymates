@@ -170,14 +170,20 @@ class _FeedListState extends State<FeedList>
       child: Row(
         children: [
           // 用户头像
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: NetworkImage(post.user.avatar),
-                fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              HapticFeedback.lightImpact();
+              _showUserProfile(post.user);
+            },
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                image: DecorationImage(
+                  image: NetworkImage(post.user.avatar),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -189,25 +195,13 @@ class _FeedListState extends State<FeedList>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      post.user.name,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF1F2937),
-                      ),
-                    ),
-                    if (post.user.isVerified) ...[
-                      const SizedBox(width: 4),
-                      const Icon(
-                        Icons.verified,
-                        size: 16,
-                        color: Color(0xFF6366F1),
-                      ),
-                    ],
-                  ],
+                Text(
+                  post.user.name,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF1F2937),
+                  ),
                 ),
                 const SizedBox(height: 2),
                 Text(
@@ -221,16 +215,49 @@ class _FeedListState extends State<FeedList>
             ),
           ),
           
-          // 更多按钮
+          // 关注按钮
           GestureDetector(
             onTap: () {
               HapticFeedback.lightImpact();
-              _showMoreOptions();
+              _toggleFollow(post.user);
             },
-            child: const Icon(
-              Icons.more_horiz,
-              size: 20,
-              color: Color(0xFF6B7280),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: post.user.isFollowing ? const Color(0xFFE5E7EB) : GymatesTheme.primaryColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Text(
+                post.user.isFollowing ? '已关注' : '关注',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: post.user.isFollowing ? const Color(0xFF6B7280) : Colors.white,
+                ),
+              ),
+            ),
+          ),
+          
+          const SizedBox(width: 8),
+          
+          // 更多选项
+          GestureDetector(
+            onTap: () {
+              HapticFeedback.lightImpact();
+              _showMoreOptions(post);
+            },
+            child: Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: const Color(0xFFF3F4F6),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: const Icon(
+                Icons.more_horiz,
+                size: 16,
+                color: Color(0xFF6B7280),
+              ),
             ),
           ),
         ],
@@ -405,6 +432,113 @@ class _FeedListState extends State<FeedList>
     );
   }
 
+  void _toggleFollow(MockUser user) {
+    setState(() {
+      // 这里应该更新数据模型
+      // user.isFollowing = !user.isFollowing;
+    });
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(user.isFollowing ? '取消关注' : '关注成功'),
+        backgroundColor: const Color(0xFF10B981),
+      ),
+    );
+  }
+
+  void _showUserProfile(MockUser user) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // 拖拽指示器
+            Container(
+              margin: const EdgeInsets.only(top: 12),
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: const Color(0xFFE5E7EB),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            
+            // 用户信息
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: NetworkImage(user.avatar),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    user.name,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF1F2937),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '@${user.username}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF6B7280),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildProfileStat('关注', '${user.following}'),
+                      _buildProfileStat('粉丝', '${user.followers}'),
+                      _buildProfileStat('帖子', '${user.posts}'),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProfileStat(String label, String value) {
+    return Column(
+      children: [
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF1F2937),
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 12,
+            color: Color(0xFF6B7280),
+          ),
+        ),
+      ],
+    );
+  }
+
   void _showComments(MockPost post) {
     showModalBottomSheet(
       context: context,
@@ -464,10 +598,11 @@ class _FeedListState extends State<FeedList>
   }
 
   void _sharePost(MockPost post) {
+    // 实现分享功能
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('分享功能待实现'),
-        backgroundColor: Color(0xFF6366F1),
+      SnackBar(
+        content: Text('分享帖子: ${post.content.substring(0, 20)}...'),
+        backgroundColor: const Color(0xFF10B981),
       ),
     );
   }
@@ -486,7 +621,7 @@ class _FeedListState extends State<FeedList>
     );
   }
 
-  void _showMoreOptions() {
+  void _showMoreOptions(MockPost post) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -517,9 +652,10 @@ class _FeedListState extends State<FeedList>
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  _buildOptionItem(Icons.report, '举报', () {}),
-                  _buildOptionItem(Icons.block, '屏蔽', () {}),
-                  _buildOptionItem(Icons.copy, '复制链接', () {}),
+                  _buildOptionItem(Icons.report, '举报', () => _reportPost(post)),
+                  _buildOptionItem(Icons.block, '屏蔽用户', () => _blockUser(post.user)),
+                  _buildOptionItem(Icons.copy, '复制链接', () => _copyLink(post)),
+                  _buildOptionItem(Icons.share, '分享到其他平台', () => _shareToOtherPlatforms(post)),
                 ],
               ),
             ),
@@ -590,6 +726,162 @@ class _FeedListState extends State<FeedList>
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _reportPost(MockPost post) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('举报帖子'),
+        content: const Text('请选择举报原因：'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('取消'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('举报已提交，我们会尽快处理'),
+                  backgroundColor: Color(0xFF10B981),
+                ),
+              );
+            },
+            child: const Text('提交'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _blockUser(MockUser user) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('屏蔽用户'),
+        content: Text('确定要屏蔽 ${user.name} 吗？屏蔽后将不再看到该用户的帖子。'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('取消'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('已屏蔽 ${user.name}'),
+                  backgroundColor: const Color(0xFFEF4444),
+                ),
+              );
+            },
+            child: const Text('确定'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _copyLink(MockPost post) {
+    // 复制链接到剪贴板
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('链接已复制到剪贴板'),
+        backgroundColor: Color(0xFF10B981),
+      ),
+    );
+  }
+
+  void _shareToOtherPlatforms(MockPost post) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 12),
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: const Color(0xFFE5E7EB),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                '分享到其他平台',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF1F2937),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildSharePlatform('微信', Icons.wechat, () {}),
+                  _buildSharePlatform('微博', Icons.share, () {}),
+                  _buildSharePlatform('QQ', Icons.share, () {}),
+                  _buildSharePlatform('更多', Icons.more_horiz, () {}),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSharePlatform(String name, IconData icon, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pop(context);
+        onTap();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('分享到$name'),
+            backgroundColor: const Color(0xFF10B981),
+          ),
+        );
+      },
+      child: Column(
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: const Color(0xFFF3F4F6),
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: Icon(icon, color: const Color(0xFF6B7280)),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            name,
+            style: const TextStyle(
+              fontSize: 12,
+              color: Color(0xFF6B7280),
+            ),
+          ),
+        ],
       ),
     );
   }

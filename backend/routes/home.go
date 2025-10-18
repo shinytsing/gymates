@@ -39,6 +39,8 @@ func SetupTrainingRoutes(r *gin.RouterGroup) {
 		// 公开接口
 		training.GET("/plans", middleware.OptionalAuthMiddleware(), trainingController.GetTrainingPlans)
 		training.GET("/plans/:id", middleware.OptionalAuthMiddleware(), trainingController.GetTrainingPlan)
+		training.GET("/exercises", trainingController.GetAllExercises)
+		training.GET("/exercises/search", trainingController.SearchExercises)
 
 		// 需要认证的接口
 		trainingAuth := training.Group("")

@@ -47,6 +47,9 @@ type Exercise struct {
 	TrainingPlanID  uint           `json:"training_plan_id" gorm:"not null"`
 	TrainingPlan    TrainingPlan   `json:"training_plan" gorm:"foreignKey:TrainingPlanID"`
 	Name            string         `json:"name" gorm:"size:100;not null"`
+	MuscleGroup     string         `json:"muscle_group" gorm:"size:50"`
+	Difficulty      string         `json:"difficulty" gorm:"size:20;default:'intermediate'"`
+	Equipment       string         `json:"equipment" gorm:"size:50"`
 	Sets            int            `json:"sets" gorm:"not null"`
 	Reps            int            `json:"reps" gorm:"not null"`
 	Weight          float64        `json:"weight"`
@@ -54,6 +57,8 @@ type Exercise struct {
 	RestTime        int            `json:"rest_time"`
 	Instructions    string         `json:"instructions" gorm:"type:text"`
 	ImageURL        string         `json:"image_url" gorm:"size:255"`
+	VideoURL        string         `json:"video_url" gorm:"size:255"`
+	Calories        int            `json:"calories" gorm:"default:50"`
 	Order           int            `json:"order" gorm:"not null"`
 	CreatedAt       time.Time      `json:"created_at"`
 	UpdatedAt       time.Time      `json:"updated_at"`

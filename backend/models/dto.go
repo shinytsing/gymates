@@ -152,6 +152,12 @@ type WorkoutSessionsResponse struct {
 	Pagination Pagination       `json:"pagination"`
 }
 
+// ExercisesResponse 训练动作列表响应
+type ExercisesResponse struct {
+	Exercises  []Exercise  `json:"exercises"`
+	Pagination Pagination  `json:"pagination"`
+}
+
 // API响应结构
 
 // APIResponse 通用API响应

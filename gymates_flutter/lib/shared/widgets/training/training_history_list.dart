@@ -36,6 +36,7 @@ class _TrainingHistoryListState extends State<TrainingHistoryList>
       image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWlnaHQlMjB0cmFpbmluZyUyMGd5bSUyMHdvcmtvdXR8ZW58MXx8fHwxNzU5NTMwOTE4fDA&ixlib=rb-4.1.0&q=80&w=400',
       isCompleted: true,
       progress: 1.0,
+      createdAt: DateTime.now().subtract(const Duration(days: 7)),
     ),
     MockTrainingPlan(
       id: '2',
@@ -48,6 +49,7 @@ class _TrainingHistoryListState extends State<TrainingHistoryList>
       image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b2dhJTIwd29ya291dCUyMGV4ZXJjaXNlfGVufDF8fHx8MTc1OTUzMDkxOXww&ixlib=rb-4.1.0&q=80&w=400',
       isCompleted: true,
       progress: 1.0,
+      createdAt: DateTime.now().subtract(const Duration(days: 5)),
     ),
     MockTrainingPlan(
       id: '3',
@@ -60,6 +62,7 @@ class _TrainingHistoryListState extends State<TrainingHistoryList>
       image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxydW5uaW5nJTIwZXhlcmNpc2UlMjBmaXRnZXNzJTIwd29ya291dHxlbnwxfHx8fDE3NTk1MzA5MjB8MA&ixlib=rb-4.1.0&q=80&w=400',
       isCompleted: true,
       progress: 1.0,
+      createdAt: DateTime.now().subtract(const Duration(days: 3)),
     ),
   ];
 

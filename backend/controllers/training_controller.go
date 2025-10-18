@@ -360,6 +360,128 @@ func (tc *TrainingController) CompleteWorkoutSession(c *gin.Context) {
 	})
 }
 
+// SearchExercises 搜索训练动作
+func (tc *TrainingController) SearchExercises(c *gin.Context) {
+	query := c.Query("q")
+	muscleGroup := c.Query("muscle_group")
+	difficulty := c.Query("difficulty")
+	equipment := c.Query("equipment")
+	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "20"))
+
+	var exercises []models.Exercise
+	var total int64
+
+	// 构建查询条件
+	dbQuery := config.DB.Model(&models.Exercise{})
+
+	// 如果有搜索关键词，进行模糊搜索
+	if query != "" {
+		dbQuery = dbQuery.Where("name LIKE ? OR instructions LIKE ?", "%"+query+"%", "%"+query+"%")
+	}
+
+	// 如果指定了肌群
+	if muscleGroup != "" {
+		dbQuery = dbQuery.Where("muscle_group = ?", muscleGroup)
+	}
+
+	// 如果指定了难度
+	if difficulty != "" {
+		dbQuery = dbQuery.Where("difficulty = ?", difficulty)
+	}
+
+	// 如果指定了器械
+	if equipment != "" {
+		dbQuery = dbQuery.Where("equipment = ?", equipment)
+	}
+
+	// 获取总数
+	dbQuery.Count(&total)
+
+	// 分页查询
+	offset := (page - 1) * limit
+	if err := dbQuery.Offset(offset).Limit(limit).Order("name ASC").Find(&exercises).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, models.ErrorResponse{
+			Success: false,
+			Message: "搜索训练动作失败",
+			Error:   err.Error(),
+			Code:    http.StatusInternalServerError,
+		})
+		return
+	}
+
+	pagination := models.Pagination{
+		Page:       page,
+		Limit:      limit,
+		Total:      total,
+		TotalPages: int((total + int64(limit) - 1) / int64(limit)),
+		HasMore:    int64(page*limit) < total,
+	}
+
+	c.JSON(http.StatusOK, models.SuccessResponse{
+		Success: true,
+		Message: "搜索训练动作成功",
+		Data: models.ExercisesResponse{
+			Exercises:  exercises,
+			Pagination: pagination,
+		},
+	})
+}
+
+// GetAllExercises 获取所有训练动作
+func (tc *TrainingController) GetAllExercises(c *gin.Context) {
+	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "50"))
+	muscleGroup := c.Query("muscle_group")
+	difficulty := c.Query("difficulty")
+
+	var exercises []models.Exercise
+	var total int64
+
+	// 构建查询条件
+	dbQuery := config.DB.Model(&models.Exercise{})
+
+	if muscleGroup != "" {
+		dbQuery = dbQuery.Where("muscle_group = ?", muscleGroup)
+	}
+
+	if difficulty != "" {
+		dbQuery = dbQuery.Where("difficulty = ?", difficulty)
+	}
+
+	// 获取总数
+	dbQuery.Count(&total)
+
+	// 分页查询
+	offset := (page - 1) * limit
+	if err := dbQuery.Offset(offset).Limit(limit).Order("name ASC").Find(&exercises).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, models.ErrorResponse{
+			Success: false,
+			Message: "获取训练动作失败",
+			Error:   err.Error(),
+			Code:    http.StatusInternalServerError,
+		})
+		return
+	}
+
+	pagination := models.Pagination{
+		Page:       page,
+		Limit:      limit,
+		Total:      total,
+		TotalPages: int((total + int64(limit) - 1) / int64(limit)),
+		HasMore:    int64(page*limit) < total,
+	}
+
+	c.JSON(http.StatusOK, models.SuccessResponse{
+		Success: true,
+		Message: "获取训练动作成功",
+		Data: models.ExercisesResponse{
+			Exercises:  exercises,
+			Pagination: pagination,
+		},
+	})
+}
+
 // GetWorkoutHistory 获取训练历史
 func (tc *TrainingController) GetWorkoutHistory(c *gin.Context) {
 	user, exists := c.Get("user")
