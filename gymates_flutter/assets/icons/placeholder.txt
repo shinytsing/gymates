@@ -1,0 +1,2 @@
+# Placeholder for icons
+# This directory contains app icons and UI elements

@@ -1,0 +1,2 @@
+# Placeholder for animations
+# This directory contains Lottie and Rive animation files

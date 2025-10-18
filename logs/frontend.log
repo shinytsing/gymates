@@ -1,0 +1,68 @@
+● Validation Warning:
+
+  Unknown option "serializer.isThirdPartyModule" with value isThirdPartyModule({ path: modulePath }) {
+        return (
+          INTERNAL_CALLSITES_REGEX.test(modulePath) ||
+          /(?:^|[/\\])node_modules[/\\]/.test(modulePath)
+        );
+      } was found.
+  This is probably a typing mistake. Fixing it will remove this message.
+
+● Validation Warning:
+
+  Unknown option "server.forwardClientLogs" with value true was found.
+  This is probably a typing mistake. Fixing it will remove this message.
+
+● Validation Warning:
+
+  Unknown option "symbolicator.customizeStack" with value async (stack, _) => stack was found.
+  This is probably a typing mistake. Fixing it will remove this message.
+
+● Validation Warning:
+
+  Unknown option "watcher.healthCheck" with value {"enabled": false, "filePrefix": ".metro-health-check", "interval": 30000, "timeout": 5000} was found.
+  This is probably a typing mistake. Fixing it will remove this message.
+
+● Validation Warning:
+
+  Unknown option "watcher.unstable_lazySha1" with value true was found.
+  This is probably a typing mistake. Fixing it will remove this message.
+
+● Validation Warning:
+
+  Unknown option "watcher.unstable_workerThreads" with value false was found.
+  This is probably a typing mistake. Fixing it will remove this message.
+
+● Validation Warning:
+
+  Unknown option "watcher.unstable_autoSaveCache" with value {"debounceMs": 5000, "enabled": true} was found.
+  This is probably a typing mistake. Fixing it will remove this message.
+
+● Validation Warning:
+
+  Unknown option "unstable_perfLoggerFactory" with value () => {
+  class Logger {
+    start() {}
+    end() {}
+    annotate() {}
+    point() {}
+    subSpan() {
+      return this;
+    }
+  }
+  return new Logger();
+} was found.
+  This is probably a typing mistake. Fixing it will remove this message.
+
+error listen EADDRINUSE: address already in use :::8081.
+Error: listen EADDRINUSE: address already in use :::8081
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at /Users/gaojie/Desktop/gymates/frontend/node_modules/@react-native-community/cli-plugin-metro/node_modules/metro/src/index.flow.js:398:14
+    at new Promise (<anonymous>)
+    at earlyPortCheck (/Users/gaojie/Desktop/gymates/frontend/node_modules/@react-native-community/cli-plugin-metro/node_modules/metro/src/index.flow.js:394:11)
+    at exports.runServer (/Users/gaojie/Desktop/gymates/frontend/node_modules/@react-native-community/cli-plugin-metro/node_modules/metro/src/index.flow.js:155:9)
+    at Object.runServer [as func] (/Users/gaojie/Desktop/gymates/frontend/node_modules/@react-native-community/cli-plugin-metro/build/commands/start/runServer.js:123:49)
+    at async Command.handleAction (/Users/gaojie/Desktop/gymates/frontend/node_modules/@react-native-community/cli/build/index.js:142:9)
+info Run CLI with --verbose flag for more details.

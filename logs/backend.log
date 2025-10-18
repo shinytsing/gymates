@@ -1,0 +1,427 @@
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.246ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="users"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.072ms] [34;1m[rows:3][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "users" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.023ms] [34;1m[rows:-][0m SELECT * FROM `users` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.009ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "users" AND name = "idx_users_email"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.006ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "users" AND name = "idx_users_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="training_plans"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.035ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "training_plans" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.009ms] [34;1m[rows:-][0m SELECT * FROM `training_plans` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.010ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "training_plans" AND (sql LIKE "%CONSTRAINT \"fk_training_plans_user\" %" OR sql LIKE "%CONSTRAINT fk_training_plans_user %" OR sql LIKE "%CONSTRAINT `fk_training_plans_user`%" OR sql LIKE "%CONSTRAINT [fk_training_plans_user]%" OR sql LIKE "%CONSTRAINT 	fk_training_plans_user	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "training_plans" AND name = "idx_training_plans_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="exercises"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.017ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "exercises" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.006ms] [34;1m[rows:-][0m SELECT * FROM `exercises` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.006ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "exercises" AND (sql LIKE "%CONSTRAINT \"fk_training_plans_exercises\" %" OR sql LIKE "%CONSTRAINT fk_training_plans_exercises %" OR sql LIKE "%CONSTRAINT `fk_training_plans_exercises`%" OR sql LIKE "%CONSTRAINT [fk_training_plans_exercises]%" OR sql LIKE "%CONSTRAINT 	fk_training_plans_exercises	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "exercises" AND name = "idx_exercises_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="workout_sessions"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.014ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "workout_sessions" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.007ms] [34;1m[rows:-][0m SELECT * FROM `workout_sessions` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.015ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "workout_sessions" AND (sql LIKE "%CONSTRAINT \"fk_workout_sessions_user\" %" OR sql LIKE "%CONSTRAINT fk_workout_sessions_user %" OR sql LIKE "%CONSTRAINT `fk_workout_sessions_user`%" OR sql LIKE "%CONSTRAINT [fk_workout_sessions_user]%" OR sql LIKE "%CONSTRAINT 	fk_workout_sessions_user	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.008ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "workout_sessions" AND (sql LIKE "%CONSTRAINT \"fk_workout_sessions_training_plan\" %" OR sql LIKE "%CONSTRAINT fk_workout_sessions_training_plan %" OR sql LIKE "%CONSTRAINT `fk_workout_sessions_training_plan`%" OR sql LIKE "%CONSTRAINT [fk_workout_sessions_training_plan]%" OR sql LIKE "%CONSTRAINT 	fk_workout_sessions_training_plan	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.007ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "workout_sessions" AND name = "idx_workout_sessions_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="posts"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.026ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "posts" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.009ms] [34;1m[rows:-][0m SELECT * FROM `posts` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.008ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "posts" AND (sql LIKE "%CONSTRAINT \"fk_posts_user\" %" OR sql LIKE "%CONSTRAINT fk_posts_user %" OR sql LIKE "%CONSTRAINT `fk_posts_user`%" OR sql LIKE "%CONSTRAINT [fk_posts_user]%" OR sql LIKE "%CONSTRAINT 	fk_posts_user	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "posts" AND name = "idx_posts_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="comments"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.019ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "comments" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.006ms] [34;1m[rows:-][0m SELECT * FROM `comments` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.006ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "comments" AND (sql LIKE "%CONSTRAINT \"fk_comments_post\" %" OR sql LIKE "%CONSTRAINT fk_comments_post %" OR sql LIKE "%CONSTRAINT `fk_comments_post`%" OR sql LIKE "%CONSTRAINT [fk_comments_post]%" OR sql LIKE "%CONSTRAINT 	fk_comments_post	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "comments" AND (sql LIKE "%CONSTRAINT \"fk_comments_user\" %" OR sql LIKE "%CONSTRAINT fk_comments_user %" OR sql LIKE "%CONSTRAINT `fk_comments_user`%" OR sql LIKE "%CONSTRAINT [fk_comments_user]%" OR sql LIKE "%CONSTRAINT 	fk_comments_user	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "comments" AND name = "idx_comments_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="post_likes"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.029ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "post_likes" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT * FROM `post_likes` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "post_likes" AND (sql LIKE "%CONSTRAINT \"fk_post_likes_user\" %" OR sql LIKE "%CONSTRAINT fk_post_likes_user %" OR sql LIKE "%CONSTRAINT `fk_post_likes_user`%" OR sql LIKE "%CONSTRAINT [fk_post_likes_user]%" OR sql LIKE "%CONSTRAINT 	fk_post_likes_user	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "post_likes" AND (sql LIKE "%CONSTRAINT \"fk_post_likes_post\" %" OR sql LIKE "%CONSTRAINT fk_post_likes_post %" OR sql LIKE "%CONSTRAINT `fk_post_likes_post`%" OR sql LIKE "%CONSTRAINT [fk_post_likes_post]%" OR sql LIKE "%CONSTRAINT 	fk_post_likes_post	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "post_likes" AND name = "idx_post_likes_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="mates"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.014ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "mates" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT * FROM `mates` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "mates" AND (sql LIKE "%CONSTRAINT \"fk_mates_mate\" %" OR sql LIKE "%CONSTRAINT fk_mates_mate %" OR sql LIKE "%CONSTRAINT `fk_mates_mate`%" OR sql LIKE "%CONSTRAINT [fk_mates_mate]%" OR sql LIKE "%CONSTRAINT 	fk_mates_mate	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "mates" AND (sql LIKE "%CONSTRAINT \"fk_mates_user\" %" OR sql LIKE "%CONSTRAINT fk_mates_user %" OR sql LIKE "%CONSTRAINT `fk_mates_user`%" OR sql LIKE "%CONSTRAINT [fk_mates_user]%" OR sql LIKE "%CONSTRAINT 	fk_mates_user	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "mates" AND name = "idx_mates_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="chats"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.013ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "chats" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT * FROM `chats` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "chats" AND name = "idx_chats_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.002ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="chat_participants"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.013ms] [34;1m[rows:1][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "chat_participants" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT * FROM `chat_participants` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.007ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "chat_participants" AND (sql LIKE "%CONSTRAINT \"fk_chat_participants_user\" %" OR sql LIKE "%CONSTRAINT fk_chat_participants_user %" OR sql LIKE "%CONSTRAINT `fk_chat_participants_user`%" OR sql LIKE "%CONSTRAINT [fk_chat_participants_user]%" OR sql LIKE "%CONSTRAINT 	fk_chat_participants_user	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.007ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "chat_participants" AND (sql LIKE "%CONSTRAINT \"fk_chat_participants_chat\" %" OR sql LIKE "%CONSTRAINT fk_chat_participants_chat %" OR sql LIKE "%CONSTRAINT `fk_chat_participants_chat`%" OR sql LIKE "%CONSTRAINT [fk_chat_participants_chat]%" OR sql LIKE "%CONSTRAINT 	fk_chat_participants_chat	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="messages"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.017ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "messages" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT * FROM `messages` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.006ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "messages" AND (sql LIKE "%CONSTRAINT \"fk_messages_sender\" %" OR sql LIKE "%CONSTRAINT fk_messages_sender %" OR sql LIKE "%CONSTRAINT `fk_messages_sender`%" OR sql LIKE "%CONSTRAINT [fk_messages_sender]%" OR sql LIKE "%CONSTRAINT 	fk_messages_sender	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "messages" AND (sql LIKE "%CONSTRAINT \"fk_chats_last_message\" %" OR sql LIKE "%CONSTRAINT fk_chats_last_message %" OR sql LIKE "%CONSTRAINT `fk_chats_last_message`%" OR sql LIKE "%CONSTRAINT [fk_chats_last_message]%" OR sql LIKE "%CONSTRAINT 	fk_chats_last_message	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "messages" AND name = "idx_messages_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="achievements"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.014ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "achievements" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT * FROM `achievements` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "achievements" AND (sql LIKE "%CONSTRAINT \"fk_achievements_user\" %" OR sql LIKE "%CONSTRAINT fk_achievements_user %" OR sql LIKE "%CONSTRAINT `fk_achievements_user`%" OR sql LIKE "%CONSTRAINT [fk_achievements_user]%" OR sql LIKE "%CONSTRAINT 	fk_achievements_user	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "achievements" AND name = "idx_achievements_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="notifications"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.014ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "notifications" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT * FROM `notifications` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "notifications" AND (sql LIKE "%CONSTRAINT \"fk_notifications_user\" %" OR sql LIKE "%CONSTRAINT fk_notifications_user %" OR sql LIKE "%CONSTRAINT `fk_notifications_user`%" OR sql LIKE "%CONSTRAINT [fk_notifications_user]%" OR sql LIKE "%CONSTRAINT 	fk_notifications_user	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "notifications" AND name = "idx_notifications_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="home_items"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.013ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "home_items" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT * FROM `home_items` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "home_items" AND (sql LIKE "%CONSTRAINT \"fk_home_items_user\" %" OR sql LIKE "%CONSTRAINT fk_home_items_user %" OR sql LIKE "%CONSTRAINT `fk_home_items_user`%" OR sql LIKE "%CONSTRAINT [fk_home_items_user]%" OR sql LIKE "%CONSTRAINT 	fk_home_items_user	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "home_items" AND name = "idx_home_items_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="detail_items"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.012ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "detail_items" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.007ms] [34;1m[rows:-][0m SELECT * FROM `detail_items` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "detail_items" AND (sql LIKE "%CONSTRAINT \"fk_detail_items_children\" %" OR sql LIKE "%CONSTRAINT fk_detail_items_children %" OR sql LIKE "%CONSTRAINT `fk_detail_items_children`%" OR sql LIKE "%CONSTRAINT [fk_detail_items_children]%" OR sql LIKE "%CONSTRAINT 	fk_detail_items_children	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "detail_items" AND (sql LIKE "%CONSTRAINT \"fk_detail_items_user\" %" OR sql LIKE "%CONSTRAINT fk_detail_items_user %" OR sql LIKE "%CONSTRAINT `fk_detail_items_user`%" OR sql LIKE "%CONSTRAINT [fk_detail_items_user]%" OR sql LIKE "%CONSTRAINT 	fk_detail_items_user	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "detail_items" AND name = "idx_detail_items_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="post_details"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.029ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "post_details" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.007ms] [34;1m[rows:-][0m SELECT * FROM `post_details` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "post_details" AND (sql LIKE "%CONSTRAINT \"fk_post_details_user\" %" OR sql LIKE "%CONSTRAINT fk_post_details_user %" OR sql LIKE "%CONSTRAINT `fk_post_details_user`%" OR sql LIKE "%CONSTRAINT [fk_post_details_user]%" OR sql LIKE "%CONSTRAINT 	fk_post_details_user	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "post_details" AND name = "idx_post_details_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="profile_details"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.023ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "profile_details" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.009ms] [34;1m[rows:-][0m SELECT * FROM `profile_details` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "profile_details" AND (sql LIKE "%CONSTRAINT \"fk_profile_details_user\" %" OR sql LIKE "%CONSTRAINT fk_profile_details_user %" OR sql LIKE "%CONSTRAINT `fk_profile_details_user`%" OR sql LIKE "%CONSTRAINT [fk_profile_details_user]%" OR sql LIKE "%CONSTRAINT 	fk_profile_details_user	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "profile_details" AND name = "idx_profile_details_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="chat_details"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.014ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "chat_details" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.010ms] [34;1m[rows:-][0m SELECT * FROM `chat_details` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "chat_details" AND (sql LIKE "%CONSTRAINT \"fk_chat_details_reply_to\" %" OR sql LIKE "%CONSTRAINT fk_chat_details_reply_to %" OR sql LIKE "%CONSTRAINT `fk_chat_details_reply_to`%" OR sql LIKE "%CONSTRAINT [fk_chat_details_reply_to]%" OR sql LIKE "%CONSTRAINT 	fk_chat_details_reply_to	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "chat_details" AND (sql LIKE "%CONSTRAINT \"fk_chat_details_user\" %" OR sql LIKE "%CONSTRAINT fk_chat_details_user %" OR sql LIKE "%CONSTRAINT `fk_chat_details_user`%" OR sql LIKE "%CONSTRAINT [fk_chat_details_user]%" OR sql LIKE "%CONSTRAINT 	fk_chat_details_user	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "chat_details" AND name = "idx_chat_details_deleted_at"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="achievement_details"
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.014ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "achievement_details" AND sql IS NOT NULL order by type = "table" desc
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.011ms] [34;1m[rows:-][0m SELECT * FROM `achievement_details` LIMIT 1
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "achievement_details" AND (sql LIKE "%CONSTRAINT \"fk_achievement_details_user\" %" OR sql LIKE "%CONSTRAINT fk_achievement_details_user %" OR sql LIKE "%CONSTRAINT `fk_achievement_details_user`%" OR sql LIKE "%CONSTRAINT [fk_achievement_details_user]%" OR sql LIKE "%CONSTRAINT 	fk_achievement_details_user	%")
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "achievement_details" AND name = "idx_achievement_details_deleted_at"
+2025/10/17 23:55:52 🔄 Initializing mock data...
+
+2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:159
+[0m[33m[0.022ms] [34;1m[rows:1][0m SELECT count(*) FROM `users` WHERE `users`.`deleted_at` IS NULL
+2025/10/17 23:55:52 📊 Mock data already exists, skipping initialization
+2025/10/17 23:55:52 ✅ Database connected successfully: sqlite
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /health                   --> gymates-backend/routes.SetupRoutes.func1 (7 handlers)
+[GIN-debug] POST   /api/auth/login           --> gymates-backend/controllers.(*AuthController).Login-fm (7 handlers)
+[GIN-debug] POST   /api/auth/register        --> gymates-backend/controllers.(*AuthController).Register-fm (7 handlers)
+[GIN-debug] GET    /api/auth/me              --> gymates-backend/controllers.(*AuthController).GetCurrentUser-fm (8 handlers)
+[GIN-debug] PUT    /api/auth/profile         --> gymates-backend/controllers.(*AuthController).UpdateProfile-fm (8 handlers)
+[GIN-debug] POST   /api/auth/logout          --> gymates-backend/controllers.(*AuthController).Logout-fm (8 handlers)
+[GIN-debug] GET    /api/users/:id            --> gymates-backend/controllers.(*AuthController).GetUserProfile-fm (7 handlers)
+[GIN-debug] GET    /api/home/list            --> gymates-backend/controllers.(*HomeController).GetHomeList-fm (7 handlers)
+[GIN-debug] GET    /api/home/stats           --> gymates-backend/controllers.(*HomeController).GetHomeStats-fm (7 handlers)
+[GIN-debug] GET    /api/home/:id             --> gymates-backend/controllers.(*HomeController).GetHomeItem-fm (7 handlers)
+[GIN-debug] POST   /api/home/:id/like        --> gymates-backend/controllers.(*HomeController).LikeHomeItem-fm (7 handlers)
+[GIN-debug] POST   /api/home/add             --> gymates-backend/controllers.(*HomeController).AddHomeItem-fm (8 handlers)
+[GIN-debug] PUT    /api/home/update/:id      --> gymates-backend/controllers.(*HomeController).UpdateHomeItem-fm (8 handlers)
+[GIN-debug] DELETE /api/home/delete/:id      --> gymates-backend/controllers.(*HomeController).DeleteHomeItem-fm (8 handlers)
+[GIN-debug] GET    /api/training/plans       --> gymates-backend/controllers.(*TrainingController).GetTrainingPlans-fm (8 handlers)
+[GIN-debug] GET    /api/training/plans/:id   --> gymates-backend/controllers.(*TrainingController).GetTrainingPlan-fm (8 handlers)
+[GIN-debug] POST   /api/training/plans       --> gymates-backend/controllers.(*TrainingController).CreateTrainingPlan-fm (8 handlers)
+[GIN-debug] POST   /api/training/sessions    --> gymates-backend/controllers.(*TrainingController).StartWorkoutSession-fm (8 handlers)
+[GIN-debug] PUT    /api/training/sessions/:id/progress --> gymates-backend/controllers.(*TrainingController).UpdateWorkoutProgress-fm (8 handlers)
+[GIN-debug] POST   /api/training/sessions/:id/complete --> gymates-backend/controllers.(*TrainingController).CompleteWorkoutSession-fm (8 handlers)
+[GIN-debug] GET    /api/training/history     --> gymates-backend/controllers.(*TrainingController).GetWorkoutHistory-fm (8 handlers)
+[GIN-debug] GET    /api/community/posts      --> gymates-backend/controllers.(*CommunityController).GetPosts-fm (8 handlers)
+[GIN-debug] GET    /api/community/posts/:id  --> gymates-backend/controllers.(*CommunityController).GetPost-fm (8 handlers)
+[GIN-debug] GET    /api/community/posts/:id/comments --> gymates-backend/controllers.(*CommunityController).GetComments-fm (8 handlers)
+[GIN-debug] GET    /api/community/search     --> gymates-backend/controllers.(*CommunityController).SearchPosts-fm (8 handlers)
+[GIN-debug] POST   /api/community/posts      --> gymates-backend/controllers.(*CommunityController).CreatePost-fm (8 handlers)
+[GIN-debug] POST   /api/community/posts/:id/like --> gymates-backend/controllers.(*CommunityController).LikePost-fm (8 handlers)
+[GIN-debug] DELETE /api/community/posts/:id/like --> gymates-backend/controllers.(*CommunityController).UnlikePost-fm (8 handlers)
+[GIN-debug] POST   /api/community/posts/:id/comments --> gymates-backend/controllers.(*CommunityController).CreateComment-fm (8 handlers)
+[GIN-debug] GET    /api/mates                --> gymates-backend/controllers.(*MatesController).GetMates-fm (8 handlers)
+[GIN-debug] GET    /api/mates/requests       --> gymates-backend/controllers.(*MatesController).GetMateRequests-fm (8 handlers)
+[GIN-debug] POST   /api/mates/requests       --> gymates-backend/controllers.(*MatesController).SendMateRequest-fm (8 handlers)
+[GIN-debug] POST   /api/mates/requests/:id/accept --> gymates-backend/controllers.(*MatesController).AcceptMateRequest-fm (8 handlers)
+[GIN-debug] POST   /api/mates/requests/:id/reject --> gymates-backend/controllers.(*MatesController).RejectMateRequest-fm (8 handlers)
+[GIN-debug] DELETE /api/mates/:id            --> gymates-backend/controllers.(*MatesController).RemoveMate-fm (8 handlers)
+[GIN-debug] GET    /api/mates/search         --> gymates-backend/controllers.(*MatesController).SearchMates-fm (8 handlers)
+[GIN-debug] GET    /api/mates/stats          --> gymates-backend/controllers.(*MatesController).GetMateStats-fm (8 handlers)
+[GIN-debug] GET    /api/messages/chats       --> gymates-backend/controllers.(*MessagesController).GetChats-fm (8 handlers)
+[GIN-debug] GET    /api/messages/chats/:id   --> gymates-backend/controllers.(*MessagesController).GetChat-fm (8 handlers)
+[GIN-debug] POST   /api/messages/chats       --> gymates-backend/controllers.(*MessagesController).CreateChat-fm (8 handlers)
+[GIN-debug] GET    /api/messages/chats/:id/messages --> gymates-backend/controllers.(*MessagesController).GetMessages-fm (8 handlers)
+[GIN-debug] POST   /api/messages/chats/:id/messages --> gymates-backend/controllers.(*MessagesController).SendMessage-fm (8 handlers)
+[GIN-debug] PUT    /api/messages/chats/:id/read --> gymates-backend/controllers.(*MessagesController).MarkAsRead-fm (8 handlers)
+[GIN-debug] GET    /api/messages/unread      --> gymates-backend/controllers.(*MessagesController).GetUnreadCount-fm (8 handlers)
+[GIN-debug] GET    /api/profile/me           --> gymates-backend/controllers.(*AuthController).GetCurrentUser-fm (8 handlers)
+[GIN-debug] PUT    /api/profile/update       --> gymates-backend/controllers.(*AuthController).UpdateProfile-fm (8 handlers)
+[GIN-debug] GET    /api/profile/stats        --> gymates-backend/controllers.(*AuthController).GetUserStats-fm (8 handlers)
+[GIN-debug] GET    /api/detail/list          --> gymates-backend/controllers.(*DetailController).GetDetailList-fm (7 handlers)
+[GIN-debug] GET    /api/detail/stats         --> gymates-backend/controllers.(*DetailController).GetDetailStats-fm (7 handlers)
+[GIN-debug] GET    /api/detail/:id           --> gymates-backend/controllers.(*DetailController).GetDetail-fm (7 handlers)
+[GIN-debug] POST   /api/detail/:id/like      --> gymates-backend/controllers.(*DetailController).LikeDetail-fm (7 handlers)
+[GIN-debug] POST   /api/detail/:id/share     --> gymates-backend/controllers.(*DetailController).ShareDetail-fm (7 handlers)
+[GIN-debug] POST   /api/detail/submit        --> gymates-backend/controllers.(*DetailController).SubmitDetail-fm (8 handlers)
+[GIN-debug] PUT    /api/detail/update/:id    --> gymates-backend/controllers.(*DetailController).UpdateDetail-fm (8 handlers)
+[GIN-debug] DELETE /api/detail/delete/:id    --> gymates-backend/controllers.(*DetailController).DeleteDetail-fm (8 handlers)
+[GIN-debug] GET    /api/post-detail/list     --> gymates-backend/controllers.(*DetailController).GetDetailList-fm (7 handlers)
+[GIN-debug] GET    /api/post-detail/:id      --> gymates-backend/controllers.(*DetailController).GetDetail-fm (7 handlers)
+[GIN-debug] POST   /api/post-detail/:id/like --> gymates-backend/controllers.(*DetailController).LikeDetail-fm (7 handlers)
+[GIN-debug] POST   /api/post-detail/:id/share --> gymates-backend/controllers.(*DetailController).ShareDetail-fm (7 handlers)
+[GIN-debug] POST   /api/post-detail/submit   --> gymates-backend/controllers.(*DetailController).SubmitDetail-fm (8 handlers)
+[GIN-debug] PUT    /api/post-detail/update/:id --> gymates-backend/controllers.(*DetailController).UpdateDetail-fm (8 handlers)
+[GIN-debug] DELETE /api/post-detail/delete/:id --> gymates-backend/controllers.(*DetailController).DeleteDetail-fm (8 handlers)
+[GIN-debug] GET    /api/profile-detail/list  --> gymates-backend/controllers.(*DetailController).GetDetailList-fm (7 handlers)
+[GIN-debug] GET    /api/profile-detail/:id   --> gymates-backend/controllers.(*DetailController).GetDetail-fm (7 handlers)
+[GIN-debug] POST   /api/profile-detail/submit --> gymates-backend/controllers.(*DetailController).SubmitDetail-fm (8 handlers)
+[GIN-debug] PUT    /api/profile-detail/update/:id --> gymates-backend/controllers.(*DetailController).UpdateDetail-fm (8 handlers)
+[GIN-debug] DELETE /api/profile-detail/delete/:id --> gymates-backend/controllers.(*DetailController).DeleteDetail-fm (8 handlers)
+[GIN-debug] GET    /api/chat-detail/list     --> gymates-backend/controllers.(*DetailController).GetDetailList-fm (8 handlers)
+[GIN-debug] GET    /api/chat-detail/:id      --> gymates-backend/controllers.(*DetailController).GetDetail-fm (8 handlers)
+[GIN-debug] POST   /api/chat-detail/submit   --> gymates-backend/controllers.(*DetailController).SubmitDetail-fm (8 handlers)
+[GIN-debug] PUT    /api/chat-detail/update/:id --> gymates-backend/controllers.(*DetailController).UpdateDetail-fm (8 handlers)
+[GIN-debug] DELETE /api/chat-detail/delete/:id --> gymates-backend/controllers.(*DetailController).DeleteDetail-fm (8 handlers)
+[GIN-debug] GET    /api/achievement-detail/list --> gymates-backend/controllers.(*DetailController).GetDetailList-fm (7 handlers)
+[GIN-debug] GET    /api/achievement-detail/:id --> gymates-backend/controllers.(*DetailController).GetDetail-fm (7 handlers)
+[GIN-debug] POST   /api/achievement-detail/:id/like --> gymates-backend/controllers.(*DetailController).LikeDetail-fm (7 handlers)
+[GIN-debug] POST   /api/achievement-detail/:id/share --> gymates-backend/controllers.(*DetailController).ShareDetail-fm (7 handlers)
+[GIN-debug] POST   /api/achievement-detail/submit --> gymates-backend/controllers.(*DetailController).SubmitDetail-fm (8 handlers)
+[GIN-debug] PUT    /api/achievement-detail/update/:id --> gymates-backend/controllers.(*DetailController).UpdateDetail-fm (8 handlers)
+[GIN-debug] DELETE /api/achievement-detail/delete/:id --> gymates-backend/controllers.(*DetailController).DeleteDetail-fm (8 handlers)
+[GIN-debug] GET    /api/training-detail/list --> gymates-backend/controllers.(*DetailController).GetDetailList-fm (7 handlers)
+[GIN-debug] GET    /api/training-detail/:id  --> gymates-backend/controllers.(*DetailController).GetDetail-fm (7 handlers)
+[GIN-debug] POST   /api/training-detail/:id/like --> gymates-backend/controllers.(*DetailController).LikeDetail-fm (7 handlers)
+[GIN-debug] POST   /api/training-detail/:id/share --> gymates-backend/controllers.(*DetailController).ShareDetail-fm (7 handlers)
+[GIN-debug] POST   /api/training-detail/submit --> gymates-backend/controllers.(*DetailController).SubmitDetail-fm (8 handlers)
+[GIN-debug] PUT    /api/training-detail/update/:id --> gymates-backend/controllers.(*DetailController).UpdateDetail-fm (8 handlers)
+[GIN-debug] DELETE /api/training-detail/delete/:id --> gymates-backend/controllers.(*DetailController).DeleteDetail-fm (8 handlers)
+[GIN-debug] GET    /api/mates-detail/list    --> gymates-backend/controllers.(*DetailController).GetDetailList-fm (8 handlers)
+[GIN-debug] GET    /api/mates-detail/:id     --> gymates-backend/controllers.(*DetailController).GetDetail-fm (8 handlers)
+[GIN-debug] POST   /api/mates-detail/submit  --> gymates-backend/controllers.(*DetailController).SubmitDetail-fm (8 handlers)
+[GIN-debug] PUT    /api/mates-detail/update/:id --> gymates-backend/controllers.(*DetailController).UpdateDetail-fm (8 handlers)
+[GIN-debug] DELETE /api/mates-detail/delete/:id --> gymates-backend/controllers.(*DetailController).DeleteDetail-fm (8 handlers)
+2025/10/17 23:55:52 🚀 Gymates Backend Server Starting...
+2025/10/17 23:55:52 📍 Host: 0.0.0.0
+2025/10/17 23:55:52 🔌 Port: 8080
+2025/10/17 23:55:52 🌐 API Base URL: http://0.0.0.0:8080/api
+2025/10/17 23:55:52 🏥 Health Check: http://0.0.0.0:8080/health
+2025/10/17 23:55:52 📚 API Docs: http://0.0.0.0:8080/api
+2025/10/17 23:55:52 🗄️  Database: sqlite
+2025/10/17 23:55:52 🔧 Environment: debug
+2025/10/17 23:55:52 =====================================
+2025/10/17 23:55:52 Failed to start server:listen tcp 0.0.0.0:8080: bind: address already in use
+exit status 1
+5/10/17 23:55:52] ::1 GET 200 2.957083ms /health 
+[2025/10/18 00:11:25] ::1 GET 200 518.5µs /health 
+[2025/10/18 00:12:23] ::1 GET 200 36.875µs /health 
+[2025/10/18 00:12:49] ::1 GET 200 49.875µs /health 
+[2025/10/18 00:15:32] ::1 GET 200 26.291µs /health 
+[2025/10/18 00:16:05] ::1 GET 200 40.125µs /health 
+[2025/10/18 00:32:06] ::1 GET 200 1.433167ms /health 
+[2025/10/18 00:53:45] ::1 GET 404 3.053125ms / 
+[2025/10/18 00:53:48] ::1 GET 404 14.042µs / 
+[2025/10/18 00:53:51] ::1 GET 404 85.875µs / 
+[2025/10/18 00:55:23] ::1 GET 404 54.125µs / 
+[2025/10/18 00:57:45] ::1 GET 404 1.396333ms / 

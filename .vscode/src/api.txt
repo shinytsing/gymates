@@ -1,0 +1,219 @@
+# 项目外部API使用总结
+
+## 📋 概述
+
+本文档总结了modeshift_django项目中使用的所有外部API服务，包括AI服务、地图服务、图片服务、社交媒体API等。所有API密钥都通过环境变量管理，确保安全性。
+
+## 🤖 AI服务API
+
+### 1. DeepSeek AI (主要AI服务)
+- **环境变量**: `DEEPSEEK_API_KEY`
+- **当前值**: `sk-c4a84c8bbff341cbb3006ecaf84030fe`
+- **用途**: 主要AI对话和内容生成服务
+- **API文档**: https://api.deepseek.com/
+- **状态**: ✅ 已配置
+- **使用位置**: 
+  - `apps/tools/services/llm_service.py`
+  - `apps/tools/utils/__init__.py`
+  - `apps/tools/services/enhanced_travel_service_v2.py`
+
+### 2. AIMLAPI (聚合AI服务)
+- **环境变量**: `AIMLAPI_API_KEY`
+- **当前值**: `d78968b01cd8440eb7b28d683f3230da`
+- **用途**: 支持200+种AI模型的聚合服务
+- **状态**: ⚠️ 需要验证
+- **验证页面**: https://aimlapi.com/app/billing/verification
+- **使用位置**: `apps/tools/services/llm_service.py`
+
+### 3. 腾讯混元大模型
+- **环境变量**: 
+  - `TENCENT_SECRET_ID`: `100032618506_100032618506_16a17a3a4bc2eba0534e7b25c4363fc8`
+  - `TENCENT_SECRET_KEY`: `sk-O5tVxVeCGTtSgPlaHMuPe9CdmgEUuy2d79yK5rf5Rp5qsI3m`
+- **用途**: 腾讯云混元大模型服务
+- **API文档**: https://cloud.tencent.com/document/product/1729/101848
+- **使用位置**: `apps/tools/services/llm_service.py`
+
+### 4. 其他AI服务 (可选配置)
+```bash
+# Groq API - 免费额度大，速度快
+GROQ_API_KEY=your_groq_api_key_here
+
+# AI Tools API - 无需登录，兼容OpenAI
+AITOOLS_API_KEY=your_aitools_key_here
+
+# Together AI - 有免费额度
+TOGETHER_API_KEY=your_together_api_key_here
+
+# OpenRouter - 聚合多个模型
+OPENROUTER_API_KEY=your_openrouter_api_key_here
+
+# 讯飞星火 - 完全免费
+XUNFEI_API_KEY=your_xunfei_key_here
+
+# 百度千帆 - 免费额度
+BAIDU_API_KEY=your_baidu_key_here
+
+# 字节扣子 - 开发者免费
+BYTEDANCE_API_KEY=your_bytedance_key_here
+
+# 硅基流动 - 免费额度
+SILICONFLOW_API_KEY=your_siliconflow_key_here
+```
+
+## 🗺️ 地图和位置服务
+
+### 高德地图API
+- **环境变量**: `AMAP_API_KEY`
+- **当前值**: `a825cd9231f473717912d3203a62c53e`
+- **用途**: 地图服务、位置查询、路径规划
+- **API文档**: https://lbs.amap.com/
+- **使用位置**: `apps/tools/services/enhanced_map_service.py`
+
+## 🖼️ 图片和媒体服务
+
+### Pixabay图片API
+- **环境变量**: `PIXABAY_API_KEY`
+- **当前值**: `36817612-8c0c4c8c8c8c8c8c8c8c8c8c`
+- **用途**: 免费图片搜索和下载
+- **API文档**: https://pixabay.com/api/docs/
+- **使用位置**: `apps/tools/services/meditation_audio_service.py`
+
+## 🌐 Google服务
+
+### Google API
+- **环境变量**: `GOOGLE_API_KEY`
+- **用途**: Google各种API服务
+- **使用位置**: 多个服务文件
+
+### Google自定义搜索
+- **环境变量**: `GOOGLE_CSE_ID`
+- **用途**: Google自定义搜索引擎
+- **使用位置**: 搜索相关服务
+
+### Google OAuth
+- **环境变量**: 
+  - `GOOGLE_OAUTH_CLIENT_ID`: `1046109123456-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com`
+  - `GOOGLE_OAUTH_CLIENT_SECRET`: `GOCSPX-abcdefghijklmnopqrstuvwxyz123456`
+- **用途**: Google OAuth认证
+- **使用位置**: 
+  - `apps/users/services/google_auth_proxy.py`
+  - `apps/tools/services/google_oauth_service.py`
+  - `apps/tools/services/final_google_oauth_service.py`
+
+## 🌤️ 天气服务
+
+### OpenWeather API
+- **环境变量**: `OPENWEATHER_API_KEY`
+- **用途**: 天气信息查询
+- **API文档**: https://openweathermap.org/api
+- **使用位置**: 天气相关服务
+
+## 📱 社交媒体API
+
+### 抖音API
+- **环境变量**: `DOUYIN_API_KEY`
+- **用途**: 抖音数据分析和爬取
+- **使用位置**: `apps/tools/services/douyin_analyzer.py`
+
+### 小红书API
+- **环境变量**: `XIAOHONGSHU_API_KEY`
+- **用途**: 小红书数据分析
+
+### 其他社交媒体API
+```bash
+# 网易云音乐
+NETEASE_API_KEY=your-netease-api-key
+
+# 微博
+WEIBO_API_KEY=your-weibo-api-key
+
+# B站
+BILIBILI_API_KEY=your-bilibili-api-key
+
+# 知乎
+ZHIHU_API_KEY=your-zhihu-api-key
+```
+
+## 🔧 配置管理
+
+### 环境变量文件
+- **生产环境**: `env.production` - 包含所有生产环境变量
+- **开发环境**: `env.example` - 环境变量模板
+- **Docker配置**: `docker-compose.yml` - 容器环境变量传递
+
+### 代码中的使用方式
+```python
+import os
+
+# ✅ 正确方式 - 使用环境变量
+api_key = os.getenv("API_KEY_NAME")
+if not api_key:
+    logger.warning("API_KEY_NAME环境变量未设置")
+    return None
+
+# ❌ 错误方式 - 硬编码
+api_key = "sk-1234567890abcdef"
+```
+
+## 🚀 快速配置脚本
+
+### 1. 配置AI Tools API (推荐，无需登录)
+```bash
+python setup_aitools_api.py
+```
+
+### 2. 配置Groq API (推荐，免费额度大)
+```bash
+python quick_setup_groq.py
+```
+
+### 3. 配置腾讯混元API
+```bash
+python setup_tencent_hunyuan.py
+```
+
+## 📊 服务优先级
+
+系统会按以下优先级自动选择可用的AI服务：
+
+1. **AIMLAPI** (你的密钥) - 最高优先级
+2. **AI Tools** (无需登录) - 立即可用
+3. **Groq** (免费额度大) - 推荐
+4. **讯飞星火** (完全免费) - 国内服务
+5. **百度千帆** (免费额度) - 国内服务
+
+## 🔒 安全注意事项
+
+1. **永远不要**将API密钥提交到版本控制
+2. **永远不要**在日志中输出API密钥
+3. **永远不要**在错误消息中暴露API密钥
+4. 使用 `.gitignore` 忽略包含密钥的文件
+5. 定期审查代码中的密钥使用情况
+
+## 📈 API使用监控
+
+### 检查服务状态
+```bash
+python scripts/check_ai_services.py
+```
+
+### 环境变量检查
+```bash
+python scripts/check_environment_variables.py
+```
+
+## 🔄 部署时的环境变量传递
+
+1. **本地开发**: 从 `.env` 文件加载
+2. **Docker部署**: 通过 `docker-compose.yml` 传递
+3. **CI/CD部署**: 通过GitHub Secrets传递到服务器
+
+## 📝 更新记录
+
+- **2024-12-29**: 初始版本，包含所有主要API服务
+- **2025-01-07**: 添加腾讯混元API配置
+- **2025-01-07**: 更新AI服务优先级和配置脚本
+
+---
+
+**注意**: 本文档中的API密钥仅用于开发环境，生产环境请使用安全的密钥管理方案。

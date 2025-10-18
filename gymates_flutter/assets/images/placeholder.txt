@@ -1,0 +1,2 @@
+# Placeholder for images
+# This directory contains app images and assets

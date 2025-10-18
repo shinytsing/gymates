@@ -1,0 +1,245 @@
+# 🏗️ Gymates Fitness Social App - React Native + Go Development Rules
+
+## 📱 Project Overview
+This is a React Native + Go fitness social app that must completely replicate the Figma design with full functionality, animations, and backend integration.
+
+## 🎯 Core Development Principles
+
+### 1. 📄 Page & Navigation Rules
+- **Complete Figma Replication**: All primary and secondary pages MUST exactly match Figma layouts and hierarchy
+- **Navigation Structure**: 
+  - Use Stack Navigator for page flows (auth → onboarding → main app)
+  - Use Tab Navigator for main app sections (Training, Community, Mates, Messages, Profile)
+  - Use Drawer Navigator for profile settings and additional features
+- **Naming Convention**: 
+  - Page names MUST match Figma page names exactly
+  - Component names MUST match Figma component names
+  - File structure: `src/screens/[PageName].tsx` and `src/components/[ComponentName].tsx`
+- **Navigation Logic**: Support multi-level navigation and conditional rendering based on auth state
+- **Route Structure**:
+  ```
+  Auth Stack: Login → Register → Onboarding
+  Main App: Training | Community | Mates | Messages | Profile
+  ```
+
+### 2. 🎨 Styling & Layout Rules
+- **Design Fidelity**: Maintain EXACT Figma specifications for:
+  - Colors (primary, secondary, accent, background, text)
+  - Typography (font families, sizes, weights, line heights)
+  - Border radius, shadows, spacing, margins, padding
+  - Component dimensions and positioning
+- **Layout System**: 
+  - Use Flexbox + StyleSheet for responsive layouts
+  - Implement proper responsive design for iOS (375x812) and Android (360x800)
+  - Maintain Figma proportions across all screen sizes
+- **Theme Support**: 
+  - Implement dark mode based on Figma theme specifications
+  - Use ThemeContext for consistent theming across components
+  - Support system theme detection and manual toggle
+- **Component Styling**:
+  ```typescript
+  // Example component structure
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+      paddingHorizontal: 16,
+    },
+    // Match Figma specs exactly
+  });
+  ```
+
+### 3. ⚡ Interaction & Logic Rules
+- **Complete Interaction Preservation**: Implement ALL Figma interactions:
+  - Tap, swipe, long press, drag gestures
+  - Form inputs, button states, modal presentations
+  - Conditional rendering and state management
+- **Dynamic Data Handling**:
+  - List pagination with infinite scroll
+  - Pull-to-refresh functionality
+  - Real-time updates for social features
+  - Loading states and error handling
+- **State Management**: 
+  - Use React Hooks (useState, useEffect, useContext)
+  - Implement Redux for complex state (user, posts, messages)
+  - Maintain proper state synchronization with backend
+- **Form Handling**:
+  - Use react-hook-form for all forms
+  - Implement proper validation and error states
+  - Support both controlled and uncontrolled components
+
+### 4. 🎬 Animation Rules
+- **Animation Library**: Use react-native-reanimated for performance
+- **Required Animations**:
+  - Page transition animations (slide, fade, scale)
+  - Component transition animations (modal, drawer, tab)
+  - Loading animations and skeleton screens
+  - Gesture-based animations (swipe, drag, bounce)
+- **Animation Consistency**: Match Figma prototype timing and easing
+- **Performance**: Use native driver for transform and opacity animations
+- **Animation Examples**:
+  ```typescript
+  // Page transition
+  const slideTransition = {
+    gestureDirection: 'horizontal',
+    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+  };
+  
+  // Component animation
+  const fadeIn = useSharedValue(0);
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: fadeIn.value,
+  }));
+  ```
+
+### 5. 📊 Data & State Rules
+- **Frontend State Management**:
+  - User authentication state (login, register, profile)
+  - App-wide state (theme, notifications, settings)
+  - Feature-specific state (posts, messages, training plans)
+- **Backend Integration**: Go REST API endpoints for:
+  - User management (register, login, profile CRUD)
+  - Social features (posts, comments, likes, follows)
+  - Training features (plans, progress, achievements)
+  - Messaging system (chats, real-time updates)
+  - AI recommendations (workout plans, nutrition)
+- **API Integration**:
+  ```typescript
+  // API service structure
+  class ApiService {
+    async login(credentials: LoginCredentials): Promise<User> {}
+    async getPosts(page: number): Promise<Post[]> {}
+    async createPost(post: CreatePostRequest): Promise<Post> {}
+    async getTrainingPlan(userId: string): Promise<TrainingPlan> {}
+  }
+  ```
+- **Error Handling**: Implement comprehensive error handling with user-friendly messages
+- **Loading States**: Show appropriate loading indicators for all async operations
+
+### 6. 📁 File Structure Rules
+- **React Native Structure**:
+  ```
+  src/
+  ├── components/          # Reusable UI components
+  │   ├── ui/             # Base UI components (Button, Input, etc.)
+  │   ├── auth/           # Authentication components
+  │   ├── community/      # Community feature components
+  │   ├── training/       # Training feature components
+  │   ├── profile/        # Profile feature components
+  │   └── messages/       # Messaging components
+  ├── screens/            # Page components
+  ├── navigation/          # Navigation configuration
+  ├── services/           # API services and utilities
+  ├── hooks/              # Custom React hooks
+  ├── context/            # React Context providers
+  ├── utils/              # Utility functions
+  └── types/              # TypeScript type definitions
+  ```
+- **Go Backend Structure**:
+  ```
+  backend/
+  ├── cmd/                # Application entry points
+  ├── internal/
+  │   ├── handler/        # HTTP handlers
+  │   ├── service/        # Business logic
+  │   ├── model/          # Data models
+  │   ├── repository/     # Data access layer
+  │   └── middleware/     # HTTP middleware
+  ├── pkg/                # Reusable packages
+  └── api/                # API definitions
+  ```
+- **Component Reusability**: All components must be reusable and match Figma component hierarchy
+
+### 7. 🚀 Build & Run Rules
+- **React Native Setup**:
+  ```bash
+  # Installation
+  npm install
+  cd ios && pod install && cd ..
+  
+  # Running
+  npx react-native run-ios
+  npx react-native run-android
+  ```
+- **Go Backend Setup**:
+  ```bash
+  # Dependencies
+  go mod tidy
+  
+  # Running
+  go run cmd/main.go
+  ```
+- **Development Environment**:
+  - Use React Native CLI or Expo CLI based on project requirements
+  - Ensure proper environment configuration for API endpoints
+  - Support both development and production builds
+- **Testing**: Implement unit tests for critical business logic and integration tests for API endpoints
+
+### 8. ✅ Validation Rules
+- **Design Validation**:
+  - Generate preview demos for all primary and secondary pages
+  - Create screenshot comparisons with Figma designs
+  - Verify all interactions work as specified in Figma
+- **Functionality Validation**:
+  - All API calls must return expected data
+  - Error states must be properly handled
+  - Loading states must be implemented
+  - Offline functionality where applicable
+- **Performance Validation**:
+  - App must run smoothly on both iOS and Android
+  - Animations must be 60fps
+  - Memory usage must be optimized
+  - Bundle size must be reasonable
+
+### 9. 📝 Naming & Standards
+- **React Native Conventions**:
+  - Use PascalCase for components: `TrainingPage`, `ProfileHeader`
+  - Use camelCase for functions and variables: `handleTabChange`, `userProfile`
+  - Use SCREAMING_SNAKE_CASE for constants: `API_BASE_URL`, `MAX_RETRY_ATTEMPTS`
+- **Go Conventions**:
+  - Use camelCase for functions: `getUserProfile`, `createPost`
+  - Use PascalCase for types: `User`, `TrainingPlan`, `Post`
+  - Use snake_case for database fields: `user_id`, `created_at`
+- **File Naming**:
+  - Components: `ComponentName.tsx`
+  - Screens: `ScreenName.tsx`
+  - Services: `serviceName.ts`
+  - Types: `types.ts` or `ComponentName.types.ts`
+- **Figma Traceability**: Maintain clear mapping between Figma components and code components
+
+### 10. 🔧 Development Workflow
+- **Code Quality**:
+  - Use TypeScript for type safety
+  - Implement ESLint and Prettier for code formatting
+  - Use Husky for pre-commit hooks
+  - Write meaningful commit messages
+- **Version Control**:
+  - Use feature branches for new development
+  - Implement proper code review process
+  - Maintain clear commit history
+- **Documentation**:
+  - Document all API endpoints
+  - Maintain component documentation
+  - Keep README files updated
+  - Document deployment procedures
+
+## 🎯 Success Criteria
+The app is considered complete when:
+1. ✅ All Figma pages are perfectly replicated in React Native
+2. ✅ All interactions and animations work as specified
+3. ✅ Go backend provides all required API endpoints
+4. ✅ Frontend and backend are fully integrated
+5. ✅ App runs smoothly on both iOS and Android
+6. ✅ All user flows work end-to-end
+7. ✅ Code is maintainable and follows best practices
+8. ✅ Performance meets mobile app standards
+
+## 🚨 Critical Requirements
+- NEVER deviate from Figma design specifications
+- ALWAYS implement proper error handling and loading states
+- ENSURE all API calls are properly integrated
+- MAINTAIN consistent code quality and naming conventions
+- TEST on both iOS and Android devices
+- DOCUMENT all major decisions and implementations
+
+This ruleset ensures the Gymates Fitness Social App will be a high-quality, production-ready application that perfectly matches the Figma design while providing robust functionality and excellent user experience.

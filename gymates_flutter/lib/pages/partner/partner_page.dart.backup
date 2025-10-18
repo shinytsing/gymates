@@ -1,0 +1,1267 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'dart:math' as math;
+import 'dart:ui';
+import '../../theme/gymates_theme.dart';
+import '../../animations/gymates_animations.dart';
+
+/// 🤝 搭子页 PartnerPage - 基于Figma设计的健身搭子匹配页面
+/// 
+/// 设计规范：
+/// - 主色调：#6366F1 (Indigo-500)
+/// - 背景色：#F9FAFB (Gray-50)
+/// - 卡片圆角：iOS 12px, Android 8px
+/// - 页面边距：16px
+/// - 滑动动画：左滑跳过，右滑感兴趣
+/// - 支持iOS和Android两种主题风格
+
+class PartnerPage extends StatefulWidget {
+  const PartnerPage({super.key});
+
+  @override
+  State<PartnerPage> createState() => _PartnerPageState();
+}
+
+class _PartnerPageState extends State<PartnerPage>
+    with TickerProviderStateMixin {
+  late AnimationController _cardAnimationController;
+  late AnimationController _matchAnimationController;
+  
+  late Animation<double> _cardScaleAnimation;
+  late Animation<double> _cardRotationAnimation;
+  late Animation<double> _matchScaleAnimation;
+
+  int _currentCardIndex = 0;
+  bool _isMatched = false;
+  String _activeTab = 'mates'; // 'mates' or 'gyms'
+  String? _swipeDirection; // 'left' or 'right'
+  
+  // 基于Figma设计的搭子数据
+  final List<MateData> _mates = [
+    MateData(
+      id: 1,
+      name: '陈雨晨',
+      age: 25,
+      avatar: 'https://images.unsplash.com/photo-1541338784564-51087dabc0de?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwd29tYW4lMjB0cmFpbmluZyUyMGV4ZXJjaXNlfGVufDF8fHx8MTc1OTUzMDkxMnww&ixlib=rb-4.1.0&q=80&w=400',
+      distance: '2.5km',
+      matchRate: 92,
+      workoutTime: '晚上 7-9点',
+      preferences: ['力量训练', '瑜伽', '跑步'],
+      goal: '减脂塑形',
+      experience: '中级',
+      bio: '热爱运动的设计师，希望找到一起坚持健身的伙伴！每周至少4次训练，追求健康生活方式。',
+      rating: 4.8,
+      workouts: 156,
+    ),
+    MateData(
+      id: 2,
+      name: '张健康',
+      age: 28,
+      avatar: 'https://images.unsplash.com/photo-1607286908165-b8b6a2874fc4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwcG9ydHJhaXQlMjBhdGhsZXRlJTIwd29ya291dHxlbnwxfHx8fDE3NTk1MzA5MTV8MA&ixlib=rb-4.1.0&q=80&w=400',
+      distance: '1.8km',
+      matchRate: 85,
+      workoutTime: '早上 6-8点',
+      preferences: ['力量训练', 'CrossFit', '游泳'],
+      goal: '增肌',
+      experience: '高级',
+      bio: '健身教练，专注力量训练5年+。喜欢挑战自己，也乐于帮助健身新手。',
+      rating: 4.9,
+      workouts: 324,
+    ),
+    MateData(
+      id: 3,
+      name: '李小雅',
+      age: 23,
+      avatar: 'https://images.unsplash.com/photo-1669989179336-b2234d2878df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwZ3ltJTIwd29ya291dCUyMG1vdGl2YXRpb258ZW58MXx8fHwxNzU5NTMwOTA5fDA&ixlib=rb-4.1.0&q=80&w=400',
+      distance: '3.2km',
+      matchRate: 78,
+      workoutTime: '下午 2-4点',
+      preferences: ['瑜伽', '普拉提', '舞蹈'],
+      goal: '塑形',
+      experience: '初级',
+      bio: '刚开始健身的大学生，希望找到耐心的健身伙伴一起进步。',
+      rating: 4.6,
+      workouts: 42,
+    ),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeAnimations();
+  }
+
+  void _initializeAnimations() {
+    // 卡片动画控制器
+    _cardAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+    
+    // 匹配动画控制器
+    _matchAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+
+    // 卡片动画
+    _cardScaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.8,
+    ).animate(CurvedAnimation(
+      parent: _cardAnimationController,
+      curve: Curves.easeInOut,
+    ));
+    
+    _cardRotationAnimation = Tween<double>(
+      begin: 0.0,
+      end: 0.1,
+    ).animate(CurvedAnimation(
+      parent: _cardAnimationController,
+      curve: Curves.easeInOut,
+    ));
+
+    // 匹配动画
+    _matchScaleAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _matchAnimationController,
+      curve: Curves.elasticOut,
+    ));
+  }
+
+  @override
+  void dispose() {
+    _cardAnimationController.dispose();
+    _matchAnimationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+    final currentMate = _currentCardIndex < _mates.length ? _mates[_currentCardIndex] : null;
+    
+    return Scaffold(
+      backgroundColor: GymatesTheme.lightBackground,
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Header with precise Figma spacing
+            _buildHeader(isIOS),
+            
+            // Content based on active tab
+            Expanded(
+              child: _activeTab == 'mates' 
+                ? _buildMatesContent(currentMate, isIOS)
+                : _buildGymsContent(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeader(bool isIOS) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: GymatesTheme.getCardShadow(false),
+      ),
+      padding: EdgeInsets.fromLTRB(
+        GymatesTheme.spacing16, 
+        GymatesTheme.spacing24, 
+        GymatesTheme.spacing16, 
+        GymatesTheme.spacing16
+      ),
+      child: Column(
+        children: [
+          // Title and action buttons with precise Figma spacing
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '搭子',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: isIOS ? FontWeight.w600 : FontWeight.w500,
+                        color: GymatesTheme.lightTextPrimary,
+                        height: 1.2, // Precise line height from Figma
+                        letterSpacing: -0.5, // iOS letter spacing
+                      ),
+                    ),
+                    SizedBox(height: GymatesTheme.spacing4),
+                    Text(
+                      '滑动卡片寻找你的健身伙伴',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: GymatesTheme.lightTextSecondary,
+                        height: 1.4,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: GymatesTheme.spacing12),
+              // Action buttons with precise spacing
+              Row(
+                children: [
+                  _buildHeaderButton(
+                    icon: Icons.person_add,
+                    onTap: () {
+                      // TODO: Add mate functionality
+                    },
+                    isIOS: isIOS,
+                  ),
+                  SizedBox(width: GymatesTheme.spacing12),
+                  _buildHeaderButton(
+                    icon: Icons.message,
+                    onTap: () {
+                      // TODO: Open messages
+                    },
+                    hasNotification: true,
+                    isIOS: isIOS,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          
+          SizedBox(height: GymatesTheme.spacing16),
+          
+          // Tab navigation with platform-specific styling
+          _buildTabNavigation(isIOS),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeaderButton({
+    required IconData icon,
+    required VoidCallback onTap,
+    bool hasNotification = false,
+    required bool isIOS,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        onTap();
+      },
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: const Color(0xFFF3F4F6), // Gray-100 from Figma
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 4,
+              offset: const Offset(0, 1),
+            ),
+          ],
+        ),
+        child: Stack(
+          children: [
+            Center(
+              child: Icon(
+                icon,
+                size: 20,
+                color: const Color(0xFF6B7280), // Gray-500 from Figma
+              ),
+            ),
+            if (hasNotification)
+              Positioned(
+                top: 8,
+                right: 8,
+                child: Container(
+                  width: 12,
+                  height: 12,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFEF4444), // Red-500 from Figma
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFEF4444).withOpacity(0.3),
+                        blurRadius: 4,
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTabNavigation(bool isIOS) {
+    return Container(
+      padding: EdgeInsets.all(GymatesTheme.spacing4),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF3F4F6), // Gray-100 from Figma
+        borderRadius: BorderRadius.circular(isIOS ? 8 : 6),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.02),
+            blurRadius: 2,
+            offset: const Offset(0, 1),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: _buildTabButton(
+              'mates',
+              '搭子',
+              isIOS,
+            ),
+          ),
+          Expanded(
+            child: _buildTabButton(
+              'gyms',
+              '健身房见',
+              isIOS,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTabButton(String tab, String label, bool isIOS) {
+    final isActive = _activeTab == tab;
+    
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.selectionClick();
+        setState(() {
+          _activeTab = tab;
+        });
+      },
+      child: AnimatedContainer(
+        duration: AnimationConstants.fastAnimation,
+        curve: Curves.easeInOut,
+        padding: EdgeInsets.symmetric(
+          vertical: GymatesTheme.spacing8, 
+          horizontal: GymatesTheme.spacing16
+        ),
+        decoration: BoxDecoration(
+          color: isActive ? Colors.white : Colors.transparent,
+          borderRadius: BorderRadius.circular(isIOS ? 6 : 4),
+          boxShadow: isActive ? [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 1,
+              offset: const Offset(0, 1),
+            ),
+          ] : null,
+        ),
+        child: Text(
+          label,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
+            color: isActive 
+              ? GymatesTheme.primaryColor // Primary color from theme
+              : GymatesTheme.lightTextSecondary,
+            height: 1.2,
+            letterSpacing: isIOS ? -0.2 : 0.0,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMatesContent(MateData? currentMate, bool isIOS) {
+    if (currentMate == null) {
+      return _buildNoMoreCards();
+    }
+    
+    return Column(
+      children: [
+        // Card Stack with precise Figma spacing
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: GymatesTheme.spacing16),
+            child: _buildSwipeCard(currentMate, isIOS),
+          ),
+        ),
+        
+        SizedBox(height: GymatesTheme.spacing32),
+        
+        // Action Buttons with precise spacing
+        _buildActionButtons(isIOS),
+        
+        SizedBox(height: 80), // Space for bottom navigation
+      ],
+    );
+  }
+
+  Widget _buildGymsContent() {
+    return const Center(
+      child: Text(
+        '健身房见功能开发中...',
+        style: TextStyle(
+          fontSize: 16,
+          color: Color(0xFF6B7280),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSwipeCard(MateData mate, bool isIOS) {
+    return Container(
+      height: 500,
+      child: GestureDetector(
+        onPanUpdate: (details) {
+          // 实时跟随手指移动
+          setState(() {
+            _swipeDirection = details.delta.dx > 0 ? 'right' : 'left';
+          });
+        },
+        onPanEnd: (details) {
+          // 根据滑动速度和距离决定是否触发滑动
+          final velocity = details.velocity.pixelsPerSecond.dx;
+          final distance = details.velocity.pixelsPerSecond.dx.abs();
+          
+          if (distance > 500 || velocity.abs() > 1000) {
+            if (velocity > 0) {
+              _swipeRight();
+            } else {
+              _swipeLeft();
+            }
+          } else {
+            // 回弹
+            setState(() {
+              _swipeDirection = null;
+            });
+          }
+        },
+        child: AnimatedBuilder(
+          animation: _cardAnimationController,
+          builder: (context, child) {
+            return Transform.translate(
+              offset: _swipeDirection == 'left' 
+                ? Offset(-300 * _cardAnimationController.value, 0)
+                : _swipeDirection == 'right'
+                ? Offset(300 * _cardAnimationController.value, 0)
+                : Offset.zero,
+              child: Transform.rotate(
+                angle: _swipeDirection == 'left' 
+                  ? -0.1 * _cardAnimationController.value
+                  : _swipeDirection == 'right'
+                  ? 0.1 * _cardAnimationController.value
+                  : 0.0,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(isIOS ? 16 : 12), // Figma precise radius
+                  boxShadow: [
+                    // Multi-layer shadow for depth
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
+                      spreadRadius: 0,
+                    ),
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.04),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                      spreadRadius: 0,
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(isIOS ? 16 : 12),
+                  child: Stack(
+                    children: [
+                      // Background Image with precise fit
+                      Positioned.fill(
+                        child: Image.network(
+                          mate.avatar,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                gradient: GymatesTheme.primaryGradient,
+                              ),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.person,
+                                  size: 80,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      
+                      // Precise gradient overlay from Figma
+                      Positioned.fill(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.transparent,
+                                Colors.transparent,
+                                Colors.black.withOpacity(0.6), // Precise opacity from Figma
+                              ],
+                              stops: const [0.0, 0.3, 1.0],
+                            ),
+                          ),
+                        ),
+                      ),
+                      
+                      // Content with precise Figma spacing
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Padding(
+                          padding: EdgeInsets.all(GymatesTheme.spacing24),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Name and Match Rate with precise typography
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '${mate.name}, ${mate.age}',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w700, // Bold from Figma
+                                      color: Colors.white,
+                                      height: 1.2,
+                                      letterSpacing: isIOS ? -0.5 : 0.0,
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: GymatesTheme.spacing12,
+                                      vertical: GymatesTheme.spacing4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF10B981), // Green-500 from Figma
+                                      borderRadius: BorderRadius.circular(12),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: const Color(0xFF10B981).withOpacity(0.3),
+                                          blurRadius: 8,
+                                          spreadRadius: 1,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Text(
+                                      '${mate.matchRate}%',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                        height: 1.2,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              
+                              SizedBox(height: GymatesTheme.spacing12),
+                              
+                              // Distance and Time with precise spacing
+                              Row(
+                                children: [
+                                  _buildInfoItem(Icons.location_on, mate.distance),
+                                  SizedBox(width: GymatesTheme.spacing16),
+                                  _buildInfoItem(Icons.access_time, mate.workoutTime),
+                                ],
+                              ),
+                              
+                              SizedBox(height: GymatesTheme.spacing12),
+                              
+                              // Preferences with precise styling
+                              Wrap(
+                                spacing: GymatesTheme.spacing8,
+                                runSpacing: GymatesTheme.spacing4,
+                                children: mate.preferences.take(3).map((pref) {
+                                  return Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: GymatesTheme.spacing8,
+                                      vertical: GymatesTheme.spacing4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: Colors.white.withOpacity(0.3),
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      pref,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.2,
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                              
+                              SizedBox(height: GymatesTheme.spacing12),
+                              
+                              // Bio with precise typography
+                              Text(
+                                mate.bio,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.white.withOpacity(0.9),
+                                  height: 1.4,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      
+                      // Detail Sheet Trigger with precise styling
+                      Positioned(
+                        top: GymatesTheme.spacing16,
+                        right: GymatesTheme.spacing16,
+                        child: GestureDetector(
+                          onTap: () => _showMateDetail(mate),
+                          child: Container(
+                            padding: EdgeInsets.all(GymatesTheme.spacing8),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.8),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.1),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Icon(
+                              Icons.more_horiz,
+                              size: 16,
+                              color: GymatesTheme.lightTextSecondary,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildInfoItem(IconData icon, String text) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          icon,
+          size: 16,
+          color: Colors.white,
+        ),
+        const SizedBox(width: 4),
+        Text(
+          text,
+          style: const TextStyle(
+            fontSize: 14,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+
+
+  Widget _buildActionButtons(bool isIOS) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: GymatesTheme.spacing16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Skip Button with precise Figma styling
+          _buildActionButton(
+            icon: Icons.close,
+            color: const Color(0xFF6B7280), // Gray-500 from Figma
+            backgroundColor: Colors.white,
+            borderColor: const Color(0xFFD1D5DB), // Gray-300 from Figma
+            onTap: () => _swipeLeft(),
+            isIOS: isIOS,
+          ),
+          
+          SizedBox(width: GymatesTheme.spacing24),
+          
+          // Like Button with precise Figma styling
+          _buildActionButton(
+            icon: Icons.favorite,
+            color: Colors.white,
+            backgroundColor: const Color(0xFF10B981), // Green-500 from Figma
+            borderColor: const Color(0xFF10B981),
+            onTap: () => _swipeRight(),
+            isIOS: isIOS,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionButton({
+    required IconData icon,
+    required Color color,
+    required Color backgroundColor,
+    required Color borderColor,
+    required VoidCallback onTap,
+    required bool isIOS,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        onTap();
+      },
+      child: AnimatedContainer(
+        duration: AnimationConstants.fastAnimation,
+        curve: Curves.easeInOut,
+        width: isIOS ? 56 : 64, // Precise size from Figma
+        height: isIOS ? 56 : 64,
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          shape: BoxShape.circle,
+          border: Border.all(color: borderColor, width: 2),
+          boxShadow: [
+            // Multi-layer shadow for depth
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+              spreadRadius: 0,
+            ),
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 2,
+              offset: const Offset(0, 1),
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: Icon(
+          icon,
+          color: color,
+          size: isIOS ? 24 : 28,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNoMoreCards() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.favorite_border,
+            size: 80,
+            color: const Color(0xFF6B7280).withOpacity(0.5),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            '暂无更多搭子',
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF6B7280),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            '请稍后再来看看',
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFF6B7280),
+            ),
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _currentCardIndex = 0;
+              });
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF6366F1),
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 16,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: const Text(
+              '重新开始',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _swipeLeft() {
+    setState(() {
+      _swipeDirection = 'left';
+    });
+    _cardAnimationController.forward().then((_) {
+      setState(() {
+        _currentCardIndex++;
+        _swipeDirection = null;
+      });
+      _cardAnimationController.reset();
+    });
+  }
+
+  void _swipeRight() {
+    setState(() {
+      _swipeDirection = 'right';
+    });
+    _cardAnimationController.forward().then((_) {
+      setState(() {
+        _currentCardIndex++;
+        _isMatched = true;
+        _swipeDirection = null;
+      });
+      _cardAnimationController.reset();
+      _matchAnimationController.forward();
+    });
+  }
+
+  void _showMateDetail(MateData mate) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => _buildMateDetailSheet(mate),
+    );
+  }
+
+  Widget _buildMateDetailSheet(MateData mate) {
+    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+    
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.8,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(isIOS ? 12 : 8),
+          topRight: Radius.circular(isIOS ? 12 : 8),
+        ),
+      ),
+      child: Column(
+        children: [
+          // Drag Handle
+          Container(
+            margin: const EdgeInsets.only(top: 12),
+            width: 40,
+            height: 4,
+            decoration: BoxDecoration(
+              color: const Color(0xFFD1D5DB),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          
+          // Content
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header
+                  Text(
+                    '${mate.name}的详细资料',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF111827),
+                    ),
+                  ),
+                  
+                  const SizedBox(height: 16),
+                  
+                  // Basic Info
+                  Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(32),
+                        child: Image.network(
+                          mate.avatar,
+                          width: 64,
+                          height: 64,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              width: 64,
+                              height: 64,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF6366F1),
+                                borderRadius: BorderRadius.circular(32),
+                              ),
+                              child: const Icon(
+                                Icons.person,
+                                size: 32,
+                                color: Colors.white,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${mate.name}, ${mate.age}',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF111827),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.location_on,
+                                  size: 16,
+                                  color: const Color(0xFF6B7280),
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  mate.distance,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xFF6B7280),
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                Icon(
+                                  Icons.star,
+                                  size: 16,
+                                  color: const Color(0xFFF59E0B),
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  mate.rating.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xFF6B7280),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 16),
+                  
+                  // Match Rate
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFECFDF5), // Green-50
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '匹配度',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFF065F46), // Green-800
+                              ),
+                            ),
+                            Text(
+                              '${mate.matchRate}%',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF059669), // Green-600
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        LinearProgressIndicator(
+                          value: mate.matchRate / 100,
+                          backgroundColor: const Color(0xFFD1FAE5), // Green-200
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                            Color(0xFF10B981), // Green-500
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  
+                  const SizedBox(height: 16),
+                  
+                  // Bio
+                  Text(
+                    '个人介绍',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF111827),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    mate.bio,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: const Color(0xFF6B7280),
+                      height: 1.5,
+                    ),
+                  ),
+                  
+                  const SizedBox(height: 16),
+                  
+                  // Workout Info Grid
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildInfoCard(
+                          icon: Icons.track_changes,
+                          iconColor: const Color(0xFF3B82F6), // Blue-500
+                          title: '目标',
+                          value: mate.goal,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _buildInfoCard(
+                          icon: Icons.emoji_events,
+                          iconColor: const Color(0xFF8B5CF6), // Purple-500
+                          title: '经验',
+                          value: mate.experience,
+                        ),
+                      ),
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 12),
+                  
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildInfoCard(
+                          icon: Icons.access_time,
+                          iconColor: const Color(0xFFF59E0B), // Orange-500
+                          title: '时间',
+                          value: mate.workoutTime,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _buildInfoCard(
+                          icon: Icons.calendar_today,
+                          iconColor: const Color(0xFF10B981), // Green-500
+                          title: '训练',
+                          value: '${mate.workouts}次',
+                        ),
+                      ),
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 16),
+                  
+                  // Preferences
+                  Text(
+                    '运动偏好',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF111827),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: mate.preferences.map((pref) {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFECFDF5), // Green-100
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Text(
+                          pref,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: const Color(0xFF065F46), // Green-800
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                  
+                  const SizedBox(height: 24),
+                  
+                  // Action Button
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _swipeRight();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF10B981), // Green-500
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(isIOS ? 12 : 8),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.message, size: 20),
+                          const SizedBox(width: 8),
+                          Text(
+                            '发起搭子邀请',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoCard({
+    required IconData icon,
+    required Color iconColor,
+    required String title,
+    required String value,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF9FAFB), // Gray-50
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 16, color: iconColor),
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF374151), // Gray-700
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF111827), // Gray-900
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// 搭子数据模型 - 基于Figma设计
+class MateData {
+  final int id;
+  final String name;
+  final int age;
+  final String avatar;
+  final String distance;
+  final int matchRate;
+  final String workoutTime;
+  final List<String> preferences;
+  final String goal;
+  final String experience;
+  final String bio;
+  final double rating;
+  final int workouts;
+
+  MateData({
+    required this.id,
+    required this.name,
+    required this.age,
+    required this.avatar,
+    required this.distance,
+    required this.matchRate,
+    required this.workoutTime,
+    required this.preferences,
+    required this.goal,
+    required this.experience,
+    required this.bio,
+    required this.rating,
+    required this.workouts,
+  });
+}
