@@ -40,19 +40,6 @@ type CreateTrainingPlanRequest struct {
 	IsPublic       bool       `json:"is_public"`
 }
 
-// CreateExerciseRequest 创建训练动作请求
-type CreateExerciseRequest struct {
-	Name         string  `json:"name" binding:"required"`
-	Sets         int     `json:"sets" binding:"required,min=1"`
-	Reps         int     `json:"reps" binding:"required,min=1"`
-	Weight       float64 `json:"weight"`
-	Duration     int     `json:"duration"`
-	RestTime     int     `json:"rest_time"`
-	Instructions string  `json:"instructions"`
-	ImageURL     string  `json:"image_url"`
-	Order        int     `json:"order"`
-}
-
 // StartWorkoutSessionRequest 开始训练会话请求
 type StartWorkoutSessionRequest struct {
 	TrainingPlanID uint `json:"training_plan_id" binding:"required"`

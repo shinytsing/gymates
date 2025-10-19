@@ -10,6 +10,8 @@ import '../../shared/widgets/training/training_history_list.dart';
 import '../../shared/widgets/training/training_mode_selection.dart';
 import 'training_plan_editor.dart';
 import '../../shared/models/mock_data.dart';
+import '../../services/training_session_service.dart';
+import '../../services/training_plan_sync_service.dart';
 
 /// 🏋️‍♀️ 训练页 TrainingPage - 基于Figma设计的现代化健身训练界面
 /// 
@@ -394,24 +396,215 @@ class _TrainingPageState extends State<TrainingPage>
   }
 
   Widget _buildTrainingContent() {
-    // 检查用户是否有训练计划
-    final hasTrainingPlan = MockDataProvider.trainingPlans.isNotEmpty;
-    
-    if (!hasTrainingPlan) {
-      // 没有训练计划，显示模式选择
-      return _buildNoPlanContent();
-    } else {
-      // 有训练计划，显示今日训练内容
-      return Column(
+    return FutureBuilder<bool>(
+      future: TrainingPlanSyncService.hasTrainingPlan(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF6366F1)),
+            ),
+          );
+        }
+        
+        if (snapshot.hasError) {
+          return _buildErrorContent(snapshot.error.toString());
+        }
+        
+        final hasTrainingPlan = snapshot.data ?? false;
+        
+        if (!hasTrainingPlan) {
+          // 没有训练计划，显示模式选择
+          return _buildNoPlanContent();
+        } else {
+          // 有训练计划，显示今日训练内容
+          return Column(
+            children: [
+              // 检查是否有未完成的训练会话
+              FutureBuilder<bool>(
+                future: TrainingSessionService.hasActiveSession(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData && snapshot.data == true) {
+                    return _buildResumeSessionCard();
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+              const TodayPlanCard(),
+              const SizedBox(height: 16),
+              const AIPlanGenerator(),
+              const SizedBox(height: 16),
+              _buildEditPlanButton(),
+            ],
+          );
+        }
+      },
+    );
+  }
+
+  /// 构建错误内容
+  Widget _buildErrorContent(String error) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const TodayPlanCard(),
+          const Icon(
+            Icons.error_outline,
+            size: 64,
+            color: Color(0xFFEF4444),
+          ),
           const SizedBox(height: 16),
-          const AIPlanGenerator(),
-          const SizedBox(height: 16),
-          _buildEditPlanButton(),
+          const Text(
+            '加载训练数据失败',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF1F2937),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            error,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFF6B7280),
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                // 重新触发FutureBuilder
+              });
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF6366F1),
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('重试'),
+          ),
         ],
-      );
-    }
+      ),
+    );
+  }
+
+  /// 构建恢复训练会话卡片
+  Widget _buildResumeSessionCard() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFFF59E0B), Color(0xFFEF4444)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFF59E0B).withOpacity(0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Icon(
+                  Icons.play_circle_outline,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 12),
+              const Expanded(
+                child: Text(
+                  '有未完成的训练',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          const Text(
+            '你有一个未完成的训练会话，是否要继续？',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.white,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () async {
+                    // 清除未完成的会话
+                    await TrainingSessionService.clearSessionState();
+                    setState(() {}); // 刷新UI
+                  },
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: Colors.white.withOpacity(0.2),
+                    foregroundColor: Colors.white,
+                    side: const BorderSide(color: Colors.white),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: const Text('重新开始'),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () async {
+                    // 恢复训练会话
+                    final state = await TrainingSessionService.getSessionState();
+                    if (state != null) {
+                      final plan = MockDataProvider.trainingPlans.firstWhere(
+                        (p) => p.id == state.planId,
+                        orElse: () => MockDataProvider.trainingPlans.first,
+                      );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TrainingSessionPage(trainingPlan: plan),
+                        ),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: const Color(0xFFF59E0B),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: const Text('继续训练'),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildNoPlanContent() {
@@ -547,8 +740,10 @@ class _TrainingPageState extends State<TrainingPage>
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => TrainingPlanEditor(
-                  trainingMode: mode,
+                builder: (context) => EditTrainingPlanPage(
+                  existingPlan: MockDataProvider.trainingPlans.isNotEmpty
+                      ? MockDataProvider.trainingPlans.first
+                      : null,
                 ),
               ),
             );
@@ -582,19 +777,12 @@ class _TrainingPageState extends State<TrainingPage>
   }
 
   void _showTrainingPlanEditor() {
-    // 获取第一个训练模式作为默认值
-    final defaultMode = MockDataProvider.trainingModes.isNotEmpty 
-        ? MockDataProvider.trainingModes.first 
-        : null;
-    
-    if (defaultMode != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TrainingPlanEditor(trainingMode: defaultMode),
-        ),
-      );
-    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditTrainingPlanPage(),
+      ),
+    );
   }
 
   /// 开始训练会话
@@ -723,10 +911,50 @@ class _TrainingSessionPageState extends State<TrainingSessionPage>
     ));
   }
 
-  void _initializeSession() {
+  void _initializeSession() async {
     _exercises = List.from(widget.trainingPlan.exerciseDetails);
     _sessionStartTime = DateTime.now();
     _isSessionActive = true;
+    
+    // 检查是否有未完成的训练会话
+    final savedState = await TrainingSessionService.getSessionState();
+    if (savedState != null && !savedState.isExpired) {
+      // 恢复之前的训练状态
+      _currentExerciseIndex = savedState.currentExerciseIndex;
+      _sessionProgress = savedState.progress;
+      _sessionStartTime = savedState.sessionStartTime;
+      
+      // 标记已完成的动作
+      for (int i = 0; i < _currentExerciseIndex && i < _exercises.length; i++) {
+        _exercises[i] = MockExercise(
+          id: _exercises[i].id,
+          name: _exercises[i].name,
+          description: _exercises[i].description,
+          muscleGroup: _exercises[i].muscleGroup,
+          difficulty: _exercises[i].difficulty,
+          equipment: _exercises[i].equipment,
+          imageUrl: _exercises[i].imageUrl,
+          videoUrl: _exercises[i].videoUrl,
+          instructions: _exercises[i].instructions,
+          tips: _exercises[i].tips,
+          sets: _exercises[i].sets,
+          reps: _exercises[i].reps,
+          weight: _exercises[i].weight,
+          restTime: _exercises[i].restTime,
+          isCompleted: true,
+          completedAt: DateTime.now(),
+          calories: _exercises[i].calories,
+        );
+      }
+      
+      print('🔄 恢复训练会话: 进度 ${(_sessionProgress * 100).toInt()}%, 当前动作 $_currentExerciseIndex');
+    } else {
+      // 清除过期的会话状态
+      if (savedState != null) {
+        await TrainingSessionService.clearSessionState();
+      }
+    }
+    
     _progressController.forward();
     _exerciseController.forward();
   }
@@ -943,16 +1171,21 @@ class _TrainingSessionPageState extends State<TrainingSessionPage>
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ),
                       ),
-                      Text(
-                        '${_currentExerciseIndex + 1}/${_exercises.length}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white.withOpacity(0.8),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: Text(
+                          '${_currentExerciseIndex + 1}/${_exercises.length}',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white.withOpacity(0.8),
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
@@ -969,14 +1202,13 @@ class _TrainingSessionPageState extends State<TrainingSessionPage>
   }
 
   Widget _buildExerciseDetails(MockExercise exercise) {
-    return Row(
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
       children: [
         _buildDetailItem('${exercise.sets}组', Icons.repeat),
-        const SizedBox(width: 16),
         _buildDetailItem('${exercise.reps}次', Icons.fitness_center),
-        const SizedBox(width: 16),
         _buildDetailItem('${exercise.weight}kg', Icons.scale),
-        const SizedBox(width: 16),
         _buildDetailItem('${exercise.restTime}秒', Icons.timer),
       ],
     );
@@ -984,7 +1216,7 @@ class _TrainingSessionPageState extends State<TrainingSessionPage>
 
   Widget _buildDetailItem(String text, IconData icon) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.2),
         borderRadius: BorderRadius.circular(8),
@@ -994,16 +1226,19 @@ class _TrainingSessionPageState extends State<TrainingSessionPage>
         children: [
           Icon(
             icon,
-            size: 16,
+            size: 14,
             color: Colors.white,
           ),
           const SizedBox(width: 4),
-          Text(
-            text,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
+          Flexible(
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],
@@ -1229,10 +1464,7 @@ class _TrainingSessionPageState extends State<TrainingSessionPage>
         children: [
           Expanded(
             child: OutlinedButton(
-              onPressed: () {
-                HapticFeedback.lightImpact();
-                Navigator.pop(context);
-              },
+              onPressed: _pauseTraining,
               style: OutlinedButton.styleFrom(
                 foregroundColor: const Color(0xFF6B7280),
                 side: const BorderSide(color: Color(0xFFE5E7EB)),
@@ -1272,13 +1504,23 @@ class _TrainingSessionPageState extends State<TrainingSessionPage>
     );
   }
 
-  void _completeExercise(MockExercise exercise) {
+  void _completeExercise(MockExercise exercise) async {
     HapticFeedback.lightImpact();
     
     setState(() {
       _currentExerciseIndex++;
       _sessionProgress = _currentExerciseIndex / _exercises.length;
     });
+
+    // 保存训练状态
+    await TrainingSessionService.saveSessionState(
+      planId: widget.trainingPlan.id,
+      currentExerciseIndex: _currentExerciseIndex,
+      progress: _sessionProgress,
+      completedExercises: _exercises.take(_currentExerciseIndex).map((e) => e.id).toList(),
+      sessionStartTime: _sessionStartTime!,
+      isPaused: false,
+    );
 
     // 播放完成动画
     _exerciseController.reset();
@@ -1294,7 +1536,7 @@ class _TrainingSessionPageState extends State<TrainingSessionPage>
     );
   }
 
-  void _skipExercise() {
+  void _skipExercise() async {
     HapticFeedback.lightImpact();
     
     setState(() {
@@ -1302,12 +1544,51 @@ class _TrainingSessionPageState extends State<TrainingSessionPage>
       _sessionProgress = _currentExerciseIndex / _exercises.length;
     });
 
+    // 保存训练状态
+    await TrainingSessionService.saveSessionState(
+      planId: widget.trainingPlan.id,
+      currentExerciseIndex: _currentExerciseIndex,
+      progress: _sessionProgress,
+      completedExercises: _exercises.take(_currentExerciseIndex).map((e) => e.id).toList(),
+      sessionStartTime: _sessionStartTime!,
+      isPaused: false,
+    );
+
     _exerciseController.reset();
     _exerciseController.forward();
   }
 
-  void _shareSession() {
+  void _pauseTraining() async {
     HapticFeedback.lightImpact();
+    
+    // 保存暂停状态
+    await TrainingSessionService.pauseSession(
+      planId: widget.trainingPlan.id,
+      currentExerciseIndex: _currentExerciseIndex,
+      progress: _sessionProgress,
+      completedExercises: _exercises.take(_currentExerciseIndex).map((e) => e.id).toList(),
+      sessionStartTime: _sessionStartTime!,
+    );
+    
+    Navigator.pop(context);
+  }
+
+  void _shareSession() async {
+    HapticFeedback.lightImpact();
+    
+    // 保存训练历史记录
+    await TrainingSessionService.saveTrainingHistory(
+      planId: widget.trainingPlan.id,
+      planTitle: widget.trainingPlan.title,
+      totalExercises: _exercises.length,
+      completedExercises: _currentExerciseIndex,
+      totalCalories: widget.trainingPlan.calories,
+      durationMinutes: int.parse(_getSessionDuration()),
+      completedAt: DateTime.now(),
+    );
+    
+    // 清除训练会话状态
+    await TrainingSessionService.completeSession();
     
     showDialog(
       context: context,
@@ -1330,7 +1611,10 @@ class _TrainingSessionPageState extends State<TrainingSessionPage>
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
             child: const Text('稍后分享'),
           ),
           ElevatedButton(

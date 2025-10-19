@@ -46,7 +46,10 @@ type Exercise struct {
 	ID              uint           `json:"id" gorm:"primaryKey"`
 	TrainingPlanID  uint           `json:"training_plan_id" gorm:"not null"`
 	TrainingPlan    TrainingPlan   `json:"training_plan" gorm:"foreignKey:TrainingPlanID"`
+	TrainingPartID  *uint          `json:"training_part_id"` // 新增：关联到训练部位
+	TrainingPart    *TrainingPart  `json:"training_part" gorm:"foreignKey:TrainingPartID"`
 	Name            string         `json:"name" gorm:"size:100;not null"`
+	Description     string         `json:"description" gorm:"type:text"`
 	MuscleGroup     string         `json:"muscle_group" gorm:"size:50"`
 	Difficulty      string         `json:"difficulty" gorm:"size:20;default:'intermediate'"`
 	Equipment       string         `json:"equipment" gorm:"size:50"`
@@ -55,10 +58,14 @@ type Exercise struct {
 	Weight          float64        `json:"weight"`
 	Duration        int            `json:"duration"`
 	RestTime        int            `json:"rest_time"`
+	RestSeconds     int            `json:"rest_seconds"` // 新增：休息时间（秒）
 	Instructions    string         `json:"instructions" gorm:"type:text"`
 	ImageURL        string         `json:"image_url" gorm:"size:255"`
 	VideoURL        string         `json:"video_url" gorm:"size:255"`
 	Calories        int            `json:"calories" gorm:"default:50"`
+	Notes           string         `json:"notes" gorm:"type:text"`
+	IsCompleted     bool           `json:"is_completed" gorm:"default:false"`
+	CompletedAt     *time.Time     `json:"completed_at"`
 	Order           int            `json:"order" gorm:"not null"`
 	CreatedAt       time.Time      `json:"created_at"`
 	UpdatedAt       time.Time      `json:"updated_at"`

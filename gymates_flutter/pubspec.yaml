@@ -48,6 +48,9 @@ dependencies:
   flutter_staggered_animations: ^1.1.1
   rive: ^0.13.20
   flutter_animate: ^4.3.0
+  
+  # Text-to-Speech
+  flutter_tts: ^3.8.5
   animations: ^2.0.8
   
   # Platform-specific UI - 使用兼容版本

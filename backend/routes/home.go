@@ -33,6 +33,10 @@ func SetupHomeRoutes(r *gin.RouterGroup) {
 // SetupTrainingRoutes 设置训练相关路由
 func SetupTrainingRoutes(r *gin.RouterGroup) {
 	trainingController := controllers.NewTrainingController()
+	weeklyTrainingController := controllers.NewWeeklyTrainingPlanController()
+	trainingPlanController := controllers.NewTrainingPlanController()
+	aiRecommendationController := controllers.NewAIRecommendationController()
+	aiTrainingController := controllers.NewAITrainingController()
 
 	training := r.Group("/training")
 	{
@@ -41,6 +45,21 @@ func SetupTrainingRoutes(r *gin.RouterGroup) {
 		training.GET("/plans/:id", middleware.OptionalAuthMiddleware(), trainingController.GetTrainingPlan)
 		training.GET("/exercises", trainingController.GetAllExercises)
 		training.GET("/exercises/search", trainingController.SearchExercises)
+
+		// 一周训练计划公开接口
+		training.GET("/weekly-plans", middleware.OptionalAuthMiddleware(), weeklyTrainingController.GetWeeklyTrainingPlans)
+		training.GET("/weekly-plans/:id", middleware.OptionalAuthMiddleware(), weeklyTrainingController.GetWeeklyTrainingPlan)
+
+		// 新的训练计划接口（按需求实现）
+		training.GET("/plan", trainingPlanController.GetTrainingPlan)                    // GET /api/training/plan?user_id={uid}
+		training.POST("/plan/update", trainingPlanController.UpdateTrainingPlan)         // POST /api/training/plan/update
+		training.GET("/ai/recommend", aiRecommendationController.GetAIRecommendation)   // GET /api/training/ai/recommend?user_id={uid}&day={Monday}
+
+		// AI训练页面接口
+		training.GET("/ai/training", aiTrainingController.GetAIRecommendation)         // GET /api/training/ai/training?user_id={uid}
+		training.POST("/ai/preferences", aiTrainingController.SaveTrainingPreferences) // POST /api/training/ai/preferences
+		training.POST("/ai/chat", aiTrainingController.AIChat)                          // POST /api/training/ai/chat
+		training.POST("/ai/session", aiTrainingController.SaveTrainingSession)          // POST /api/training/ai/session
 
 		// 需要认证的接口
 		trainingAuth := training.Group("")
@@ -51,6 +70,13 @@ func SetupTrainingRoutes(r *gin.RouterGroup) {
 			trainingAuth.PUT("/sessions/:id/progress", trainingController.UpdateWorkoutProgress)
 			trainingAuth.POST("/sessions/:id/complete", trainingController.CompleteWorkoutSession)
 			trainingAuth.GET("/history", trainingController.GetWorkoutHistory)
+
+			// 一周训练计划认证接口
+			trainingAuth.POST("/weekly-plans", weeklyTrainingController.CreateWeeklyTrainingPlan)
+			trainingAuth.PUT("/weekly-plans/:id", weeklyTrainingController.UpdateWeeklyTrainingPlan)
+			trainingAuth.DELETE("/weekly-plans/:id", weeklyTrainingController.DeleteWeeklyTrainingPlan)
+			trainingAuth.GET("/today", weeklyTrainingController.GetTodayTraining)
+			trainingAuth.POST("/ai-recommendations", weeklyTrainingController.GetAIRecommendations)
 		}
 	}
 }
