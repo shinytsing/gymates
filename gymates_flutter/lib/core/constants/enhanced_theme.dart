@@ -500,7 +500,6 @@ class AppThemeBuilder {
           borderRadius: BorderRadius.circular(AppSizes.radiusM),
         ),
         behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.all(AppSizes.spacingM),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColors.surface,
@@ -509,7 +508,7 @@ class AppThemeBuilder {
         type: BottomNavigationBarType.fixed,
         elevation: 8,
       ),
-      tabBarTheme: const TabBarTheme(
+      tabBarTheme: const TabBarThemeData(
         labelColor: AppColors.primary,
         unselectedLabelColor: AppColors.textSecondary,
         indicatorColor: AppColors.primary,
@@ -631,7 +630,6 @@ class AppThemeBuilder {
           borderRadius: BorderRadius.circular(AppSizes.radiusM),
         ),
         behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.all(AppSizes.spacingM),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColors.darkSurface,
@@ -640,7 +638,7 @@ class AppThemeBuilder {
         type: BottomNavigationBarType.fixed,
         elevation: 8,
       ),
-      tabBarTheme: const TabBarTheme(
+      tabBarTheme: const TabBarThemeData(
         labelColor: AppColors.primary,
         unselectedLabelColor: AppColors.darkTextSecondary,
         indicatorColor: AppColors.primary,

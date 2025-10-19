@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/constants/app_theme.dart';
+import '../../core/constants/enhanced_theme.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -29,12 +29,12 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isSecondary ? AppColors.surface : AppColors.primary,
-          foregroundColor: isSecondary ? AppColors.primary : AppColors.textOnPrimary,
+          backgroundColor: isSecondary ? Colors.white : const Color(0xFF6366F1),
+          foregroundColor: isSecondary ? const Color(0xFF6366F1) : Colors.white,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSizes.radiusM),
-            side: isSecondary ? const BorderSide(color: AppColors.primary) : BorderSide.none,
+            borderRadius: BorderRadius.circular(12),
+            side: isSecondary ? const BorderSide(color: Color(0xFF6366F1)) : BorderSide.none,
           ),
         ),
         child: isLoading
@@ -43,7 +43,7 @@ class CustomButton extends StatelessWidget {
                 height: 20,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.textOnPrimary),
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
                 ),
               )
             : Row(
@@ -51,12 +51,14 @@ class CustomButton extends StatelessWidget {
                 children: [
                   if (icon != null) ...[
                     Icon(icon, size: 18),
-                    const SizedBox(width: AppSizes.spacingS),
+                    const SizedBox(width: 8),
                   ],
                   Text(
                     text,
-                    style: AppTextStyles.button.copyWith(
-                      color: isSecondary ? AppColors.primary : AppColors.textOnPrimary,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: isSecondary ? const Color(0xFF6366F1) : Colors.white,
                     ),
                   ),
                 ],

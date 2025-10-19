@@ -123,6 +123,28 @@ class MockTrainingPlan {
     required this.createdAt,
     this.lastCompleted,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'duration': duration,
+      'difficulty': difficulty,
+      'calories': calories,
+      'exercises': exercises,
+      'image': image,
+      'isCompleted': isCompleted,
+      'progress': progress,
+      'trainingMode': trainingMode,
+      'targetMuscles': targetMuscles,
+      'exerciseDetails': exerciseDetails.map((e) => e.name).toList(),
+      'suitableFor': suitableFor,
+      'weeklyFrequency': weeklyFrequency,
+      'createdAt': createdAt.toIso8601String(),
+      'lastCompleted': lastCompleted?.toIso8601String(),
+    };
+  }
 }
 
 class MockExercise {

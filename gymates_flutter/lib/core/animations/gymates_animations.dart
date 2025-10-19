@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'dart:math' as math;
@@ -378,7 +379,7 @@ class GymatesAnimations {
       builder: (context, value, child) {
         return Stack(
           children: [
-            child,
+            if (child != null) child,
             ...List.generate(particleCount, (index) {
               final angle = (index * 2 * math.pi) / particleCount;
               final distance = value * 100;

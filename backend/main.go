@@ -10,6 +10,7 @@ import (
 	"gymates-backend/config"
 	"gymates-backend/middleware"
 	"gymates-backend/routes"
+	"gymates-backend/services"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -26,6 +27,10 @@ func main() {
 	if err := config.InitDB(); err != nil {
 		log.Fatal("Failed to initialize database:", err)
 	}
+
+	// 初始化AI服务
+	services.InitAIServices()
+	log.Println("🤖 AI Services initialized")
 
 	// 设置Gin模式
 	if os.Getenv("GIN_MODE") == "release" {

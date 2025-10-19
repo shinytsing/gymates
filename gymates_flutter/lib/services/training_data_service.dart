@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/mock_data.dart';
+import '../core/config/smart_api_config.dart';
 
 /// 🏋️‍♀️ 训练数据服务 - TrainingDataService
 /// 
@@ -8,7 +9,8 @@ import '../models/mock_data.dart';
 /// 支持数据持久化、同步和缓存
 
 class TrainingDataService {
-  static const String _baseUrl = 'http://localhost:8080/api'; // 后端API地址
+  // 使用智能API配置
+  static String get _baseUrl => SmartApiConfig.apiBaseUrl;
   static const Duration _timeout = Duration(seconds: 10);
 
   // 单例模式

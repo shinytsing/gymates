@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:math' as math;
 
 /// 🎬 Enhanced Gymates Animations
 /// 
@@ -625,6 +626,3 @@ class AnimationUtils {
     );
   }
 }
-
-// 导入数学库
-import 'dart:math' as math;

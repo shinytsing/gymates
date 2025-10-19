@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../shared/models/edit_training_plan_models.dart';
-import '../../../shared/models/mock_data.dart';
+import '../../../shared/models/edit_training_plan_models.dart' as models;
 
 /// 🏋️‍♀️ 训练部位卡片 - TrainingPartCard
 /// 
 /// 显示单个训练部位及其动作列表
 class TrainingPartCard extends StatefulWidget {
-  final TrainingPart trainingPart;
-  final Function(Exercise) onEditExercise;
-  final Function(Exercise) onDeleteExercise;
+  final models.TrainingPart trainingPart;
+  final Function(models.Exercise) onEditExercise;
+  final Function(models.Exercise) onDeleteExercise;
   final VoidCallback onAddExercise;
   final VoidCallback onDeletePart;
   final VoidCallback onCopyPart;
@@ -93,7 +92,7 @@ class _TrainingPartCardState extends State<TrainingPartCard>
   }
 
   Widget _buildHeader() {
-    final muscleGroupColor = MuscleGroups.colors[widget.trainingPart.muscleGroup] ?? 
+    final muscleGroupColor = models.MuscleGroups.colors[widget.trainingPart.muscleGroup] ?? 
         const Color(0xFF6366F1);
     
     return Container(
@@ -115,7 +114,7 @@ class _TrainingPartCardState extends State<TrainingPartCard>
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              MuscleGroups.icons[widget.trainingPart.muscleGroup]!,
+              models.MuscleGroups.icons[widget.trainingPart.muscleGroup]!,
               style: const TextStyle(fontSize: 20),
             ),
           ),
@@ -261,7 +260,7 @@ class _TrainingPartCardState extends State<TrainingPartCard>
     );
   }
 
-  Widget _buildExerciseItem(Exercise exercise, int index) {
+  Widget _buildExerciseItem(models.Exercise exercise, int index) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       padding: const EdgeInsets.all(12),
@@ -454,7 +453,7 @@ class _TrainingPartCardState extends State<TrainingPartCard>
     );
   }
 
-  void _showDeleteExerciseDialog(Exercise exercise) {
+  void _showDeleteExerciseDialog(models.Exercise exercise) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(

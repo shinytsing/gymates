@@ -4,7 +4,9 @@ import '../../../theme/gymates_theme.dart';
 import '../../../animations/gymates_animations.dart';
 import '../../../routes/app_routes.dart';
 import '../../../pages/training/training_plan_editor.dart';
+import '../../../pages/training/training_detail_page.dart';
 import '../../../services/training_plan_sync_service.dart';
+import '../../../shared/models/mock_data.dart';
 import 'exercise_completion_animation.dart';
 
 /// 🏋️‍♀️ 今日训练计划卡片 - TodayPlanCard
@@ -181,7 +183,7 @@ class _TodayPlanCardState extends State<TodayPlanCard>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  training['dayName']?.toString() ?? '今日训练',
+                  training['day_name']?.toString() ?? '今日训练',
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -517,12 +519,77 @@ class _TodayPlanCardState extends State<TodayPlanCard>
         ),
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('开始训练: ${training['dayName']?.toString() ?? '今日训练'}'),
-          backgroundColor: const Color(0xFF6366F1),
-        ),
+      // 将API数据转换为MockTrainingPlan格式
+      final mockPlan = _convertToMockTrainingPlan(training);
+      
+      // 导航到训练详情页面
+      Navigator.pushNamed(
+        context,
+        AppRoutes.trainingDetail,
+        arguments: {'trainingPlan': mockPlan},
       );
     }
+  }
+
+  /// 将API训练数据转换为MockTrainingPlan格式
+  MockTrainingPlan _convertToMockTrainingPlan(Map<String, dynamic> training) {
+    // 提取动作列表
+    List<String> exerciseNames = [];
+    List<MockExercise> exerciseDetails = [];
+    
+    if (training['parts'] != null) {
+      final parts = training['parts'] as List?;
+      if (parts != null) {
+        for (final part in parts) {
+          if (part is Map<String, dynamic> && part['exercises'] != null) {
+            final exercises = part['exercises'] as List?;
+            if (exercises != null) {
+              for (final exercise in exercises) {
+                if (exercise is Map<String, dynamic>) {
+                  exerciseNames.add(exercise['name'] ?? '未知动作');
+                  exerciseDetails.add(MockExercise(
+                    id: exercise['id']?.toString() ?? DateTime.now().millisecondsSinceEpoch.toString(),
+                    name: exercise['name'] ?? '未知动作',
+                    description: exercise['description'] ?? '',
+                    muscleGroup: exercise['muscle_group'] ?? '',
+                    difficulty: exercise['difficulty'] ?? 'intermediate',
+                    equipment: exercise['equipment'] ?? '',
+                    imageUrl: exercise['image_url'] ?? '',
+                    videoUrl: exercise['video_url'] ?? '',
+                    instructions: exercise['instructions'] ?? '',
+                    tips: exercise['notes'] ?? '',
+                    sets: exercise['sets'] ?? 3,
+                    reps: exercise['reps'] ?? 10,
+                    weight: exercise['weight']?.toDouble() ?? 0.0,
+                    restTime: exercise['rest_seconds'] ?? 60,
+                    calories: exercise['calories'] ?? 50,
+                  ));
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return MockTrainingPlan(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      title: training['planName'] ?? '今日训练',
+      description: training['planDescription'] ?? '个性化训练计划',
+      duration: '${training['totalDuration'] ?? 30}分钟',
+      difficulty: 'intermediate',
+      calories: training['totalCalories'] ?? 300,
+      exercises: exerciseNames,
+      image: training['image'] ?? 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400',
+      isCompleted: false,
+      progress: 0.0,
+      trainingMode: '五分化',
+      targetMuscles: ['胸部', '背部', '腿部', '肩部', '手臂'],
+      exerciseDetails: exerciseDetails,
+      suitableFor: '中级',
+      weeklyFrequency: 5,
+      createdAt: DateTime.now(),
+      lastCompleted: null,
+    );
   }
 }

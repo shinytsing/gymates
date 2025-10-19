@@ -5,10 +5,12 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import '../core/config/smart_api_config.dart';
 
 class ApiConfig {
-  static const String baseUrl = 'http://localhost:8080/api';
-  static const String wsUrl = 'ws://localhost:8080/ws';
+  // 使用智能API配置
+  static String get baseUrl => SmartApiConfig.apiBaseUrl;
+  static String get wsUrl => SmartApiConfig.wsBaseUrl;
   static const Duration timeout = Duration(seconds: 30);
 }
 

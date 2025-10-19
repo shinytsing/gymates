@@ -1,136 +1,214 @@
 package main
 
 import (
+	"database/sql"
+	"fmt"
 	"log"
-	"gymates-backend/config"
-	"gymates-backend/models"
+	"time"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
-func main() {
-	// 初始化数据库连接
-	config.InitDB()
-
-	// 自动迁移数据库表结构
-	err := config.DB.AutoMigrate(
-		&models.User{},
-		&models.TrainingPlan{},
-		&models.Exercise{},
-		&models.WorkoutSession{},
-		&models.Post{},
-		&models.Comment{},
-		&models.PostLike{},
-		&models.Mate{},
-		&models.Chat{},
-		&models.Message{},
-		&models.ChatParticipant{},
-		&models.Achievement{},
-		&models.Notification{},
-		// 新增的一周训练计划相关表
-		&models.WeeklyTrainingPlan{},
-		&models.TrainingDay{},
-		&models.TrainingPart{},
-		// 新增的动作库相关表
-		&models.ExerciseLibrary{},
-		&models.TrainingMode{},
-		&models.UserTrainingHistory{},
-	)
-
-	if err != nil {
-		log.Fatal("数据库迁移失败:", err)
-	}
-
-	log.Println("数据库迁移成功完成！")
-
-	// 初始化动作库数据
-	initExerciseLibrary()
+type Exercise struct {
+	Name         string
+	Description  string
+	MuscleGroup  string
+	Difficulty   string
+	Equipment    string
+	Sets         int
+	Reps         int
+	Weight       float64
+	RestSeconds  int
+	Instructions string
+	ImageURL     string
+	VideoURL     string
+	Calories     int
+	Notes        string
 }
 
-func initExerciseLibrary() {
-	// 检查是否已有数据
-	var count int64
-	config.DB.Model(&models.ExerciseLibrary{}).Count(&count)
-	if count > 0 {
-		log.Println("动作库数据已存在，跳过初始化")
-		return
+func main() {
+	// 连接数据库
+	db, err := sql.Open("sqlite3", "gymates.db")
+	if err != nil {
+		log.Fatal("数据库连接失败:", err)
+	}
+	defer db.Close()
+
+	// 清空现有动作数据
+	_, err = db.Exec("DELETE FROM exercises")
+	if err != nil {
+		log.Fatal("清空动作数据失败:", err)
 	}
 
-	// 胸部动作
-	chestExercises := []models.ExerciseLibrary{
-		{Name: "Bench Press", Part: "chest", Level: "intermediate", Type: "compound", Equipment: "barbell", MuscleGroups: "chest,triceps,shoulders", Description: "经典胸部训练动作", Instructions: "平躺在卧推凳上，双手握杠铃，缓慢下放至胸部，然后推起"},
-		{Name: "Incline Press", Part: "chest", Level: "intermediate", Type: "compound", Equipment: "barbell", MuscleGroups: "chest,triceps,shoulders", Description: "上斜卧推", Instructions: "调整卧推凳角度至30-45度，进行卧推动作"},
-		{Name: "Chest Fly", Part: "chest", Level: "beginner", Type: "isolation", Equipment: "dumbbell", MuscleGroups: "chest", Description: "胸部飞鸟", Instructions: "平躺，双手持哑铃，缓慢向两侧展开，感受胸部拉伸"},
-		{Name: "Push-up", Part: "chest", Level: "beginner", Type: "compound", Equipment: "bodyweight", MuscleGroups: "chest,triceps,shoulders", Description: "俯卧撑", Instructions: "双手与肩同宽，保持身体挺直，上下运动"},
-		{Name: "Dumbbell Press", Part: "chest", Level: "intermediate", Type: "compound", Equipment: "dumbbell", MuscleGroups: "chest,triceps,shoulders", Description: "哑铃卧推", Instructions: "平躺，双手持哑铃，缓慢下放至胸部两侧，然后推起"},
-		{Name: "Decline Press", Part: "chest", Level: "advanced", Type: "compound", Equipment: "barbell", MuscleGroups: "chest,triceps", Description: "下斜卧推", Instructions: "调整卧推凳为下斜角度，进行卧推动作"},
-		{Name: "Cable Fly", Part: "chest", Level: "intermediate", Type: "isolation", Equipment: "cable", MuscleGroups: "chest", Description: "绳索飞鸟", Instructions: "使用绳索器械，双手向中间合拢，感受胸部收缩"},
+	// 定义完整的动作库
+	exercises := []Exercise{
+		// 胸部动作 (15个)
+		{"俯卧撑", "经典的上肢训练动作", "chest", "beginner", "无器械", 3, 15, 0, 60, "保持身体挺直，双手与肩同宽", "", "", 50, "适合初学者"},
+		{"平板卧推", "经典胸部训练动作", "chest", "intermediate", "杠铃", 4, 10, 60, 90, "平躺在卧推凳上，双手握杠铃", "", "", 80, "注意安全"},
+		{"上斜卧推", "上胸部训练", "chest", "intermediate", "杠铃", 3, 12, 50, 90, "上斜角度30-45度", "", "", 70, "重点训练上胸"},
+		{"哑铃飞鸟", "胸部拉伸动作", "chest", "intermediate", "哑铃", 3, 12, 20, 60, "双臂展开呈弧形", "", "", 60, "感受胸部拉伸"},
+		{"下斜卧推", "下胸部训练", "chest", "intermediate", "杠铃", 3, 10, 55, 90, "下斜角度15-30度", "", "", 75, "重点训练下胸"},
+		{"双杠臂屈伸", "胸部自重训练", "chest", "advanced", "双杠", 3, 8, 0, 120, "身体前倾，重点训练胸部", "", "", 70, "高级动作"},
+		{"绳索夹胸", "胸部塑形", "chest", "intermediate", "绳索", 3, 15, 0, 60, "双臂向中间夹紧", "", "", 55, "塑形效果佳"},
+		{"哑铃卧推", "胸部力量训练", "chest", "intermediate", "哑铃", 4, 10, 25, 90, "双手持哑铃卧推", "", "", 75, "自由重量训练"},
+		{"上斜哑铃飞鸟", "上胸塑形", "chest", "intermediate", "哑铃", 3, 12, 15, 60, "上斜角度哑铃飞鸟", "", "", 65, "上胸塑形"},
+		{"下斜哑铃飞鸟", "下胸塑形", "chest", "intermediate", "哑铃", 3, 12, 15, 60, "下斜角度哑铃飞鸟", "", "", 65, "下胸塑形"},
+		{"宽距俯卧撑", "胸部宽度训练", "chest", "intermediate", "无器械", 3, 12, 0, 60, "双手距离比肩宽", "", "", 55, "胸部宽度"},
+		{"窄距俯卧撑", "胸部厚度训练", "chest", "intermediate", "无器械", 3, 10, 0, 60, "双手距离比肩窄", "", "", 60, "胸部厚度"},
+		{"上斜俯卧撑", "上胸自重训练", "chest", "beginner", "无器械", 3, 15, 0, 60, "脚部抬高俯卧撑", "", "", 50, "上胸训练"},
+		{"下斜俯卧撑", "下胸自重训练", "chest", "intermediate", "无器械", 3, 12, 0, 60, "手部抬高俯卧撑", "", "", 55, "下胸训练"},
+		{"单臂俯卧撑", "胸部单侧训练", "chest", "advanced", "无器械", 3, 5, 0, 120, "单臂俯卧撑", "", "", 80, "高级动作"},
+
+		// 背部动作 (20个)
+		{"引体向上", "背部训练经典动作", "back", "intermediate", "单杠", 3, 8, 0, 120, "双手正握单杠，身体垂直上拉", "", "", 80, "自重训练"},
+		{"杠铃划船", "背部厚度训练", "back", "intermediate", "杠铃", 4, 10, 50, 90, "俯身划船，背部发力", "", "", 85, "重点训练中背部"},
+		{"高位下拉", "背部宽度训练", "back", "intermediate", "下拉器", 4, 12, 0, 90, "下拉至胸部，背部收缩", "", "", 75, "重点训练背阔肌"},
+		{"坐姿绳索划船", "背部中下部训练", "back", "intermediate", "绳索", 3, 12, 0, 90, "坐姿划船，背部后缩", "", "", 70, "稳定训练"},
+		{"哑铃划船", "单侧背部训练", "back", "intermediate", "哑铃", 3, 12, 25, 90, "单臂哑铃划船", "", "", 65, "单侧训练"},
+		{"T杠划船", "背部厚度训练", "back", "intermediate", "T杠", 4, 10, 40, 90, "T杠划船动作", "", "", 80, "传统训练"},
+		{"单臂哑铃划船", "背部单侧训练", "back", "intermediate", "哑铃", 3, 12, 20, 90, "单臂哑铃划船", "", "", 60, "单侧强化"},
+		{"直臂下拉", "背部宽度训练", "back", "intermediate", "绳索", 3, 15, 0, 60, "直臂下拉动作", "", "", 55, "背部宽度"},
+		{"反向飞鸟", "后三角肌训练", "back", "intermediate", "哑铃", 3, 15, 10, 60, "反向飞鸟动作", "", "", 45, "后三角肌"},
+		{"面拉", "后三角肌训练", "back", "intermediate", "绳索", 3, 15, 0, 60, "面拉动作", "", "", 50, "后三角肌"},
+		{"俯身划船", "背部厚度训练", "back", "intermediate", "杠铃", 4, 10, 45, 90, "俯身划船动作", "", "", 75, "传统训练"},
+		{"反手引体", "背部训练", "back", "intermediate", "单杠", 3, 8, 0, 120, "反手握法引体向上", "", "", 80, "不同握法"},
+		{"硬拉", "全身复合动作", "back", "advanced", "杠铃", 5, 5, 100, 180, "全身硬拉动作", "", "", 120, "复合动作"},
+		{"海豹划船", "背部训练", "back", "intermediate", "杠铃", 3, 12, 30, 90, "海豹划船动作", "", "", 70, "特殊动作"},
+		{"宽握引体向上", "背部宽度训练", "back", "intermediate", "单杠", 3, 8, 0, 120, "宽握引体向上", "", "", 85, "背部宽度"},
+		{"窄握引体向上", "背部厚度训练", "back", "intermediate", "单杠", 3, 8, 0, 120, "窄握引体向上", "", "", 80, "背部厚度"},
+		{"对握引体向上", "背部训练", "back", "intermediate", "单杠", 3, 8, 0, 120, "对握引体向上", "", "", 75, "中性握法"},
+		{"绳索直臂下拉", "背部宽度训练", "back", "intermediate", "绳索", 3, 15, 0, 60, "绳索直臂下拉", "", "", 60, "背部宽度"},
+		{"单臂绳索划船", "背部单侧训练", "back", "intermediate", "绳索", 3, 12, 0, 90, "单臂绳索划船", "", "", 65, "单侧训练"},
+		{"杠铃耸肩", "斜方肌训练", "back", "intermediate", "杠铃", 4, 12, 30, 60, "杠铃耸肩", "", "", 50, "斜方肌训练"},
+
+		// 腿部动作 (18个)
+		{"深蹲", "经典的下肢训练动作", "legs", "intermediate", "杠铃", 4, 12, 80, 120, "双脚与肩同宽，下蹲至大腿平行地面", "", "", 100, "下肢基础动作"},
+		{"前蹲", "腿部前侧训练", "legs", "advanced", "杠铃", 4, 10, 70, 120, "杠铃置于胸前", "", "", 95, "前侧重点"},
+		{"保加利亚分腿蹲", "单腿训练", "legs", "intermediate", "哑铃", 3, 12, 20, 90, "单腿分腿蹲", "", "", 80, "单腿训练"},
+		{"腿举", "腿部力量训练", "legs", "intermediate", "腿举机", 4, 15, 0, 90, "腿部推举动作", "", "", 85, "器械训练"},
+		{"弓步蹲", "腿部功能性训练", "legs", "intermediate", "哑铃", 3, 12, 15, 90, "弓步蹲动作", "", "", 75, "功能性训练"},
+		{"罗马尼亚硬拉", "腿部后侧训练", "legs", "intermediate", "杠铃", 4, 10, 60, 120, "罗马尼亚硬拉", "", "", 90, "后侧重点"},
+		{"提踵", "小腿训练", "legs", "beginner", "杠铃", 4, 20, 40, 60, "小腿提踵动作", "", "", 40, "小腿训练"},
+		{"单腿深蹲", "单腿力量训练", "legs", "advanced", "无器械", 3, 8, 0, 120, "单腿深蹲", "", "", 70, "高级动作"},
+		{"腿弯举", "腿部后侧训练", "legs", "intermediate", "腿弯举机", 3, 15, 0, 90, "腿部弯举", "", "", 60, "后侧训练"},
+		{"腿屈伸", "腿部前侧训练", "legs", "intermediate", "腿屈伸机", 3, 15, 0, 90, "腿部屈伸", "", "", 55, "前侧训练"},
+		{"相扑深蹲", "腿部内侧训练", "legs", "intermediate", "杠铃", 4, 12, 60, 120, "双脚宽距深蹲", "", "", 85, "内侧训练"},
+		{"侧弓步", "腿部侧向训练", "legs", "intermediate", "无器械", 3, 12, 0, 90, "侧向弓步", "", "", 70, "侧向训练"},
+		{"跳箱", "腿部爆发力训练", "legs", "advanced", "跳箱", 3, 10, 0, 120, "跳箱训练", "", "", 90, "爆发力训练"},
+		{"单腿提踵", "小腿单侧训练", "legs", "intermediate", "无器械", 3, 15, 0, 60, "单腿提踵", "", "", 35, "小腿单侧"},
+		{"墙蹲", "腿部耐力训练", "legs", "beginner", "无器械", 3, 1, 0, 60, "靠墙深蹲", "", "", 50, "耐力训练"},
+		{"手枪深蹲", "单腿高级训练", "legs", "advanced", "无器械", 3, 5, 0, 120, "单腿深蹲", "", "", 80, "高级动作"},
+		{"哈克深蹲", "腿部力量训练", "legs", "intermediate", "哈克深蹲机", 4, 12, 0, 90, "哈克深蹲", "", "", 90, "器械训练"},
+		{"坐姿提踵", "小腿训练", "legs", "beginner", "坐姿提踵机", 4, 20, 0, 60, "坐姿提踵", "", "", 40, "小腿训练"},
+
+		// 肩部动作 (12个)
+		{"肩推", "肩部力量训练", "shoulders", "intermediate", "哑铃", 4, 10, 20, 90, "双手持哑铃，从肩部推举至头顶", "", "", 70, "肩部基础"},
+		{"侧平举", "肩部宽度训练", "shoulders", "intermediate", "哑铃", 3, 15, 10, 60, "侧平举动作", "", "", 45, "肩部宽度"},
+		{"前平举", "肩部前束训练", "shoulders", "intermediate", "哑铃", 3, 12, 8, 60, "前平举动作", "", "", 40, "前束训练"},
+		{"俯身侧平举", "肩部后束训练", "shoulders", "intermediate", "哑铃", 3, 12, 8, 60, "俯身侧平举", "", "", 45, "后束训练"},
+		{"阿诺德推举", "肩部复合训练", "shoulders", "advanced", "哑铃", 4, 10, 15, 90, "阿诺德推举", "", "", 65, "复合动作"},
+		{"杠铃推举", "肩部力量训练", "shoulders", "intermediate", "杠铃", 4, 8, 30, 120, "杠铃推举", "", "", 75, "力量训练"},
+		{"绳索侧平举", "肩部塑形", "shoulders", "intermediate", "绳索", 3, 15, 0, 60, "绳索侧平举", "", "", 50, "塑形训练"},
+		{"杠铃前平举", "肩部前束训练", "shoulders", "intermediate", "杠铃", 3, 12, 15, 60, "杠铃前平举", "", "", 55, "前束力量"},
+		{"绳索前平举", "肩部前束训练", "shoulders", "intermediate", "绳索", 3, 15, 0, 60, "绳索前平举", "", "", 45, "前束塑形"},
+		{"绳索后平举", "肩部后束训练", "shoulders", "intermediate", "绳索", 3, 15, 0, 60, "绳索后平举", "", "", 50, "后束塑形"},
+		{"杠铃耸肩", "斜方肌训练", "shoulders", "intermediate", "杠铃", 4, 12, 40, 60, "杠铃耸肩", "", "", 60, "斜方肌"},
+		{"哑铃耸肩", "斜方肌训练", "shoulders", "intermediate", "哑铃", 4, 12, 20, 60, "哑铃耸肩", "", "", 55, "斜方肌"},
+
+		// 手臂动作 (15个)
+		{"二头弯举", "二头肌训练", "arms", "beginner", "哑铃", 3, 12, 15, 60, "二头弯举动作", "", "", 40, "二头基础"},
+		{"三头屈伸", "三头肌训练", "arms", "intermediate", "哑铃", 3, 12, 20, 60, "三头屈伸动作", "", "", 45, "三头训练"},
+		{"锤式弯举", "二头肌训练", "arms", "intermediate", "哑铃", 3, 12, 12, 60, "锤式弯举", "", "", 35, "不同握法"},
+		{"窄握卧推", "三头肌训练", "arms", "intermediate", "杠铃", 4, 10, 40, 90, "窄握卧推", "", "", 60, "三头力量"},
+		{"绳索下压", "三头肌训练", "arms", "intermediate", "绳索", 3, 15, 0, 60, "绳索下压", "", "", 40, "三头塑形"},
+		{"集中弯举", "二头肌训练", "arms", "intermediate", "哑铃", 3, 12, 10, 60, "集中弯举", "", "", 30, "孤立训练"},
+		{"过顶臂屈伸", "三头肌训练", "arms", "intermediate", "哑铃", 3, 12, 15, 60, "过顶臂屈伸", "", "", 40, "三头拉伸"},
+		{"杠铃弯举", "二头肌力量训练", "arms", "intermediate", "杠铃", 4, 10, 25, 90, "杠铃弯举", "", "", 50, "二头力量"},
+		{"绳索弯举", "二头肌训练", "arms", "intermediate", "绳索", 3, 15, 0, 60, "绳索弯举", "", "", 35, "二头塑形"},
+		{"三头臂屈伸", "三头肌训练", "arms", "intermediate", "无器械", 3, 12, 0, 60, "三头臂屈伸", "", "", 40, "自重训练"},
+		{"反向弯举", "前臂训练", "arms", "intermediate", "杠铃", 3, 12, 15, 60, "反向弯举", "", "", 30, "前臂训练"},
+		{"杠铃腕弯举", "前臂训练", "arms", "beginner", "杠铃", 3, 15, 10, 60, "杠铃腕弯举", "", "", 25, "前臂力量"},
+		{"绳索锤式弯举", "二头肌训练", "arms", "intermediate", "绳索", 3, 15, 0, 60, "绳索锤式弯举", "", "", 40, "二头塑形"},
+		{"单臂绳索下压", "三头肌单侧训练", "arms", "intermediate", "绳索", 3, 12, 0, 60, "单臂绳索下压", "", "", 35, "三头单侧"},
+		{"单臂哑铃弯举", "二头肌单侧训练", "arms", "intermediate", "哑铃", 3, 12, 12, 60, "单臂哑铃弯举", "", "", 30, "二头单侧"},
+
+		// 核心动作 (18个)
+		{"平板支撑", "核心力量训练", "core", "beginner", "无器械", 3, 1, 0, 60, "保持身体成一条直线，核心收紧", "", "", 30, "核心基础"},
+		{"卷腹", "腹肌训练", "core", "beginner", "无器械", 3, 20, 0, 30, "卷腹动作", "", "", 25, "腹肌训练"},
+		{"俄罗斯转体", "腹肌训练", "core", "intermediate", "无器械", 3, 20, 0, 30, "俄罗斯转体", "", "", 30, "腹肌旋转"},
+		{"登山者", "全身有氧", "core", "intermediate", "无器械", 3, 30, 0, 60, "登山者动作", "", "", 50, "有氧训练"},
+		{"死虫式", "核心稳定", "core", "beginner", "无器械", 3, 10, 0, 30, "死虫式动作", "", "", 20, "核心稳定"},
+		{"侧平板支撑", "核心侧向训练", "core", "intermediate", "无器械", 3, 1, 0, 60, "侧平板支撑", "", "", 35, "侧向训练"},
+		{"悬垂举腿", "腹肌训练", "core", "advanced", "单杠", 3, 12, 0, 90, "悬垂举腿", "", "", 60, "高级动作"},
+		{"龙旗", "腹肌训练", "core", "advanced", "无器械", 3, 8, 0, 120, "龙旗动作", "", "", 70, "高级动作"},
+		{"农夫行走", "全身训练", "core", "intermediate", "哑铃", 3, 1, 30, 120, "农夫行走", "", "", 80, "功能性训练"},
+		{"土耳其起立", "全身训练", "core", "advanced", "哑铃", 3, 5, 20, 120, "土耳其起立", "", "", 90, "复合动作"},
+		{"仰卧起坐", "腹肌训练", "core", "beginner", "无器械", 3, 15, 0, 30, "仰卧起坐", "", "", 30, "腹肌基础"},
+		{"自行车卷腹", "腹肌训练", "core", "intermediate", "无器械", 3, 20, 0, 30, "自行车卷腹", "", "", 35, "腹肌训练"},
+		{"侧卷腹", "腹肌侧向训练", "core", "intermediate", "无器械", 3, 15, 0, 30, "侧卷腹", "", "", 25, "腹肌侧向"},
+		{"反向卷腹", "下腹训练", "core", "intermediate", "无器械", 3, 15, 0, 30, "反向卷腹", "", "", 30, "下腹训练"},
+		{"V字卷腹", "腹肌训练", "core", "intermediate", "无器械", 3, 12, 0, 30, "V字卷腹", "", "", 40, "腹肌训练"},
+		{"侧支撑", "核心侧向训练", "core", "intermediate", "无器械", 3, 1, 0, 60, "侧支撑", "", "", 35, "侧向训练"},
+		{"鸟狗式", "核心稳定", "core", "beginner", "无器械", 3, 10, 0, 30, "鸟狗式", "", "", 25, "核心稳定"},
+		{"超人式", "背部核心训练", "core", "beginner", "无器械", 3, 10, 0, 30, "超人式", "", "", 20, "背部核心"},
 	}
 
-	// 背部动作
-	backExercises := []models.ExerciseLibrary{
-		{Name: "Pull-up", Part: "back", Level: "intermediate", Type: "compound", Equipment: "pullup_bar", MuscleGroups: "back,biceps", Description: "引体向上", Instructions: "双手正握单杠，身体垂直上拉至下巴过杠"},
-		{Name: "Barbell Row", Part: "back", Level: "intermediate", Type: "compound", Equipment: "barbell", MuscleGroups: "back,biceps", Description: "杠铃划船", Instructions: "弯腰90度，双手握杠铃，向腹部拉拽"},
-		{Name: "Lat Pulldown", Part: "back", Level: "beginner", Type: "compound", Equipment: "cable", MuscleGroups: "back,biceps", Description: "高位下拉", Instructions: "坐在器械上，双手握杆，向下拉至胸部"},
-		{Name: "Deadlift", Part: "back", Level: "advanced", Type: "compound", Equipment: "barbell", MuscleGroups: "back,legs,glutes", Description: "硬拉", Instructions: "双脚与肩同宽，弯腰握杠铃，挺直身体拉起"},
-		{Name: "T-Bar Row", Part: "back", Level: "intermediate", Type: "compound", Equipment: "barbell", MuscleGroups: "back,biceps", Description: "T杠划船", Instructions: "使用T杠器械，向胸部拉拽"},
-		{Name: "Seated Row", Part: "back", Level: "beginner", Type: "compound", Equipment: "cable", MuscleGroups: "back,biceps", Description: "坐姿划船", Instructions: "坐在器械上，双手握杆，向腹部拉拽"},
-		{Name: "Face Pull", Part: "back", Level: "intermediate", Type: "isolation", Equipment: "cable", MuscleGroups: "rear_delts,rhomboids", Description: "面拉", Instructions: "使用绳索，向面部拉拽，感受后三角肌收缩"},
+	// 插入动作数据
+	stmt, err := db.Prepare(`
+		INSERT INTO exercises (
+			training_plan_id, name, description, muscle_group, difficulty, equipment, 
+			sets, reps, weight, rest_seconds, instructions, 
+			image_url, video_url, calories, notes, 
+			created_at, updated_at, "order"
+		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+	`)
+	if err != nil {
+		log.Fatal("准备插入语句失败:", err)
+	}
+	defer stmt.Close()
+
+	now := time.Now()
+	trainingPlanID := 4 // 动作库训练计划ID
+	for i, exercise := range exercises {
+		_, err = stmt.Exec(
+			trainingPlanID,
+			exercise.Name,
+			exercise.Description,
+			exercise.MuscleGroup,
+			exercise.Difficulty,
+			exercise.Equipment,
+			exercise.Sets,
+			exercise.Reps,
+			exercise.Weight,
+			exercise.RestSeconds,
+			exercise.Instructions,
+			exercise.ImageURL,
+			exercise.VideoURL,
+			exercise.Calories,
+			exercise.Notes,
+			now,
+			now,
+			i+1, // order字段
+		)
+		if err != nil {
+			log.Printf("插入动作失败 %s: %v", exercise.Name, err)
+		}
 	}
 
-	// 腿部动作
-	legExercises := []models.ExerciseLibrary{
-		{Name: "Squat", Part: "legs", Level: "intermediate", Type: "compound", Equipment: "barbell", MuscleGroups: "quads,glutes,hamstrings", Description: "深蹲", Instructions: "双脚与肩同宽，下蹲至大腿平行地面，然后站起"},
-		{Name: "Leg Press", Part: "legs", Level: "beginner", Type: "compound", Equipment: "machine", MuscleGroups: "quads,glutes", Description: "腿举", Instructions: "坐在器械上，双脚推举重量"},
-		{Name: "Lunge", Part: "legs", Level: "intermediate", Type: "compound", Equipment: "bodyweight", MuscleGroups: "quads,glutes,hamstrings", Description: "弓步蹲", Instructions: "向前迈一大步，下蹲至后膝接近地面"},
-		{Name: "Calf Raise", Part: "legs", Level: "beginner", Type: "isolation", Equipment: "bodyweight", MuscleGroups: "calves", Description: "提踵", Instructions: "双脚并拢，踮起脚尖，感受小腿收缩"},
-		{Name: "Romanian Deadlift", Part: "legs", Level: "intermediate", Type: "compound", Equipment: "barbell", MuscleGroups: "hamstrings,glutes", Description: "罗马尼亚硬拉", Instructions: "保持腿部微弯，弯腰下放杠铃至膝盖下方"},
-		{Name: "Bulgarian Split Squat", Part: "legs", Level: "intermediate", Type: "compound", Equipment: "bodyweight", MuscleGroups: "quads,glutes", Description: "保加利亚分腿蹲", Instructions: "后脚抬高，前腿下蹲"},
-		{Name: "Leg Extension", Part: "legs", Level: "beginner", Type: "isolation", Equipment: "machine", MuscleGroups: "quads", Description: "腿屈伸", Instructions: "坐在器械上，双腿向前伸展"},
+	fmt.Printf("✅ 成功初始化 %d 个训练动作\n", len(exercises))
+
+	// 显示各部位动作数量
+	muscleGroups := map[string]int{}
+	for _, exercise := range exercises {
+		muscleGroups[exercise.MuscleGroup]++
 	}
 
-	// 肩部动作
-	shoulderExercises := []models.ExerciseLibrary{
-		{Name: "Shoulder Press", Part: "shoulders", Level: "intermediate", Type: "compound", Equipment: "dumbbell", MuscleGroups: "shoulders,triceps", Description: "肩推", Instructions: "双手持哑铃，从肩部推举至头顶"},
-		{Name: "Lateral Raise", Part: "shoulders", Level: "beginner", Type: "isolation", Equipment: "dumbbell", MuscleGroups: "shoulders", Description: "侧平举", Instructions: "双手持哑铃，向两侧平举至肩高"},
-		{Name: "Rear Delt Fly", Part: "shoulders", Level: "intermediate", Type: "isolation", Equipment: "dumbbell", MuscleGroups: "rear_delts", Description: "后三角肌飞鸟", Instructions: "弯腰，双手持哑铃向两侧展开"},
-		{Name: "Front Raise", Part: "shoulders", Level: "beginner", Type: "isolation", Equipment: "dumbbell", MuscleGroups: "front_delts", Description: "前平举", Instructions: "双手持哑铃，向前平举至肩高"},
-		{Name: "Upright Row", Part: "shoulders", Level: "intermediate", Type: "compound", Equipment: "barbell", MuscleGroups: "shoulders,traps", Description: "直立划船", Instructions: "双手握杠铃，向上拉至胸部"},
-		{Name: "Arnold Press", Part: "shoulders", Level: "intermediate", Type: "compound", Equipment: "dumbbell", MuscleGroups: "shoulders", Description: "阿诺德推举", Instructions: "哑铃从胸部旋转推举至头顶"},
-		{Name: "Shrug", Part: "shoulders", Level: "beginner", Type: "isolation", Equipment: "barbell", MuscleGroups: "traps", Description: "耸肩", Instructions: "双手握杠铃，向上耸肩"},
-	}
-
-	// 手臂动作
-	armExercises := []models.ExerciseLibrary{
-		{Name: "Bicep Curl", Part: "arms", Level: "beginner", Type: "isolation", Equipment: "dumbbell", MuscleGroups: "biceps", Description: "二头弯举", Instructions: "双手持哑铃，弯曲肘部向上举起"},
-		{Name: "Tricep Extension", Part: "arms", Level: "beginner", Type: "isolation", Equipment: "dumbbell", MuscleGroups: "triceps", Description: "三头伸展", Instructions: "双手持哑铃，向后伸展手臂"},
-		{Name: "Hammer Curl", Part: "arms", Level: "beginner", Type: "isolation", Equipment: "dumbbell", MuscleGroups: "biceps,forearms", Description: "锤式弯举", Instructions: "双手持哑铃，保持中立握法弯举"},
-		{Name: "Close Grip Press", Part: "arms", Level: "intermediate", Type: "compound", Equipment: "barbell", MuscleGroups: "triceps,chest", Description: "窄握卧推", Instructions: "双手窄握杠铃，进行卧推动作"},
-		{Name: "Preacher Curl", Part: "arms", Level: "intermediate", Type: "isolation", Equipment: "barbell", MuscleGroups: "biceps", Description: "牧师椅弯举", Instructions: "使用牧师椅，进行二头弯举"},
-		{Name: "Overhead Extension", Part: "arms", Level: "intermediate", Type: "isolation", Equipment: "dumbbell", MuscleGroups: "triceps", Description: "过头伸展", Instructions: "双手持哑铃举过头顶，向后伸展"},
-		{Name: "Cable Curl", Part: "arms", Level: "beginner", Type: "isolation", Equipment: "cable", MuscleGroups: "biceps", Description: "绳索弯举", Instructions: "使用绳索器械，进行二头弯举"},
-	}
-
-	// 核心动作
-	coreExercises := []models.ExerciseLibrary{
-		{Name: "Crunch", Part: "core", Level: "beginner", Type: "isolation", Equipment: "bodyweight", MuscleGroups: "abs", Description: "卷腹", Instructions: "平躺，膝盖弯曲，向上卷起上半身"},
-		{Name: "Plank", Part: "core", Level: "beginner", Type: "isometric", Equipment: "bodyweight", MuscleGroups: "core", Description: "平板支撑", Instructions: "保持身体成一条直线，核心收紧"},
-		{Name: "Leg Raise", Part: "core", Level: "intermediate", Type: "isolation", Equipment: "bodyweight", MuscleGroups: "lower_abs", Description: "抬腿", Instructions: "平躺，双腿向上抬起至90度"},
-		{Name: "Russian Twist", Part: "core", Level: "intermediate", Type: "isolation", Equipment: "bodyweight", MuscleGroups: "obliques", Description: "俄罗斯转体", Instructions: "坐姿，双腿抬起，左右转体"},
-		{Name: "Mountain Climber", Part: "core", Level: "intermediate", Type: "cardio", Equipment: "bodyweight", MuscleGroups: "core,cardio", Description: "登山者", Instructions: "平板支撑姿势，交替提膝"},
-		{Name: "Dead Bug", Part: "core", Level: "beginner", Type: "isolation", Equipment: "bodyweight", MuscleGroups: "core", Description: "死虫式", Instructions: "平躺，对侧手脚同时伸展"},
-		{Name: "Bicycle Crunch", Part: "core", Level: "intermediate", Type: "isolation", Equipment: "bodyweight", MuscleGroups: "abs,obliques", Description: "自行车卷腹", Instructions: "平躺，模拟骑自行车动作"},
-	}
-
-	// 合并所有动作
-	allExercises := append(chestExercises, backExercises...)
-	allExercises = append(allExercises, legExercises...)
-	allExercises = append(allExercises, shoulderExercises...)
-	allExercises = append(allExercises, armExercises...)
-	allExercises = append(allExercises, coreExercises...)
-
-	// 批量插入动作库
-	if err := config.DB.CreateInBatches(allExercises, 50).Error; err != nil {
-		log.Fatal("初始化动作库失败:", err)
-	}
-
-	log.Printf("成功初始化 %d 个动作到动作库", len(allExercises))
+	fmt.Println("\n📊 各部位动作数量:")
+	fmt.Printf("  🏋️ 胸部: %d 个动作\n", muscleGroups["chest"])
+	fmt.Printf("  💪 背部: %d 个动作\n", muscleGroups["back"])
+	fmt.Printf("  🦵 腿部: %d 个动作\n", muscleGroups["legs"])
+	fmt.Printf("  🤸 肩部: %d 个动作\n", muscleGroups["shoulders"])
+	fmt.Printf("  💪 手臂: %d 个动作\n", muscleGroups["arms"])
+	fmt.Printf("  🏃 核心: %d 个动作\n", muscleGroups["core"])
+	fmt.Printf("\n🎯 总计: %d 个训练动作", len(exercises))
 }

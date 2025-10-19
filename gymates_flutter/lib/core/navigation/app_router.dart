@@ -26,6 +26,7 @@ class AppRoutes {
   static const String community = '/main/community';
   static const String createPost = '/main/community/create-post';
   static const String mates = '/main/mates';
+  static const String partner = '/main/partner';
   static const String messages = '/main/messages';
   static const String chatDetail = '/main/messages/chat';
   static const String profile = '/main/profile';

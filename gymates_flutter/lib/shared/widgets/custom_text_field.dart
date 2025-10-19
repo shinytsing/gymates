@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/constants/app_theme.dart';
+import '../../core/constants/enhanced_theme.dart';
 
 class CustomTextField extends StatelessWidget {
   final String? label;
@@ -43,11 +43,12 @@ class CustomTextField extends StatelessWidget {
         if (label != null) ...[
           Text(
             label!,
-            style: AppTextStyles.bodyMedium.copyWith(
+            style: const TextStyle(
+              fontSize: 16,
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: AppSizes.spacingS),
+          const SizedBox(height: 8),
         ],
         TextFormField(
           controller: controller,
@@ -60,39 +61,40 @@ class CustomTextField extends StatelessWidget {
           onTap: onTap,
           onChanged: onChanged,
           focusNode: focusNode,
-          style: AppTextStyles.bodyMedium,
+          style: const TextStyle(fontSize: 16),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
+            hintStyle: const TextStyle(
+              fontSize: 16,
+              color: Color(0xFF6B7280),
             ),
             prefixIcon: prefixIcon,
             suffixIcon: suffixIcon,
             filled: true,
-            fillColor: AppColors.surface,
+            fillColor: Colors.white,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppSizes.radiusM),
-              borderSide: const BorderSide(color: AppColors.border),
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppSizes.radiusM),
-              borderSide: const BorderSide(color: AppColors.border),
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppSizes.radiusM),
-              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Color(0xFF6366F1), width: 2),
             ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppSizes.radiusM),
-              borderSide: const BorderSide(color: AppColors.error),
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Color(0xFFEF4444)),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppSizes.radiusM),
-              borderSide: const BorderSide(color: AppColors.error, width: 2),
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Color(0xFFEF4444), width: 2),
             ),
             contentPadding: const EdgeInsets.symmetric(
-              horizontal: AppSizes.paddingM,
-              vertical: AppSizes.paddingM,
+              horizontal: 16,
+              vertical: 16,
             ),
             counterText: '',
           ),

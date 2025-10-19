@@ -67,5 +67,8 @@ func SetupRoutes(r *gin.Engine) {
 		SetupAchievementDetailRoutes(api)
 		SetupTrainingDetailRoutes(api)
 		SetupMatesDetailRoutes(api)
+
+		// AI教练路由
+		SetupAICoachRoutes(api)
 	}
 }

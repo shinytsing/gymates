@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../theme/gymates_theme.dart';
-import '../../animations/gymates_animations.dart';
+import '../../core/animations/gymates_animations.dart';
 import '../../shared/widgets/training/today_plan_card.dart';
 import '../../shared/widgets/training/ai_plan_generator.dart';
 import '../../shared/widgets/training/progress_chart.dart';
 import '../../shared/widgets/training/checkin_calendar.dart';
 import '../../shared/widgets/training/training_history_list.dart';
 import '../../shared/widgets/training/training_mode_selection.dart';
-import 'training_plan_editor.dart';
+import 'edit_training_plan_page.dart';
+import 'widgets/training_plan_selection_dialog.dart';
+import 'ai_smart_coach_page.dart';
 import '../../shared/models/mock_data.dart';
 import '../../services/training_session_service.dart';
 import '../../services/training_plan_sync_service.dart';
@@ -705,25 +707,55 @@ class _TrainingPageState extends State<TrainingPage>
           
           const SizedBox(height: 16),
           
-          // AI推荐按钮
-          SizedBox(
-            width: double.infinity,
-            height: 48,
-            child: OutlinedButton.icon(
-              onPressed: () {
-                HapticFeedback.lightImpact();
-                _showAIGenerator();
-              },
-              icon: const Icon(Icons.auto_awesome),
-              label: const Text('AI智能推荐'),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: const Color(0xFF6366F1),
-                side: const BorderSide(color: Color(0xFF6366F1)),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+          // AI功能按钮组
+          Row(
+            children: [
+              // AI推荐按钮
+              Expanded(
+                child: SizedBox(
+                  height: 48,
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      HapticFeedback.lightImpact();
+                      _showAIGenerator();
+                    },
+                    icon: const Icon(Icons.auto_awesome),
+                    label: const Text('AI推荐'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: const Color(0xFF6366F1),
+                      side: const BorderSide(color: Color(0xFF6366F1)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              
+              const SizedBox(width: 12),
+              
+              // AI智能教练按钮
+              Expanded(
+                child: SizedBox(
+                  height: 48,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      HapticFeedback.lightImpact();
+                      _openAISmartCoach();
+                    },
+                    icon: const Icon(Icons.smart_toy),
+                    label: const Text('AI教练'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF6366F1),
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -741,9 +773,7 @@ class _TrainingPageState extends State<TrainingPage>
               context,
               MaterialPageRoute(
                 builder: (context) => EditTrainingPlanPage(
-                  existingPlan: MockDataProvider.trainingPlans.isNotEmpty
-                      ? MockDataProvider.trainingPlans.first
-                      : null,
+                  existingPlan: null, // 创建新计划
                 ),
               ),
             );
@@ -777,10 +807,20 @@ class _TrainingPageState extends State<TrainingPage>
   }
 
   void _showTrainingPlanEditor() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => EditTrainingPlanPage(),
+    showDialog(
+      context: context,
+      builder: (context) => TrainingPlanSelectionDialog(
+        onPlanSelected: (selectedPlan) {
+          // 导航到编辑页面，传递选中的计划ID
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EditTrainingPlanPage(
+                existingPlan: null, // 创建新计划
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -843,6 +883,18 @@ class _TrainingPageState extends State<TrainingPage>
             child: const Text('开始推荐'),
           ),
         ],
+      ),
+    );
+  }
+
+  void _openAISmartCoach() {
+    // 导航到AI智能教练页面
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AISmartCoachPage(
+          userId: 1, // 使用测试用户ID
+        ),
       ),
     );
   }

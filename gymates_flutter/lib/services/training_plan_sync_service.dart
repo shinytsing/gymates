@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../shared/models/edit_training_plan_models.dart';
+import '../core/config/smart_api_config.dart';
 
 /// 🏋️‍♀️ 训练计划同步服务 - TrainingPlanSyncService
 ///
 /// 直接使用API数据，不依赖Mock数据
 class TrainingPlanSyncService {
-  static const String _baseUrl = 'http://localhost:8080/api'; // Go后端API地址
+  // 使用智能API配置
+  static String get _baseUrl => SmartApiConfig.apiBaseUrl;
 
   static Future<SharedPreferences> get _prefs async =>
       await SharedPreferences.getInstance();
@@ -15,7 +17,8 @@ class TrainingPlanSyncService {
   /// 获取认证token
   static Future<String?> _getAuthToken() async {
     final prefs = await _prefs;
-    return prefs.getString('auth_token');
+    // 使用测试token进行开发测试
+    return prefs.getString('auth_token') ?? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6InhpYW93YW5nQGd5bWF0ZXMuY29tIiwiZXhwIjoxNzYwOTYzNzMwLCJuYmYiOjE3NjA4NzczMzAsImlhdCI6MTc2MDg3NzMzMH0.5-idVaROmRyW1drflvNZvRO38T1Ost8TI4gFL4qqT30';
   }
 
   /// 构建请求头
@@ -82,15 +85,23 @@ class TrainingPlanSyncService {
     }
   }
 
-  /// 保存训练计划到API (兼容旧接口)
+  /// 保存训练计划到API (使用weekly-plans端点)
   static Future<bool> saveTrainingPlan(Map<String, dynamic> planData) async {
     try {
       final headers = await _buildHeaders();
       
+      // 转换数据格式以匹配CreateWeeklyTrainingPlanRequest
+      final weeklyPlanData = {
+        'name': planData['name'] ?? '我的训练计划',
+        'description': planData['description'] ?? '',
+        'is_public': true,
+        'days': _convertDaysToApiFormat(planData['days'] ?? []),
+      };
+      
       final response = await http.post(
-        Uri.parse('$_baseUrl/training/plans'),
+        Uri.parse('$_baseUrl/training/weekly-plans'),
         headers: headers,
-        body: json.encode(planData),
+        body: json.encode(weeklyPlanData),
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -104,6 +115,42 @@ class TrainingPlanSyncService {
       print('❌ API请求失败: $e');
       return false;
     }
+  }
+
+  /// 将Flutter的days格式转换为API格式
+  static List<Map<String, dynamic>> _convertDaysToApiFormat(List<dynamic> days) {
+    return days.map((day) => {
+      'day_of_week': day['dayOfWeek'] ?? 1,
+      'day_name': day['dayName'] ?? '周一',
+      'is_rest_day': day['isRestDay'] ?? false,
+      'notes': day['notes'] ?? '',
+      'parts': _convertPartsToApiFormat(day['parts'] ?? []),
+    }).toList();
+  }
+
+  /// 将Flutter的parts格式转换为API格式
+  static List<Map<String, dynamic>> _convertPartsToApiFormat(List<dynamic> parts) {
+    return parts.map((part) => {
+      'muscle_group': part['muscleGroup'] ?? '',
+      'muscle_group_name': part['muscleGroupName'] ?? '',
+      'order': part['order'] ?? 0,
+      'exercises': _convertExercisesToApiFormat(part['exercises'] ?? []),
+    }).toList();
+  }
+
+  /// 将Flutter的exercises格式转换为API格式
+  static List<Map<String, dynamic>> _convertExercisesToApiFormat(List<dynamic> exercises) {
+    return exercises.map((exercise) => {
+      'name': exercise['name'] ?? '',
+      'description': exercise['description'] ?? '',
+      'muscle_group': exercise['muscleGroup'] ?? '',
+      'sets': exercise['sets'] ?? 3,
+      'reps': exercise['reps'] ?? 10,
+      'weight': exercise['weight'] ?? 0.0,
+      'rest_seconds': exercise['restSeconds'] ?? 90,
+      'notes': exercise['notes'] ?? '',
+      'order': exercise['order'] ?? 0,
+    }).toList();
   }
 
   /// 从API获取一周训练计划
@@ -179,13 +226,13 @@ class TrainingPlanSyncService {
     return [];
   }
 
-  /// 获取用户的训练计划列表 (兼容旧接口)
+  /// 获取用户的训练计划列表 (使用weekly-plans API)
   static Future<List<Map<String, dynamic>>> getUserTrainingPlans() async {
     try {
       final headers = await _buildHeaders();
       
       final response = await http.get(
-        Uri.parse('$_baseUrl/training/plans'),
+        Uri.parse('$_baseUrl/training/weekly-plans'),
         headers: headers,
       );
 
@@ -279,8 +326,9 @@ class TrainingPlanSyncService {
         final days = latestPlan['days'] as List?;
         if (days != null) {
           for (final day in days) {
-            if (day is Map<String, dynamic> && day['dayOfWeek'] == today) {
-              return day;
+            if (day is Map<String, dynamic> && day['day_of_week'] == today) {
+              // 转换数据格式以匹配TodayPlanCard的期望
+              return _convertDayToTodayTrainingFormat(day, latestPlan);
             }
           }
         }
@@ -291,6 +339,44 @@ class TrainingPlanSyncService {
       print('❌ 获取今日训练失败: $e');
       return null;
     }
+  }
+
+  /// 将API的day数据转换为TodayPlanCard期望的格式
+  static Map<String, dynamic> _convertDayToTodayTrainingFormat(Map<String, dynamic> day, Map<String, dynamic> plan) {
+    // 计算总动作数
+    int totalExercises = 0;
+    if (day['parts'] != null) {
+      final parts = day['parts'] as List?;
+      if (parts != null) {
+        for (final part in parts) {
+          if (part is Map<String, dynamic> && part['exercises'] != null) {
+            final exercises = part['exercises'] as List?;
+            if (exercises != null) {
+              totalExercises += exercises.length;
+            }
+          }
+        }
+      }
+    }
+
+    // 计算总时长（估算）
+    int totalDuration = totalExercises * 3; // 每个动作约3分钟
+
+    // 计算总卡路里（估算）
+    int totalCalories = totalExercises * 50; // 每个动作约50卡路里
+
+    return {
+      'day_name': day['day_name'] ?? '今日训练',
+      'isRestDay': day['is_rest_day'] ?? false,
+      'totalExercises': totalExercises,
+      'totalDuration': totalDuration,
+      'totalCalories': totalCalories,
+      'planName': plan['name'] ?? '我的训练计划',
+      'planDescription': plan['description'] ?? '',
+      'image': 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400',
+      'parts': day['parts'] ?? [],
+      'notes': day['notes'] ?? '',
+    };
   }
 
   /// 获取动作列表

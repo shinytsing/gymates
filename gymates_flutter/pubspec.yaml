@@ -51,6 +51,7 @@ dependencies:
   
   # Text-to-Speech
   flutter_tts: ^3.8.5
+  speech_to_text: ^7.0.0
   animations: ^2.0.8
   
   # Platform-specific UI - 使用兼容版本

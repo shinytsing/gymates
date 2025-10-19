@@ -1,8 +1,9 @@
+import '../config/smart_api_config.dart';
+
 class AppConstants {
-  // API Configuration
-  static const String baseUrl = 'http://localhost:8080';
-  static const String apiVersion = '/api';
-  static const String apiBaseUrl = '$baseUrl$apiVersion';
+  // 使用智能API配置
+  static String get baseUrl => SmartApiConfig.baseUrl;
+  static String get apiBaseUrl => SmartApiConfig.apiBaseUrl;
   
   // API Endpoints
   static const String authLogin = '/auth/login';

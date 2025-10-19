@@ -210,7 +210,7 @@ class _AITrainingTestPageState extends State<AITrainingTestPage> {
                   SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      '确保后端服务正在运行 (localhost:8080)',
+                      '确保后端服务正在运行 (${SmartApiConfig.baseUrl})',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,

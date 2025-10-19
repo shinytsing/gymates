@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import '../../core/config/smart_api_config.dart';
 
 class AITrainingPage extends StatefulWidget {
   final int userId;
@@ -121,7 +122,7 @@ class _AITrainingPageState extends State<AITrainingPage>
   Future<void> _loadAIRecommendation() async {
     try {
       final response = await http.get(
-        Uri.parse('http://localhost:8080/api/training/ai/recommend?user_id=${widget.userId}'),
+        Uri.parse('${SmartApiConfig.apiBaseUrl}/training/ai/recommend?user_id=${widget.userId}'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -172,7 +173,7 @@ class _AITrainingPageState extends State<AITrainingPage>
 
     try {
       final response = await http.post(
-        Uri.parse('http://localhost:8080/api/training/plan/update'),
+        Uri.parse('${SmartApiConfig.apiBaseUrl}/training/plan/update'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'user_id': widget.userId,
@@ -331,7 +332,7 @@ class _AITrainingPageState extends State<AITrainingPage>
       }).toList();
       
       await http.post(
-        Uri.parse('http://localhost:8080/api/training/ai/session'),
+        Uri.parse('${SmartApiConfig.apiBaseUrl}/training/ai/session'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'user_id': widget.userId,
@@ -357,7 +358,7 @@ class _AITrainingPageState extends State<AITrainingPage>
 
     try {
       final response = await http.post(
-        Uri.parse('http://localhost:8080/api/training/ai/chat'),
+        Uri.parse('${SmartApiConfig.apiBaseUrl}/training/ai/chat'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'user_id': widget.userId,

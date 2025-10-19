@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../shared/models/mock_data.dart';
+import '../core/config/smart_api_config.dart';
 
 /// 🏋️‍♀️ 训练动作API服务 - ExerciseApiService
 /// 
@@ -8,7 +9,8 @@ import '../shared/models/mock_data.dart';
 /// 使用Go后端API
 
 class ExerciseApiService {
-  static const String _baseUrl = 'http://localhost:8080/api'; // Go后端地址
+  // 使用智能API配置
+  static String get _baseUrl => SmartApiConfig.apiBaseUrl;
   static const Duration _timeout = Duration(seconds: 10);
 
   /// 搜索训练动作
@@ -51,6 +53,31 @@ class ExerciseApiService {
       // 网络错误时返回模拟数据
       print('API Error: $e');
       return _getMockExercises(query: query);
+    }
+  }
+
+  /// 根据身体部位搜索动作
+  static Future<List<Map<String, dynamic>>> searchExercisesByMuscleGroup(String muscleGroup) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$_baseUrl/training/exercises/search?muscle_group=$muscleGroup'),
+      ).timeout(_timeout);
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data is Map && data.containsKey('data')) {
+          final responseData = data['data'];
+          if (responseData is Map && responseData.containsKey('exercises')) {
+            return List<Map<String, dynamic>>.from(responseData['exercises']);
+          }
+        }
+      }
+      
+      // 如果API失败，返回空列表
+      return [];
+    } catch (e) {
+      print('API Error: $e');
+      return [];
     }
   }
 

@@ -16,6 +16,8 @@ import '../../features/profile/screens/profile_screen.dart';
 import '../../features/profile/screens/edit_profile_screen.dart';
 import '../../shared/widgets/enhanced_navigation.dart';
 import '../../core/animations/page_animations.dart';
+import '../constants/enhanced_theme.dart';
+import '../../shared/widgets/enhanced_components.dart';
 
 // Route paths
 class AppRoutes {
@@ -112,7 +114,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: AppRoutes.main,
             name: 'main',
             pageBuilder: (context, state) => CustomTransitionPage(
-              child: const EnhancedTrainingScreen(),
+              child: const TrainingScreen(),
               transitionsBuilder: (context, animation, secondaryAnimation, child) {
                 return FadePageRoute(child: child).transitionsBuilder(
                   context, animation, secondaryAnimation, child);
@@ -124,7 +126,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                 path: 'training',
                 name: 'training',
                 pageBuilder: (context, state) => CustomTransitionPage(
-                  child: const EnhancedTrainingScreen(),
+                  child: const TrainingScreen(),
                   transitionsBuilder: (context, animation, secondaryAnimation, child) {
                     return FadePageRoute(child: child).transitionsBuilder(
                       context, animation, secondaryAnimation, child);
@@ -273,7 +275,7 @@ final routerProvider = Provider<GoRouter>((ref) {
               EnhancedButton(
                 text: '返回首页',
                 onPressed: () => context.go(AppRoutes.main),
-                width: 200,
+                fullWidth: false,
               ),
             ],
           ),
