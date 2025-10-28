@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../theme/gymates_theme.dart';
-import '../../animations/gymates_animations.dart';
 import '../../shared/models/mock_data.dart';
 
 /// 🏆 成就详情页 - AchievementDetailPage
@@ -268,7 +266,7 @@ class _AchievementDetailPageState extends State<AchievementDetailPage>
                   borderRadius: BorderRadius.circular(6),
                   boxShadow: isSelected ? [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     ),
@@ -333,7 +331,7 @@ class _AchievementDetailPageState extends State<AchievementDetailPage>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -351,7 +349,7 @@ class _AchievementDetailPageState extends State<AchievementDetailPage>
             height: 60,
             decoration: BoxDecoration(
               color: achievement.isUnlocked 
-                  ? const Color(0xFF10B981).withOpacity(0.1)
+                  ? const Color(0xFF10B981).withValues(alpha: 0.1)
                   : const Color(0xFFE5E7EB),
               borderRadius: BorderRadius.circular(30),
               border: Border.all(

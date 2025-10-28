@@ -498,7 +498,7 @@ class MaterialGymatesTheme {
           backgroundColor: GymatesTheme.primaryColor,
           foregroundColor: Colors.white,
           elevation: 2,
-          shadowColor: GymatesTheme.primaryColor.withOpacity(0.3),
+          shadowColor: GymatesTheme.primaryColor.withValues(alpha: 0.3),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(GymatesTheme.radius8),
           ),
@@ -548,7 +548,7 @@ class MaterialGymatesTheme {
       cardTheme: CardTheme(
         color: Colors.white,
         elevation: 2,
-        shadowColor: Colors.black.withOpacity(0.1),
+        shadowColor: Colors.black.withValues(alpha: 0.1),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(GymatesTheme.radius12),
         ),

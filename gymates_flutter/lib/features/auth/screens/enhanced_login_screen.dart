@@ -6,8 +6,8 @@ import '../../../core/constants/enhanced_theme.dart';
 import '../../../core/navigation/app_router.dart';
 import '../../../shared/providers/auth_provider.dart';
 import '../../../shared/widgets/enhanced_components.dart';
-import '../../../shared/widgets/enhanced_navigation.dart';
 import '../../../core/animations/page_animations.dart';
+import '../../../shared/widgets/loading_overlay.dart';
 
 /// Enhanced Login Screen with Figma-inspired design
 class EnhancedLoginScreen extends ConsumerStatefulWidget {
@@ -94,7 +94,7 @@ class _EnhancedLoginScreenState extends ConsumerState<EnhancedLoginScreen>
     final authState = ref.watch(authNotifierProvider);
     final screenSize = MediaQuery.of(context).size;
     
-    return EnhancedLoadingOverlay(
+    return LoadingOverlay(
       isLoading: authState.isLoading,
       loadingText: '正在登录...',
       child: Scaffold(
@@ -245,11 +245,14 @@ class _EnhancedLoginScreenState extends ConsumerState<EnhancedLoginScreen>
         // Error Message
         if (authState.error != null)
           FadeInAnimation(
-            child: EnhancedCard(
-              color: AppColors.error.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(AppSizes.radiusM),
-              child: Row(
-                children: [
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.error.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(AppSizes.radiusM),
+              ),
+              child: EnhancedCard(
+                child: Row(
+                  children: [
                   Icon(
                     Icons.error_outline,
                     color: AppColors.error,
@@ -268,16 +271,17 @@ class _EnhancedLoginScreenState extends ConsumerState<EnhancedLoginScreen>
               ),
             ),
           ),
+        ),
         
         if (authState.error != null) const SizedBox(height: AppSizes.spacingL),
         
         // Email Field
         EnhancedTextField(
           controller: _emailController,
-          label: '邮箱地址',
+          labelText: '邮箱地址',
           hintText: '请输入您的邮箱',
           keyboardType: TextInputType.emailAddress,
-          prefixIcon: Icons.email_outlined,
+          prefixIcon: Icon(Icons.email_outlined),
           validator: (value) {
             if (value == null || value.trim().isEmpty) {
               return '请输入邮箱';
@@ -294,10 +298,10 @@ class _EnhancedLoginScreenState extends ConsumerState<EnhancedLoginScreen>
         // Password Field
         EnhancedTextField(
           controller: _passwordController,
-          label: '密码',
+          labelText: '密码',
           hintText: '请输入您的密码',
           obscureText: _obscurePassword,
-          prefixIcon: Icons.lock_outlined,
+          prefixIcon: Icon(Icons.lock_outlined),
           suffixIcon: AnimatedScaleContainer(
             scale: 0.9,
             onTap: () {
@@ -401,8 +405,7 @@ class _EnhancedLoginScreenState extends ConsumerState<EnhancedLoginScreen>
           text: '登录',
           onPressed: _handleLogin,
           isLoading: authState.isLoading,
-          width: double.infinity,
-          height: AppSizes.buttonHeightL,
+          fullWidth: true,
         ),
       ],
     );
@@ -446,7 +449,7 @@ class _EnhancedLoginScreenState extends ConsumerState<EnhancedLoginScreen>
             Expanded(
               child: EnhancedButton(
                 text: 'Google',
-                isSecondary: true,
+                type: ButtonType.secondary,
                 icon: Icons.g_mobiledata,
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(

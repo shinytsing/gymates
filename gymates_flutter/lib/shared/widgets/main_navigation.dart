@@ -136,7 +136,7 @@ class _MainNavigationState extends State<MainNavigation> {
                           )
                           .shimmer(
                             duration: const Duration(milliseconds: 1500),
-                            color: Colors.white.withOpacity(0.3),
+                            color: Colors.white.withValues(alpha: 0.3),
                           ),
                           
                           const SizedBox(height: 0),

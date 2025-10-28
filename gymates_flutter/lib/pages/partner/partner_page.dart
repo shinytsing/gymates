@@ -132,7 +132,7 @@ class _PartnerPageState extends State<PartnerPage>
           borderRadius: BorderRadius.circular(GymatesTheme.radius12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -157,7 +157,7 @@ class _PartnerPageState extends State<PartnerPage>
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 4,
             offset: const Offset(0, 1),
           ),
@@ -194,7 +194,7 @@ class _PartnerPageState extends State<PartnerPage>
           borderRadius: BorderRadius.circular(GymatesTheme.radius8),
           boxShadow: isSelected ? [
             BoxShadow(
-              color: GymatesTheme.primaryColor.withOpacity(0.3),
+              color: GymatesTheme.primaryColor.withValues(alpha: 0.3),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -274,13 +274,13 @@ class _PartnerPageState extends State<PartnerPage>
                     borderRadius: BorderRadius.circular(isIOS ? 16 : 12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
+                        color: Colors.black.withValues(alpha: 0.08),
                         blurRadius: 20,
                         offset: const Offset(0, 8),
                         spreadRadius: 0,
                       ),
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.04),
+                        color: Colors.black.withValues(alpha: 0.04),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                         spreadRadius: 0,
@@ -323,7 +323,7 @@ class _PartnerPageState extends State<PartnerPage>
                                 colors: [
                                   Colors.transparent,
                                   Colors.transparent,
-                                  Colors.black.withOpacity(0.6),
+                                  Colors.black.withValues(alpha: 0.6),
                                 ],
                                 stops: const [0.0, 0.3, 1.0],
                               ),
@@ -365,7 +365,7 @@ class _PartnerPageState extends State<PartnerPage>
                                         borderRadius: BorderRadius.circular(12),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: const Color(0xFF10B981).withOpacity(0.3),
+                                            color: const Color(0xFF10B981).withValues(alpha: 0.3),
                                             blurRadius: 8,
                                             spreadRadius: 1,
                                           ),
@@ -398,10 +398,10 @@ class _PartnerPageState extends State<PartnerPage>
                                         vertical: GymatesTheme.spacing4,
                                       ),
                                       decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.2),
+                                        color: Colors.white.withValues(alpha: 0.2),
                                         borderRadius: BorderRadius.circular(16),
                                         border: Border.all(
-                                          color: Colors.white.withOpacity(0.3),
+                                          color: Colors.white.withValues(alpha: 0.3),
                                           width: 1,
                                         ),
                                       ),
@@ -451,11 +451,11 @@ class _PartnerPageState extends State<PartnerPage>
                             child: Container(
                               padding: EdgeInsets.all(GymatesTheme.spacing8),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.8),
+                                color: Colors.white.withValues(alpha: 0.8),
                                 borderRadius: BorderRadius.circular(20),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
+                                    color: Colors.black.withValues(alpha: 0.1),
                                     blurRadius: 4,
                                     offset: const Offset(0, 2),
                                   ),
@@ -522,12 +522,12 @@ class _PartnerPageState extends State<PartnerPage>
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: color.withOpacity(0.3),
+              color: color.withValues(alpha: 0.3),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -789,7 +789,7 @@ class _PartnerPageState extends State<PartnerPage>
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
+                                  color: Colors.black.withValues(alpha: 0.1),
                                   blurRadius: 10,
                                   offset: const Offset(0, 5),
                                 ),
@@ -886,10 +886,10 @@ class _PartnerPageState extends State<PartnerPage>
                             vertical: GymatesTheme.spacing4,
                           ),
                           decoration: BoxDecoration(
-                            color: GymatesTheme.primaryColor.withOpacity(0.1),
+                            color: GymatesTheme.primaryColor.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                              color: GymatesTheme.primaryColor.withOpacity(0.3),
+                              color: GymatesTheme.primaryColor.withValues(alpha: 0.3),
                               width: 1,
                             ),
                           ),

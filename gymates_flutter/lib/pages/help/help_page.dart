@@ -275,7 +275,7 @@ class _HelpPageState extends State<HelpPage> with TickerProviderStateMixin {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(GymatesTheme.radius8),
                 ),
                 child: Icon(
@@ -375,7 +375,7 @@ class _HelpPageState extends State<HelpPage> with TickerProviderStateMixin {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(GymatesTheme.radius8),
                 ),
                 child: Icon(
@@ -440,7 +440,7 @@ class _HelpPageState extends State<HelpPage> with TickerProviderStateMixin {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('$type'),
+        title: Text(type),
         content: Text('感谢您的$type，我们会认真考虑您的建议！'),
         actions: [
           TextButton(

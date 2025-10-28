@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../theme/gymates_theme.dart';
-import '../../animations/gymates_animations.dart';
 import '../../routes/app_routes.dart';
 
 /// 🎯 引导页面 - 完全按照 Figma 设计实现
@@ -162,10 +161,10 @@ class _OnboardingPageState extends State<OnboardingPage>
                     width: 200,
                     height: 200,
                     decoration: BoxDecoration(
-                      color: data.color.withOpacity(0.1),
+                      color: data.color.withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: data.color.withOpacity(0.2),
+                        color: data.color.withValues(alpha: 0.2),
                         width: 2,
                       ),
                     ),
@@ -227,7 +226,7 @@ class _OnboardingPageState extends State<OnboardingPage>
             decoration: BoxDecoration(
               color: _currentPage == index
                   ? GymatesTheme.primaryColor
-                  : GymatesTheme.lightTextSecondary.withOpacity(0.3),
+                  : GymatesTheme.lightTextSecondary.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(4),
             ),
           ),

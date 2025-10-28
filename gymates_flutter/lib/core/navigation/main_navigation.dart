@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
-import '../../core/theme/gymates_theme.dart';
-import '../../core/animations/gymates_animations.dart';
-import '../training/screens/training_screen.dart';
-import '../community/screens/community_screen.dart';
-import '../mates/screens/mates_screen.dart';
-import '../messages/screens/messages_screen.dart';
-import '../profile/screens/profile_screen.dart';
+import 'package:flutter/services.dart';
+import 'dart:io';
+import 'package:gymates_flutter/core/theme/gymates_theme.dart';
+import '../../pages/training/training_page.dart';
+import '../../pages/community/community_page.dart';
+import '../../pages/partner/partner_page.dart';
+import '../../pages/messages/messages_page.dart';
+import '../../pages/profile/profile_page.dart';
 
 /// 🧭 Gymates Main Navigation - Platform-Adaptive Bottom Navigation
 /// 
@@ -36,31 +36,31 @@ class _GymatesMainNavigationState extends State<GymatesMainNavigation>
       icon: Icons.fitness_center,
       activeIcon: Icons.fitness_center,
       label: 'Training',
-      page: const TrainingScreen(),
+      page: const TrainingPage(),
     ),
     NavigationItem(
       icon: Icons.people,
       activeIcon: Icons.people,
       label: 'Community',
-      page: const CommunityScreen(),
+      page: const CommunityPage(),
     ),
     NavigationItem(
       icon: Icons.favorite,
       activeIcon: Icons.favorite,
       label: 'Mates',
-      page: const MatesScreen(),
+      page: const PartnerPage(),
     ),
     NavigationItem(
       icon: Icons.message,
       activeIcon: Icons.message,
       label: 'Messages',
-      page: const MessagesScreen(),
+      page: const MessagesPage(),
     ),
     NavigationItem(
       icon: Icons.person,
       activeIcon: Icons.person,
       label: 'Profile',
-      page: const ProfileScreen(),
+      page: const ProfilePage(),
     ),
   ];
 
@@ -101,59 +101,29 @@ class _GymatesMainNavigationState extends State<GymatesMainNavigation>
 
   @override
   Widget build(BuildContext context) {
-    return PlatformScaffold(
+    return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
         children: _navigationItems.map((item) => item.page).toList(),
       ),
-      bottomNavBar: _buildBottomNavigationBar(),
+      bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
 
   Widget _buildBottomNavigationBar() {
-    return PlatformNavBar(
+    return BottomNavigationBar(
       currentIndex: _currentIndex,
       onTap: _onTabTapped,
-      itemChanged: (index) => _onTabTapped(index),
-      items: _navigationItems.map((item) => _buildNavBarItem(item)).toList(),
-      backgroundColor: Platform.isIOS 
-          ? CupertinoColors.systemBackground.withOpacity(0.8)
-          : Theme.of(context).colorScheme.surface,
-      // iOS specific styling
-      ios: (context, platform) => CupertinoTabBarData(
-        backgroundColor: CupertinoColors.systemBackground.withOpacity(0.8),
-        activeColor: GymatesTheme.primaryColor,
-        inactiveColor: CupertinoColors.inactiveGray,
-        border: Border(
-          top: BorderSide(
-            color: CupertinoColors.separator.withOpacity(0.3),
-            width: 0.5,
-          ),
-        ),
-      ),
-      // Android specific styling
-      android: (context, platform) => MaterialNavBarData(
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        selectedItemColor: GymatesTheme.primaryColor,
-        unselectedItemColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
-        type: BottomNavigationBarType.fixed,
-        elevation: 8,
-      ),
-    );
-  }
-
-  PlatformNavBarItem _buildNavBarItem(NavigationItem item) {
-    return PlatformNavBarItem(
-      cupertino: (context, platform) => CupertinoTabBarItemData(
-        icon: Icon(item.icon),
-        activeIcon: Icon(item.activeIcon),
-        title: Text(item.label),
-      ),
-      material: (context, platform) => MaterialNavBarItemData(
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      selectedItemColor: GymatesTheme.primaryColor,
+      unselectedItemColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+      elevation: 8,
+      items: _navigationItems.map((item) => BottomNavigationBarItem(
         icon: Icon(item.icon),
         activeIcon: Icon(item.activeIcon),
         label: item.label,
-      ),
+      )).toList(),
     );
   }
 }
@@ -232,11 +202,11 @@ class _EnhancedBottomNavigationState extends State<EnhancedBottomNavigation>
     return Container(
       decoration: BoxDecoration(
         color: Platform.isIOS 
-            ? CupertinoColors.systemBackground.withOpacity(0.8)
+            ? CupertinoColors.systemBackground.withValues(alpha: 0.8)
             : Theme.of(context).colorScheme.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, -2),
           ),
@@ -286,7 +256,7 @@ class _EnhancedBottomNavigationState extends State<EnhancedBottomNavigation>
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: isSelected 
-                  ? GymatesTheme.primaryColor.withOpacity(0.1)
+                  ? GymatesTheme.primaryColor.withValues(alpha: 0.1)
                   : Colors.transparent,
               borderRadius: BorderRadius.circular(12),
             ),
@@ -295,7 +265,7 @@ class _EnhancedBottomNavigationState extends State<EnhancedBottomNavigation>
               size: 24,
               color: isSelected 
                   ? GymatesTheme.primaryColor
-                  : Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                  : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
             ),
           ),
           
@@ -309,7 +279,7 @@ class _EnhancedBottomNavigationState extends State<EnhancedBottomNavigation>
               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
               color: isSelected 
                   ? GymatesTheme.primaryColor
-                  : Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                  : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
             ),
             child: Text(item.label),
           ),

@@ -56,10 +56,26 @@ class GymatesTheme {
   static const Color infoColor = Color(0xFF3B82F6);
   
   // 📐 Spacing & Dimensions
+  static const double spacing1 = 1.0;
+  static const double spacing2 = 2.0;
+  static const double spacing4 = 4.0;
+  static const double spacing8 = 8.0;
+  static const double spacing12 = 12.0;
+  static const double spacing16 = 16.0;
+  static const double spacing20 = 20.0;
+  static const double spacing24 = 24.0;
+  static const double spacing32 = 32.0;
+  
+  // 🎯 Border Radius
   static const double borderRadius = 16.0;
-  static const double buttonRadius = 8.0;
+  static const double buttonRadius = 12.0;
   static const double cardRadius = 16.0;
-  static const double inputRadius = 12.0;
+  static const double inputRadius = 8.0;
+  
+  // 兼容性别名
+  static const double radius8 = 8.0;
+  static const double radius12 = 12.0;
+  static const double radius16 = 16.0;
   
   // 🌟 Shadow Definitions
   static const List<BoxShadow> softShadow = [
@@ -88,6 +104,40 @@ class GymatesTheme {
       spreadRadius: 0,
     ),
   ];
+  
+  // 🎭 Border Color
+  static const Color borderColor = Color(0x4DE0E0E0);
+  
+  /// Get card shadow for theme
+  static List<BoxShadow> getCardShadow(bool isDark) {
+    return [
+      BoxShadow(
+        color: isDark 
+          ? Colors.black.withValues(alpha: 0.3)
+          : Colors.black.withValues(alpha: 0.08),
+        blurRadius: 15,
+        offset: const Offset(0, 4),
+        spreadRadius: 0,
+      ),
+    ];
+  }
+  
+  /// Get background gradient
+  static LinearGradient getBackgroundGradient(bool isDark) {
+    if (isDark) {
+      return const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xFF111827), Color(0xFF1F2937)],
+      );
+    } else {
+      return const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xFFF9FAFB), Color(0xFFFFFFFF)],
+      );
+    }
+  }
 }
 
 /// 🍎 iOS Cupertino Theme Configuration
@@ -96,7 +146,7 @@ class CupertinoGymatesTheme {
     return CupertinoThemeData(
       primaryColor: GymatesTheme.primaryColor,
       scaffoldBackgroundColor: GymatesTheme.lightBackground,
-      barBackgroundColor: GymatesTheme.cardBackground.withOpacity(0.8),
+      barBackgroundColor: GymatesTheme.cardBackground.withValues(alpha: 0.8),
       textTheme: CupertinoTextThemeData(
         primaryColor: GymatesTheme.lightTextPrimary,
         textStyle: const TextStyle(
@@ -113,7 +163,7 @@ class CupertinoGymatesTheme {
     return CupertinoThemeData(
       primaryColor: GymatesTheme.primaryColor,
       scaffoldBackgroundColor: GymatesTheme.darkBackground,
-      barBackgroundColor: GymatesTheme.darkCardBackground.withOpacity(0.8),
+      barBackgroundColor: GymatesTheme.darkCardBackground.withValues(alpha: 0.8),
       textTheme: CupertinoTextThemeData(
         primaryColor: GymatesTheme.darkTextPrimary,
         textStyle: const TextStyle(
@@ -202,7 +252,7 @@ class MaterialGymatesTheme {
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: GymatesTheme.cardBackground,
         elevation: 0,
         shadowColor: Colors.transparent,
@@ -294,10 +344,10 @@ class PlatformEffects {
         filter: ImageFilter.blur(sigmaX: sigmaX, sigmaY: sigmaY),
         child: Container(
           decoration: BoxDecoration(
-            color: tintColor.withOpacity(tintOpacity),
+            color: tintColor.withValues(alpha: tintOpacity),
             borderRadius: BorderRadius.circular(GymatesTheme.borderRadius),
             border: Border.all(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               width: 1,
             ),
           ),
@@ -319,7 +369,7 @@ class PlatformEffects {
         borderRadius: BorderRadius.circular(GymatesTheme.borderRadius),
         boxShadow: [
           BoxShadow(
-            color: glowColor.withOpacity(0.3),
+            color: glowColor.withValues(alpha: 0.3),
             blurRadius: blurRadius,
             spreadRadius: spreadRadius,
             offset: const Offset(0, 0),
@@ -362,7 +412,7 @@ class PlatformEffects {
           CircularProgressIndicator(
             value: 1.0,
             strokeWidth: strokeWidth,
-            backgroundColor: Colors.grey.withOpacity(0.2),
+            backgroundColor: Colors.grey.withValues(alpha: 0.2),
             valueColor: const AlwaysStoppedAnimation<Color>(Colors.grey),
           ),
           // Progress ring with gradient

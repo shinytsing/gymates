@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../shared/models/edit_training_plan_models.dart' as models;
 import '../../shared/models/mock_data.dart';
 import '../../services/training_plan_sync_service.dart';
@@ -11,11 +10,11 @@ class EditTrainingPlanPage extends StatefulWidget {
   final int? userId;
 
   const EditTrainingPlanPage({
-    Key? key,
+    super.key,
     this.existingPlan,
     this.planId,
     this.userId,
-  }) : super(key: key);
+  });
 
   @override
   _EditTrainingPlanPageState createState() => _EditTrainingPlanPageState();
@@ -106,7 +105,7 @@ class _EditTrainingPlanPageState extends State<EditTrainingPlanPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -143,7 +142,7 @@ class _EditTrainingPlanPageState extends State<EditTrainingPlanPage> {
           ),
           const SizedBox(height: 16),
           DropdownButtonFormField<String>(
-            value: _cycleTime,
+            initialValue: _cycleTime,
             decoration: const InputDecoration(
               labelText: '循环时间',
               border: OutlineInputBorder(),
@@ -191,7 +190,7 @@ class _EditTrainingPlanPageState extends State<EditTrainingPlanPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),

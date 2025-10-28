@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:math' as math;
-import '../../core/theme/gymates_theme.dart';
-import '../../core/animations/gymates_animations.dart';
+import 'package:gymates_flutter/core/theme/gymates_theme.dart';
+import '../../../core/animations/gymates_animations.dart';
 
 /// 💬 Community Page - Social Fitness Feed
 /// 
@@ -165,7 +164,7 @@ class _CommunityScreenState extends State<CommunityScreen>
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: GymatesTheme.primaryColor.withOpacity(0.1),
+                color: GymatesTheme.primaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: const Icon(
@@ -193,7 +192,7 @@ class _CommunityScreenState extends State<CommunityScreen>
     return AnimatedBuilder(
       animation: _tagAnimation,
       builder: (context, child) {
-        return Container(
+        return SizedBox(
           height: 50,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -418,8 +417,8 @@ class _CommunityScreenState extends State<CommunityScreen>
             borderRadius: BorderRadius.circular(12),
             gradient: LinearGradient(
               colors: [
-                GymatesTheme.primaryColor.withOpacity(0.1),
-                GymatesTheme.secondaryColor.withOpacity(0.1),
+                GymatesTheme.primaryColor.withValues(alpha: 0.1),
+                GymatesTheme.secondaryColor.withValues(alpha: 0.1),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -611,8 +610,8 @@ class _CommunityScreenState extends State<CommunityScreen>
               borderRadius: BorderRadius.circular(16),
               gradient: LinearGradient(
                 colors: [
-                  GymatesTheme.primaryColor.withOpacity(0.1),
-                  GymatesTheme.secondaryColor.withOpacity(0.1),
+                  GymatesTheme.primaryColor.withValues(alpha: 0.1),
+                  GymatesTheme.secondaryColor.withValues(alpha: 0.1),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,

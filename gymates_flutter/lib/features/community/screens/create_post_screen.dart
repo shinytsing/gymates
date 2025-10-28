@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/constants/app_theme.dart';
 import '../../../core/navigation/app_router.dart';
 import '../../../shared/widgets/custom_app_bar.dart';
-import '../../../shared/widgets/custom_button.dart';
 import '../../../shared/widgets/custom_text_field.dart';
 
 class CreatePostScreen extends ConsumerStatefulWidget {
@@ -63,7 +62,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
                 children: [
                   CircleAvatar(
                     radius: AppSizes.avatarS / 2,
-                    backgroundColor: AppColors.primary.withOpacity(0.1),
+                    backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                     child: const Icon(
                       Icons.person,
                       color: AppColors.primary,
@@ -231,10 +230,10 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
           vertical: AppSizes.paddingS,
         ),
         decoration: BoxDecoration(
-          color: AppColors.primary.withOpacity(0.1),
+          color: AppColors.primary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(AppSizes.radiusS),
           border: Border.all(
-            color: AppColors.primary.withOpacity(0.3),
+            color: AppColors.primary.withValues(alpha: 0.3),
           ),
         ),
         child: Text(

@@ -189,6 +189,56 @@ class MockExercise {
     this.notes = '',
     this.calories = 50,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'muscle_group': muscleGroup,
+      'difficulty': difficulty,
+      'equipment': equipment,
+      'image_url': imageUrl,
+      'video_url': videoUrl,
+      'instructions': instructions,
+      'tips': tips,
+      'sets': sets,
+      'reps': reps,
+      'weight': weight,
+      'rest_time': restTime,
+      'is_completed': isCompleted,
+      'completed_at': completedAt?.toIso8601String(),
+      'max_rm': maxRM,
+      'notes': notes,
+      'calories': calories,
+    };
+  }
+
+  factory MockExercise.fromJson(Map<String, dynamic> json) {
+    return MockExercise(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
+      muscleGroup: json['muscle_group'] ?? '',
+      difficulty: json['difficulty'] ?? '中级',
+      equipment: json['equipment'] ?? '',
+      imageUrl: json['image_url'] ?? '',
+      videoUrl: json['video_url'] ?? '',
+      instructions: List<String>.from(json['instructions'] ?? []),
+      tips: List<String>.from(json['tips'] ?? []),
+      sets: json['sets'] ?? 3,
+      reps: json['reps'] ?? 10,
+      weight: (json['weight'] ?? 0.0).toDouble(),
+      restTime: json['rest_time'] ?? 60,
+      isCompleted: json['is_completed'] ?? false,
+      completedAt: json['completed_at'] != null 
+          ? DateTime.parse(json['completed_at'])
+          : null,
+      maxRM: (json['max_rm'] ?? 0.0).toDouble(),
+      notes: json['notes'] ?? '',
+      calories: json['calories'] ?? 50,
+    );
+  }
 }
 
 class MockTrainingMode {

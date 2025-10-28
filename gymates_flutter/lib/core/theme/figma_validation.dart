@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import '../../theme/gymates_theme.dart';
+import 'gymates_theme.dart';
 import 'theme_fixes.dart';
 
 /// 🔍 Figma 高保真验证工具
@@ -83,8 +82,8 @@ class FigmaValidation {
   /// 验证渐变效果
   static bool validateGradient(Gradient gradient, Gradient expectedGradient) {
     if (gradient is LinearGradient && expectedGradient is LinearGradient) {
-      final actual = gradient as LinearGradient;
-      final expected = expectedGradient as LinearGradient;
+      final actual = gradient;
+      final expected = expectedGradient;
       
       if (actual.colors.length != expected.colors.length) return false;
       
@@ -155,7 +154,6 @@ class DesignSpecChecker {
     required Widget page,
   }) {
     final issues = <String>[];
-    final isIOS = PlatformStyles.isIOS(context);
 
     // 检查背景色
     if (page is Scaffold) {

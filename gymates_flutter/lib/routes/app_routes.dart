@@ -254,7 +254,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: double.infinity,
         height: double.infinity,
         child: Stack(
@@ -360,7 +360,7 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.white.withOpacity(0.3),
+                    color: Colors.white.withValues(alpha: 0.3),
                     blurRadius: 30,
                     spreadRadius: 5,
                   ),
@@ -408,7 +408,7 @@ class _SplashScreenState extends State<SplashScreen>
       child: CircularProgressIndicator(
         strokeWidth: 3,
         valueColor: AlwaysStoppedAnimation<Color>(
-          Colors.white.withOpacity(0.8),
+          Colors.white.withValues(alpha: 0.8),
         ),
       ),
     );
@@ -427,7 +427,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
     with TickerProviderStateMixin {
   int _currentIndex = 0;
   late AnimationController _tabAnimationController;
-  late Animation<double> _tabScaleAnimation;
+  // late Animation<double> _tabScaleAnimation; // Commented out - unused
 
   final List<NavigationItem> _navigationItems = [
     NavigationItem(
@@ -469,13 +469,13 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    _tabScaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.95,
-    ).animate(CurvedAnimation(
-      parent: _tabAnimationController,
-      curve: Curves.easeInOut,
-    ));
+    // _tabScaleAnimation = Tween<double>(
+    //   begin: 1.0,
+    //   end: 0.95,
+    // ).animate(CurvedAnimation(
+    //   parent: _tabAnimationController,
+    //   curve: Curves.easeInOut,
+    // )); // Commented out - unused
   }
 
   @override
@@ -509,7 +509,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, -5),
             ),
@@ -537,7 +537,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
                       ),
                       decoration: BoxDecoration(
                         color: isSelected 
-                            ? GymatesTheme.primaryColor.withOpacity(0.1)
+                            ? GymatesTheme.primaryColor.withValues(alpha: 0.1)
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -613,7 +613,7 @@ class ParticlePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.1)
+      ..color = Colors.white.withValues(alpha: 0.1)
       ..style = PaintingStyle.fill;
 
     final random = math.Random(42);
@@ -626,7 +626,7 @@ class ParticlePainter extends CustomPainter {
       final offsetY = math.sin(animationValue * 2 * math.pi + i) * 20;
       final opacity = 0.1 + (math.sin(animationValue * 2 * math.pi + i) * 0.1);
       
-      paint.color = Colors.white.withOpacity(opacity.clamp(0.0, 0.2));
+      paint.color = Colors.white.withValues(alpha: opacity.clamp(0.0, 0.2));
       
       canvas.drawCircle(
         Offset(x, y + offsetY),

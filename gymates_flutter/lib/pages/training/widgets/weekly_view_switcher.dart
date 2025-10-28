@@ -114,7 +114,7 @@ class _WeeklyViewSwitcherState extends State<WeeklyViewSwitcher>
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: const Color(0xFF6366F1).withOpacity(0.3),
+                    color: const Color(0xFF6366F1).withValues(alpha: 0.3),
                     blurRadius: 8,
                     offset: const Offset(0, 4),
                   ),
@@ -153,7 +153,7 @@ class _WeeklyViewSwitcherState extends State<WeeklyViewSwitcher>
                 '动作',
                 style: TextStyle(
                   fontSize: 10,
-                  color: isSelected ? Colors.white.withOpacity(0.8) : const Color(0xFF6B7280),
+                  color: isSelected ? Colors.white.withValues(alpha: 0.8) : const Color(0xFF6B7280),
                 ),
               ),
           ],

@@ -63,7 +63,7 @@ class ApiService {
   }
 
   // Home endpoints
-  Future<ApiResponse<Map<String, dynamic>>> getHomeList({
+  Future<ApiResponse<HomeItem>> getHomeList({
     int page = 1,
     int limit = 10,
     String? category,
@@ -86,7 +86,7 @@ class ApiService {
         AppConstants.homeList,
         queryParameters: queryParams,
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => HomeItem.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -110,7 +110,7 @@ class ApiService {
         '${AppConstants.homeUpdate}/$id',
         data: data,
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => HomeItem.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -119,7 +119,7 @@ class ApiService {
   Future<ApiResponse<void>> deleteHomeItem(int id) async {
     try {
       final response = await _dio.delete('${AppConstants.homeDelete}/$id');
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => HomeItem.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -138,7 +138,7 @@ class ApiService {
           'limit': limit,
         },
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => List<TrainingPlan>.from((json as List).map((x) => TrainingPlan.fromJson(x as Map<String, dynamic>))));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -150,7 +150,7 @@ class ApiService {
         AppConstants.trainingPlans,
         data: data,
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => TrainingPlan.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -162,7 +162,7 @@ class ApiService {
         AppConstants.trainingSessions,
         data: data,
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => WorkoutSession.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -186,7 +186,7 @@ class ApiService {
         AppConstants.communityPosts,
         queryParameters: queryParams,
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => List<Post>.from((json as List).map((x) => Post.fromJson(x as Map<String, dynamic>))));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -198,7 +198,7 @@ class ApiService {
         AppConstants.communityPosts,
         data: data,
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => Post.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -207,7 +207,7 @@ class ApiService {
   Future<ApiResponse<void>> likePost(String postId) async {
     try {
       final response = await _dio.post('${AppConstants.communityPosts}/$postId/like');
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => HomeItem.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -225,7 +225,7 @@ class ApiService {
           'limit': limit,
         },
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => List<Comment>.from((json as List).map((x) => Comment.fromJson(x as Map<String, dynamic>))));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -237,7 +237,7 @@ class ApiService {
         '${AppConstants.communityPosts}/$postId/comments',
         data: data,
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => Comment.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -256,7 +256,7 @@ class ApiService {
           'limit': limit,
         },
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => (json as List).map((e) => Mate.fromJson(e as Map<String, dynamic>)).toList()));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -268,7 +268,7 @@ class ApiService {
         AppConstants.matesRequests,
         data: data,
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) {});
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -287,7 +287,7 @@ class ApiService {
           'limit': limit,
         },
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => (json as List).map((e) => Chat.fromJson(e as Map<String, dynamic>)).toList()));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -305,7 +305,7 @@ class ApiService {
           'limit': limit,
         },
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => (json as List).map((e) => Message.fromJson(e as Map<String, dynamic>)).toList()));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -317,14 +317,14 @@ class ApiService {
         '${AppConstants.messagesChats}/$chatId/messages',
         data: data,
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => Message.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
       throw _handleError(e);
     }
   }
 
   // Detail endpoints
-  Future<ApiResponse<Map<String, dynamic>>> getDetailList({
+  Future<ApiResponse<DetailItem>> getDetailList({
     int page = 1,
     int limit = 10,
     String? category,
@@ -345,7 +345,7 @@ class ApiService {
         AppConstants.detailList,
         queryParameters: queryParams,
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => DetailItem.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -354,7 +354,7 @@ class ApiService {
   Future<ApiResponse<DetailItem>> getDetail(int id) async {
     try {
       final response = await _dio.get('${AppConstants.detailList}/$id');
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => DetailItem.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -366,7 +366,7 @@ class ApiService {
         AppConstants.detailSubmit,
         data: data,
       );
-      return ApiResponse.fromJson(response.data, (json) => json as Map<String, dynamic>);
+      return ApiResponse.fromJson(response.data, (json) => DetailItem.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
       throw _handleError(e);
     }

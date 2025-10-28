@@ -5,7 +5,7 @@ import '../../core/config/smart_api_config.dart';
 /// 
 /// 用于测试和验证智能API配置系统
 class ApiConfigTestPage extends StatelessWidget {
-  const ApiConfigTestPage({Key? key}) : super(key: key);
+  const ApiConfigTestPage({super.key});
 
   @override
   Widget build(BuildContext context) {

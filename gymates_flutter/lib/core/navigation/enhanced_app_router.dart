@@ -6,7 +6,7 @@ import '../../shared/providers/auth_provider.dart';
 import '../../features/auth/screens/enhanced_login_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
 import '../../features/auth/screens/onboarding_screen.dart';
-import '../../features/training/screens/enhanced_training_screen.dart';
+import '../../pages/training/training_page.dart';
 import '../../features/community/screens/community_screen.dart';
 import '../../features/community/screens/create_post_screen.dart';
 import '../../features/mates/screens/mates_screen.dart';
@@ -114,7 +114,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: AppRoutes.main,
             name: 'main',
             pageBuilder: (context, state) => CustomTransitionPage(
-              child: const TrainingScreen(),
+              child: const TrainingPage(),
               transitionsBuilder: (context, animation, secondaryAnimation, child) {
                 return FadePageRoute(child: child).transitionsBuilder(
                   context, animation, secondaryAnimation, child);

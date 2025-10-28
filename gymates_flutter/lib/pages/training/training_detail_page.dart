@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../theme/gymates_theme.dart';
-import '../../animations/gymates_animations.dart';
 import '../../shared/models/mock_data.dart';
 
 /// 🏋️‍♀️ 训练计划详情页 - TrainingDetailPage
@@ -33,7 +31,7 @@ class _TrainingDetailPageState extends State<TrainingDetailPage>
 
   bool _isTrainingStarted = false;
   int _currentExerciseIndex = 0;
-  int _completedExercises = 0;
+  final int _completedExercises = 0;
 
   @override
   void initState() {
@@ -257,7 +255,7 @@ class _TrainingDetailPageState extends State<TrainingDetailPage>
                 end: Alignment.bottomCenter,
                 colors: [
                   Colors.transparent,
-                  Colors.black.withOpacity(0.3),
+                  Colors.black.withValues(alpha: 0.3),
                 ],
               ),
             ),
@@ -270,7 +268,7 @@ class _TrainingDetailPageState extends State<TrainingDetailPage>
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9),
+                color: Colors.white.withValues(alpha: 0.9),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
@@ -291,7 +289,7 @@ class _TrainingDetailPageState extends State<TrainingDetailPage>
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.6),
+                color: Colors.black.withValues(alpha: 0.6),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
@@ -328,7 +326,7 @@ class _TrainingDetailPageState extends State<TrainingDetailPage>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -399,10 +397,10 @@ class _TrainingDetailPageState extends State<TrainingDetailPage>
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: color.withOpacity(0.2),
+          color: color.withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -443,7 +441,7 @@ class _TrainingDetailPageState extends State<TrainingDetailPage>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -518,7 +516,7 @@ class _TrainingDetailPageState extends State<TrainingDetailPage>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -538,14 +536,13 @@ class _TrainingDetailPageState extends State<TrainingDetailPage>
           
           const SizedBox(height: 12),
           
-          ...widget.trainingPlan.exercises.asMap().entries.map((entry) {
+          ...widget.trainingPlan.exerciseDetails.asMap().entries.map((entry) {
             final index = entry.key;
             final exercise = entry.value;
             final isCompleted = index < _completedExercises;
             final isCurrent = index == _currentExerciseIndex && _isTrainingStarted;
-            
-            return _buildExerciseItem(exercise, index, isCompleted, isCurrent);
-          }).toList(),
+            return _buildExerciseDetailItem(exercise, index, isCompleted, isCurrent);
+          }),
         ],
       ),
     );
@@ -557,9 +554,9 @@ class _TrainingDetailPageState extends State<TrainingDetailPage>
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: isCurrent 
-            ? const Color(0xFF6366F1).withOpacity(0.1)
+            ? const Color(0xFF6366F1).withValues(alpha: 0.1)
             : isCompleted 
-                ? const Color(0xFF10B981).withOpacity(0.1)
+                ? const Color(0xFF10B981).withValues(alpha: 0.1)
                 : const Color(0xFFF9FAFB),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
@@ -643,6 +640,113 @@ class _TrainingDetailPageState extends State<TrainingDetailPage>
     );
   }
 
+  Widget _buildExerciseDetailItem(MockExercise exercise, int index, bool isCompleted, bool isCurrent) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: isCurrent 
+            ? const Color(0xFF6366F1).withValues(alpha: 0.1)
+            : isCompleted 
+                ? const Color(0xFF10B981).withValues(alpha: 0.1)
+                : const Color(0xFFF9FAFB),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isCurrent 
+              ? const Color(0xFF6366F1)
+              : isCompleted 
+                  ? const Color(0xFF10B981)
+                  : const Color(0xFFE5E7EB),
+          width: isCurrent || isCompleted ? 2 : 1,
+        ),
+      ),
+      child: Row(
+        children: {
+          // 序号 / 状态
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              color: isCompleted 
+                  ? const Color(0xFF10B981)
+                  : isCurrent 
+                      ? const Color(0xFF6366F1)
+                      : const Color(0xFFE5E7EB),
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: isCompleted
+                  ? const Icon(Icons.check, color: Colors.white, size: 16)
+                  : Text(
+                      '${index + 1}',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: isCurrent ? Colors.white : const Color(0xFF6B7280),
+                      ),
+                    ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          // 信息
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  exercise.name,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: isCurrent ? FontWeight.w600 : FontWeight.normal,
+                    color: isCurrent
+                        ? const Color(0xFF6366F1)
+                        : isCompleted
+                            ? const Color(0xFF10B981)
+                            : const Color(0xFF1F2937),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '${exercise.sets}组 × ${exercise.reps}次 × ${exercise.weight}kg · 休息${exercise.restTime}s',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF6B7280),
+                  ),
+                ),
+                if ((exercise.muscleGroup).toString().isNotEmpty) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    exercise.muscleGroup,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFF9CA3AF),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          if (isCurrent)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: const Color(0xFF6366F1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Text(
+                '进行中',
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+        }.toList(),
+      ),
+    );
+  }
+
   Widget _buildTrainingTips() {
     return Container(
       padding: const EdgeInsets.all(16),
@@ -651,7 +755,7 @@ class _TrainingDetailPageState extends State<TrainingDetailPage>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),

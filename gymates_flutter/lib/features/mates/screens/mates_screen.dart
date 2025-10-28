@@ -52,7 +52,7 @@ class _MatesScreenState extends ConsumerState<MatesScreen> {
             children: [
               CircleAvatar(
                 radius: AppSizes.avatarM / 2,
-                backgroundColor: AppColors.primary.withOpacity(0.1),
+                backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                 child: const Icon(
                   Icons.person,
                   color: AppColors.primary,
@@ -127,7 +127,7 @@ class _MatesScreenState extends ConsumerState<MatesScreen> {
         vertical: AppSizes.paddingXS,
       ),
       decoration: BoxDecoration(
-        color: AppColors.primary.withOpacity(0.1),
+        color: AppColors.primary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppSizes.radiusS),
       ),
       child: Text(

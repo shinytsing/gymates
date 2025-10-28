@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../theme/gymates_theme.dart';
-import '../../animations/gymates_animations.dart';
 
 /// 🤖 AI训练推荐详情页 - AITrainingDetailPage
 /// 
@@ -272,7 +270,7 @@ class _AITrainingDetailPageState extends State<AITrainingDetailPage>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF6366F1).withOpacity(0.3),
+            color: const Color(0xFF6366F1).withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -332,10 +330,10 @@ class _AITrainingDetailPageState extends State<AITrainingDetailPage>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
+        color: Colors.white.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Colors.white.withOpacity(0.3),
+          color: Colors.white.withValues(alpha: 0.3),
           width: 1,
         ),
       ),
@@ -369,7 +367,7 @@ class _AITrainingDetailPageState extends State<AITrainingDetailPage>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -483,7 +481,7 @@ class _AITrainingDetailPageState extends State<AITrainingDetailPage>
                 borderRadius: BorderRadius.circular(18),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -509,7 +507,7 @@ class _AITrainingDetailPageState extends State<AITrainingDetailPage>
                       fontSize: 10,
                       color: message.isAI 
                           ? const Color(0xFF6B7280)
-                          : Colors.white.withOpacity(0.7),
+                          : Colors.white.withValues(alpha: 0.7),
                     ),
                   ),
                 ],

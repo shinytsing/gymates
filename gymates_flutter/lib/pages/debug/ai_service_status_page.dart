@@ -7,7 +7,7 @@ import '../../core/config/smart_api_config.dart';
 /// 
 /// 显示当前AI服务状态，允许用户切换AI服务提供商
 class AIServiceStatusPage extends StatefulWidget {
-  const AIServiceStatusPage({Key? key}) : super(key: key);
+  const AIServiceStatusPage({super.key});
 
   @override
   _AIServiceStatusPageState createState() => _AIServiceStatusPageState();
@@ -17,8 +17,8 @@ class _AIServiceStatusPageState extends State<AIServiceStatusPage> {
   String _currentProvider = 'unknown';
   List<String> _availableProviders = [];
   Map<String, bool> _serviceStatus = {};
-  Map<String, int> _servicePriority = {};
-  List<Map<String, dynamic>> _servicesWithPriority = [];
+  final Map<String, int> _servicePriority = {};
+  final List<Map<String, dynamic>> _servicesWithPriority = [];
   bool _isLoading = true;
   String? _errorMessage;
 
@@ -258,7 +258,7 @@ class _AIServiceStatusPageState extends State<AIServiceStatusPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
-                color: _getProviderColor(_currentProvider).withOpacity(0.2),
+                color: _getProviderColor(_currentProvider).withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: _getProviderColor(_currentProvider),
@@ -340,7 +340,7 @@ class _AIServiceStatusPageState extends State<AIServiceStatusPage> {
                   )
                 : const Icon(Icons.block, color: Colors.grey),
         tileColor: isCurrent 
-            ? _getProviderColor(provider).withOpacity(0.1)
+            ? _getProviderColor(provider).withValues(alpha: 0.1)
             : null,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

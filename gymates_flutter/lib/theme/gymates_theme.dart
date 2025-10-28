@@ -134,8 +134,8 @@ class GymatesTheme {
     return [
       BoxShadow(
         color: isDark 
-          ? Colors.black.withOpacity(0.3)
-          : Colors.black.withOpacity(0.08),
+          ? Colors.black.withValues(alpha: 0.3)
+          : Colors.black.withValues(alpha: 0.08),
         blurRadius: 15,
         offset: const Offset(0, 4),
         spreadRadius: 0,
@@ -167,7 +167,7 @@ class CupertinoGymatesTheme {
     return CupertinoThemeData(
       primaryColor: GymatesTheme.primaryColor,
       scaffoldBackgroundColor: GymatesTheme.lightBackground,
-      barBackgroundColor: GymatesTheme.cardBackground.withOpacity(0.8),
+      barBackgroundColor: GymatesTheme.cardBackground.withValues(alpha: 0.8),
       textTheme: CupertinoTextThemeData(
         primaryColor: GymatesTheme.lightTextPrimary,
         textStyle: const TextStyle(
@@ -184,7 +184,7 @@ class CupertinoGymatesTheme {
     return CupertinoThemeData(
       primaryColor: GymatesTheme.primaryColor,
       scaffoldBackgroundColor: GymatesTheme.darkBackground,
-      barBackgroundColor: GymatesTheme.darkCardBackground.withOpacity(0.8),
+      barBackgroundColor: GymatesTheme.darkCardBackground.withValues(alpha: 0.8),
       textTheme: CupertinoTextThemeData(
         primaryColor: GymatesTheme.darkTextPrimary,
         textStyle: const TextStyle(
@@ -364,10 +364,10 @@ class PlatformEffects {
         filter: ImageFilter.blur(sigmaX: sigmaX, sigmaY: sigmaY),
         child: Container(
           decoration: BoxDecoration(
-            color: tintColor.withOpacity(tintOpacity),
+            color: tintColor.withValues(alpha: tintOpacity),
             borderRadius: BorderRadius.circular(GymatesTheme.radius16),
             border: Border.all(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               width: 1,
             ),
           ),
@@ -389,7 +389,7 @@ class PlatformEffects {
         borderRadius: BorderRadius.circular(GymatesTheme.radius16),
         boxShadow: [
           BoxShadow(
-            color: glowColor.withOpacity(0.3),
+            color: glowColor.withValues(alpha: 0.3),
             blurRadius: blurRadius,
             spreadRadius: spreadRadius,
             offset: const Offset(0, 0),
@@ -425,7 +425,7 @@ class PlatformEffects {
         filter: ImageFilter.blur(sigmaX: sigmaX, sigmaY: sigmaY),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.8),
+            color: Colors.white.withValues(alpha: 0.8),
             border: Border(
               bottom: BorderSide(
                 color: GymatesTheme.borderColor,
@@ -450,8 +450,8 @@ class PlatformEffects {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(GymatesTheme.radius16),
-        splashColor: rippleColor.withOpacity(0.1),
-        highlightColor: rippleColor.withOpacity(0.05),
+        splashColor: rippleColor.withValues(alpha: 0.1),
+        highlightColor: rippleColor.withValues(alpha: 0.05),
         child: child,
       ),
     );

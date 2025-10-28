@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../theme/gymates_theme.dart';
-import '../../../animations/gymates_animations.dart';
-import '../../../routes/app_routes.dart';
 import '../../../pages/training/training_plan_editor.dart';
 import '../../../pages/training/training_detail_page.dart';
 import '../../../services/training_plan_sync_service.dart';
 import '../../../shared/models/mock_data.dart';
-import 'exercise_completion_animation.dart';
 
 /// 🏋️‍♀️ 今日训练计划卡片 - TodayPlanCard
 /// 
@@ -87,6 +83,10 @@ class _TodayPlanCardState extends State<TodayPlanCard>
     return FutureBuilder<Map<String, dynamic>?>(
       future: TrainingPlanSyncService.getTodayTraining(),
       builder: (context, snapshot) {
+        print('🏋️‍♀️ TodayPlanCard - 数据状态: ${snapshot.connectionState}');
+        print('🏋️‍♀️ TodayPlanCard - 数据: ${snapshot.data}');
+        print('🏋️‍♀️ TodayPlanCard - 错误: ${snapshot.error}');
+        
         if (snapshot.connectionState == ConnectionState.waiting) {
           return _buildLoadingCard();
         }
@@ -114,7 +114,7 @@ class _TodayPlanCardState extends State<TodayPlanCard>
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
+                        color: Colors.black.withValues(alpha: 0.08),
                         blurRadius: 20,
                         offset: const Offset(0, 4),
                       ),
@@ -170,7 +170,7 @@ class _TodayPlanCardState extends State<TodayPlanCard>
             end: Alignment.bottomCenter,
             colors: [
               Colors.transparent,
-              Colors.black.withOpacity(0.3),
+              Colors.black.withValues(alpha: 0.3),
             ],
           ),
         ),
@@ -195,7 +195,7 @@ class _TodayPlanCardState extends State<TodayPlanCard>
                   (training['isRestDay'] == true) ? '休息日' : '${training['totalExercises'] ?? 0} 个动作',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(alpha: 0.9),
                   ),
                 ),
               ],
@@ -242,7 +242,7 @@ class _TodayPlanCardState extends State<TodayPlanCard>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF6366F1).withOpacity(0.1),
+                  color: const Color(0xFF6366F1).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -256,7 +256,62 @@ class _TodayPlanCardState extends State<TodayPlanCard>
               ),
             ],
           ),
+          const SizedBox(height: 12),
+          _buildExercisePreview(training),
         ],
+      ),
+    );
+  }
+
+  /// 今日动作预览（最多展示6个）
+  Widget _buildExercisePreview(Map<String, dynamic> training) {
+    final List<Map<String, dynamic>> preview = [];
+    final parts = training['parts'] as List?;
+    if (parts != null) {
+      for (final part in parts) {
+        if (part is Map<String, dynamic>) {
+          final exercises = part['exercises'] as List?;
+          if (exercises != null) {
+            for (final e in exercises) {
+              if (e is Map<String, dynamic>) {
+                preview.add(e);
+                if (preview.length >= 6) break;
+              }
+            }
+          }
+        }
+        if (preview.length >= 6) break;
+      }
+    }
+
+    if (preview.isEmpty) return const SizedBox.shrink();
+
+    return SizedBox(
+      height: 36,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: preview.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        itemBuilder: (context, index) {
+          final e = preview[index];
+          final name = (e['name'] ?? '动作').toString();
+          final muscle = (e['muscle_group'] ?? '').toString();
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            decoration: BoxDecoration(
+              color: const Color(0xFFEEF2FF),
+              borderRadius: BorderRadius.circular(999),
+            ),
+            child: Text(
+              muscle.isEmpty ? name : '$name · $muscle',
+              style: const TextStyle(
+                fontSize: 12,
+                color: Color(0xFF4F46E5),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -362,7 +417,7 @@ class _TodayPlanCardState extends State<TodayPlanCard>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -396,7 +451,7 @@ class _TodayPlanCardState extends State<TodayPlanCard>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -455,7 +510,7 @@ class _TodayPlanCardState extends State<TodayPlanCard>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -489,6 +544,7 @@ class _TodayPlanCardState extends State<TodayPlanCard>
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
+              print('🏋️‍♀️ 创建训练计划按钮被点击');
               HapticFeedback.lightImpact();
               // 导航到训练计划编辑页面
               Navigator.push(
@@ -511,6 +567,8 @@ class _TodayPlanCardState extends State<TodayPlanCard>
 
   /// 开始训练
   void _startTraining(Map<String, dynamic> training) {
+    print('🏋️‍♀️ 开始训练 - 训练数据: $training');
+    
     if (training['isRestDay'] == true) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -521,60 +579,100 @@ class _TodayPlanCardState extends State<TodayPlanCard>
     } else {
       // 将API数据转换为MockTrainingPlan格式
       final mockPlan = _convertToMockTrainingPlan(training);
+      print('🏋️‍♀️ 转换后的训练计划: $mockPlan');
       
-      // 导航到训练详情页面
-      Navigator.pushNamed(
-        context,
-        AppRoutes.trainingDetail,
-        arguments: {'trainingPlan': mockPlan},
-      );
+      // 直接路由到训练详情（使用 rootNavigator 避免嵌套导航栈拦截）
+      Navigator.of(context, rootNavigator: true)
+          .push(
+        MaterialPageRoute(
+          builder: (_) => TrainingDetailPage(trainingPlan: mockPlan),
+        ),
+      )
+          .then((result) {
+        print('🏋️‍♀️ 导航结果: $result');
+      }).catchError((error) {
+        print('❌ 导航错误: $error');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('导航失败: $error'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      });
     }
   }
 
   /// 将API训练数据转换为MockTrainingPlan格式
   MockTrainingPlan _convertToMockTrainingPlan(Map<String, dynamic> training) {
-    // 提取动作列表
+    // 提取动作列表（兼容多种字段命名）
     List<String> exerciseNames = [];
     List<MockExercise> exerciseDetails = [];
-    
-    if (training['parts'] != null) {
-      final parts = training['parts'] as List?;
-      if (parts != null) {
-        for (final part in parts) {
-          if (part is Map<String, dynamic> && part['exercises'] != null) {
-            final exercises = part['exercises'] as List?;
-            if (exercises != null) {
-              for (final exercise in exercises) {
-                if (exercise is Map<String, dynamic>) {
-                  exerciseNames.add(exercise['name'] ?? '未知动作');
-                  exerciseDetails.add(MockExercise(
-                    id: exercise['id']?.toString() ?? DateTime.now().millisecondsSinceEpoch.toString(),
-                    name: exercise['name'] ?? '未知动作',
-                    description: exercise['description'] ?? '',
-                    muscleGroup: exercise['muscle_group'] ?? '',
-                    difficulty: exercise['difficulty'] ?? 'intermediate',
-                    equipment: exercise['equipment'] ?? '',
-                    imageUrl: exercise['image_url'] ?? '',
-                    videoUrl: exercise['video_url'] ?? '',
-                    instructions: exercise['instructions'] ?? '',
-                    tips: exercise['notes'] ?? '',
-                    sets: exercise['sets'] ?? 3,
-                    reps: exercise['reps'] ?? 10,
-                    weight: exercise['weight']?.toDouble() ?? 0.0,
-                    restTime: exercise['rest_seconds'] ?? 60,
-                    calories: exercise['calories'] ?? 50,
-                  ));
-                }
-              }
-            }
-          }
+
+    List pickExercises(dynamic container) {
+      if (container is Map<String, dynamic>) {
+        // 常见字段：exercises / motions / items / exercise_list
+        final candidates = [
+          container['exercises'],
+          container['motions'],
+          container['items'],
+          container['exercise_list'],
+        ];
+        for (final c in candidates) {
+          if (c is List && c.isNotEmpty) return c;
         }
+      }
+      return const [];
+    }
+
+    final parts = (training['parts'] as List?) ?? const [];
+    for (final part in parts) {
+      final list = pickExercises(part);
+      for (final exercise in list) {
+        if (exercise is Map<String, dynamic>) {
+          final name = (exercise['name'] ?? exercise['title'] ?? '未知动作').toString();
+          exerciseNames.add(name);
+          exerciseDetails.add(
+            MockExercise(
+              id: exercise['id']?.toString() ?? DateTime.now().millisecondsSinceEpoch.toString(),
+              name: name,
+              description: (exercise['description'] ?? exercise['desc'] ?? '').toString(),
+              muscleGroup: (exercise['muscle_group'] ?? exercise['muscle'] ?? '').toString(),
+              difficulty: (exercise['difficulty'] ?? 'intermediate').toString(),
+              equipment: (exercise['equipment'] ?? '').toString(),
+              imageUrl: (exercise['image_url'] ?? '').toString(),
+              videoUrl: (exercise['video_url'] ?? '').toString(),
+              instructions: (exercise['instructions'] is List)
+                  ? (exercise['instructions'] as List).map((e) => e.toString()).toList()
+                  : (exercise['instructions'] is String)
+                      ? <String>[exercise['instructions'] as String]
+                      : const <String>[],
+              tips: (exercise['notes'] is List)
+                  ? (exercise['notes'] as List).map((e) => e.toString()).toList()
+                  : (exercise['notes'] is String)
+                      ? <String>[exercise['notes'] as String]
+                      : const <String>[],
+              sets: (exercise['sets'] ?? 3) as int,
+              reps: (exercise['reps'] ?? 10) as int,
+              weight: (exercise['weight'] is num) ? (exercise['weight'] as num).toDouble() : 0.0,
+              restTime: (exercise['rest_seconds'] ?? exercise['rest_time'] ?? 60) as int,
+              calories: (exercise['calories'] ?? 50) as int,
+            ),
+          );
+        }
+      }
+    }
+
+    // 若API未返回动作明细，但告知数量，则制造占位名称，避免详情页空白
+    if (exerciseNames.isEmpty) {
+      final count = (training['totalExercises'] ?? 0) as int;
+      for (int i = 0; i < (count == 0 ? 3 : count.clamp(1, 6)); i++) {
+        exerciseNames.add('动作 ${i + 1}');
       }
     }
 
     return MockTrainingPlan(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      title: training['planName'] ?? '今日训练',
+      title: (training['planName'] ?? training['name'] ?? training['day_name'] ?? '今日训练').toString(),
       description: training['planDescription'] ?? '个性化训练计划',
       duration: '${training['totalDuration'] ?? 30}分钟',
       difficulty: 'intermediate',

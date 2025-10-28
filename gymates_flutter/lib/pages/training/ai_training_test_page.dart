@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'ai_training_page.dart';
+import '../../core/config/smart_api_config.dart';
+import 'training_plan_test_page.dart';
 
 class AITrainingTestPage extends StatefulWidget {
-  const AITrainingTestPage({Key? key}) : super(key: key);
+  const AITrainingTestPage({super.key});
 
   @override
   _AITrainingTestPageState createState() => _AITrainingTestPageState();
@@ -39,9 +40,9 @@ class _AITrainingTestPageState extends State<AITrainingTestPage> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
+                color: Colors.blue.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.blue.withOpacity(0.3)),
+                border: Border.all(color: Colors.blue.withValues(alpha: 0.3)),
               ),
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,9 +81,9 @@ class _AITrainingTestPageState extends State<AITrainingTestPage> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.05),
+                color: Colors.white.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.white.withOpacity(0.1)),
+                border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,16 +102,16 @@ class _AITrainingTestPageState extends State<AITrainingTestPage> {
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelText: '用户ID',
-                      labelStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+                      labelStyle: TextStyle(color: Colors.white.withValues(alpha: 0.7)),
                       hintText: '输入用户ID (默认: 1)',
-                      hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
+                      hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.5)),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
+                        borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.2)),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
+                        borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.2)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -131,12 +132,8 @@ class _AITrainingTestPageState extends State<AITrainingTestPage> {
               child: ElevatedButton.icon(
                 onPressed: () {
                   final userId = int.tryParse(_userIdController.text) ?? 1;
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AITrainingPage(userId: userId),
-                    ),
-                  );
+                  // Navigate to training page
+                  Navigator.pop(context);
                 },
                 icon: const Icon(Icons.play_arrow),
                 label: const Text('启动AI训练页面'),
@@ -157,9 +154,9 @@ class _AITrainingTestPageState extends State<AITrainingTestPage> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.1),
+                color: Colors.green.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.green.withOpacity(0.3)),
+                border: Border.all(color: Colors.green.withValues(alpha: 0.3)),
               ),
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,9 +197,9 @@ class _AITrainingTestPageState extends State<AITrainingTestPage> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.orange.withOpacity(0.1),
+                color: Colors.orange.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.orange.withOpacity(0.3)),
+                border: Border.all(color: Colors.orange.withValues(alpha: 0.3)),
               ),
               child: const Row(
                 children: [
@@ -210,7 +207,7 @@ class _AITrainingTestPageState extends State<AITrainingTestPage> {
                   SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      '确保后端服务正在运行 (${SmartApiConfig.baseUrl})',
+                      '确保后端服务正在运行 (backendservice)',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,

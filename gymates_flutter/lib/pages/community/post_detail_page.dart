@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../theme/gymates_theme.dart';
-import '../../animations/gymates_animations.dart';
 import '../../shared/models/mock_data.dart';
 
 /// 📱 社区帖子详情页 - PostDetailPage
@@ -278,7 +276,7 @@ class _PostDetailPageState extends State<PostDetailPage>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -312,7 +310,7 @@ class _PostDetailPageState extends State<PostDetailPage>
                 return Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF6366F1).withOpacity(0.1),
+                    color: const Color(0xFF6366F1).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Text(
@@ -532,7 +530,7 @@ class _PostDetailPageState extends State<PostDetailPage>
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                  color: Colors.black.withValues(alpha: 0.08),
                   blurRadius: 20,
                   offset: const Offset(0, 4),
                 ),
@@ -576,7 +574,7 @@ class _PostDetailPageState extends State<PostDetailPage>
                 const SizedBox(height: 16),
                 
                 // 评论列表
-                ..._comments.map((comment) => _buildCommentItem(comment)).toList(),
+                ..._comments.map((comment) => _buildCommentItem(comment)),
               ],
             ),
           ),
@@ -722,7 +720,7 @@ class _PostDetailPageState extends State<PostDetailPage>
               height: 48,
               decoration: BoxDecoration(
                 color: _isLiked 
-                    ? const Color(0xFFEF4444).withOpacity(0.1)
+                    ? const Color(0xFFEF4444).withValues(alpha: 0.1)
                     : const Color(0xFFF3F4F6),
                 borderRadius: BorderRadius.circular(24),
               ),
@@ -795,7 +793,7 @@ class _PostDetailPageState extends State<PostDetailPage>
               height: 48,
               decoration: BoxDecoration(
                 color: _isBookmarked 
-                    ? const Color(0xFF6366F1).withOpacity(0.1)
+                    ? const Color(0xFF6366F1).withValues(alpha: 0.1)
                     : const Color(0xFFF3F4F6),
                 borderRadius: BorderRadius.circular(24),
               ),
@@ -871,7 +869,7 @@ class _PostDetailPageState extends State<PostDetailPage>
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.5),
+                    color: Colors.black.withValues(alpha: 0.5),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(

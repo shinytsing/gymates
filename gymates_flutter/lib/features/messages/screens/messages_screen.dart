@@ -36,14 +36,14 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen> {
           padding: const EdgeInsets.all(AppSizes.paddingM),
           itemCount: 5, // Mock data
           itemBuilder: (context, index) {
-            return _buildChatCard();
+            return _buildChatCard(index);
           },
         ),
       ),
     );
   }
 
-  Widget _buildChatCard() {
+  Widget _buildChatCard(int index) {
     return CustomCard(
       margin: const EdgeInsets.only(bottom: AppSizes.paddingS),
       onTap: () {
@@ -53,7 +53,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen> {
         children: [
           CircleAvatar(
             radius: AppSizes.avatarM / 2,
-            backgroundColor: AppColors.primary.withOpacity(0.1),
+            backgroundColor: AppColors.primary.withValues(alpha: 0.1),
             child: const Icon(
               Icons.person,
               color: AppColors.primary,

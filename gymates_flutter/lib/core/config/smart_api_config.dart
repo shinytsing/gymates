@@ -28,23 +28,23 @@ class SmartApiConfig {
   static String _determineApiUrl() {
     // 1. 检查是否在Web环境
     if (kIsWeb) {
-      return 'http://localhost:8080';
+      return 'http://localhost:8081';
     }
     
     // 2. 检查是否在Android模拟器
     if (Platform.isAndroid) {
       // Android模拟器使用10.0.2.2访问宿主机
-      return 'http://10.0.2.2:8080';
+      return 'http://10.0.2.2:8081';
     }
     
     // 3. 检查是否在iOS模拟器
     if (Platform.isIOS) {
       // iOS模拟器可以直接使用localhost
-      return 'http://localhost:8080';
+      return 'http://localhost:8081';
     }
     
     // 4. 其他平台默认使用localhost
-    return 'http://localhost:8080';
+    return 'http://localhost:8081';
   }
   
   /// 重置缓存（用于测试或动态切换）

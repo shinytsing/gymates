@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../theme/gymates_theme.dart';
-import '../../../animations/gymates_animations.dart';
 
 /// ✍️ 帖子创建器 - PostCreator
 /// 
@@ -99,7 +97,7 @@ class _PostCreatorState extends State<PostCreator>
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                  color: Colors.black.withValues(alpha: 0.08),
                   blurRadius: 20,
                   offset: const Offset(0, 4),
                 ),

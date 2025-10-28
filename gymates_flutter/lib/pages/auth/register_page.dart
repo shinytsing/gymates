@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../theme/gymates_theme.dart';
-import '../../animations/gymates_animations.dart';
 import '../../routes/app_routes.dart';
 
 /// 📝 注册页面 - 完全按照 Figma 设计实现

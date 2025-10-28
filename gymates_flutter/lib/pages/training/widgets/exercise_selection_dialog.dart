@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../../shared/models/edit_training_plan_models.dart';
 import '../../../services/exercise_api_service.dart';
 
@@ -149,7 +148,7 @@ class _ExerciseSelectionDialogState extends State<ExerciseSelectionDialog>
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -358,7 +357,7 @@ class _ExerciseSelectionDialogState extends State<ExerciseSelectionDialog>
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -397,7 +396,7 @@ class _ExerciseSelectionDialogState extends State<ExerciseSelectionDialog>
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: _getDifficultyColor(difficulty).withOpacity(0.1),
+                    color: _getDifficultyColor(difficulty).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -440,7 +439,7 @@ class _ExerciseSelectionDialogState extends State<ExerciseSelectionDialog>
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                             decoration: BoxDecoration(
-                              color: _getDifficultyColor(difficulty).withOpacity(0.1),
+                              color: _getDifficultyColor(difficulty).withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
@@ -473,7 +472,7 @@ class _ExerciseSelectionDialogState extends State<ExerciseSelectionDialog>
                           ],
                           // 组数次数
                           Text(
-                            '${sets}组 × ${reps}次',
+                            '$sets组 × $reps次',
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.grey.shade600,

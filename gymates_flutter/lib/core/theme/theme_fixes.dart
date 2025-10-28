@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../theme/gymates_theme.dart';
+import 'gymates_theme.dart';
 
 /// 🎨 全局主题修复工具
 /// 
@@ -49,12 +49,12 @@ class ThemeFixes {
       border: Border.all(color: borderColor, width: 1),
       boxShadow: hasShadow ? [
         BoxShadow(
-          color: Colors.black.withOpacity(0.08),
+          color: Colors.black.withValues(alpha: 0.08),
           blurRadius: 8,
           offset: const Offset(0, 4),
         ),
         BoxShadow(
-          color: Colors.black.withOpacity(0.04),
+          color: Colors.black.withValues(alpha: 0.04),
           blurRadius: 2,
           offset: const Offset(0, 1),
         ),
@@ -171,7 +171,7 @@ class ThemeFixes {
       borderRadius: BorderRadius.circular(isIOS ? 6 : 4),
       boxShadow: isActive ? [
         BoxShadow(
-          color: Colors.black.withOpacity(0.05),
+          color: Colors.black.withValues(alpha: 0.05),
           blurRadius: 1,
           offset: const Offset(0, 1),
         ),
@@ -193,7 +193,7 @@ class ThemeFixes {
       ) : null,
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.1),
+          color: Colors.black.withValues(alpha: 0.1),
           blurRadius: 4,
           offset: const Offset(0, 2),
         ),
@@ -231,8 +231,8 @@ class ThemeFixes {
       indent: indent,
       endIndent: endIndent,
       color: isDark 
-        ? GymatesTheme.darkTextSecondary.withOpacity(0.2)
-        : GymatesTheme.lightTextSecondary.withOpacity(0.2),
+        ? GymatesTheme.darkTextSecondary.withValues(alpha: 0.2)
+        : GymatesTheme.lightTextSecondary.withValues(alpha: 0.2),
     );
   }
 
@@ -246,7 +246,7 @@ class ThemeFixes {
       borderRadius: BorderRadius.circular(isIOS ? 12 : 8),
       boxShadow: [
         BoxShadow(
-          color: backgroundColor.withOpacity(0.3),
+          color: backgroundColor.withValues(alpha: 0.3),
           blurRadius: 4,
           spreadRadius: 1,
         ),
@@ -269,7 +269,7 @@ class ThemeFixes {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, -4),
           ),

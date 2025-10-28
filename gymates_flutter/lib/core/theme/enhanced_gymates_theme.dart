@@ -265,7 +265,7 @@ class EnhancedGymatesTheme {
           ),
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: Colors.white,
         elevation: 0,
         shadowColor: Colors.transparent,
@@ -412,7 +412,7 @@ class EnhancedGymatesTheme {
           backgroundColor: primaryColor,
           foregroundColor: Colors.white,
           elevation: 2,
-          shadowColor: primaryColor.withOpacity(0.3),
+          shadowColor: primaryColor.withValues(alpha: 0.3),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius8),
           ),
@@ -459,10 +459,10 @@ class EnhancedGymatesTheme {
           ),
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: Colors.white,
         elevation: 2,
-        shadowColor: Colors.black.withOpacity(0.1),
+        shadowColor: Colors.black.withValues(alpha: 0.1),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radius12),
         ),
@@ -650,7 +650,7 @@ class EnhancedGymatesTheme {
           ),
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: const Color(0xFF1F2937),
         elevation: 0,
         shadowColor: Colors.transparent,
@@ -734,7 +734,7 @@ extension ThemeExtension on BuildContext {
   ThemeData get gymatesTheme => Theme.of(this);
   
   Color get primaryColor => EnhancedGymatesTheme.primaryColor;
-  Color get backgroundColor => Theme.of(this).scaffoldBackgroundColor ?? EnhancedGymatesTheme.lightBackground;
+  Color get backgroundColor => Theme.of(this).scaffoldBackgroundColor;
   Color get textPrimary => Theme.of(this).textTheme.bodyLarge?.color ?? EnhancedGymatesTheme.lightTextPrimary;
   Color get textSecondary => Theme.of(this).textTheme.bodySmall?.color ?? EnhancedGymatesTheme.lightTextSecondary;
 }

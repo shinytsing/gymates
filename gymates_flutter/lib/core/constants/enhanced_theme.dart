@@ -384,6 +384,7 @@ class AppCurves {
   static const Curve bounce = Curves.bounceOut;
   static const Curve elastic = Curves.elasticOut;
   static const Curve spring = Curves.easeOutBack;
+  static const Curve easeOutBack = Curves.easeOutBack;
 }
 
 /// Enhanced Theme Builder
@@ -399,8 +400,6 @@ class AppThemeBuilder {
         onSecondary: AppColors.textOnPrimary,
         surface: AppColors.surface,
         onSurface: AppColors.textOnSurface,
-        background: AppColors.background,
-        onBackground: AppColors.textPrimary,
         error: AppColors.error,
         onError: AppColors.textOnPrimary,
         outline: AppColors.border,
@@ -529,8 +528,6 @@ class AppThemeBuilder {
         onSecondary: AppColors.textOnPrimary,
         surface: AppColors.darkSurface,
         onSurface: AppColors.darkTextPrimary,
-        background: AppColors.darkBackground,
-        onBackground: AppColors.darkTextPrimary,
         error: AppColors.error,
         onError: AppColors.textOnPrimary,
         outline: AppColors.darkBorder,
@@ -687,10 +684,10 @@ class FrostedGlassContainer extends StatelessWidget {
           child: Container(
             padding: padding ?? const EdgeInsets.all(AppSizes.spacingM),
             decoration: BoxDecoration(
-              color: (color ?? AppColors.surface).withOpacity(opacity),
+              color: (color ?? AppColors.surface).withValues(alpha: opacity),
               borderRadius: borderRadius ?? BorderRadius.circular(AppSizes.radiusL),
               border: Border.all(
-                color: AppColors.border.withOpacity(0.2),
+                color: AppColors.border.withValues(alpha: 0.2),
                 width: 0.5,
               ),
             ),

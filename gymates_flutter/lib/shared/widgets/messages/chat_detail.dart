@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../theme/gymates_theme.dart';
-import '../../../animations/gymates_animations.dart';
 import '../../../shared/models/mock_data.dart';
 
 /// 💬 聊天详情页 - ChatDetail
@@ -353,7 +351,7 @@ class _ChatDetailState extends State<ChatDetail>
                 borderRadius: BorderRadius.circular(18),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -376,7 +374,7 @@ class _ChatDetailState extends State<ChatDetail>
                     style: TextStyle(
                       fontSize: 10,
                       color: message.isMe 
-                          ? Colors.white.withOpacity(0.7)
+                          ? Colors.white.withValues(alpha: 0.7)
                           : const Color(0xFF6B7280),
                     ),
                   ),

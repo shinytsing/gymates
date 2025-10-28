@@ -188,7 +188,7 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
             children: [
               CircleAvatar(
                 radius: AppSizes.avatarS / 2,
-                backgroundColor: AppColors.primary.withOpacity(0.1),
+                backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                 child: const Icon(
                   Icons.person,
                   color: AppColors.primary,
@@ -238,7 +238,7 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
             width: double.infinity,
             height: 200,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppSizes.radiusM),
             ),
             child: const Center(

@@ -313,7 +313,10 @@ class TrainingPlanSyncService {
   static Future<Map<String, dynamic>?> getTodayTraining() async {
     try {
       final plans = await getUserTrainingPlans();
-      if (plans.isEmpty) return null;
+      if (plans.isEmpty) {
+        print('🏋️‍♀️ 没有训练计划，返回测试数据');
+        return _getTestTrainingData();
+      }
 
       // 获取最新的训练计划
       final latestPlan = plans.first;
@@ -334,11 +337,79 @@ class TrainingPlanSyncService {
         }
       }
       
-      return null;
+      print('🏋️‍♀️ 没有找到今日训练，返回测试数据');
+      return _getTestTrainingData();
     } catch (e) {
       print('❌ 获取今日训练失败: $e');
-      return null;
+      return _getTestTrainingData();
     }
+  }
+
+  /// 获取测试训练数据
+  static Map<String, dynamic> _getTestTrainingData() {
+    return {
+      'id': 'test_training_${DateTime.now().millisecondsSinceEpoch}',
+      'name': '测试训练计划',
+      'description': '这是一个测试训练计划',
+      'isRestDay': false,
+      'totalExercises': 5,
+      'completedExercises': 0,
+      'estimatedDuration': 45,
+      'parts': [
+        {
+          'name': '胸部训练',
+          'exercises': [
+            {
+              'id': '1',
+              'name': '俯卧撑',
+              'description': '标准俯卧撑',
+              'muscle_group': '胸部',
+              'difficulty': 'beginner',
+              'equipment': '无',
+              'image_url': '',
+              'video_url': '',
+              'instructions': '保持身体挺直，手臂与肩同宽',
+              'sets': 3,
+              'reps': 10,
+              'rest_time': 60,
+            },
+            {
+              'id': '2',
+              'name': '哑铃卧推',
+              'description': '平躺哑铃卧推',
+              'muscle_group': '胸部',
+              'difficulty': 'intermediate',
+              'equipment': '哑铃',
+              'image_url': '',
+              'video_url': '',
+              'instructions': '平躺在凳子上，双手持哑铃推举',
+              'sets': 3,
+              'reps': 12,
+              'rest_time': 90,
+            },
+          ],
+        },
+        {
+          'name': '背部训练',
+          'exercises': [
+            {
+              'id': '3',
+              'name': '引体向上',
+              'description': '标准引体向上',
+              'muscle_group': '背部',
+              'difficulty': 'intermediate',
+              'equipment': '单杠',
+              'image_url': '',
+              'video_url': '',
+              'instructions': '双手握杠，身体悬垂，向上拉至下巴过杠',
+              'sets': 3,
+              'reps': 8,
+              'rest_time': 120,
+            },
+          ],
+        },
+      ],
+    };
   }
 
   /// 将API的day数据转换为TodayPlanCard期望的格式

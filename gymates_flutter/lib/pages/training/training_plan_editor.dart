@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../theme/gymates_theme.dart';
-import '../../../animations/gymates_animations.dart';
+import '../../../core/theme/gymates_theme.dart';
 import '../../../shared/models/mock_data.dart';
 import '../../../services/exercise_api_service.dart';
 import '../../../services/training_plan_sync_service.dart';
@@ -360,7 +359,7 @@ class _EditTrainingPlanPageState extends State<EditTrainingPlanPage>
                           '${day.totalExercises} 动作',
                           style: TextStyle(
                             fontSize: 12,
-                            color: isSelected ? Colors.white.withOpacity(0.8) : const Color(0xFF6B7280),
+                            color: isSelected ? Colors.white.withValues(alpha: 0.8) : const Color(0xFF6B7280),
                           ),
                         ),
                     ],
@@ -424,7 +423,7 @@ class _EditTrainingPlanPageState extends State<EditTrainingPlanPage>
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -531,7 +530,7 @@ class _EditTrainingPlanPageState extends State<EditTrainingPlanPage>
           ),
         
         // 训练部位列表
-        ...day.parts.map((part) => _buildTrainingPartCard(part)).toList(),
+        ...day.parts.map((part) => _buildTrainingPartCard(part)),
         
         // 添加训练部位按钮
         _buildAddTrainingPartButton(day),
@@ -549,7 +548,7 @@ class _EditTrainingPlanPageState extends State<EditTrainingPlanPage>
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -562,7 +561,7 @@ class _EditTrainingPlanPageState extends State<EditTrainingPlanPage>
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: partColor.withOpacity(0.1),
+              color: partColor.withValues(alpha: 0.1),
               borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
             ),
             child: Row(
@@ -570,7 +569,7 @@ class _EditTrainingPlanPageState extends State<EditTrainingPlanPage>
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
@@ -621,7 +620,7 @@ class _EditTrainingPlanPageState extends State<EditTrainingPlanPage>
           ),
           
           // 动作列表
-          ...part.exercises.map((exercise) => _buildExerciseItem(exercise, partColor)).toList(),
+          ...part.exercises.map((exercise) => _buildExerciseItem(exercise, partColor)),
           
           // 添加动作按钮
           Padding(
@@ -725,7 +724,7 @@ class _EditTrainingPlanPageState extends State<EditTrainingPlanPage>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
@@ -743,7 +742,7 @@ class _EditTrainingPlanPageState extends State<EditTrainingPlanPage>
   }
 
   Widget _buildAddTrainingPartButton(TrainingDay day) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: OutlinedButton.icon(
         onPressed: () => _addTrainingPart(day),
@@ -1090,7 +1089,7 @@ class _EditTrainingPlanPageState extends State<EditTrainingPlanPage>
                   Navigator.pop(context, entry.key);
                 },
               );
-            }).toList(),
+            }),
           ],
         ),
       ),

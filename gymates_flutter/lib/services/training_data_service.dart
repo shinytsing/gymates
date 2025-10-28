@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../models/mock_data.dart';
+import '../shared/models/mock_data.dart';
 import '../core/config/smart_api_config.dart';
 
 /// 🏋️‍♀️ 训练数据服务 - TrainingDataService
@@ -97,17 +97,17 @@ class TrainingDataService {
     DateTime startTime,
     DateTime endTime,
   ) async {
-    try {
-      final sessionData = {
-        'user_id': userId,
-        'plan_id': planId,
-        'exercises': completedExercises.map((e) => _exerciseToJson(e)).toList(),
-        'start_time': startTime.toIso8601String(),
-        'end_time': endTime.toIso8601String(),
-        'duration': endTime.difference(startTime).inMinutes,
-        'calories_burned': _calculateCaloriesBurned(completedExercises),
-      };
+    final sessionData = {
+      'user_id': userId,
+      'plan_id': planId,
+      'exercises': completedExercises.map((e) => _exerciseToJson(e)).toList(),
+      'start_time': startTime.toIso8601String(),
+      'end_time': endTime.toIso8601String(),
+      'duration': endTime.difference(startTime).inMinutes,
+      'calories_burned': _calculateCaloriesBurned(completedExercises),
+    };
 
+    try {
       final response = await http.post(
         Uri.parse('$_baseUrl/workout-sessions'),
         headers: {'Content-Type': 'application/json'},

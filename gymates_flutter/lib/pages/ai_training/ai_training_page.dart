@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'dart:math' as math;
 import '../../theme/gymates_theme.dart';
 import '../../animations/gymates_animations.dart';
-import '../../shared/widgets/enhanced_components.dart';
 
 /// 🤖 AI 训练页 AITrainingPage - 流动渐变 + 微粒漂浮 + 电弧光特效
 /// 
@@ -43,7 +42,7 @@ class _AITrainingPageState extends State<AITrainingPage>
   bool _isListening = false;
   bool _isGenerating = false;
   bool _isCharging = false;
-  String _aiResponse = '';
+  final String _aiResponse = '';
 
   @override
   void initState() {
@@ -320,7 +319,7 @@ class _AITrainingPageState extends State<AITrainingPage>
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(GymatesTheme.radius12),
             ),
             child: const Icon(
@@ -373,7 +372,7 @@ class _AITrainingPageState extends State<AITrainingPage>
           CircularProgressIndicator(
             value: 1.0,
             strokeWidth: 4,
-            backgroundColor: Colors.white.withOpacity(0.1),
+            backgroundColor: Colors.white.withValues(alpha: 0.1),
             valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
           ),
           // 动画进度环
@@ -402,10 +401,10 @@ class _AITrainingPageState extends State<AITrainingPage>
       height: 80,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.white.withOpacity(0.2),
+        color: Colors.white.withValues(alpha: 0.2),
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withOpacity(0.3),
+            color: Colors.white.withValues(alpha: 0.3),
             blurRadius: 20,
             spreadRadius: 2,
           ),
@@ -445,11 +444,11 @@ class _AITrainingPageState extends State<AITrainingPage>
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: _isListening 
-                        ? Colors.white.withOpacity(0.3)
-                        : Colors.white.withOpacity(0.2),
+                        ? Colors.white.withValues(alpha: 0.3)
+                        : Colors.white.withValues(alpha: 0.2),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.white.withOpacity(0.3),
+                        color: Colors.white.withValues(alpha: 0.3),
                         blurRadius: 20,
                         spreadRadius: 2,
                       ),
@@ -483,7 +482,7 @@ class _AITrainingPageState extends State<AITrainingPage>
     return AnimatedBuilder(
       animation: _waveformAnimation,
       builder: (context, child) {
-        return Container(
+        return SizedBox(
           height: 60,
           width: 200,
           child: CustomPaint(
@@ -518,10 +517,10 @@ class _AITrainingPageState extends State<AITrainingPage>
               vertical: GymatesTheme.spacing8,
             ),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: Colors.white.withOpacity(0.3),
+                color: Colors.white.withValues(alpha: 0.3),
                 width: 1,
               ),
             ),
@@ -574,10 +573,10 @@ class _AITrainingPageState extends State<AITrainingPage>
       width: double.infinity,
       padding: const EdgeInsets.all(GymatesTheme.spacing20),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
+        color: Colors.white.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(GymatesTheme.radius16),
         border: Border.all(
-          color: Colors.white.withOpacity(0.2),
+          color: Colors.white.withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -634,7 +633,7 @@ class _AITrainingPageState extends State<AITrainingPage>
                     width: 24,
                     height: 24,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
@@ -780,7 +779,7 @@ class VoiceWaveformPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.8)
+      ..color = Colors.white.withValues(alpha: 0.8)
       ..style = PaintingStyle.fill;
 
     final centerY = size.height / 2;
@@ -813,7 +812,7 @@ class ParticlePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.1)
+      ..color = Colors.white.withValues(alpha: 0.1)
       ..style = PaintingStyle.fill;
 
     final random = math.Random(42);
@@ -826,7 +825,7 @@ class ParticlePainter extends CustomPainter {
       final offsetY = math.sin(animationValue * 2 * math.pi + i) * 20;
       final opacity = 0.1 + (math.sin(animationValue * 2 * math.pi + i) * 0.1);
       
-      paint.color = Colors.white.withOpacity(opacity.clamp(0.0, 0.2));
+      paint.color = Colors.white.withValues(alpha: opacity.clamp(0.0, 0.2));
       
       canvas.drawCircle(
         Offset(x, y + offsetY),
@@ -851,7 +850,7 @@ class ElectricEffectPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.3)
+      ..color = Colors.white.withValues(alpha: 0.3)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2;
 

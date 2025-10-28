@@ -128,9 +128,9 @@ class _UIDemoScreenState extends State<UIDemoScreen>
         vertical: AppSizes.spacingXS,
       ),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppSizes.radiusS),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Text(
         label,
@@ -412,7 +412,7 @@ class _UIDemoScreenState extends State<UIDemoScreen>
           Container(
             padding: const EdgeInsets.all(AppSizes.spacingS),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(AppSizes.radiusM),
             ),
             child: Icon(
@@ -556,9 +556,9 @@ class _UIDemoScreenState extends State<UIDemoScreen>
           vertical: AppSizes.spacingS,
         ),
         decoration: BoxDecoration(
-          color: AppColors.primary.withOpacity(0.1),
+          color: AppColors.primary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(AppSizes.radiusM),
-          border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+          border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
         ),
         child: Text(
           text,
@@ -716,7 +716,7 @@ class _UIDemoScreenState extends State<UIDemoScreen>
             children: List.generate(6, (index) {
               return Container(
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(AppSizes.radiusM),
                 ),
                 child: Center(

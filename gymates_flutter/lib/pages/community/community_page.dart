@@ -423,7 +423,7 @@ class _CommunityPageState extends State<CommunityPage>
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: isActive ? GymatesTheme.primaryColor.withOpacity(0.1) : const Color(0xFFF3F4F6),
+          color: isActive ? GymatesTheme.primaryColor.withValues(alpha: 0.1) : const Color(0xFFF3F4F6),
           borderRadius: BorderRadius.circular(20),
           border: isActive ? Border.all(
             color: GymatesTheme.primaryColor,
@@ -431,7 +431,7 @@ class _CommunityPageState extends State<CommunityPage>
           ) : null,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 4,
               offset: const Offset(0, 1),
             ),
@@ -472,7 +472,7 @@ class _CommunityPageState extends State<CommunityPage>
                   borderRadius: BorderRadius.circular(6),
                   boxShadow: isSelected ? [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     ),
@@ -637,7 +637,7 @@ class _CommunityPageState extends State<CommunityPage>
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
+                color: color.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
@@ -693,10 +693,10 @@ class _CommunityPageState extends State<CommunityPage>
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF6366F1).withOpacity(0.1),
+                  color: const Color(0xFF6366F1).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: const Color(0xFF6366F1).withOpacity(0.2),
+                    color: const Color(0xFF6366F1).withValues(alpha: 0.2),
                     width: 1,
                   ),
                 ),
@@ -773,7 +773,7 @@ class _CommunityPageState extends State<CommunityPage>
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF6366F1).withOpacity(0.1),
+                          color: const Color(0xFF6366F1).withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: const Text(

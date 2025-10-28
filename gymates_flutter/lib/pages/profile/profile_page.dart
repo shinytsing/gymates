@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../theme/gymates_theme.dart';
-import '../../animations/gymates_animations.dart';
 import '../achievements/achievements_page.dart';
 import 'edit_profile_page.dart';
 import '../settings/settings_page.dart';
@@ -185,10 +184,10 @@ class _ProfilePageState extends State<ProfilePage>
                         width: 80,
                         height: 80,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: Colors.white.withOpacity(0.3),
+                            color: Colors.white.withValues(alpha: 0.3),
                             width: 3,
                           ),
                         ),
@@ -230,7 +229,7 @@ class _ProfilePageState extends State<ProfilePage>
                             Text(
                               _userProfile.bio,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: Colors.white.withOpacity(0.9),
+                                color: Colors.white.withValues(alpha: 0.9),
                               ),
                             ),
                             const SizedBox(height: GymatesTheme.spacing8),
@@ -238,27 +237,27 @@ class _ProfilePageState extends State<ProfilePage>
                               children: [
                                 Icon(
                                   Icons.location_on,
-                                  color: Colors.white.withOpacity(0.8),
+                                  color: Colors.white.withValues(alpha: 0.8),
                                   size: 16,
                                 ),
                                 const SizedBox(width: GymatesTheme.spacing4),
                                 Text(
                                   _userProfile.location,
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Colors.white.withOpacity(0.8),
+                                    color: Colors.white.withValues(alpha: 0.8),
                                   ),
                                 ),
                                 const SizedBox(width: GymatesTheme.spacing16),
                                 Icon(
                                   Icons.calendar_today,
-                                  color: Colors.white.withOpacity(0.8),
+                                  color: Colors.white.withValues(alpha: 0.8),
                                   size: 16,
                                 ),
                                 const SizedBox(width: GymatesTheme.spacing4),
                                 Text(
                                   _userProfile.joinDate,
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Colors.white.withOpacity(0.8),
+                                    color: Colors.white.withValues(alpha: 0.8),
                                   ),
                                 ),
                               ],
@@ -280,7 +279,7 @@ class _ProfilePageState extends State<ProfilePage>
                       Container(
                         width: 1,
                         height: 40,
-                        color: Colors.white.withOpacity(0.3),
+                        color: Colors.white.withValues(alpha: 0.3),
                       ),
                       Expanded(
                         child: _buildFollowStat('关注', _userProfile.following),
@@ -288,7 +287,7 @@ class _ProfilePageState extends State<ProfilePage>
                       Container(
                         width: 1,
                         height: 40,
-                        color: Colors.white.withOpacity(0.3),
+                        color: Colors.white.withValues(alpha: 0.3),
                       ),
                       Expanded(
                         child: _buildFollowStat('动态', _userProfile.posts),
@@ -348,7 +347,7 @@ class _ProfilePageState extends State<ProfilePage>
         Text(
           label,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Colors.white.withOpacity(0.9),
+            color: Colors.white.withValues(alpha: 0.9),
           ),
         ),
       ],
@@ -491,8 +490,8 @@ class _ProfilePageState extends State<ProfilePage>
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Colors.orange.withOpacity(0.8),
-                        Colors.amber.withOpacity(0.8),
+                        Colors.orange.withValues(alpha: 0.8),
+                        Colors.amber.withValues(alpha: 0.8),
                       ],
                     ),
                     borderRadius: BorderRadius.circular(GymatesTheme.radius8),
@@ -579,7 +578,7 @@ class _ProfilePageState extends State<ProfilePage>
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: GymatesTheme.primaryColor.withOpacity(0.1),
+                  color: GymatesTheme.primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(GymatesTheme.radius8),
                 ),
                 child: Icon(
@@ -737,7 +736,7 @@ class _ProfilePageState extends State<ProfilePage>
     return Container(
       padding: const EdgeInsets.all(GymatesTheme.spacing12),
       decoration: BoxDecoration(
-        color: isUnlocked ? color.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
+        color: isUnlocked ? color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(GymatesTheme.radius8),
       ),
       child: Column(

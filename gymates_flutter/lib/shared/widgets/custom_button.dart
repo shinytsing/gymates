@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../core/constants/enhanced_theme.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -43,7 +42,7 @@ class CustomButton extends StatelessWidget {
                 height: 20,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                 ),
               )
             : Row(

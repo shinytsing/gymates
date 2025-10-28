@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../theme/gymates_theme.dart';
-import '../../../animations/gymates_animations.dart';
 
 /// 📅 训练打卡日历 - CheckinCalendar
 /// 
@@ -23,7 +21,7 @@ class _CheckinCalendarState extends State<CheckinCalendar>
   late Animation<double> _calendarFadeAnimation;
   late Animation<double> _checkinAnimation;
 
-  DateTime _currentDate = DateTime.now();
+  final DateTime _currentDate = DateTime.now();
   final List<DateTime> _checkedInDates = [
     DateTime.now().subtract(const Duration(days: 1)),
     DateTime.now().subtract(const Duration(days: 3)),
@@ -101,7 +99,7 @@ class _CheckinCalendarState extends State<CheckinCalendar>
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                  color: Colors.black.withValues(alpha: 0.08),
                   blurRadius: 20,
                   offset: const Offset(0, 4),
                 ),
@@ -315,7 +313,7 @@ class _CheckinCalendarState extends State<CheckinCalendar>
     if (isCheckedIn) {
       return const Color(0xFF10B981);
     } else if (isToday) {
-      return const Color(0xFF6366F1).withOpacity(0.1);
+      return const Color(0xFF6366F1).withValues(alpha: 0.1);
     } else {
       return Colors.transparent;
     }

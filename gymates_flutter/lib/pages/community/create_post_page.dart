@@ -36,8 +36,8 @@ class _CreatePostPageState extends State<CreatePostPage>
   final _contentController = TextEditingController();
   final _titleController = TextEditingController();
 
-  List<String> _selectedTags = [];
-  List<String> _selectedImages = [];
+  final List<String> _selectedTags = [];
+  final List<String> _selectedImages = [];
   bool _isLocationEnabled = false;
   bool _isPublic = true;
   bool _isLoading = false;
@@ -301,7 +301,7 @@ class _CreatePostPageState extends State<CreatePostPage>
         
         // 已选择的图片
         if (_selectedImages.isNotEmpty)
-          Container(
+          SizedBox(
             height: 100,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -457,7 +457,7 @@ class _CreatePostPageState extends State<CreatePostPage>
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   color: isSelected 
-                      ? GymatesTheme.primaryColor.withOpacity(0.1)
+                      ? GymatesTheme.primaryColor.withValues(alpha: 0.1)
                       : Colors.white,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
@@ -495,7 +495,7 @@ class _CreatePostPageState extends State<CreatePostPage>
               _isLocationEnabled = value;
             });
           },
-          activeColor: GymatesTheme.primaryColor,
+          activeThumbColor: GymatesTheme.primaryColor,
         ),
         const SizedBox(width: 12),
         Expanded(

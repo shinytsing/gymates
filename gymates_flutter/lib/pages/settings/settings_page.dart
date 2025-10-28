@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../theme/gymates_theme.dart';
-import '../../animations/gymates_animations.dart';
 
 /// ⚙️ 设置页面 - SettingsPage
 /// 
@@ -484,7 +482,7 @@ class _SettingsPageState extends State<SettingsPage>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -519,7 +517,7 @@ class _SettingsPageState extends State<SettingsPage>
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -558,7 +556,7 @@ class _SettingsPageState extends State<SettingsPage>
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: const Color(0xFF6366F1).withOpacity(0.1),
+              color: const Color(0xFF6366F1).withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Icon(
@@ -594,7 +592,7 @@ class _SettingsPageState extends State<SettingsPage>
           Switch(
             value: value,
             onChanged: onChanged,
-            activeColor: const Color(0xFF6366F1),
+            activeThumbColor: const Color(0xFF6366F1),
           ),
         ],
       ),
@@ -624,7 +622,7 @@ class _SettingsPageState extends State<SettingsPage>
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: (iconColor ?? const Color(0xFF6366F1)).withOpacity(0.1),
+                    color: (iconColor ?? const Color(0xFF6366F1)).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Icon(

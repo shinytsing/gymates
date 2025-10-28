@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../services/training_plan_sync_service.dart';
-import '../../../theme/gymates_theme.dart';
 
 /// 🏋️‍♀️ 训练计划选择对话框
 /// 
@@ -120,7 +119,7 @@ class _TrainingPlanSelectionDialogState extends State<TrainingPlanSelectionDialo
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
                               color: isSelected 
-                                  ? const Color(0xFF6366F1).withOpacity(0.1)
+                                  ? const Color(0xFF6366F1).withValues(alpha: 0.1)
                                   : Colors.white,
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
@@ -182,7 +181,7 @@ class _TrainingPlanSelectionDialogState extends State<TrainingPlanSelectionDialo
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: isSelected 
-                                              ? const Color(0xFF6366F1).withOpacity(0.8)
+                                              ? const Color(0xFF6366F1).withValues(alpha: 0.8)
                                               : const Color(0xFF6B7280),
                                         ),
                                       ),

@@ -139,7 +139,7 @@ class _EnhancedMainNavigationState extends State<EnhancedMainNavigation>
                             padding: const EdgeInsets.all(AppSizes.spacingS),
                             decoration: BoxDecoration(
                               color: isSelected 
-                                  ? item.color.withOpacity(0.1)
+                                  ? item.color.withValues(alpha: 0.1)
                                   : Colors.transparent,
                               borderRadius: BorderRadius.circular(AppSizes.radiusM),
                             ),
@@ -257,8 +257,8 @@ class EnhancedAppBar extends StatelessWidget implements PreferredSizeWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              (backgroundColor ?? AppColors.surface).withOpacity(0.95),
-              (backgroundColor ?? AppColors.surface).withOpacity(0.8),
+              (backgroundColor ?? AppColors.surface).withValues(alpha: 0.95),
+              (backgroundColor ?? AppColors.surface).withValues(alpha: 0.8),
             ],
           ),
         ),

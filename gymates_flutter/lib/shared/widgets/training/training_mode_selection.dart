@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../theme/gymates_theme.dart';
-import '../../../animations/gymates_animations.dart';
 import '../../../shared/models/mock_data.dart';
 
 /// 🏋️‍♀️ 训练模式选择组件 - TrainingModeSelection
@@ -108,7 +107,6 @@ class _TrainingModeSelectionState extends State<TrainingModeSelection>
   void _generateRecommendations() {
     // 基于用户数据生成推荐
     final userExperience = widget.userProfile?.experience ?? '中级';
-    final userGoal = widget.userProfile?.goal ?? '增肌';
     
     _recommendedModes = MockDataProvider.trainingModes.where((mode) {
       if (userExperience == '初级' && mode.difficulty == '初级') return true;
@@ -261,7 +259,7 @@ class _TrainingModeSelectionState extends State<TrainingModeSelection>
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF6366F1).withOpacity(0.3),
+                    color: const Color(0xFF6366F1).withValues(alpha: 0.3),
                     blurRadius: 20,
                     offset: const Offset(0, 8),
                   ),
@@ -276,7 +274,7 @@ class _TrainingModeSelectionState extends State<TrainingModeSelection>
                         width: 48,
                         height: 48,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: const Icon(
@@ -305,7 +303,7 @@ class _TrainingModeSelectionState extends State<TrainingModeSelection>
                               '基于你的训练经验：${widget.userProfile?.experience ?? '中级'}',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.white.withOpacity(0.8),
+                                color: Colors.white.withValues(alpha: 0.8),
                                 height: 1.3,
                               ),
                             ),
@@ -320,7 +318,7 @@ class _TrainingModeSelectionState extends State<TrainingModeSelection>
                   // 推荐模式列表
                   ..._recommendedModes.take(2).map((mode) {
                     return _buildRecommendedModeCard(mode);
-                  }).toList(),
+                  }),
                 ],
               ),
             ),
@@ -335,10 +333,10 @@ class _TrainingModeSelectionState extends State<TrainingModeSelection>
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.15),
+        color: Colors.white.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: Colors.white.withOpacity(0.2),
+          color: Colors.white.withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -368,7 +366,7 @@ class _TrainingModeSelectionState extends State<TrainingModeSelection>
                   mode.description,
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withValues(alpha: 0.8),
                     height: 1.3,
                   ),
                 ),
@@ -430,7 +428,7 @@ class _TrainingModeSelectionState extends State<TrainingModeSelection>
                 // 训练模式网格
                 ...MockDataProvider.trainingModes.map((mode) {
                   return _buildModeCard(mode);
-                }).toList(),
+                }),
               ],
             ),
           ),
@@ -467,7 +465,7 @@ class _TrainingModeSelectionState extends State<TrainingModeSelection>
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.08),
+                color: Colors.black.withValues(alpha: 0.08),
                 blurRadius: 20,
                 offset: const Offset(0, 4),
               ),
@@ -483,7 +481,7 @@ class _TrainingModeSelectionState extends State<TrainingModeSelection>
                     width: 48,
                     height: 48,
                     decoration: BoxDecoration(
-                      color: Color(int.parse(mode.color.substring(1), radix: 16) + 0xFF000000).withOpacity(0.1),
+                      color: Color(int.parse(mode.color.substring(1), radix: 16) + 0xFF000000).withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
@@ -583,10 +581,10 @@ class _TrainingModeSelectionState extends State<TrainingModeSelection>
                   return Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Color(int.parse(mode.color.substring(1), radix: 16) + 0xFF000000).withOpacity(0.1),
+                      color: Color(int.parse(mode.color.substring(1), radix: 16) + 0xFF000000).withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: Color(int.parse(mode.color.substring(1), radix: 16) + 0xFF000000).withOpacity(0.2),
+                        color: Color(int.parse(mode.color.substring(1), radix: 16) + 0xFF000000).withValues(alpha: 0.2),
                         width: 1,
                       ),
                     ),

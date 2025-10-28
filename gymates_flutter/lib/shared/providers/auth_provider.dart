@@ -78,7 +78,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final response = await _apiService.login(request);
       
       if (response.success && response.data != null) {
-        final authResponse = AuthResponse.fromJson(response.data!);
+        final authResponse = response.data!;
         
         // Save tokens and user data
         await _storage.write(key: AppConstants.tokenKey, value: authResponse.token);
@@ -121,7 +121,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final response = await _apiService.register(request);
       
       if (response.success && response.data != null) {
-        final authResponse = AuthResponse.fromJson(response.data!);
+        final authResponse = response.data!;
         
         // Save tokens and user data
         await _storage.write(key: AppConstants.tokenKey, value: authResponse.token);

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../core/theme/enhanced_gymates_theme.dart';
-import '../core/animations/enhanced_gymates_animations.dart';
-import '../pages/training/training_page.dart';
-import '../pages/community/community_page.dart';
-import '../pages/partner/partner_page.dart';
-import '../pages/messages/messages_page.dart';
-import '../pages/profile/profile_page.dart';
+import '../constants/enhanced_theme.dart';
+import '../../pages/training/training_page.dart';
+import '../../pages/community/community_page.dart';
+import '../../pages/partner/partner_page.dart';
+import '../../pages/messages/messages_page.dart';
+import '../../pages/profile/profile_page.dart';
 
 /// 🧭 Enhanced Main Navigation
 /// 
@@ -82,7 +81,7 @@ class _EnhancedMainNavigationState extends State<EnhancedMainNavigation>
     super.initState();
     _pageController = PageController(initialPage: _currentIndex);
     _tabAnimationController = AnimationController(
-      duration: EnhancedGymatesAnimations.fastDuration,
+      duration: const Duration(milliseconds: 300),
       vsync: this,
     );
     _tabAnimation = Tween<double>(
@@ -90,7 +89,7 @@ class _EnhancedMainNavigationState extends State<EnhancedMainNavigation>
       end: 1.0,
     ).animate(CurvedAnimation(
       parent: _tabAnimationController,
-      curve: EnhancedGymatesAnimations.easeInOut,
+      curve: Curves.easeInOut,
     ));
   }
 
@@ -104,7 +103,7 @@ class _EnhancedMainNavigationState extends State<EnhancedMainNavigation>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: EnhancedGymatesTheme.lightBackground,
+      backgroundColor: AppColors.background,
       body: PageView(
         controller: _pageController,
         onPageChanged: _onPageChanged,
@@ -118,18 +117,18 @@ class _EnhancedMainNavigationState extends State<EnhancedMainNavigation>
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: EnhancedGymatesTheme.softShadow,
+        boxShadow: AppShadows.medium,
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(EnhancedGymatesTheme.radius20),
-          topRight: Radius.circular(EnhancedGymatesTheme.radius20),
+          topLeft: Radius.circular(AppSizes.radiusL),
+          topRight: Radius.circular(AppSizes.radiusL),
         ),
       ),
       child: SafeArea(
         child: Container(
           height: 70, // 减少高度从80到70
           padding: const EdgeInsets.symmetric(
-            horizontal: EnhancedGymatesTheme.spacing8,
-            vertical: EnhancedGymatesTheme.spacing4, // 减少垂直间距
+            horizontal: AppSizes.spacingS,
+            vertical: AppSizes.spacingXS, // 减少垂直间距
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -151,28 +150,28 @@ class _EnhancedMainNavigationState extends State<EnhancedMainNavigation>
             onTap: () => _onTabTapped(tab.pageIndex),
             child: Container(
               padding: const EdgeInsets.symmetric(
-                vertical: EnhancedGymatesTheme.spacing4, // 减少垂直间距
-                horizontal: EnhancedGymatesTheme.spacing4,
+                vertical: AppSizes.spacingXS, // 减少垂直间距
+                horizontal: AppSizes.spacingXS,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   // 图标
                   AnimatedContainer(
-                    duration: EnhancedGymatesAnimations.fastDuration,
-                    curve: EnhancedGymatesAnimations.easeInOut,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
                     padding: const EdgeInsets.all(6), // 减少图标内边距
                     decoration: BoxDecoration(
                       color: isSelected
-                          ? EnhancedGymatesTheme.primaryColor.withOpacity(0.1)
+                          ? AppColors.primary.withValues(alpha: 0.1)
                           : Colors.transparent,
-                      borderRadius: BorderRadius.circular(EnhancedGymatesTheme.radius12),
+                      borderRadius: BorderRadius.circular(AppSizes.radiusM),
                     ),
                     child: Icon(
                       isSelected ? tab.activeIcon : tab.icon,
                       color: isSelected
-                          ? EnhancedGymatesTheme.primaryColor
-                          : EnhancedGymatesTheme.lightTextSecondary,
+                          ? AppColors.primary
+                          : AppColors.textSecondary,
                       size: isSelected ? 24 : 22, // 减少图标大小
                     ),
                   ),
@@ -181,13 +180,13 @@ class _EnhancedMainNavigationState extends State<EnhancedMainNavigation>
                   
                   // 标签
                   AnimatedDefaultTextStyle(
-                    duration: EnhancedGymatesAnimations.fastDuration,
+                    duration: const Duration(milliseconds: 300),
                     style: TextStyle(
                       fontSize: isSelected ? 11 : 10, // 减少字体大小
                       fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                       color: isSelected
-                          ? EnhancedGymatesTheme.primaryColor
-                          : EnhancedGymatesTheme.lightTextSecondary,
+                          ? AppColors.primary
+                          : AppColors.textSecondary,
                     ),
                     child: Text(tab.label),
                   ),
@@ -208,8 +207,8 @@ class _EnhancedMainNavigationState extends State<EnhancedMainNavigation>
       });
       _pageController.animateToPage(
         index,
-        duration: EnhancedGymatesAnimations.normalDuration,
-        curve: EnhancedGymatesAnimations.easeInOut,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
       );
       _tabAnimationController.forward().then((_) {
         _tabAnimationController.reset();
@@ -261,7 +260,7 @@ class CupertinoStyleBottomNavigation extends StatelessWidget {
         color: Colors.white,
         border: Border(
           top: BorderSide(
-            color: EnhancedGymatesTheme.lightBorder,
+            color: AppColors.border,
             width: 0.5,
           ),
         ),
@@ -270,8 +269,8 @@ class CupertinoStyleBottomNavigation extends StatelessWidget {
         child: Container(
           height: 70, // 减少高度从80到70
           padding: const EdgeInsets.symmetric(
-            horizontal: EnhancedGymatesTheme.spacing8,
-            vertical: EnhancedGymatesTheme.spacing4, // 减少垂直间距
+            horizontal: AppSizes.spacingS,
+            vertical: AppSizes.spacingXS, // 减少垂直间距
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -290,8 +289,8 @@ class CupertinoStyleBottomNavigation extends StatelessWidget {
         onTap: () => onTap(tab.pageIndex),
         child: Container(
           padding: const EdgeInsets.symmetric(
-            vertical: EnhancedGymatesTheme.spacing4, // 减少垂直间距
-            horizontal: EnhancedGymatesTheme.spacing4,
+            vertical: AppSizes.spacingXS, // 减少垂直间距
+            horizontal: AppSizes.spacingXS,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -301,15 +300,15 @@ class CupertinoStyleBottomNavigation extends StatelessWidget {
                 padding: const EdgeInsets.all(6), // 减少图标内边距
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? EnhancedGymatesTheme.primaryColor.withOpacity(0.1)
+                      ? AppColors.primary.withValues(alpha: 0.1)
                       : Colors.transparent,
-                  borderRadius: BorderRadius.circular(EnhancedGymatesTheme.radius12),
+                  borderRadius: BorderRadius.circular(AppSizes.radiusM),
                 ),
                 child: Icon(
                   isSelected ? tab.activeIcon : tab.icon,
                   color: isSelected
-                      ? EnhancedGymatesTheme.primaryColor
-                      : EnhancedGymatesTheme.lightTextSecondary,
+                      ? AppColors.primary
+                      : AppColors.textSecondary,
                   size: isSelected ? 24 : 22, // 减少图标大小
                 ),
               ),
@@ -323,8 +322,8 @@ class CupertinoStyleBottomNavigation extends StatelessWidget {
                   fontSize: isSelected ? 11 : 10, // 减少字体大小
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                   color: isSelected
-                      ? EnhancedGymatesTheme.primaryColor
-                      : EnhancedGymatesTheme.lightTextSecondary,
+                      ? AppColors.primary
+                      : AppColors.textSecondary,
                 ),
               ),
             ],
@@ -353,14 +352,14 @@ class Material3StyleBottomNavigation extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: EnhancedGymatesTheme.softShadow,
+        boxShadow: AppShadows.medium,
       ),
       child: SafeArea(
         child: Container(
           height: 70, // 减少高度从80到70
           padding: const EdgeInsets.symmetric(
-            horizontal: EnhancedGymatesTheme.spacing8,
-            vertical: EnhancedGymatesTheme.spacing4, // 减少垂直间距
+            horizontal: AppSizes.spacingS,
+            vertical: AppSizes.spacingXS, // 减少垂直间距
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -379,8 +378,8 @@ class Material3StyleBottomNavigation extends StatelessWidget {
         onTap: () => onTap(tab.pageIndex),
         child: Container(
           padding: const EdgeInsets.symmetric(
-            vertical: EnhancedGymatesTheme.spacing4, // 减少垂直间距
-            horizontal: EnhancedGymatesTheme.spacing4,
+            vertical: AppSizes.spacingXS, // 减少垂直间距
+            horizontal: AppSizes.spacingXS,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -390,15 +389,15 @@ class Material3StyleBottomNavigation extends StatelessWidget {
                 padding: const EdgeInsets.all(6), // 减少图标内边距
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? EnhancedGymatesTheme.primaryColor.withOpacity(0.1)
+                      ? AppColors.primary.withValues(alpha: 0.1)
                       : Colors.transparent,
-                  borderRadius: BorderRadius.circular(EnhancedGymatesTheme.radius12),
+                  borderRadius: BorderRadius.circular(AppSizes.radiusM),
                 ),
                 child: Icon(
                   isSelected ? tab.activeIcon : tab.icon,
                   color: isSelected
-                      ? EnhancedGymatesTheme.primaryColor
-                      : EnhancedGymatesTheme.lightTextSecondary,
+                      ? AppColors.primary
+                      : AppColors.textSecondary,
                   size: isSelected ? 24 : 22, // 减少图标大小
                 ),
               ),
@@ -412,8 +411,8 @@ class Material3StyleBottomNavigation extends StatelessWidget {
                   fontSize: isSelected ? 11 : 10, // 减少字体大小
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                   color: isSelected
-                      ? EnhancedGymatesTheme.primaryColor
-                      : EnhancedGymatesTheme.lightTextSecondary,
+                      ? AppColors.primary
+                      : AppColors.textSecondary,
                 ),
               ),
             ],

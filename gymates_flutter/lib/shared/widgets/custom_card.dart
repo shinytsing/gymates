@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../core/constants/enhanced_theme.dart';
 
 class CustomCard extends StatelessWidget {
   final Widget child;

@@ -89,7 +89,7 @@ class _AboutPageState extends State<AboutPage> with TickerProviderStateMixin {
           end: Alignment.bottomRight,
           colors: [
             GymatesTheme.primaryColor,
-            GymatesTheme.primaryColor.withOpacity(0.8),
+            GymatesTheme.primaryColor.withValues(alpha: 0.8),
           ],
         ),
         borderRadius: BorderRadius.circular(GymatesTheme.radius16),
@@ -101,7 +101,7 @@ class _AboutPageState extends State<AboutPage> with TickerProviderStateMixin {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(GymatesTheme.radius16),
             ),
             child: const Icon(
@@ -231,7 +231,7 @@ class _AboutPageState extends State<AboutPage> with TickerProviderStateMixin {
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: GymatesTheme.primaryColor.withOpacity(0.1),
+              color: GymatesTheme.primaryColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(GymatesTheme.radius8),
             ),
             child: Icon(

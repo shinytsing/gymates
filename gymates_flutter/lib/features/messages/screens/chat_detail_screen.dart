@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/constants/app_theme.dart';
 import '../../../core/navigation/app_router.dart';
 import '../../../shared/widgets/custom_app_bar.dart';
-import '../../../shared/widgets/custom_card.dart';
 
 class ChatDetailScreen extends ConsumerStatefulWidget {
   final String chatId;
@@ -137,7 +136,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
           if (!isMe) ...[
             CircleAvatar(
               radius: AppSizes.avatarS / 2,
-              backgroundColor: AppColors.primary.withOpacity(0.1),
+              backgroundColor: AppColors.primary.withValues(alpha: 0.1),
               child: const Icon(
                 Icons.person,
                 color: AppColors.primary,
@@ -169,7 +168,7 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
             const SizedBox(width: AppSizes.paddingS),
             CircleAvatar(
               radius: AppSizes.avatarS / 2,
-              backgroundColor: AppColors.secondary.withOpacity(0.1),
+              backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
               child: const Icon(
                 Icons.person,
                 color: AppColors.secondary,

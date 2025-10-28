@@ -1,6 +1,7 @@
 /// 🏋️‍♀️ 训练计划编辑数据模型 - Training Plan Edit Models
 /// 
 /// 支持一周7天的训练计划编辑功能
+library;
 
 import 'package:flutter/material.dart';
 

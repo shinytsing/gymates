@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'dart:math' as math;
-import '../theme/gymates_theme.dart';
-import '../animations/gymates_animations.dart';
+import '../../core/theme/gymates_theme.dart';
+import '../../core/animations/gymates_animations.dart';
 
 /// 🌟 Gymates Splash Screen - Premium Launch Experience
 /// 
@@ -147,7 +146,7 @@ class _GymatesSplashScreenState extends State<GymatesSplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: double.infinity,
         height: double.infinity,
         child: Stack(
@@ -253,7 +252,7 @@ class _GymatesSplashScreenState extends State<GymatesSplashScreen>
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.white.withOpacity(0.3),
+                    color: Colors.white.withValues(alpha: 0.3),
                     blurRadius: 30,
                     spreadRadius: 5,
                   ),
@@ -322,7 +321,7 @@ class _GymatesSplashScreenState extends State<GymatesSplashScreen>
             child: CircularProgressIndicator(
               strokeWidth: 3,
               valueColor: AlwaysStoppedAnimation<Color>(
-                Colors.white.withOpacity(0.8),
+                Colors.white.withValues(alpha: 0.8),
               ),
             ),
           ),
@@ -341,7 +340,7 @@ class ParticlePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.1)
+      ..color = Colors.white.withValues(alpha: 0.1)
       ..style = PaintingStyle.fill;
 
     // Generate random particles
@@ -356,7 +355,7 @@ class ParticlePainter extends CustomPainter {
       final offsetY = math.sin(animationValue * 2 * math.pi + i) * 20;
       final opacity = 0.1 + (math.sin(animationValue * 2 * math.pi + i) * 0.1);
       
-      paint.color = Colors.white.withOpacity(opacity.clamp(0.0, 0.2));
+      paint.color = Colors.white.withValues(alpha: opacity.clamp(0.0, 0.2));
       
       canvas.drawCircle(
         Offset(x, y + offsetY),

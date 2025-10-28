@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'dart:math' as math;
 
 /// 🎬 Gymates Animation System - High-Performance Visual Effects
@@ -189,7 +187,7 @@ class GymatesAnimations {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: pulseColor.withOpacity(0.3 * (1 - value)),
+                color: pulseColor.withValues(alpha: 0.3 * (1 - value)),
                 blurRadius: 20 * value,
                 spreadRadius: 5 * value,
               ),
@@ -347,7 +345,7 @@ class GymatesAnimations {
               CircularProgressIndicator(
                 value: 1.0,
                 strokeWidth: strokeWidth,
-                backgroundColor: Colors.grey.withOpacity(0.2),
+                backgroundColor: Colors.grey.withValues(alpha: 0.2),
                 valueColor: const AlwaysStoppedAnimation<Color>(Colors.grey),
               ),
               // Animated progress ring

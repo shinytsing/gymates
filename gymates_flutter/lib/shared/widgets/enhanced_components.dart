@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../theme/gymates_theme.dart';
-import '../../animations/gymates_animations.dart';
 
 /// 🎨 Enhanced UI Components - Premium Design System
 /// 
@@ -211,7 +210,7 @@ class _EnhancedButtonState extends State<EnhancedButton>
       case ButtonType.primary:
         return null;
       case ButtonType.secondary:
-        return GymatesTheme.primaryColor.withOpacity(0.1);
+        return GymatesTheme.primaryColor.withValues(alpha: 0.1);
       case ButtonType.outline:
         return Colors.transparent;
       case ButtonType.ghost:
@@ -383,7 +382,7 @@ class _EnhancedCardState extends State<EnhancedCard>
       case CardType.filled:
         return GymatesTheme.lightBackground;
       case CardType.glass:
-        return Colors.white.withOpacity(0.1);
+        return Colors.white.withValues(alpha: 0.1);
     }
   }
 
@@ -408,14 +407,14 @@ class _EnhancedCardState extends State<EnhancedCard>
         return null;
       case CardType.outlined:
         return Border.all(
-          color: GymatesTheme.lightTextSecondary.withOpacity(0.2),
+          color: GymatesTheme.lightTextSecondary.withValues(alpha: 0.2),
           width: 1,
         );
       case CardType.filled:
         return null;
       case CardType.glass:
         return Border.all(
-          color: Colors.white.withOpacity(0.2),
+          color: Colors.white.withValues(alpha: 0.2),
           width: 1,
         );
     }
@@ -434,8 +433,8 @@ class _EnhancedCardState extends State<EnhancedCard>
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Colors.white.withOpacity(0.1),
-            Colors.white.withOpacity(0.05),
+            Colors.white.withValues(alpha: 0.1),
+            Colors.white.withValues(alpha: 0.05),
           ],
         );
     }
@@ -540,7 +539,7 @@ class _EnhancedTextFieldState extends State<EnhancedTextField>
             boxShadow: _isFocused 
                 ? [
                     BoxShadow(
-                      color: GymatesTheme.primaryColor.withOpacity(0.2),
+                      color: GymatesTheme.primaryColor.withValues(alpha: 0.2),
                       blurRadius: 8,
                       spreadRadius: 1,
                     ),
@@ -569,14 +568,14 @@ class _EnhancedTextFieldState extends State<EnhancedTextField>
                 borderSide: BorderSide(
                   color: _isFocused 
                       ? GymatesTheme.primaryColor
-                      : Colors.grey.withOpacity(0.3),
+                      : Colors.grey.withValues(alpha: 0.3),
                   width: _isFocused ? 2 : 1,
                 ),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(GymatesTheme.inputRadius),
                 borderSide: BorderSide(
-                  color: Colors.grey.withOpacity(0.3),
+                  color: Colors.grey.withValues(alpha: 0.3),
                   width: 1,
                 ),
               ),
@@ -756,7 +755,7 @@ class _EnhancedLoadingIndicatorState extends State<EnhancedLoadingIndicator>
           height: size,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: color.withOpacity(0.3 * (1 - _animation.value)),
+            color: color.withValues(alpha: 0.3 * (1 - _animation.value)),
           ),
           child: Center(
             child: Container(

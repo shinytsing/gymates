@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../theme/gymates_theme.dart';
-import '../../animations/gymates_animations.dart';
 import '../../routes/app_routes.dart';
 
 /// 🔐 登录页面 - 完全按照 Figma 设计实现
@@ -83,7 +82,7 @@ class _LoginPageState extends State<LoginPage>
     final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
     
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: double.infinity,
         height: double.infinity,
         child: Stack(
@@ -173,7 +172,7 @@ class _LoginPageState extends State<LoginPage>
                 width: 16,
                 height: 8,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white.withOpacity(0.8)),
+                  border: Border.all(color: Colors.white.withValues(alpha: 0.8)),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Container(
@@ -222,7 +221,7 @@ class _LoginPageState extends State<LoginPage>
                       borderRadius: BorderRadius.circular(isIOS ? 16 : 12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
+                          color: Colors.black.withValues(alpha: 0.2),
                           blurRadius: 20,
                           offset: const Offset(0, 10),
                         ),
@@ -270,10 +269,10 @@ class _LoginPageState extends State<LoginPage>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.1),
+                      color: Colors.white.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withValues(alpha: 0.2),
                         width: 1,
                       ),
                     ),
@@ -391,7 +390,7 @@ class _LoginPageState extends State<LoginPage>
             margin: const EdgeInsets.only(top: 2),
             decoration: BoxDecoration(
               border: Border.all(
-                color: Colors.white.withOpacity(0.5),
+                color: Colors.white.withValues(alpha: 0.5),
                 width: 2,
               ),
               borderRadius: BorderRadius.circular(4),
@@ -462,11 +461,11 @@ class _LoginPageState extends State<LoginPage>
             height: 48,
             decoration: BoxDecoration(
               color: isIOS 
-                  ? Colors.white.withOpacity(0.2)
-                  : Colors.black.withOpacity(0.3),
+                  ? Colors.white.withValues(alpha: 0.2)
+                  : Colors.black.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
-                color: Colors.white.withOpacity(0.2),
+                color: Colors.white.withValues(alpha: 0.2),
                 width: 1,
               ),
             ),
@@ -488,11 +487,11 @@ class _LoginPageState extends State<LoginPage>
             height: 48,
             decoration: BoxDecoration(
               color: isIOS 
-                  ? Colors.white.withOpacity(0.2)
-                  : const Color(0xFF10B981).withOpacity(0.8),
+                  ? Colors.white.withValues(alpha: 0.2)
+                  : const Color(0xFF10B981).withValues(alpha: 0.8),
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
-                color: Colors.white.withOpacity(0.2),
+                color: Colors.white.withValues(alpha: 0.2),
                 width: 1,
               ),
             ),
@@ -529,7 +528,7 @@ class _LoginPageState extends State<LoginPage>
     // TODO: 实现社交登录逻辑
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('${provider}登录功能待实现'),
+        content: Text('$provider登录功能待实现'),
         backgroundColor: GymatesTheme.primaryColor,
       ),
     );

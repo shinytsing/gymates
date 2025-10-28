@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../theme/gymates_theme.dart';
-import '../../../animations/gymates_animations.dart';
 import '../../../shared/models/mock_data.dart';
 
 /// 🏋️‍♀️ 动作完成动画组件 - ExerciseCompletionAnimation
@@ -138,7 +136,7 @@ class _ExerciseCompletionAnimationState extends State<ExerciseCompletionAnimatio
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -231,10 +229,10 @@ class _ExerciseCompletionAnimationState extends State<ExerciseCompletionAnimatio
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
-            color: _getDifficultyColor().withOpacity(0.1),
+            color: _getDifficultyColor().withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: _getDifficultyColor().withOpacity(0.2),
+              color: _getDifficultyColor().withValues(alpha: 0.2),
               width: 1,
             ),
           ),
@@ -503,7 +501,7 @@ class _ExerciseCompletionAnimationState extends State<ExerciseCompletionAnimatio
                     '恭喜你完成了 ${widget.exercise.name}',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha: 0.9),
                     ),
                   ),
                   
@@ -543,7 +541,7 @@ class _ExerciseCompletionAnimationState extends State<ExerciseCompletionAnimatio
           label,
           style: TextStyle(
             fontSize: 12,
-            color: Colors.white.withOpacity(0.8),
+            color: Colors.white.withValues(alpha: 0.8),
           ),
         ),
       ],

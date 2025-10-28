@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../shared/models/mock_data.dart';
 
 /// 🏋️‍♀️ 训练会话状态管理服务 - TrainingSessionService
 /// 

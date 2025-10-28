@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../theme/gymates_theme.dart';
-import '../../../animations/gymates_animations.dart';
 import '../../../shared/models/mock_data.dart';
 
 /// 📋 训练历史列表 - TrainingHistoryList
@@ -135,7 +133,7 @@ class _TrainingHistoryListState extends State<TrainingHistoryList>
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                  color: Colors.black.withValues(alpha: 0.08),
                   blurRadius: 20,
                   offset: const Offset(0, 4),
                 ),
@@ -207,7 +205,6 @@ class _TrainingHistoryListState extends State<TrainingHistoryList>
           itemCount: _historyPlans.length,
           itemBuilder: (context, index) {
             final plan = _historyPlans[index];
-            final animationDelay = index * 0.1;
             
             return Transform.translate(
               offset: Offset(0, 20 * (1 - _itemAnimation.value)),
@@ -332,7 +329,7 @@ class _TrainingHistoryListState extends State<TrainingHistoryList>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: const Color(0xFF6366F1).withOpacity(0.1),
+        color: const Color(0xFF6366F1).withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -376,7 +373,7 @@ class _TrainingHistoryListState extends State<TrainingHistoryList>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(

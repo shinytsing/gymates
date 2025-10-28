@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
 import '../../theme/gymates_theme.dart';
-import '../../animations/gymates_animations.dart';
-import '../../shared/widgets/enhanced_components.dart';
 
 /// 🏆 成就系统 AchievementsPage - 3D 翻转 + 发光边框 + 进度光带
 /// 
@@ -216,7 +214,7 @@ class _AchievementsPageState extends State<AchievementsPage>
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: GymatesTheme.primaryColor.withOpacity(0.1),
+              color: GymatesTheme.primaryColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(GymatesTheme.radius12),
             ),
             child: const Icon(
@@ -277,7 +275,7 @@ class _AchievementsPageState extends State<AchievementsPage>
                         height: 60,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                         ),
                         child: const Icon(
                           Icons.check_circle,
@@ -313,7 +311,7 @@ class _AchievementsPageState extends State<AchievementsPage>
               borderRadius: BorderRadius.circular(GymatesTheme.radius12),
               boxShadow: [
                 BoxShadow(
-                  color: GymatesTheme.primaryColor.withOpacity(0.3),
+                  color: GymatesTheme.primaryColor.withValues(alpha: 0.3),
                   blurRadius: 20 * _checkInAnimation.value,
                   spreadRadius: 5 * _checkInAnimation.value,
                 ),
@@ -467,8 +465,8 @@ class _AchievementsPageState extends State<AchievementsPage>
                   ? GymatesTheme.primaryGradient
                   : LinearGradient(
                       colors: [
-                        Colors.grey.withOpacity(0.3),
-                        Colors.grey.withOpacity(0.1),
+                        Colors.grey.withValues(alpha: 0.3),
+                        Colors.grey.withValues(alpha: 0.1),
                       ],
                     ),
               boxShadow: isUnlocked 
@@ -494,7 +492,7 @@ class _AchievementsPageState extends State<AchievementsPage>
       height: 4,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(2),
-        color: Colors.grey.withOpacity(0.2),
+        color: Colors.grey.withValues(alpha: 0.2),
       ),
       child: FractionallySizedBox(
         alignment: Alignment.centerLeft,
@@ -579,7 +577,7 @@ class _AchievementsPageState extends State<AchievementsPage>
 
   Widget _buildSuccessOverlay() {
     return Container(
-      color: Colors.black.withOpacity(0.5),
+      color: Colors.black.withValues(alpha: 0.5),
       child: Center(
         child: AnimatedBuilder(
           animation: _unlockAnimation,
