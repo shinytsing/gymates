@@ -5,6 +5,7 @@ import '../../../core/constants/app_theme.dart';
 import '../../../core/navigation/app_router.dart';
 import '../../../shared/widgets/custom_app_bar.dart';
 import '../../../shared/widgets/custom_text_field.dart';
+import '../../../shared/widgets/custom_card.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
   const EditProfileScreen({super.key});
@@ -91,7 +92,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               CustomTextField(
                 controller: _bioController,
                 label: '个人简介',
-                hintText: '介绍一下自己吧',
+                hint: '介绍一下自己吧',
                 maxLines: 3,
                 maxLength: 200,
                 validator: (value) {
@@ -107,8 +108,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               CustomTextField(
                 controller: _locationController,
                 label: '所在城市',
-                hintText: '请输入所在城市',
-                prefixIcon: Icons.location_on_outlined,
+                hint: '请输入所在城市',
+                prefixIcon: const Icon(Icons.location_on_outlined),
               ),
               
               const SizedBox(height: AppSizes.paddingL),
@@ -188,18 +189,18 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
               Expanded(
                 child: CustomTextField(
                   label: '年龄',
-                  hintText: '25',
+                  hint: '25',
                   keyboardType: TextInputType.number,
-                  prefixIcon: Icons.cake_outlined,
+                  prefixIcon: const Icon(Icons.cake_outlined),
                 ),
               ),
               const SizedBox(width: AppSizes.paddingM),
               Expanded(
                 child: CustomTextField(
                   label: '身高 (cm)',
-                  hintText: '175',
+                  hint: '175',
                   keyboardType: TextInputType.number,
-                  prefixIcon: Icons.height,
+                  prefixIcon: const Icon(Icons.height),
                 ),
               ),
             ],
@@ -210,9 +211,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
           // Weight
           CustomTextField(
             label: '体重 (kg)',
-            hintText: '70',
+            hint: '70',
             keyboardType: TextInputType.number,
-            prefixIcon: Icons.monitor_weight_outlined,
+            prefixIcon: const Icon(Icons.monitor_weight_outlined),
           ),
           
           const SizedBox(height: AppSizes.paddingM),

@@ -43,7 +43,7 @@ func SetupTrainingRoutes(r *gin.RouterGroup) {
 		// 公开接口
 		training.GET("/plans", middleware.OptionalAuthMiddleware(), trainingController.GetTrainingPlans)
 		training.GET("/plans/:id", middleware.OptionalAuthMiddleware(), trainingController.GetTrainingPlan)
-		training.GET("/exercises", trainingController.GetAllExercises)
+		// training.GET("/exercises", trainingController.GetAllExercises) // 已迁移到 training_v2.go
 		training.GET("/exercises/search", trainingController.SearchExercises)
 
 		// 一周训练计划公开接口

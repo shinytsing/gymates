@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../core/config/smart_api_config.dart';
-import 'training_plan_test_page.dart';
 
 class AITrainingTestPage extends StatefulWidget {
   const AITrainingTestPage({super.key});

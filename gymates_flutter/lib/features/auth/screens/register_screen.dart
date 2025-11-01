@@ -134,8 +134,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   CustomTextField(
                     controller: _nameController,
                     label: '姓名',
-                    hintText: '请输入您的姓名',
-                    prefixIcon: Icons.person_outlined,
+                    hint: '请输入您的姓名',
+                    prefixIcon: const Icon(Icons.person_outlined),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return '请输入姓名';
@@ -156,9 +156,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   CustomTextField(
                     controller: _emailController,
                     label: '邮箱',
-                    hintText: '请输入您的邮箱',
+                    hint: '请输入您的邮箱',
                     keyboardType: TextInputType.emailAddress,
-                    prefixIcon: Icons.email_outlined,
+                    prefixIcon: const Icon(Icons.email_outlined),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return '请输入邮箱';
@@ -176,9 +176,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   CustomTextField(
                     controller: _passwordController,
                     label: '密码',
-                    hintText: '请输入密码（至少6位）',
+                    hint: '请输入密码（至少6位）',
                     obscureText: _obscurePassword,
-                    prefixIcon: Icons.lock_outlined,
+                    prefixIcon: const Icon(Icons.lock_outlined),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscurePassword ? Icons.visibility : Icons.visibility_off,
@@ -210,9 +210,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   CustomTextField(
                     controller: _confirmPasswordController,
                     label: '确认密码',
-                    hintText: '请再次输入密码',
+                    hint: '请再次输入密码',
                     obscureText: _obscureConfirmPassword,
-                    prefixIcon: Icons.lock_outlined,
+                    prefixIcon: const Icon(Icons.lock_outlined),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,

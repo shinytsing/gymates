@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import '../../core/theme/gymates_theme.dart';
-import '../../core/animations/gymates_animations.dart';
 
 /// 🌟 Gymates Splash Screen - Premium Launch Experience
 /// 

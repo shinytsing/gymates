@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
+import '../pages/auth/login_page.dart';
 import '../pages/training/training_page.dart';
 import '../pages/training/training_detail_page.dart';
 import '../pages/training/ai_training_detail_page.dart';
@@ -28,6 +29,8 @@ import '../theme/gymates_theme.dart';
 class AppRoutes {
   // 路由名称常量
   static const String splash = '/';
+  static const String login = '/login';
+  static const String register = '/register';
   static const String main = '/main';
   static const String training = '/training';
   static const String trainingDetail = '/training-detail';
@@ -46,6 +49,7 @@ class AppRoutes {
   // 路由配置
   static Map<String, WidgetBuilder> get routes => {
     splash: (context) => const SplashScreen(),
+    login: (context) => const LoginPage(),
     main: (context) => const MainNavigationScreen(),
     training: (context) => const TrainingPage(),
     trainingDetail: (context) {
@@ -239,7 +243,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _navigateToMain() {
     if (mounted) {
-      AppRoutes.pushReplacementNamed(context, AppRoutes.main);
+      // TODO: 检查用户登录状态，这里暂时跳转到登录页
+      AppRoutes.pushReplacementNamed(context, AppRoutes.login);
     }
   }
 

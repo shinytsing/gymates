@@ -256,7 +256,7 @@ class ApiService {
           'limit': limit,
         },
       );
-      return ApiResponse.fromJson(response.data, (json) => (json as List).map((e) => Mate.fromJson(e as Map<String, dynamic>)).toList()));
+      return ApiResponse.fromJson(response.data, (json) => (json as List).map((e) => Mate.fromJson(e as Map<String, dynamic>)).toList());
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -287,7 +287,7 @@ class ApiService {
           'limit': limit,
         },
       );
-      return ApiResponse.fromJson(response.data, (json) => (json as List).map((e) => Chat.fromJson(e as Map<String, dynamic>)).toList()));
+      return ApiResponse.fromJson(response.data, (json) => (json as List).map((e) => Chat.fromJson(e as Map<String, dynamic>)).toList());
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -305,7 +305,7 @@ class ApiService {
           'limit': limit,
         },
       );
-      return ApiResponse.fromJson(response.data, (json) => (json as List).map((e) => Message.fromJson(e as Map<String, dynamic>)).toList()));
+      return ApiResponse.fromJson(response.data, (json) => (json as List).map((e) => Message.fromJson(e as Map<String, dynamic>)).toList());
     } on DioException catch (e) {
       throw _handleError(e);
     }

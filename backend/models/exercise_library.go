@@ -7,21 +7,23 @@ import (
 
 // ExerciseLibrary 动作库模型
 type ExerciseLibrary struct {
-	ID          uint           `json:"id" gorm:"primaryKey"`
-	Name        string         `json:"name" gorm:"size:100;not null"`
-	Part        string         `json:"part" gorm:"size:50;not null"`
-	Level       string         `json:"level" gorm:"size:20;default:'intermediate'"`
-	Type        string         `json:"type" gorm:"size:30"`
-	Equipment   string         `json:"equipment" gorm:"size:50"`
-	Tags        string         `json:"tags" gorm:"type:text"` // JSON字符串存储标签
-	Description string         `json:"description" gorm:"type:text"`
-	Instructions string        `json:"instructions" gorm:"type:text"`
-	ImageURL    string         `json:"image_url" gorm:"size:255"`
-	VideoURL    string         `json:"video_url" gorm:"size:255"`
-	MuscleGroups string        `json:"muscle_groups" gorm:"size:100"` // 主要肌群
-	CreatedAt   time.Time      `json:"created_at"`
-	UpdatedAt   time.Time      `json:"updated_at"`
-	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`
+	ID                uint           `json:"id" gorm:"primaryKey"`
+	Name              string         `json:"name" gorm:"size:100;not null"`
+	Part              string         `json:"part" gorm:"size:50;not null"`
+	Level             string         `json:"level" gorm:"size:20;default:'intermediate'"`
+	Type              string         `json:"type" gorm:"size:30"`
+	Equipment         string         `json:"equipment" gorm:"size:50"`
+	Tags              string         `json:"tags" gorm:"type:text"` // JSON字符串存储标签
+	Description       string         `json:"description" gorm:"type:text"`
+	Instructions      string         `json:"instructions" gorm:"type:text"`
+	ImageURL          string         `json:"image_url" gorm:"size:255"`
+	VideoURL          string         `json:"video_url" gorm:"size:255"`
+	MuscleGroups      string         `json:"muscle_groups" gorm:"size:100"` // 主要肌群
+	EstimatedCalories int            `json:"estimated_calories" gorm:"default:10"` // 每组预计消耗卡路里
+	EstimatedDuration int            `json:"estimated_duration" gorm:"default:30"` // 每组预计时长(秒)
+	CreatedAt         time.Time      `json:"created_at"`
+	UpdatedAt         time.Time      `json:"updated_at"`
+	DeletedAt         gorm.DeletedAt `json:"-" gorm:"index"`
 }
 
 // TrainingMode 训练模式

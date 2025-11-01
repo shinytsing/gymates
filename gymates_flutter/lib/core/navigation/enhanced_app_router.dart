@@ -126,7 +126,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                 path: 'training',
                 name: 'training',
                 pageBuilder: (context, state) => CustomTransitionPage(
-                  child: const TrainingScreen(),
+                  child: const TrainingPage(),
                   transitionsBuilder: (context, animation, secondaryAnimation, child) {
                     return FadePageRoute(child: child).transitionsBuilder(
                       context, animation, secondaryAnimation, child);

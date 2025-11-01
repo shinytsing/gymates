@@ -47,6 +47,9 @@ func SetupRoutes(r *gin.Engine) {
 		// 训练路由
 		SetupTrainingRoutes(api)
 
+	// 训练路由 V2 (重构版) - 暂时禁用,避免路由冲突
+	// SetupTrainingV2Routes(api)
+
 		// 社区路由
 		SetupCommunityRoutes(api)
 

@@ -465,7 +465,7 @@ class _EnhancedLoginScreenState extends ConsumerState<EnhancedLoginScreen>
             Expanded(
               child: EnhancedButton(
                 text: 'Apple',
-                isSecondary: true,
+                type: ButtonType.secondary,
                 icon: Icons.apple,
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'exercise_detail_page.dart';
-import '../today_training_page.dart';
 
 /// 📚 动作库页面（二级页面）
 /// 支持搜索、筛选、收藏与推荐动作
@@ -14,7 +13,7 @@ class ExerciseLibraryPage extends StatefulWidget {
 class _ExerciseLibraryPageState extends State<ExerciseLibraryPage> {
   final TextEditingController _searchController = TextEditingController();
   String _selectedCategory = '全部';
-  String _selectedFilter = '全部';
+  final String _selectedFilter = '全部';
 
   final List<String> _categories = [
     '全部',

@@ -97,7 +97,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
               CustomTextField(
                 controller: _contentController,
                 label: '分享你的健身心得',
-                hintText: '今天训练了什么？有什么收获？',
+                hint: '今天训练了什么？有什么收获？',
                 maxLines: 8,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {

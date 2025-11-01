@@ -1,4 +1,5 @@
 /// 🏋️ 训练模块数据模型
+library;
 
 class TrainingPlan {
   final String id;

@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../theme/gymates_theme.dart';
-import '../../routes/app_routes.dart';
 
-/// 🔐 登录页面 - 完全按照 Figma 设计实现
+/// 🔐 Login Page - 基于 Figma 设计的登录页面
 /// 
-/// 设计规范：
-/// - 背景图片 + 渐变遮罩
-/// - 一键登录按钮
-/// - 其他手机号登录
-/// - 服务协议同意
-/// - 社交登录 (Apple, WeChat)
-
+/// 设计特点：
+/// - 顶部英雄图片区域（45vh）
+/// - Logo 和品牌标识居中展示
+/// - 圆角卡片式登录表单
+/// - 邮箱和密码输入框
+/// - 社交登录选项（Apple & WeChat）
+/// - 渐变背景和现代化 UI
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -19,196 +17,147 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with TickerProviderStateMixin {
-  late AnimationController _logoController;
-  late AnimationController _contentController;
-  
-  late Animation<double> _logoAnimation;
-  late Animation<double> _contentAnimation;
-
-  bool _agreedToTerms = false;
+class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _obscurePassword = true;
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
 
   @override
   void initState() {
     super.initState();
-    _initializeAnimations();
-    _startAnimations();
-  }
-
-  void _initializeAnimations() {
-    _logoController = AnimationController(
+    _animationController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
     
-    _contentController = AnimationController(
-      duration: const Duration(milliseconds: 600),
-      vsync: this,
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
     );
-
-    _logoAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _logoController,
-      curve: Curves.easeOutCubic,
-    ));
-
-    _contentAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _contentController,
-      curve: Curves.easeOutCubic,
-    ));
-  }
-
-  void _startAnimations() async {
-    _logoController.forward();
-    await Future.delayed(const Duration(milliseconds: 300));
-    _contentController.forward();
+    
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.3),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeOut));
+    
+    _animationController.forward();
   }
 
   @override
   void dispose() {
-    _logoController.dispose();
-    _contentController.dispose();
+    _animationController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
+  }
+
+  void _handleLogin() {
+    if (_formKey.currentState?.validate() ?? false) {
+      // TODO: 实现登录逻辑
+      Navigator.pushReplacementNamed(context, '/main');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+    final size = MediaQuery.of(context).size;
+    final brightness = Theme.of(context).brightness;
     
     return Scaffold(
-      body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Stack(
-          children: [
-            // 背景图片
-            _buildBackgroundImage(),
-            
-            // 渐变遮罩
-            _buildGradientOverlay(),
-            
-            // 内容
-            _buildContent(isIOS),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBackgroundImage() {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage(
-            'https://images.unsplash.com/photo-1738523686534-7055df5858d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwY291cGxlJTIwd29ya291dCUyMHRvZ2V0aGVyfGVufDF8fHx8MTc1OTYzOTc0NHww&ixlib=rb-4.1.0&q=80&w=1080',
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: brightness == Brightness.dark
+                ? const [
+                    Color(0xFF1a3a1a),
+                    Color(0xFF1a2f3a),
+                    Color(0xFF2a1a3a),
+                  ]
+                : const [
+                    Color(0xFFf0fdf4), // green-50
+                    Color(0xFFeff6ff), // blue-50
+                    Color(0xFFfaf5ff), // purple-50
+                  ],
           ),
-          fit: BoxFit.cover,
         ),
-      ),
-    );
-  }
-
-  Widget _buildGradientOverlay() {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.transparent,
-            Color(0x33000000),
-            Color(0x99000000),
-          ],
-          stops: [0.0, 0.2, 1.0],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildContent(bool isIOS) {
-    return SafeArea(
-      child: Column(
-        children: [
-          // 状态栏
-          _buildStatusBar(),
-          
-          // 品牌区域
-          Expanded(
-            child: _buildBrandSection(isIOS),
-          ),
-          
-          // 登录区域
-          _buildLoginSection(isIOS),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStatusBar() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(
-            '09:49',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Row(
-            children: [
-              Container(
-                width: 16,
-                height: 8,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.8)),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Container(
-                  width: 8,
-                  height: 6,
-                  margin: const EdgeInsets.all(1),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(2),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                // Hero Image Section
+                _buildHeroSection(size),
+                
+                // Login Form Section
+                FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: SlideTransition(
+                    position: _slideAnimation,
+                    child: _buildLoginForm(context),
                   ),
                 ),
-              ),
-              const SizedBox(width: 4),
-              const Text(
-                '47',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ],
+        ),
       ),
     );
   }
 
-  Widget _buildBrandSection(bool isIOS) {
-    return AnimatedBuilder(
-      animation: _logoAnimation,
-      builder: (context, child) {
-        return Transform.translate(
-          offset: Offset(0, 30 * (1 - _logoAnimation.value)),
-          child: Opacity(
-            opacity: _logoAnimation.value,
-            child: Center(
+  Widget _buildHeroSection(Size size) {
+    return SizedBox(
+      height: size.height * 0.45,
+      child: Stack(
+        children: [
+          // Background Image
+          Positioned.fill(
+            child: Stack(
+              children: [
+                Image.network(
+                  'https://images.unsplash.com/photo-1669989179336-b2234d2878df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            GymatesTheme.primaryColor,
+                            Color(0xB36366F1),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                // Gradient Overlay
+                Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Color(0x336366F1),
+                        Color(0xE6f0fdf4),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          
+          // Logo & Brand
+          Center(
+            child: FadeTransition(
+              opacity: _fadeAnimation,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -217,319 +166,477 @@ class _LoginPageState extends State<LoginPage>
                     width: 80,
                     height: 80,
                     decoration: BoxDecoration(
-                      color: isIOS ? Colors.white : GymatesTheme.primaryColor,
-                      borderRadius: BorderRadius.circular(isIOS ? 16 : 12),
-                      boxShadow: [
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: const [
                         BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.2),
+                          color: Color(0x33000000),
                           blurRadius: 20,
-                          offset: const Offset(0, 10),
+                          offset: Offset(0, 10),
                         ),
                       ],
                     ),
-                    child: Center(
-                      child: Text(
-                        '💪',
-                        style: TextStyle(
-                          fontSize: 32,
-                          color: isIOS ? GymatesTheme.primaryColor : Colors.white,
-                        ),
-                      ),
+                    child: const Icon(
+                      Icons.fitness_center,
+                      size: 40,
+                      color: GymatesTheme.primaryColor,
                     ),
                   ),
                   
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 16),
                   
                   // App Name
                   const Text(
                     'Gymates',
                     style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      letterSpacing: 1,
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          color: Color(0x4D000000),
+                          offset: Offset(0, 2),
+                          blurRadius: 8,
+                        ),
+                      ],
                     ),
                   ),
                   
                   const SizedBox(height: 8),
                   
                   // Tagline
-                  const Text(
-                    '寻找你的健身搭子',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white70,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                  
-                  const SizedBox(height: 32),
-                  
-                  // Phone Display
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.2),
-                        width: 1,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.auto_awesome,
+                        size: 16,
+                        color: Colors.yellow.shade300,
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        const Text(
-                          '166****3484',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        const Text(
-                          '认证服务由中国联通通信提供',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildLoginSection(bool isIOS) {
-    return AnimatedBuilder(
-      animation: _contentAnimation,
-      builder: (context, child) {
-        return Transform.translate(
-          offset: Offset(0, 50 * (1 - _contentAnimation.value)),
-          child: Opacity(
-            opacity: _contentAnimation.value,
-            child: Padding(
-              padding: const EdgeInsets.all(32),
-              child: Column(
-                children: [
-                  // 一键登录按钮
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: _agreedToTerms ? _handleQuickLogin : null,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: isIOS ? Colors.white : const Color(0xFF10B981),
-                        foregroundColor: isIOS ? Colors.black : Colors.white,
-                        elevation: 0,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(isIOS ? 12 : 8),
-                        ),
-                      ),
-                      child: const Text(
-                        '一键登录',
+                      const SizedBox(width: 8),
+                      const Text(
+                        'Your AI Fitness Partner',
                         style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                          color: Color(0xE6FFFFFF),
+                          fontSize: 18,
+                          shadows: [
+                            Shadow(
+                              color: Color(0x4D000000),
+                              offset: Offset(0, 1),
+                              blurRadius: 4,
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ),
-                  
-                  const SizedBox(height: 16),
-                  
-                  // 其他手机号登录
-                  TextButton(
-                    onPressed: _handlePhoneLogin,
-                    child: const Text(
-                      '其他手机号登录',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 16,
+                      const SizedBox(width: 8),
+                      Icon(
+                        Icons.auto_awesome,
+                        size: 16,
+                        color: Colors.yellow.shade300,
                       ),
-                    ),
+                    ],
                   ),
-                  
-                  const SizedBox(height: 24),
-                  
-                  // 服务协议
-                  _buildTermsAgreement(),
-                  
-                  const SizedBox(height: 24),
-                  
-                  // 社交登录
-                  _buildSocialLogin(isIOS),
                 ],
               ),
             ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 
-  Widget _buildTermsAgreement() {
-    return Row(
+  Widget _buildLoginForm(BuildContext context) {
+    return Transform.translate(
+      offset: const Offset(0, -32),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          children: [
+            // Login Form Card
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x1A000000),
+                    blurRadius: 20,
+                    offset: Offset(0, 10),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Title
+                      const Text(
+                        'Welcome Back!',
+                        style: TextStyle(
+                          color: Color(0xFF111827),
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      
+                      const SizedBox(height: 8),
+                      
+                      const Text(
+                        'Continue your fitness journey',
+                        style: TextStyle(
+                          color: GymatesTheme.lightTextSecondary,
+                          fontSize: 14,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      
+                      const SizedBox(height: 24),
+                      
+                      // Email Field
+                      _buildEmailField(),
+                      
+                      const SizedBox(height: 16),
+                      
+                      // Password Field
+                      _buildPasswordField(),
+                      
+                      const SizedBox(height: 8),
+                      
+                      // Forgot Password
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            // TODO: 实现忘记密码
+                          },
+                          child: const Text(
+                            'Forgot Password?',
+                            style: TextStyle(
+                              color: GymatesTheme.primaryColor,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                      
+                      const SizedBox(height: 16),
+                      
+                      // Login Button
+                      _buildLoginButton(),
+                      
+                      const SizedBox(height: 24),
+                      
+                      // Divider
+                      const Row(
+                        children: [
+                          Expanded(child: Divider(color: GymatesTheme.borderColor)),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              'OR',
+                              style: TextStyle(
+                                color: GymatesTheme.lightTextSecondary,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                          Expanded(child: Divider(color: GymatesTheme.borderColor)),
+                        ],
+                      ),
+                      
+                      const SizedBox(height: 24),
+                      
+                      // Social Login Options
+                      _buildSocialLoginButtons(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            
+            const SizedBox(height: 24),
+            
+            // Register Link
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "Don't have an account? ",
+                  style: TextStyle(
+                    color: GymatesTheme.lightTextSecondary,
+                    fontSize: 14,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/register');
+                  },
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: const Text(
+                    'Create Your Free AI Plan',
+                    style: TextStyle(
+                      color: GymatesTheme.primaryColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            
+            const SizedBox(height: 32),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmailField() {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              _agreedToTerms = !_agreedToTerms;
-            });
-          },
-          child: Container(
-            width: 20,
-            height: 20,
-            margin: const EdgeInsets.only(top: 2),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.white.withValues(alpha: 0.5),
-                width: 2,
-              ),
-              borderRadius: BorderRadius.circular(4),
-              color: _agreedToTerms ? Colors.white : Colors.transparent,
-            ),
-            child: _agreedToTerms
-                ? const Icon(
-                    Icons.check,
-                    size: 12,
-                    color: GymatesTheme.primaryColor,
-                  )
-                : null,
+        const Text(
+          'Email',
+          style: TextStyle(
+            color: Color(0xFF111827),
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
           ),
         ),
-        
-        const SizedBox(width: 12),
-        
-        Expanded(
-          child: RichText(
-            text: const TextSpan(
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.white70,
-                height: 1.4,
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: _emailController,
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+            hintText: 'Enter your email',
+            prefixIcon: const Icon(Icons.mail_outline),
+            filled: true,
+            fillColor: const Color(0xFFF9FAFB),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: GymatesTheme.borderColor),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: GymatesTheme.primaryColor, width: 2),
+            ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          ),
+          validator: (value) {
+            if (value == null || value.trim().isEmpty) {
+              return 'Please enter your email';
+            }
+            if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+              return 'Please enter a valid email';
+            }
+            return null;
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPasswordField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Password',
+          style: TextStyle(
+            color: Color(0xFF111827),
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: _passwordController,
+          obscureText: _obscurePassword,
+          decoration: InputDecoration(
+            hintText: 'Enter your password',
+            prefixIcon: const Icon(Icons.lock_outline),
+            suffixIcon: IconButton(
+              icon: Icon(
+                _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                color: GymatesTheme.lightTextSecondary,
               ),
+              onPressed: () {
+                setState(() {
+                  _obscurePassword = !_obscurePassword;
+                });
+              },
+            ),
+            filled: true,
+            fillColor: const Color(0xFFF9FAFB),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: GymatesTheme.borderColor),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: GymatesTheme.primaryColor, width: 2),
+            ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter your password';
+            }
+            if (value.length < 6) {
+              return 'Password must be at least 6 characters';
+            }
+            return null;
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLoginButton() {
+    return Container(
+      height: 56,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [
+            GymatesTheme.primaryColor,
+            Color(0xCC6366F1),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x4D6366F1),
+            blurRadius: 12,
+            offset: Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: _handleLogin,
+          borderRadius: BorderRadius.circular(12),
+          child: const Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextSpan(text: '已阅读并同意'),
-                TextSpan(
-                  text: '《服务协议》',
+                Text(
+                  'Log In',
                   style: TextStyle(
                     color: Colors.white,
-                    decoration: TextDecoration.underline,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                TextSpan(text: '、'),
-                TextSpan(
-                  text: '《用户隐私政策》',
-                  style: TextStyle(
+                SizedBox(width: 8),
+                Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white,
+                  size: 20,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSocialLoginButtons() {
+    return Column(
+      children: [
+        // Apple Login
+        _buildSocialButton(
+          icon: Icons.apple,
+          label: 'Continue with Apple',
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Apple login coming soon')),
+            );
+          },
+        ),
+        
+        const SizedBox(height: 12),
+        
+        // WeChat Login
+        _buildSocialButton(
+          icon: Icons.chat_bubble,
+          label: 'Continue with WeChat',
+          color: const Color(0xFF09BB07),
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('WeChat login coming soon')),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSocialButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+    Color? color,
+  }) {
+    return Container(
+      height: 48,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFFE5E7EB), width: 2),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 20,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    color: color ?? Colors.blue,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 12,
                     color: Colors.white,
-                    decoration: TextDecoration.underline,
                   ),
                 ),
-                TextSpan(text: '和'),
-                TextSpan(
-                  text: '《第三方信息共享清单》',
-                  style: TextStyle(
-                    color: Colors.white,
-                    decoration: TextDecoration.underline,
+                const SizedBox(width: 12),
+                Text(
+                  label,
+                  style: const TextStyle(
+                    color: Color(0xFF111827),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
             ),
           ),
         ),
-      ],
-    );
-  }
-
-  Widget _buildSocialLogin(bool isIOS) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // Apple Login
-        GestureDetector(
-          onTap: () => _handleSocialLogin('apple'),
-          child: Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: isIOS 
-                  ? Colors.white.withValues(alpha: 0.2)
-                  : Colors.black.withValues(alpha: 0.3),
-              borderRadius: BorderRadius.circular(24),
-              border: Border.all(
-                color: Colors.white.withValues(alpha: 0.2),
-                width: 1,
-              ),
-            ),
-            child: const Icon(
-              Icons.apple,
-              color: Colors.white,
-              size: 24,
-            ),
-          ),
-        ),
-        
-        const SizedBox(width: 32),
-        
-        // WeChat Login
-        GestureDetector(
-          onTap: () => _handleSocialLogin('wechat'),
-          child: Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: isIOS 
-                  ? Colors.white.withValues(alpha: 0.2)
-                  : const Color(0xFF10B981).withValues(alpha: 0.8),
-              borderRadius: BorderRadius.circular(24),
-              border: Border.all(
-                color: Colors.white.withValues(alpha: 0.2),
-                width: 1,
-              ),
-            ),
-            child: const Icon(
-              Icons.chat,
-              color: Colors.white,
-              size: 24,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  void _handleQuickLogin() {
-    HapticFeedback.lightImpact();
-    // TODO: 实现一键登录逻辑
-    AppRoutes.pushReplacementNamed(context, AppRoutes.main);
-  }
-
-  void _handlePhoneLogin() {
-    HapticFeedback.lightImpact();
-    // TODO: 跳转到手机号登录页面
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('手机号登录功能待实现'),
-        backgroundColor: GymatesTheme.primaryColor,
-      ),
-    );
-  }
-
-  void _handleSocialLogin(String provider) {
-    HapticFeedback.lightImpact();
-    // TODO: 实现社交登录逻辑
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('$provider登录功能待实现'),
-        backgroundColor: GymatesTheme.primaryColor,
       ),
     );
   }

@@ -143,9 +143,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   CustomTextField(
                     controller: _emailController,
                     label: '邮箱',
-                    hintText: '请输入您的邮箱',
+                    hint: '请输入您的邮箱',
                     keyboardType: TextInputType.emailAddress,
-                    prefixIcon: Icons.email_outlined,
+                    prefixIcon: const Icon(Icons.email_outlined),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return '请输入邮箱';
@@ -163,9 +163,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   CustomTextField(
                     controller: _passwordController,
                     label: '密码',
-                    hintText: '请输入您的密码',
+                    hint: '请输入您的密码',
                     obscureText: _obscurePassword,
-                    prefixIcon: Icons.lock_outlined,
+                    prefixIcon: const Icon(Icons.lock_outlined),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscurePassword ? Icons.visibility : Icons.visibility_off,

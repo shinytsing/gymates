@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gymates_flutter/core/theme/gymates_theme.dart';
-import '../../../core/animations/gymates_animations.dart';
 
 /// 💬 Community Page - Social Fitness Feed
 /// 

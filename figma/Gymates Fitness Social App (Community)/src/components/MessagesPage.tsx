@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Search, MoreHorizontal, Phone, Video, Plus } from 'lucide-react';
+import { Search, MoreHorizontal, Phone, Video, Plus, Bell } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { ChatDetail } from './messages/ChatDetail';
+import { NotificationList } from './messages/NotificationList';
 import { useTheme } from './context/ThemeContext';
 
 export function MessagesPage() {
@@ -9,10 +10,11 @@ export function MessagesPage() {
   const isIOS = theme === 'ios';
   const [activeTab, setActiveTab] = useState('messages');
   const [selectedChat, setSelectedChat] = useState<any>(null);
+  const [unreadNotifications, setUnreadNotifications] = useState(3);
 
   const tabs = [
-    { id: 'messages', label: '消息' },
-    { id: 'notifications', label: '通知' },
+    { id: 'messages', label: '聊天' },
+    { id: 'notifications', label: '通知', badge: unreadNotifications },
   ];
 
   const messages = [
@@ -113,13 +115,18 @@ export function MessagesPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 py-2 px-4 rounded-md transition-colors ${
+              className={`flex-1 py-2 px-4 rounded-md transition-colors relative ${
                 activeTab === tab.id
                   ? 'bg-white text-primary shadow-sm'
                   : 'text-gray-600'
               }`}
             >
-              {tab.label}
+              <span>{tab.label}</span>
+              {tab.badge && tab.badge > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                  {tab.badge}
+                </span>
+              )}
             </button>
           ))}
         </div>
@@ -132,7 +139,7 @@ export function MessagesPage() {
             {messages.map((message) => (
               <div 
                 key={message.id} 
-                className={`bg-white rounded-xl p-4 border border-gray-200 flex items-center space-x-3 cursor-pointer ${
+                className={`bg-white ${isIOS ? 'rounded-2xl' : 'rounded-xl'} p-4 border border-gray-200 flex items-center space-x-3 cursor-pointer ${
                   isIOS ? 'active:bg-gray-50' : 'hover:bg-gray-50'
                 } transition-colors`}
                 onClick={() => setSelectedChat(message)}
@@ -163,10 +170,10 @@ export function MessagesPage() {
                     </div>
                   )}
                   <div className="flex space-x-1">
-                    <button className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                    <button className={`w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center transition-colors ${isIOS ? 'active:bg-gray-200' : 'hover:bg-gray-200'}`}>
                       <Phone className="w-4 h-4 text-gray-600" />
                     </button>
-                    <button className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                    <button className={`w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center transition-colors ${isIOS ? 'active:bg-gray-200' : 'hover:bg-gray-200'}`}>
                       <Video className="w-4 h-4 text-gray-600" />
                     </button>
                   </div>
@@ -175,22 +182,7 @@ export function MessagesPage() {
             ))}
           </div>
         ) : (
-          <div className="space-y-3">
-            {notifications.map((notification) => (
-              <div key={notification.id} className={`bg-white rounded-xl p-4 border border-gray-200 ${notification.unread ? 'border-l-4 border-l-primary' : ''}`}>
-                <div className="flex items-start justify-between mb-2">
-                  <h4 className="text-gray-900">{notification.title}</h4>
-                  <span className="text-xs text-gray-500">{notification.time}</span>
-                </div>
-                <p className="text-sm text-gray-600">{notification.content}</p>
-                {notification.unread && (
-                  <div className="mt-2">
-                    <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+          <NotificationList />
         )}
       </div>
 
