@@ -73,5 +73,11 @@ func SetupRoutes(r *gin.Engine) {
 
 		// AI教练路由
 		SetupAICoachRoutes(api)
+
+		// AI聊天路由
+		SetupAIChatRoutes(api)
+
+		// 地图服务路由
+		SetupMapRoutes(api)
 	}
 }
