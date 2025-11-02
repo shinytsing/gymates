@@ -1,8 +1,8 @@
 package models
 
 import (
-	"time"
 	"gorm.io/gorm"
+	"time"
 )
 
 // ExerciseLibrary 动作库模型
@@ -18,7 +18,7 @@ type ExerciseLibrary struct {
 	Instructions      string         `json:"instructions" gorm:"type:text"`
 	ImageURL          string         `json:"image_url" gorm:"size:255"`
 	VideoURL          string         `json:"video_url" gorm:"size:255"`
-	MuscleGroups      string         `json:"muscle_groups" gorm:"size:100"` // 主要肌群
+	MuscleGroups      string         `json:"muscle_groups" gorm:"size:100"`        // 主要肌群
 	EstimatedCalories int            `json:"estimated_calories" gorm:"default:10"` // 每组预计消耗卡路里
 	EstimatedDuration int            `json:"estimated_duration" gorm:"default:30"` // 每组预计时长(秒)
 	CreatedAt         time.Time      `json:"created_at"`
@@ -28,33 +28,33 @@ type ExerciseLibrary struct {
 
 // TrainingMode 训练模式
 type TrainingMode struct {
-	ID          uint           `json:"id" gorm:"primaryKey"`
-	UserID      uint           `json:"user_id" gorm:"not null"`
-	User        User           `json:"user" gorm:"foreignKey:UserID"`
-	Mode        string         `json:"mode" gorm:"size:20;not null"` // 三分化/五分化/推拉腿
-	TrainDays   int            `json:"train_days" gorm:"default:3"` // 每周训练天数
-	Target      string         `json:"target" gorm:"size:20"` // 增肌/减脂/综合
-	Level       string         `json:"level" gorm:"size:20"` // 初级/中级/高级
-	IsActive    bool           `json:"is_active" gorm:"default:true"`
-	CreatedAt   time.Time      `json:"created_at"`
-	UpdatedAt   time.Time      `json:"updated_at"`
-	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`
+	ID        uint           `json:"id" gorm:"primaryKey"`
+	UserID    uint           `json:"user_id" gorm:"not null"`
+	User      User           `json:"user" gorm:"foreignKey:UserID"`
+	Mode      string         `json:"mode" gorm:"size:20;not null"` // 三分化/五分化/推拉腿
+	TrainDays int            `json:"train_days" gorm:"default:3"`  // 每周训练天数
+	Target    string         `json:"target" gorm:"size:20"`        // 增肌/减脂/综合
+	Level     string         `json:"level" gorm:"size:20"`         // 初级/中级/高级
+	IsActive  bool           `json:"is_active" gorm:"default:true"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt time.Time      `json:"updated_at"`
+	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
 }
 
 // UserTrainingHistory 用户训练历史
 type UserTrainingHistory struct {
-	ID          uint           `json:"id" gorm:"primaryKey"`
-	UserID      uint           `json:"user_id" gorm:"not null"`
-	User        User           `json:"user" gorm:"foreignKey:UserID"`
-	ExerciseID  uint           `json:"exercise_id" gorm:"not null"`
+	ID          uint            `json:"id" gorm:"primaryKey"`
+	UserID      uint            `json:"user_id" gorm:"not null"`
+	User        User            `json:"user" gorm:"foreignKey:UserID"`
+	ExerciseID  uint            `json:"exercise_id" gorm:"not null"`
 	Exercise    ExerciseLibrary `json:"exercise" gorm:"foreignKey:ExerciseID"`
-	MuscleGroup string         `json:"muscle_group" gorm:"size:50"`
-	Sets        int            `json:"sets"`
-	Reps        int            `json:"reps"`
-	Weight      float64        `json:"weight"`
-	Duration    int            `json:"duration"` // 训练时长（秒）
-	CompletedAt time.Time      `json:"completed_at"`
-	CreatedAt   time.Time      `json:"created_at"`
-	UpdatedAt   time.Time      `json:"updated_at"`
-	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`
+	MuscleGroup string          `json:"muscle_group" gorm:"size:50"`
+	Sets        int             `json:"sets"`
+	Reps        int             `json:"reps"`
+	Weight      float64         `json:"weight"`
+	Duration    int             `json:"duration"` // 训练时长（秒）
+	CompletedAt time.Time       `json:"completed_at"`
+	CreatedAt   time.Time       `json:"created_at"`
+	UpdatedAt   time.Time       `json:"updated_at"`
+	DeletedAt   gorm.DeletedAt  `json:"-" gorm:"index"`
 }

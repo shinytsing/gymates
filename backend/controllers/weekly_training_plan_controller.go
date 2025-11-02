@@ -183,10 +183,10 @@ func (wtc *WeeklyTrainingPlanController) CreateWeeklyTrainingPlan(c *gin.Context
 		// 创建训练部位
 		for _, partReq := range dayReq.Parts {
 			part := models.TrainingPart{
-				TrainingDayID:     day.ID,
-				MuscleGroup:       partReq.MuscleGroup,
-				MuscleGroupName:   partReq.MuscleGroupName,
-				Order:             partReq.Order,
+				TrainingDayID:   day.ID,
+				MuscleGroup:     partReq.MuscleGroup,
+				MuscleGroupName: partReq.MuscleGroupName,
+				Order:           partReq.Order,
 			}
 
 			if err := tx.Create(&part).Error; err != nil {
@@ -203,22 +203,22 @@ func (wtc *WeeklyTrainingPlanController) CreateWeeklyTrainingPlan(c *gin.Context
 			// 创建训练动作
 			for _, exerciseReq := range partReq.Exercises {
 				exercise := models.Exercise{
-					TrainingPlanID:  plan.ID, // 保持与原有模型的兼容性
-					TrainingPartID:  &part.ID,
-					Name:            exerciseReq.Name,
-					Description:     exerciseReq.Description,
-					MuscleGroup:     exerciseReq.MuscleGroup,
-					Sets:            exerciseReq.Sets,
-					Reps:            exerciseReq.Reps,
-					Weight:          exerciseReq.Weight,
-					Duration:        exerciseReq.Duration,
-					RestTime:        exerciseReq.RestTime,
-					RestSeconds:     exerciseReq.RestSeconds,
-					Instructions:    exerciseReq.Instructions,
-					ImageURL:        exerciseReq.ImageURL,
-					VideoURL:        exerciseReq.VideoURL,
-					Notes:           exerciseReq.Notes,
-					Order:           exerciseReq.Order,
+					TrainingPlanID: plan.ID, // 保持与原有模型的兼容性
+					TrainingPartID: &part.ID,
+					Name:           exerciseReq.Name,
+					Description:    exerciseReq.Description,
+					MuscleGroup:    exerciseReq.MuscleGroup,
+					Sets:           exerciseReq.Sets,
+					Reps:           exerciseReq.Reps,
+					Weight:         exerciseReq.Weight,
+					Duration:       exerciseReq.Duration,
+					RestTime:       exerciseReq.RestTime,
+					RestSeconds:    exerciseReq.RestSeconds,
+					Instructions:   exerciseReq.Instructions,
+					ImageURL:       exerciseReq.ImageURL,
+					VideoURL:       exerciseReq.VideoURL,
+					Notes:          exerciseReq.Notes,
+					Order:          exerciseReq.Order,
 				}
 
 				if err := tx.Create(&exercise).Error; err != nil {
@@ -381,10 +381,10 @@ func (wtc *WeeklyTrainingPlanController) UpdateWeeklyTrainingPlan(c *gin.Context
 			// 创建训练部位
 			for _, partReq := range dayReq.Parts {
 				part := models.TrainingPart{
-					TrainingDayID:     day.ID,
-					MuscleGroup:       partReq.MuscleGroup,
-					MuscleGroupName:   partReq.MuscleGroupName,
-					Order:             partReq.Order,
+					TrainingDayID:   day.ID,
+					MuscleGroup:     partReq.MuscleGroup,
+					MuscleGroupName: partReq.MuscleGroupName,
+					Order:           partReq.Order,
 				}
 
 				if err := tx.Create(&part).Error; err != nil {
@@ -401,23 +401,23 @@ func (wtc *WeeklyTrainingPlanController) UpdateWeeklyTrainingPlan(c *gin.Context
 				// 创建训练动作
 				for _, exerciseReq := range partReq.Exercises {
 					exercise := models.Exercise{
-						TrainingPlanID:  plan.ID,
-						TrainingPartID:  &part.ID,
-						Name:            exerciseReq.Name,
-						Description:     exerciseReq.Description,
-						MuscleGroup:     exerciseReq.MuscleGroup,
-						Sets:            exerciseReq.Sets,
-						Reps:            exerciseReq.Reps,
-						Weight:          exerciseReq.Weight,
-						Duration:        exerciseReq.Duration,
-						RestTime:        exerciseReq.RestTime,
-						RestSeconds:     exerciseReq.RestSeconds,
-						Instructions:    exerciseReq.Instructions,
-						ImageURL:        exerciseReq.ImageURL,
-						VideoURL:        exerciseReq.VideoURL,
-						Notes:           exerciseReq.Notes,
-						IsCompleted:     exerciseReq.IsCompleted != nil && *exerciseReq.IsCompleted,
-						Order:           exerciseReq.Order,
+						TrainingPlanID: plan.ID,
+						TrainingPartID: &part.ID,
+						Name:           exerciseReq.Name,
+						Description:    exerciseReq.Description,
+						MuscleGroup:    exerciseReq.MuscleGroup,
+						Sets:           exerciseReq.Sets,
+						Reps:           exerciseReq.Reps,
+						Weight:         exerciseReq.Weight,
+						Duration:       exerciseReq.Duration,
+						RestTime:       exerciseReq.RestTime,
+						RestSeconds:    exerciseReq.RestSeconds,
+						Instructions:   exerciseReq.Instructions,
+						ImageURL:       exerciseReq.ImageURL,
+						VideoURL:       exerciseReq.VideoURL,
+						Notes:          exerciseReq.Notes,
+						IsCompleted:    exerciseReq.IsCompleted != nil && *exerciseReq.IsCompleted,
+						Order:          exerciseReq.Order,
 					}
 
 					if err := tx.Create(&exercise).Error; err != nil {

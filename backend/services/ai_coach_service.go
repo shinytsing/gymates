@@ -16,9 +16,9 @@ import (
 
 // AICoachService AI教练服务
 type AICoachService struct {
-	db            *gorm.DB
+	db              *gorm.DB
 	trainingService *TrainingService
-	aiClient      *openai.Client
+	aiClient        *openai.Client
 }
 
 // NewAICoachService 创建AI教练服务
@@ -28,7 +28,7 @@ func NewAICoachService() *AICoachService {
 	if apiKey != "" {
 		aiClient = openai.NewClient(apiKey)
 	}
-	
+
 	return &AICoachService{
 		db:              config.DB,
 		trainingService: NewTrainingService(),
@@ -126,7 +126,7 @@ func (s *AICoachService) AdjustWorkoutIntensity(userID uint, sessionID uint, cur
 	analysis := s.analyzePerformance(currentPerformance)
 
 	adjustments := make(map[string]interface{})
-	
+
 	// 根据表现调整
 	if analysis["difficulty"] == "too_easy" {
 		adjustments["recommendation"] = "增加重量或组数"
@@ -342,9 +342,9 @@ func (s *AICoachService) convertAIExercisesToPlanExercises(aiExercises []AIExerc
 func (s *AICoachService) analyzePerformance(performance map[string]interface{}) map[string]interface{} {
 	// 简单的表现分析逻辑
 	completionRate, _ := performance["completion_rate"].(float64)
-	
+
 	analysis := make(map[string]interface{})
-	
+
 	if completionRate > 0.95 {
 		analysis["difficulty"] = "too_easy"
 	} else if completionRate < 0.7 {
@@ -352,14 +352,14 @@ func (s *AICoachService) analyzePerformance(performance map[string]interface{}) 
 	} else {
 		analysis["difficulty"] = "appropriate"
 	}
-	
+
 	return analysis
 }
 
 // getFallbackFeedback 获取备用反馈
 func (s *AICoachService) getFallbackFeedback(currentSet, targetSets int) string {
 	progress := float64(currentSet) / float64(targetSets)
-	
+
 	if progress < 0.3 {
 		return "很好的开始!保持节奏,继续加油! 💪"
 	} else if progress < 0.7 {
@@ -378,7 +378,7 @@ func (s *AICoachService) getDefaultMotivationalMessage(context string) string {
 		"rest":     "休息是为了走更远的路! 😌",
 		"struggle": "困难只是暂时的,你比你想象的更强! 💪",
 	}
-	
+
 	if msg, ok := messages[context]; ok {
 		return msg
 	}
@@ -441,4 +441,3 @@ type AIExercise struct {
 	RestTime    int    `json:"rest_time"`
 	Notes       string `json:"notes"`
 }
-

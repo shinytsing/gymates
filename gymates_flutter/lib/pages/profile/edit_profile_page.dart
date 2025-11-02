@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../shared/models/mock_data.dart';
+import '../../models/user_achievement_data.dart';
 
 /// 👤 个人资料编辑页 - EditProfilePage
 /// 
@@ -8,7 +8,7 @@ import '../../shared/models/mock_data.dart';
 /// 包含头像上传、基本信息编辑、健身目标设置
 
 class EditProfilePage extends StatefulWidget {
-  final MockUser user;
+  final UserAchievementData user;
 
   const EditProfilePage({
     super.key,
@@ -99,14 +99,14 @@ class _EditProfilePageState extends State<EditProfilePage>
 
   void _initializeForm() {
     _nameController.text = widget.user.name;
-    _bioController.text = widget.user.bio;
-    _ageController.text = widget.user.age.toString();
+    _bioController.text = widget.user.bio ?? '';
+    _ageController.text = '25'; // 默认年龄
     _heightController.text = '170'; // 默认身高
     _weightController.text = '65'; // 默认体重
-    _locationController.text = widget.user.location;
-    _selectedGoal = widget.user.goal;
-    _selectedExperience = widget.user.experience;
-    _selectedPreferences = List.from(widget.user.preferences);
+    _locationController.text = ''; // widget.user没有location字段
+    _selectedGoal = widget.user.fitnessGoal ?? '健康';
+    _selectedExperience = '中级'; // 默认值
+    _selectedPreferences = []; // 默认空列表
     _avatarUrl = widget.user.avatar;
   }
 

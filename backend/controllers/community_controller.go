@@ -23,11 +23,33 @@ func (cc *CommunityController) GetPosts(c *gin.Context) {
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
 	typeFilter := c.Query("type")
+	tab := c.DefaultQuery("tab", "recommended") // recommended, following, nearby
+
+	// 位置参数（用于nearby tab）
+	latitudeStr := c.Query("latitude")
+	longitudeStr := c.Query("longitude")
 
 	var posts []models.Post
 	var total int64
 
 	query := config.DB.Model(&models.Post{}).Where("is_public = ?", true)
+
+	// 根据tab类型过滤
+	switch tab {
+	case "following":
+		// TODO: 实现关注逻辑，暂时返回所有帖子
+		// 需要获取当前用户关注的用户列表，然后过滤帖子
+	case "nearby":
+		// TODO: 实现附近逻辑，需要根据位置信息筛选
+		// 这里可以添加距离计算逻辑
+		if latitudeStr != "" && longitudeStr != "" {
+			// 可以在这里添加地理位置过滤逻辑
+			// 暂时返回所有帖子
+		}
+	case "recommended":
+		// 推荐算法：按点赞数和创建时间综合排序
+		query = query.Order("likes DESC, created_at DESC")
+	}
 
 	// 根据类型过滤
 	if typeFilter != "" {
@@ -40,7 +62,7 @@ func (cc *CommunityController) GetPosts(c *gin.Context) {
 	// 分页查询
 	offset := (page - 1) * limit
 	if err := query.Preload("User").
-		Offset(offset).Limit(limit).Order("created_at DESC").Find(&posts).Error; err != nil {
+		Offset(offset).Limit(limit).Find(&posts).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, models.ErrorResponse{
 			Success: false,
 			Message: "获取帖子列表失败",

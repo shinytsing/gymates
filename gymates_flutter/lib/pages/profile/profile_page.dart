@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import '../../theme/gymates_theme.dart';
-import '../achievements/achievements_page.dart';
+import '../../models/user_achievement_data.dart';
+import '../../core/theme/gymates_colors.dart';
+import '../../services/profile_api_service.dart';
+import 'widgets/user_header.dart';
+import 'widgets/achievement_panel.dart';
+import 'widgets/my_content_section.dart';
+import 'widgets/settings_section.dart';
+import 'widgets/achievement_share_card.dart';
 import 'edit_profile_page.dart';
-import '../settings/settings_page.dart';
-import '../../shared/models/mock_data.dart';
+import '../achievements/achievements_page.dart';
 import '../help/help_page.dart';
 import '../about/about_page.dart';
 
-/// 👤 我的页 ProfilePage - 现代化用户个人中心
+/// 👤 个人中心页面 - ProfilePage
 /// 
-/// 设计规范：
-/// - 主色调：#6366F1
-/// - 背景色：#F9FAFB
-/// - 卡片圆角：12px
-/// - 页面边距：16px
-/// - 个人信息头部 + 功能卡片区 + 统计组件
+/// 完全重构的个人中心页面，包含：
+/// - 用户信息头部（头像、昵称、目标、社交数据）
+/// - 成就面板（训练统计、徽章展示）
+/// - 我的内容（动态、计划、收藏、伙伴）
+/// - 设置与工具（通知、隐私、语言等）
+/// - 成就卡片分享功能
+/// 
+/// 设计特点：
+/// - 渐变色头部，现代化卡片设计
+/// - 流畅的动画效果
+/// - 清晰的层次结构
+/// - 支持深色模式
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -25,530 +35,255 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage>
-    with TickerProviderStateMixin {
-  late AnimationController _headerAnimationController;
-  late AnimationController _statsAnimationController;
-  late AnimationController _cardsAnimationController;
-  
-  late Animation<double> _headerAnimation;
-  late Animation<double> _statsAnimation;
-  late Animation<double> _cardsAnimation;
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
 
-  // 模拟用户数据
-  final UserProfile _userProfile = UserProfile(
-    name: '健身达人',
-    avatar: '👨‍💼',
-    bio: '热爱健身，追求健康生活',
-    followers: 1280,
-    following: 456,
-    posts: 89,
-    isVerified: true,
-    joinDate: '2023年1月',
-    location: '北京市',
-    workoutDays: 156,
-    caloriesBurned: 125000,
-    achievements: 12,
-  );
+  final ProfileApiService _apiService = ProfileApiService();
+  
+  // 用户数据
+  UserAchievementData? _userData;
+  bool _isLoading = true;
+  String? _errorMessage;
 
   @override
   void initState() {
     super.initState();
     _initializeAnimations();
-    _startAnimations();
+    _loadUserData();
+  }
+
+  /// 加载用户数据
+  Future<void> _loadUserData() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    try {
+      // TODO: 从本地存储或认证服务获取当前用户ID
+      // 这里暂时使用默认ID，实际应用中需要从登录状态获取
+      const String userId = '1';
+      
+      print('🔄 开始加载用户数据...');
+      
+      // 尝试从API获取完整数据
+      final userData = await _apiService.fetchCompleteUserData(userId);
+      
+      if (mounted) {
+        setState(() {
+          _userData = userData;
+          _isLoading = false;
+        });
+        
+        print('✅ 用户数据加载成功');
+        
+        // 数据加载完成后启动动画
+        _startAnimations();
+      }
+    } catch (e) {
+      print('❌ 加载用户数据失败: $e');
+      
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+          _errorMessage = '无法加载用户数据: $e';
+        });
+        
+        // 显示错误提示
+        _showErrorSnackBar('无法加载用户数据，请检查网络连接');
+      }
+    }
+  }
+
+  /// 刷新数据
+  Future<void> _refreshUserData() async {
+    await _loadUserData();
   }
 
   void _initializeAnimations() {
-    // 头部动画控制器
-    _headerAnimationController = AnimationController(
+    _animationController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
-    
-    // 统计动画控制器
-    _statsAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 1200),
-      vsync: this,
-    );
-    
-    // 卡片动画控制器
-    _cardsAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
-      vsync: this,
-    );
 
-    // 头部动画
-    _headerAnimation = Tween<double>(
+    _fadeAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
     ).animate(CurvedAnimation(
-      parent: _headerAnimationController,
-      curve: Curves.easeOutCubic,
+      parent: _animationController,
+      curve: Curves.easeOut,
     ));
 
-    // 统计动画
-    _statsAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.1),
+      end: Offset.zero,
     ).animate(CurvedAnimation(
-      parent: _statsAnimationController,
-      curve: Curves.easeOutCubic,
-    ));
-
-    // 卡片动画
-    _cardsAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _cardsAnimationController,
+      parent: _animationController,
       curve: Curves.easeOutCubic,
     ));
   }
 
-  void _startAnimations() async {
-    _headerAnimationController.forward();
-    
-    await Future.delayed(const Duration(milliseconds: 200));
-    _statsAnimationController.forward();
-    
-    await Future.delayed(const Duration(milliseconds: 300));
-    _cardsAnimationController.forward();
+  void _startAnimations() {
+    _animationController.forward();
   }
 
   @override
   void dispose() {
-    _headerAnimationController.dispose();
-    _statsAnimationController.dispose();
-    _cardsAnimationController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: GymatesTheme.lightBackground,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // 个人信息头部
-              _buildProfileHeader(),
-              
-              const SizedBox(height: GymatesTheme.spacing16),
-              
-              // 统计组件
-              _buildStatsSection(),
-              
-              const SizedBox(height: GymatesTheme.spacing16),
-              
-              // 功能卡片区
-              _buildFunctionCards(),
-              
-              const SizedBox(height: GymatesTheme.spacing16),
-              
-              // 设置选项
-              _buildSettingsSection(),
-              
-              const SizedBox(height: GymatesTheme.spacing32),
-            ],
-          ),
-        ),
-      ),
+      backgroundColor: const Color(0xFFF9FAFB),
+      body: _isLoading
+          ? _buildLoadingView()
+          : _userData == null
+              ? _buildErrorView()
+              : _buildContentView(),
     );
   }
 
-  Widget _buildProfileHeader() {
-    return AnimatedBuilder(
-      animation: _headerAnimation,
-      builder: (context, child) {
-        return Transform.translate(
-          offset: Offset(0, 30 * (1 - _headerAnimation.value)),
-          child: Opacity(
-            opacity: _headerAnimation.value,
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(GymatesTheme.spacing20),
-              decoration: BoxDecoration(
-                gradient: GymatesTheme.primaryGradient,
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(GymatesTheme.radius16),
-                  bottomRight: Radius.circular(GymatesTheme.radius16),
-                ),
-              ),
-              child: Column(
-                children: [
-                  // 头像和基本信息
-                  Row(
-                    children: [
-                      // 头像
-                      Container(
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.3),
-                            width: 3,
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            _userProfile.avatar,
-                            style: const TextStyle(fontSize: 40),
-                          ),
-                        ),
-                      ),
-                      
-                      const SizedBox(width: GymatesTheme.spacing16),
-                      
-                      // 用户信息
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  _userProfile.name,
-                                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                if (_userProfile.isVerified) ...[
-                                  const SizedBox(width: GymatesTheme.spacing4),
-                                  Icon(
-                                    Icons.verified,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                ],
-                              ],
-                            ),
-                            const SizedBox(height: GymatesTheme.spacing4),
-                            Text(
-                              _userProfile.bio,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: Colors.white.withValues(alpha: 0.9),
-                              ),
-                            ),
-                            const SizedBox(height: GymatesTheme.spacing8),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on,
-                                  color: Colors.white.withValues(alpha: 0.8),
-                                  size: 16,
-                                ),
-                                const SizedBox(width: GymatesTheme.spacing4),
-                                Text(
-                                  _userProfile.location,
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Colors.white.withValues(alpha: 0.8),
-                                  ),
-                                ),
-                                const SizedBox(width: GymatesTheme.spacing16),
-                                Icon(
-                                  Icons.calendar_today,
-                                  color: Colors.white.withValues(alpha: 0.8),
-                                  size: 16,
-                                ),
-                                const SizedBox(width: GymatesTheme.spacing4),
-                                Text(
-                                  _userProfile.joinDate,
-                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Colors.white.withValues(alpha: 0.8),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  
-                  const SizedBox(height: GymatesTheme.spacing20),
-                  
-                  // 关注数据
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildFollowStat('粉丝', _userProfile.followers),
-                      ),
-                      Container(
-                        width: 1,
-                        height: 40,
-                        color: Colors.white.withValues(alpha: 0.3),
-                      ),
-                      Expanded(
-                        child: _buildFollowStat('关注', _userProfile.following),
-                      ),
-                      Container(
-                        width: 1,
-                        height: 40,
-                        color: Colors.white.withValues(alpha: 0.3),
-                      ),
-                      Expanded(
-                        child: _buildFollowStat('动态', _userProfile.posts),
-                      ),
-                    ],
-                  ),
-                  
-                  const SizedBox(height: GymatesTheme.spacing20),
-                  
-                  // 编辑资料按钮
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        HapticFeedback.lightImpact();
-                        _editProfile();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: GymatesTheme.primaryColor,
-                        elevation: 0,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: GymatesTheme.spacing16,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(GymatesTheme.radius8),
-                        ),
-                      ),
-                      child: Text(
-                        '编辑资料',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildFollowStat(String label, int count) {
-    return Column(
-      children: [
-        Text(
-          _formatNumber(count),
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: GymatesTheme.spacing4),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Colors.white.withValues(alpha: 0.9),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildStatsSection() {
-    return AnimatedBuilder(
-      animation: _statsAnimation,
-      builder: (context, child) {
-        return Transform.translate(
-          offset: Offset(0, 20 * (1 - _statsAnimation.value)),
-          child: Opacity(
-            opacity: _statsAnimation.value,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: GymatesTheme.spacing16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: _buildStatCard(
-                      '训练天数',
-                      _userProfile.workoutDays.toString(),
-                      Icons.fitness_center,
-                      GymatesTheme.primaryColor,
-                    ),
-                  ),
-                  const SizedBox(width: GymatesTheme.spacing12),
-                  Expanded(
-                    child: _buildStatCard(
-                      '消耗卡路里',
-                      _formatNumber(_userProfile.caloriesBurned),
-                      Icons.local_fire_department,
-                      GymatesTheme.warningColor,
-                    ),
-                  ),
-                  const SizedBox(width: GymatesTheme.spacing12),
-                  Expanded(
-                    child: _buildStatCard(
-                      '成就徽章',
-                      _userProfile.achievements.toString(),
-                      Icons.emoji_events,
-                      GymatesTheme.successColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildStatCard(String title, String value, IconData icon, Color color) {
-    return Container(
-      padding: const EdgeInsets.all(GymatesTheme.spacing16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(GymatesTheme.radius12),
-        boxShadow: GymatesTheme.softShadow,
-      ),
+  /// 构建加载视图
+  Widget _buildLoadingView() {
+    return const Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            icon,
-            color: color,
-            size: 24,
-          ),
-          const SizedBox(height: GymatesTheme.spacing8),
+          CircularProgressIndicator(),
+          SizedBox(height: 16),
           Text(
-            value,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: GymatesTheme.lightTextPrimary,
+            '加载中...',
+            style: TextStyle(
+              fontSize: 14,
+              color: Color(0xFF9CA3AF),
             ),
-          ),
-          const SizedBox(height: GymatesTheme.spacing4),
-          Text(
-            title,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: GymatesTheme.lightTextSecondary,
-            ),
-            textAlign: TextAlign.center,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildFunctionCards() {
-    return AnimatedBuilder(
-      animation: _cardsAnimation,
-      builder: (context, child) {
-        return Transform.translate(
-          offset: Offset(0, 30 * (1 - _cardsAnimation.value)),
-          child: Opacity(
-            opacity: _cardsAnimation.value,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: GymatesTheme.spacing16),
-              child: Column(
-                children: [
-                  _buildAchievementsShowcase(),
-                  const SizedBox(height: GymatesTheme.spacing16),
-                  _buildFunctionCard(
-                    '设置',
-                    '应用设置和账户管理',
-                    Icons.settings_outlined,
-                    () => _openSettings(),
-                  ),
-                ],
-              ),
+  /// 构建错误视图
+  Widget _buildErrorView() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.error_outline,
+            size: 64,
+            color: Color(0xFFEF4444),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            _errorMessage ?? '加载失败',
+            style: const TextStyle(
+              fontSize: 16,
+              color: Color(0xFF6B7280),
             ),
           ),
-        );
-      },
+          const SizedBox(height: 24),
+          ElevatedButton.icon(
+            onPressed: _refreshUserData,
+            icon: const Icon(Icons.refresh),
+            label: const Text('重试'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: GyMatesColors.primaryPurple,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildAchievementsShowcase() {
-    return GestureDetector(
-      onTap: () {
-        HapticFeedback.lightImpact();
-        _openAchievements();
+  /// 构建内容视图
+  Widget _buildContentView() {
+    return AnimatedBuilder(
+      animation: _animationController,
+      builder: (context, child) {
+        return FadeTransition(
+          opacity: _fadeAnimation,
+          child: SlideTransition(
+            position: _slideAnimation,
+            child: child,
+          ),
+        );
       },
-      child: Container(
-        padding: const EdgeInsets.all(GymatesTheme.spacing20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(GymatesTheme.radius16),
-          boxShadow: GymatesTheme.softShadow,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.orange.withValues(alpha: 0.8),
-                        Colors.amber.withValues(alpha: 0.8),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(GymatesTheme.radius8),
-                  ),
-                  child: const Icon(
-                    Icons.emoji_events,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                ),
-                const SizedBox(width: GymatesTheme.spacing12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        '我的成就',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: GymatesTheme.lightTextPrimary,
-                        ),
-                      ),
-                      const SizedBox(height: GymatesTheme.spacing4),
-                      Text(
-                        '查看你的成就和徽章',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: GymatesTheme.lightTextSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  size: 16,
-                  color: GymatesTheme.lightTextSecondary,
-                ),
-              ],
+      child: RefreshIndicator(
+        onRefresh: _refreshUserData,
+        child: CustomScrollView(
+          slivers: [
+            // 用户信息头部
+            SliverToBoxAdapter(
+              child: UserHeader(
+                userData: _userData!,
+                onEditProfile: _handleEditProfile,
+                onFollowersClick: _handleFollowersClick,
+                onFollowingClick: _handleFollowingClick,
+                onPostsClick: _handlePostsClick,
+              ),
             ),
-            const SizedBox(height: GymatesTheme.spacing16),
-            // 成就展示
-            Row(
-              children: [
-                Expanded(
-                  child: _buildAchievementItem('连续训练7天', Icons.local_fire_department, Colors.orange, true),
-                ),
-                const SizedBox(width: GymatesTheme.spacing12),
-                Expanded(
-                  child: _buildAchievementItem('力量提升', Icons.fitness_center, Colors.blue, true),
-                ),
-                const SizedBox(width: GymatesTheme.spacing12),
-                Expanded(
-                  child: _buildAchievementItem('有氧达人', Icons.directions_run, Colors.green, false),
-                ),
-              ],
+
+            // 间距
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 20),
+            ),
+
+            // 成就面板
+            SliverToBoxAdapter(
+              child: AchievementPanel(
+                userData: _userData!,
+                onShareAchievement: _handleShareAchievement,
+                onViewAllBadges: _handleViewAllBadges,
+              ),
+            ),
+
+            // 间距
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 16),
+            ),
+
+            // 我的内容
+            SliverToBoxAdapter(
+              child: MyContentSection(
+                userData: _userData!,
+                onMyPosts: _handleMyPosts,
+                onMyPlans: _handleMyPlans,
+                onSavedPosts: _handleSavedPosts,
+                onPartners: _handlePartners,
+                onMemberCenter: _handleMemberCenter,
+              ),
+            ),
+
+            // 间距
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 16),
+            ),
+
+            // 设置与工具
+            SliverToBoxAdapter(
+              child: SettingsSection(
+                onNotifications: _handleNotifications,
+                onPrivacy: _handlePrivacy,
+                onLanguage: _handleLanguage,
+                onDeviceBinding: _handleDeviceBinding,
+                onPermissions: _handlePermissions,
+                onFeedback: _handleFeedback,
+                onHelp: _handleHelp,
+                onAbout: _handleAbout,
+                onLogout: _handleLogout,
+              ),
+            ),
+
+            // 底部间距
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 32),
             ),
           ],
         ),
@@ -556,139 +291,145 @@ class _ProfilePageState extends State<ProfilePage>
     );
   }
 
-  Widget _buildFunctionCard(String title, String subtitle, IconData icon, VoidCallback onTap) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {
-          HapticFeedback.lightImpact();
-          onTap();
-        },
-        borderRadius: BorderRadius.circular(GymatesTheme.radius12),
-        child: Container(
-          padding: const EdgeInsets.all(GymatesTheme.spacing16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(GymatesTheme.radius12),
-            boxShadow: GymatesTheme.softShadow,
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: GymatesTheme.primaryColor.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(GymatesTheme.radius8),
-                ),
-                child: Icon(
-                  icon,
-                  color: GymatesTheme.primaryColor,
-                  size: 20,
-                ),
-              ),
-              const SizedBox(width: GymatesTheme.spacing12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: GymatesTheme.lightTextPrimary,
-                      ),
-                    ),
-                    const SizedBox(height: GymatesTheme.spacing4),
-                    Text(
-                      subtitle,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: GymatesTheme.lightTextSecondary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Icon(
-                Icons.arrow_forward_ios,
-                size: 16,
-                color: GymatesTheme.lightTextSecondary,
-              ),
-            ],
-          ),
+  // ========== 辅助方法 ==========
+
+  /// 显示错误提示
+  void _showErrorSnackBar(String message) {
+    if (!mounted) return;
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(
+              Icons.warning_amber_rounded,
+              color: Colors.white,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(message),
+            ),
+          ],
+        ),
+        backgroundColor: GyMatesColors.warningYellow,
+        duration: const Duration(seconds: 3),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
     );
   }
-  void _editProfile() {
+
+  // ========== 事件处理方法 ==========
+
+  /// 编辑个人资料
+  void _handleEditProfile() {
+    if (_userData == null) return;
+
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => EditProfilePage(user: _convertToMockUser(_userProfile)),
+        builder: (context) => EditProfilePage(user: _userData!),
       ),
     );
   }
 
-  MockUser _convertToMockUser(UserProfile profile) {
-    return MockUser(
-      id: '1',
-      name: profile.name,
-      username: profile.name.toLowerCase().replaceAll(' ', ''),
-      avatar: profile.avatar,
-      bio: profile.bio,
-      age: 25,
-      location: profile.location,
-      isVerified: profile.isVerified,
-      followers: profile.followers,
-      following: profile.following,
-      posts: profile.posts,
-      joinDate: profile.joinDate,
-      workoutDays: profile.workoutDays,
-      caloriesBurned: profile.caloriesBurned,
-      achievements: profile.achievements,
-      rating: 4.8,
-      preferences: ['力量训练', '有氧运动'],
-      goal: '增肌',
-      experience: '中级',
-      workoutTime: '60分钟',
-      distance: '5公里',
-      isOnline: true,
-    );
+  /// 查看粉丝
+  void _handleFollowersClick() {
+    _showSnackBar('查看粉丝列表');
   }
 
-  void _openTrainingData() {
-    // 移除训练数据页面
+  /// 查看关注
+  void _handleFollowingClick() {
+    _showSnackBar('查看关注列表');
   }
 
-  void _openAchievements() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AchievementsPage(),
+  /// 查看动态
+  void _handlePostsClick() {
+    _showSnackBar('查看我的动态');
+  }
+
+  /// 分享成就
+  void _handleShareAchievement() {
+    if (_userData == null) return;
+    
+    showDialog(
+      context: context,
+      barrierColor: Colors.black.withOpacity(0.7),
+      builder: (context) => AchievementShareCard(
+        userData: _userData!,
       ),
     );
   }
 
-  void _openMyCommunity() {
-    // 移除社区页面
-  }
-
-  void _openMessageCenter() {
-    // 移除消息中心页面
-  }
-
-  void _openSettings() {
+  /// 查看所有徽章
+  void _handleViewAllBadges() {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SettingsPage(),
+        builder: (context) => const AchievementsPage(),
       ),
     );
   }
 
-  void _openHelp() {
+  /// 我的动态
+  void _handleMyPosts() {
+    _showSnackBar('查看我的动态');
+  }
+
+  /// 我的训练计划
+  void _handleMyPlans() {
+    _showSnackBar('查看我的训练计划');
+  }
+
+  /// 收藏的帖子
+  void _handleSavedPosts() {
+    _showSnackBar('查看收藏的帖子');
+  }
+
+  /// 我的伙伴
+  void _handlePartners() {
+    _showSnackBar('查看我的伙伴');
+  }
+
+  /// 会员中心
+  void _handleMemberCenter() {
+    _showMemberCenterDialog();
+  }
+
+  /// 通知设置
+  void _handleNotifications() {
+    _showSnackBar('通知设置');
+  }
+
+  /// 隐私设置
+  void _handlePrivacy() {
+    _showSnackBar('隐私设置');
+  }
+
+  /// 语言设置
+  void _handleLanguage() {
+    _showLanguageDialog();
+  }
+
+  /// 设备绑定
+  void _handleDeviceBinding() {
+    _showSnackBar('设备绑定管理');
+  }
+
+  /// 权限控制
+  void _handlePermissions() {
+    _showSnackBar('权限控制');
+  }
+
+  /// 意见反馈
+  void _handleFeedback() {
+    _showSnackBar('意见反馈');
+  }
+
+  /// 帮助中心
+  void _handleHelp() {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -697,7 +438,8 @@ class _ProfilePageState extends State<ProfilePage>
     );
   }
 
-  void _openAbout() {
+  /// 关于
+  void _handleAbout() {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -706,12 +448,195 @@ class _ProfilePageState extends State<ProfilePage>
     );
   }
 
-  void _logout() {
+  /// 退出登录
+  void _handleLogout() {
+    // 显示确认对话框
+    _showSnackBar('退出登录');
+  }
+
+  // ========== 辅助方法 ==========
+
+  /// 显示提示
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 2),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
+  }
+
+  /// 显示会员中心对话框
+  void _showMemberCenterDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // 会员图标
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFFFFD700), Color(0xFFFF8C00)],
+                  ),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.workspace_premium,
+                  color: Colors.white,
+                  size: 48,
+                ),
+              ),
+              const SizedBox(height: 20),
+              
+              // 标题
+              const Text(
+                '会员中心',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 12),
+              
+              // 描述
+              Text(
+                _userData?.isPremium == true
+                    ? '您已是尊贵的高级会员\n尽享AI教练和全部高级功能'
+                    : '升级为高级会员\n解锁AI教练和更多高级功能',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[600],
+                  height: 1.5,
+                ),
+              ),
+              const SizedBox(height: 24),
+              
+              // 功能列表
+              _buildMemberFeature('AI智能教练', '24/7在线指导'),
+              _buildMemberFeature('个性化训练计划', '科学定制方案'),
+              _buildMemberFeature('高级数据分析', '深度运动洞察'),
+              _buildMemberFeature('优先客服支持', '快速响应服务'),
+              
+              const SizedBox(height: 24),
+              
+              // 按钮
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () => Navigator.pop(context),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: const Text('关闭'),
+                    ),
+                  ),
+                  if (_userData?.isPremium != true) ...[
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          _showSnackBar('开通会员功能开发中...');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: GyMatesColors.primaryPurple,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: const Text('立即开通'),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// 会员功能项
+  Widget _buildMemberFeature(String title, String subtitle) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        children: [
+          Icon(
+            Icons.check_circle,
+            color: GyMatesColors.successGreen,
+            size: 20,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  subtitle,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 显示语言选择对话框
+  void _showLanguageDialog() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('退出登录'),
-        content: const Text('确定要退出登录吗？'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: const Text(
+          '选择语言',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildLanguageOption('简体中文', true),
+            _buildLanguageOption('English', false),
+            _buildLanguageOption('繁體中文', false),
+          ],
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -720,150 +645,60 @@ class _ProfilePageState extends State<ProfilePage>
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              // TODO: 执行退出登录
+              _showSnackBar('语言已切换');
             },
-            child: const Text(
-              '确定',
-              style: TextStyle(color: GymatesTheme.errorColor),
-            ),
+            child: const Text('确定'),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildAchievementItem(String title, IconData icon, Color color, bool isUnlocked) {
-    return Container(
-      padding: const EdgeInsets.all(GymatesTheme.spacing12),
-      decoration: BoxDecoration(
-        color: isUnlocked ? color.withValues(alpha: 0.1) : Colors.grey.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(GymatesTheme.radius8),
-      ),
-      child: Column(
-        children: [
-          Icon(
-            icon,
-            color: isUnlocked ? color : Colors.grey,
-            size: 20,
+  /// 语言选项
+  Widget _buildLanguageOption(String language, bool isSelected) {
+    return InkWell(
+      onTap: () {
+        // 切换语言逻辑
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        margin: const EdgeInsets.only(bottom: 8),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? GyMatesColors.primaryPurple.withOpacity(0.1)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: isSelected
+                ? GyMatesColors.primaryPurple
+                : Colors.grey[300]!,
+            width: 1.5,
           ),
-          const SizedBox(height: GymatesTheme.spacing8),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: isUnlocked ? color : Colors.grey,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-
-  String _formatNumber(int number) {
-    if (number >= 1000000) {
-      return '${(number / 1000000).toStringAsFixed(1)}M';
-    } else if (number >= 1000) {
-      return '${(number / 1000).toStringAsFixed(1)}K';
-    }
-    return number.toString();
-  }
-
-  Widget _buildSettingsSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: GymatesTheme.spacing16),
-      child: Column(
-        children: [
-          _buildSettingsItem(
-            '帮助与反馈',
-            Icons.help_outline,
-            () => _openHelp(),
-          ),
-          _buildSettingsItem(
-            '关于我们',
-            Icons.info_outline,
-            () => _openAbout(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSettingsItem(String title, IconData icon, VoidCallback onTap) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {
-          HapticFeedback.lightImpact();
-          onTap();
-        },
-        borderRadius: BorderRadius.circular(GymatesTheme.radius12),
-        child: Container(
-          padding: const EdgeInsets.all(GymatesTheme.spacing16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(GymatesTheme.radius12),
-            boxShadow: GymatesTheme.softShadow,
-          ),
-          child: Row(
-            children: [
-              Icon(
-                icon,
-                color: GymatesTheme.lightTextSecondary,
-                size: 24,
-              ),
-              const SizedBox(width: GymatesTheme.spacing16),
-              Expanded(
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: GymatesTheme.lightTextPrimary,
-                  ),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                language,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                  color: isSelected
+                      ? GyMatesColors.primaryPurple
+                      : Colors.black87,
                 ),
               ),
-              const Icon(
-                Icons.arrow_forward_ios,
-                color: GymatesTheme.lightTextSecondary,
-                size: 16,
+            ),
+            if (isSelected)
+              Icon(
+                Icons.check_circle,
+                color: GyMatesColors.primaryPurple,
+                size: 20,
               ),
-            ],
-          ),
+          ],
         ),
       ),
     );
   }
 }
 
-/// 用户资料数据模型
-class UserProfile {
-  final String name;
-  final String avatar;
-  final String bio;
-  final int followers;
-  final int following;
-  final int posts;
-  final bool isVerified;
-  final String joinDate;
-  final String location;
-  final int workoutDays;
-  final int caloriesBurned;
-  final int achievements;
-
-  const UserProfile({
-    required this.name,
-    required this.avatar,
-    required this.bio,
-    required this.followers,
-    required this.following,
-    required this.posts,
-    required this.isVerified,
-    required this.joinDate,
-    required this.location,
-    required this.workoutDays,
-    required this.caloriesBurned,
-    required this.achievements,
-  });
-}

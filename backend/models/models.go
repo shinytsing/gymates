@@ -1,93 +1,106 @@
 package models
 
 import (
-	"time"
 	"gorm.io/gorm"
+	"time"
 )
 
 // User 用户模型
 type User struct {
-	ID        uint           `json:"id" gorm:"primaryKey"`
-	Name      string         `json:"name" gorm:"size:100;not null"`
-	Email     string         `json:"email" gorm:"size:100;uniqueIndex;not null"`
-	Password  string         `json:"-" gorm:"size:255;not null"`
-	Avatar    string         `json:"avatar" gorm:"size:255"`
-	Bio       string         `json:"bio" gorm:"type:text"`
-	Location  string         `json:"location" gorm:"size:100"`
-	Age       int            `json:"age"`
-	Height    float64        `json:"height"`
-	Weight    float64        `json:"weight"`
-	Goal      string         `json:"goal" gorm:"size:50"`
-	Experience string        `json:"experience" gorm:"size:50"`
-	CreatedAt time.Time      `json:"created_at"`
-	UpdatedAt time.Time      `json:"updated_at"`
-	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
+	ID             uint           `json:"id" gorm:"primaryKey"`
+	Name           string         `json:"name" gorm:"size:100;not null"`
+	Email          string         `json:"email" gorm:"size:100;index"`     // 改为普通索引，允许空值重复
+	Phone          string         `json:"phone" gorm:"size:20;index"`      // 改为普通索引，允许空值重复
+	Password       string         `json:"-" gorm:"size:255"`
+	Avatar         string         `json:"avatar" gorm:"size:255"`
+	Bio            string         `json:"bio" gorm:"type:text"`
+	Location       string         `json:"location" gorm:"size:100"`
+	Latitude       float64        `json:"latitude"`
+	Longitude      float64        `json:"longitude"`
+	Age            int            `json:"age"`
+	Gender         string         `json:"gender" gorm:"size:20"`
+	Height         float64        `json:"height"`
+	Weight         float64        `json:"weight"`
+	Goal           string         `json:"goal" gorm:"size:50"`
+	Experience     string         `json:"experience" gorm:"size:50"`
+	PreferredTime  string         `json:"preferred_time" gorm:"size:100"`            // 偏好训练时间
+	TrainingTypes  string         `json:"training_types" gorm:"size:255"`            // 训练类型偏好，逗号分隔
+	LookingForMate bool           `json:"looking_for_mate" gorm:"default:false"`     // 是否寻找搭子
+	LoginType      string         `json:"login_type" gorm:"size:20;default:'email'"` // 登录类型: email, phone, apple, google, wechat
+	AppleID        string         `json:"apple_id" gorm:"size:255;index"`            // Apple登录ID (改为普通索引，允许NULL重复)
+	GoogleID       string         `json:"google_id" gorm:"size:255;index"`           // Google登录ID (改为普通索引，允许NULL重复)
+	WechatID       string         `json:"wechat_id" gorm:"size:255;index"`           // 微信登录ID (改为普通索引，允许NULL重复)
+	IsGuest        bool           `json:"is_guest" gorm:"default:false"`             // 是否游客
+	LastLoginAt    *time.Time     `json:"last_login_at"`                             // 最后登录时间
+	CreatedAt      time.Time      `json:"created_at"`
+	UpdatedAt      time.Time      `json:"updated_at"`
+	DeletedAt      gorm.DeletedAt `json:"-" gorm:"index"`
 }
 
 // TrainingPlan 训练计划模型
 type TrainingPlan struct {
-	ID            uint           `json:"id" gorm:"primaryKey"`
-	UserID        uint           `json:"user_id" gorm:"not null"`
-	User          User           `json:"user" gorm:"foreignKey:UserID"`
-	Name          string         `json:"name" gorm:"size:100;not null"`
-	Description   string         `json:"description" gorm:"type:text"`
-	Exercises     []Exercise     `json:"exercises" gorm:"foreignKey:TrainingPlanID"`
-	Duration      int            `json:"duration" gorm:"not null"`
-	CaloriesBurned int           `json:"calories_burned" gorm:"not null"`
-	Difficulty    string         `json:"difficulty" gorm:"size:20;default:'beginner'"`
-	IsPublic      bool           `json:"is_public" gorm:"default:false"`
-	CreatedAt     time.Time      `json:"created_at"`
-	UpdatedAt     time.Time      `json:"updated_at"`
-	DeletedAt     gorm.DeletedAt `json:"-" gorm:"index"`
+	ID             uint           `json:"id" gorm:"primaryKey"`
+	UserID         uint           `json:"user_id" gorm:"not null"`
+	User           User           `json:"user" gorm:"foreignKey:UserID"`
+	Name           string         `json:"name" gorm:"size:100;not null"`
+	Description    string         `json:"description" gorm:"type:text"`
+	Exercises      []Exercise     `json:"exercises" gorm:"foreignKey:TrainingPlanID"`
+	Duration       int            `json:"duration" gorm:"not null"`
+	CaloriesBurned int            `json:"calories_burned" gorm:"not null"`
+	Difficulty     string         `json:"difficulty" gorm:"size:20;default:'beginner'"`
+	IsPublic       bool           `json:"is_public" gorm:"default:false"`
+	CreatedAt      time.Time      `json:"created_at"`
+	UpdatedAt      time.Time      `json:"updated_at"`
+	DeletedAt      gorm.DeletedAt `json:"-" gorm:"index"`
 }
 
 // Exercise 训练动作模型
 type Exercise struct {
-	ID              uint           `json:"id" gorm:"primaryKey"`
-	TrainingPlanID  uint           `json:"training_plan_id" gorm:"not null"`
-	TrainingPlan    TrainingPlan   `json:"training_plan" gorm:"foreignKey:TrainingPlanID"`
-	TrainingPartID  *uint          `json:"training_part_id"` // 新增：关联到训练部位
-	TrainingPart    *TrainingPart  `json:"training_part" gorm:"foreignKey:TrainingPartID"`
-	Name            string         `json:"name" gorm:"size:100;not null"`
-	Description     string         `json:"description" gorm:"type:text"`
-	MuscleGroup     string         `json:"muscle_group" gorm:"size:50"`
-	Difficulty      string         `json:"difficulty" gorm:"size:20;default:'intermediate'"`
-	Equipment       string         `json:"equipment" gorm:"size:50"`
-	Sets            int            `json:"sets" gorm:"not null"`
-	Reps            int            `json:"reps" gorm:"not null"`
-	Weight          float64        `json:"weight"`
-	Duration        int            `json:"duration"`
-	RestTime        int            `json:"rest_time"`
-	RestSeconds     int            `json:"rest_seconds"` // 新增：休息时间（秒）
-	Instructions    string         `json:"instructions" gorm:"type:text"`
-	ImageURL        string         `json:"image_url" gorm:"size:255"`
-	VideoURL        string         `json:"video_url" gorm:"size:255"`
-	Calories        int            `json:"calories" gorm:"default:50"`
-	Notes           string         `json:"notes" gorm:"type:text"`
-	IsCompleted     bool           `json:"is_completed" gorm:"default:false"`
-	CompletedAt     *time.Time     `json:"completed_at"`
-	Order           int            `json:"order" gorm:"not null"`
-	CreatedAt       time.Time      `json:"created_at"`
-	UpdatedAt       time.Time      `json:"updated_at"`
-	DeletedAt       gorm.DeletedAt `json:"-" gorm:"index"`
+	ID             uint           `json:"id" gorm:"primaryKey"`
+	TrainingPlanID uint           `json:"training_plan_id" gorm:"not null"`
+	TrainingPlan   TrainingPlan   `json:"training_plan" gorm:"foreignKey:TrainingPlanID"`
+	TrainingPartID *uint          `json:"training_part_id"` // 新增：关联到训练部位
+	TrainingPart   *TrainingPart  `json:"training_part" gorm:"foreignKey:TrainingPartID"`
+	Name           string         `json:"name" gorm:"size:100;not null"`
+	Description    string         `json:"description" gorm:"type:text"`
+	MuscleGroup    string         `json:"muscle_group" gorm:"size:50"`
+	Difficulty     string         `json:"difficulty" gorm:"size:20;default:'intermediate'"`
+	Equipment      string         `json:"equipment" gorm:"size:50"`
+	Sets           int            `json:"sets" gorm:"not null"`
+	Reps           int            `json:"reps" gorm:"not null"`
+	Weight         float64        `json:"weight"`
+	Duration       int            `json:"duration"`
+	RestTime       int            `json:"rest_time"`
+	RestSeconds    int            `json:"rest_seconds"` // 新增：休息时间（秒）
+	Instructions   string         `json:"instructions" gorm:"type:text"`
+	ImageURL       string         `json:"image_url" gorm:"size:255"`
+	VideoURL       string         `json:"video_url" gorm:"size:255"`
+	Calories       int            `json:"calories" gorm:"default:50"`
+	Notes          string         `json:"notes" gorm:"type:text"`
+	IsCompleted    bool           `json:"is_completed" gorm:"default:false"`
+	CompletedAt    *time.Time     `json:"completed_at"`
+	Order          int            `json:"order" gorm:"not null"`
+	CreatedAt      time.Time      `json:"created_at"`
+	UpdatedAt      time.Time      `json:"updated_at"`
+	DeletedAt      gorm.DeletedAt `json:"-" gorm:"index"`
 }
 
 // WorkoutSession 训练会话模型
 type WorkoutSession struct {
-	ID            uint           `json:"id" gorm:"primaryKey"`
-	UserID        uint           `json:"user_id" gorm:"not null"`
-	User          User           `json:"user" gorm:"foreignKey:UserID"`
-	TrainingPlanID uint          `json:"training_plan_id" gorm:"not null"`
-	TrainingPlan  TrainingPlan   `json:"training_plan" gorm:"foreignKey:TrainingPlanID"`
-	StartTime     time.Time      `json:"start_time" gorm:"not null"`
-	EndTime       *time.Time     `json:"end_time"`
-	Status        string         `json:"status" gorm:"size:20;default:'ongoing'"`
-	Progress      int            `json:"progress" gorm:"default:0"`
-	TotalCalories int            `json:"total_calories" gorm:"default:0"`
-	Notes         string         `json:"notes" gorm:"type:text"`
-	CreatedAt     time.Time      `json:"created_at"`
-	UpdatedAt     time.Time      `json:"updated_at"`
-	DeletedAt     gorm.DeletedAt `json:"-" gorm:"index"`
+	ID             uint           `json:"id" gorm:"primaryKey"`
+	UserID         uint           `json:"user_id" gorm:"not null"`
+	User           User           `json:"user" gorm:"foreignKey:UserID"`
+	TrainingPlanID uint           `json:"training_plan_id" gorm:"not null"`
+	TrainingPlan   TrainingPlan   `json:"training_plan" gorm:"foreignKey:TrainingPlanID"`
+	StartTime      time.Time      `json:"start_time" gorm:"not null"`
+	EndTime        *time.Time     `json:"end_time"`
+	Status         string         `json:"status" gorm:"size:20;default:'ongoing'"`
+	Progress       int            `json:"progress" gorm:"default:0"`
+	TotalCalories  int            `json:"total_calories" gorm:"default:0"`
+	Notes          string         `json:"notes" gorm:"type:text"`
+	CreatedAt      time.Time      `json:"created_at"`
+	UpdatedAt      time.Time      `json:"updated_at"`
+	DeletedAt      gorm.DeletedAt `json:"-" gorm:"index"`
 }
 
 // Post 社区帖子模型
@@ -203,6 +216,34 @@ type Notification struct {
 	Content   string         `json:"content" gorm:"type:text"`
 	Type      string         `json:"type" gorm:"size:50;not null"`
 	IsRead    bool           `json:"is_read" gorm:"default:false"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt time.Time      `json:"updated_at"`
+	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
+}
+
+// VerificationCode 验证码模型
+type VerificationCode struct {
+	ID        uint           `json:"id" gorm:"primaryKey"`
+	Phone     string         `json:"phone" gorm:"size:20;not null;index"`
+	Code      string         `json:"code" gorm:"size:6;not null"`
+	Type      string         `json:"type" gorm:"size:20;not null"` // login, register, reset_password
+	ExpiresAt time.Time      `json:"expires_at" gorm:"not null"`
+	IsUsed    bool           `json:"is_used" gorm:"default:false"`
+	UsedAt    *time.Time     `json:"used_at"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt time.Time      `json:"updated_at"`
+	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
+}
+
+// RefreshToken 刷新令牌模型
+type RefreshToken struct {
+	ID        uint           `json:"id" gorm:"primaryKey"`
+	UserID    uint           `json:"user_id" gorm:"not null;index"`
+	User      User           `json:"user" gorm:"foreignKey:UserID"`
+	Token     string         `json:"token" gorm:"size:500;not null;uniqueIndex"`
+	ExpiresAt time.Time      `json:"expires_at" gorm:"not null"`
+	IsRevoked bool           `json:"is_revoked" gorm:"default:false"`
+	RevokedAt *time.Time     `json:"revoked_at"`
 	CreatedAt time.Time      `json:"created_at"`
 	UpdatedAt time.Time      `json:"updated_at"`
 	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`

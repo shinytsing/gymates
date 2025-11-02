@@ -1,9 +1,9 @@
 package main
 
 import (
-	"log"
 	"gymates-backend/config"
 	"gymates-backend/models"
+	"log"
 )
 
 func main() {
@@ -13,6 +13,8 @@ func main() {
 	// 自动迁移数据库表结构
 	err := config.DB.AutoMigrate(
 		&models.User{},
+		&models.RefreshToken{},      // 刷新令牌表
+		&models.VerificationCode{},  // 验证码表
 		&models.TrainingPlan{},
 		&models.Exercise{},
 		&models.WorkoutSession{},
@@ -52,16 +54,16 @@ func main() {
 func createSampleData() {
 	// 创建示例用户
 	user := models.User{
-		Name:      "测试用户",
-		Email:     "test@example.com",
-		Password:  "password123", // 实际应用中应该加密
-		Avatar:    "https://via.placeholder.com/150",
-		Bio:       "健身爱好者",
-		Location:  "北京",
-		Age:       25,
-		Height:    175.0,
-		Weight:    70.0,
-		Goal:      "增肌",
+		Name:       "测试用户",
+		Email:      "test@example.com",
+		Password:   "password123", // 实际应用中应该加密
+		Avatar:     "https://via.placeholder.com/150",
+		Bio:        "健身爱好者",
+		Location:   "北京",
+		Age:        25,
+		Height:     175.0,
+		Weight:     70.0,
+		Goal:       "增肌",
 		Experience: "中级",
 	}
 
@@ -184,7 +186,7 @@ func createSampleData() {
 	weeklyPlan := models.WeeklyTrainingPlan{
 		UserID:      user.ID,
 		Name:        "我的第一周训练计划",
-		Description:  "适合初学者的全身训练计划",
+		Description: "适合初学者的全身训练计划",
 		IsActive:    true,
 		IsPublic:    false,
 	}
@@ -218,7 +220,7 @@ func createSampleData() {
 			if !day.IsRestDay {
 				muscleGroups := map[string]string{
 					"chest":     "胸部",
-					"back":      "背部", 
+					"back":      "背部",
 					"legs":      "腿部",
 					"shoulders": "肩部",
 					"arms":      "手臂",
@@ -230,10 +232,10 @@ func createSampleData() {
 				if i < len(muscleGroupKeys) {
 					muscleGroup := muscleGroupKeys[i]
 					part := models.TrainingPart{
-						TrainingDayID:     day.ID,
-						MuscleGroup:       muscleGroup,
-						MuscleGroupName:   muscleGroups[muscleGroup],
-						Order:             0,
+						TrainingDayID:   day.ID,
+						MuscleGroup:     muscleGroup,
+						MuscleGroupName: muscleGroups[muscleGroup],
+						Order:           0,
 					}
 
 					if err := config.DB.Create(&part).Error; err != nil {

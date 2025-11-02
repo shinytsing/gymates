@@ -10,11 +10,51 @@ type LoginRequest struct {
 	Password string `json:"password" binding:"required,min=6"`
 }
 
+// PhoneLoginRequest 手机号登录请求
+type PhoneLoginRequest struct {
+	Phone string `json:"phone" binding:"required"`
+	Code  string `json:"code" binding:"required,len=6"`
+}
+
+// SendCodeRequest 发送验证码请求
+type SendCodeRequest struct {
+	Phone string `json:"phone" binding:"required"`
+	Type  string `json:"type" binding:"required,oneof=login register reset_password"`
+}
+
+// SocialLoginRequest 社交登录请求
+type SocialLoginRequest struct {
+	Provider    string          `json:"provider" binding:"required,oneof=apple google wechat"`
+	AccessToken string          `json:"access_token" binding:"required"`
+	UserInfo    *SocialUserInfo `json:"user_info,omitempty"`
+}
+
+// SocialUserInfo 社交登录用户信息
+type SocialUserInfo struct {
+	ID     string `json:"id"`
+	Name   string `json:"name"`
+	Email  string `json:"email"`
+	Avatar string `json:"avatar"`
+}
+
+// RefreshTokenRequest 刷新Token请求
+type RefreshTokenRequest struct {
+	RefreshToken string `json:"refresh_token" binding:"required"`
+}
+
 // RegisterRequest 注册请求
 type RegisterRequest struct {
 	Name     string `json:"name" binding:"required,min=2,max=50"`
 	Email    string `json:"email" binding:"required,email"`
 	Password string `json:"password" binding:"required,min=6"`
+}
+
+// PhoneRegisterRequest 手机号注册请求
+type PhoneRegisterRequest struct {
+	Phone    string `json:"phone" binding:"required"`
+	Code     string `json:"code" binding:"required,len=6"`
+	Name     string `json:"name" binding:"required,min=2,max=50"`
+	Password string `json:"password"`
 }
 
 // UpdateProfileRequest 更新用户资料请求
@@ -67,6 +107,29 @@ type SendMateRequestRequest struct {
 	MateID uint `json:"mate_id" binding:"required"`
 }
 
+// MateRecommendationRequest 搭子推荐请求
+type MateRecommendationRequest struct {
+	MaxDistance   int      `json:"max_distance" form:"max_distance"`     // 最大距离（米），默认5000
+	Gender        string   `json:"gender" form:"gender"`                 // 性别过滤
+	TrainingTypes []string `json:"training_types" form:"training_types"` // 训练类型
+	Goals         []string `json:"goals" form:"goals"`                   // 健身目标
+	PreferredTime string   `json:"preferred_time" form:"preferred_time"` // 偏好时间
+	Experience    string   `json:"experience" form:"experience"`         // 经验等级
+	Page          int      `json:"page" form:"page"`
+	Limit         int      `json:"limit" form:"limit"`
+}
+
+// MateProfile 搭子资料
+type MateProfile struct {
+	User
+	Distance     float64  `json:"distance"`       // 距离（米）
+	MatchScore   int      `json:"match_score"`    // 匹配度分数（0-100）
+	CommonGoals  []string `json:"common_goals"`   // 共同健身目标
+	CommonTypes  []string `json:"common_types"`   // 共同训练类型
+	IsOnline     bool     `json:"is_online"`      // 是否在线
+	LastActiveAt string   `json:"last_active_at"` // 最后活跃时间
+}
+
 // SendMessageRequest 发送消息请求
 type SendMessageRequest struct {
 	ChatID  uint   `json:"chat_id" binding:"required"`
@@ -78,8 +141,10 @@ type SendMessageRequest struct {
 
 // AuthResponse 认证响应
 type AuthResponse struct {
-	Token string `json:"token"`
-	User  User   `json:"user"`
+	AccessToken  string `json:"access_token"`
+	RefreshToken string `json:"refresh_token"`
+	ExpiresIn    int64  `json:"expires_in"` // 访问令牌过期时间（秒）
+	User         User   `json:"user"`
 }
 
 // PaginationResponse 分页响应
@@ -141,8 +206,14 @@ type WorkoutSessionsResponse struct {
 
 // ExercisesResponse 训练动作列表响应
 type ExercisesResponse struct {
-	Exercises  []Exercise  `json:"exercises"`
-	Pagination Pagination  `json:"pagination"`
+	Exercises  []Exercise `json:"exercises"`
+	Pagination Pagination `json:"pagination"`
+}
+
+// NotificationsResponse 通知列表响应
+type NotificationsResponse struct {
+	Notifications []Notification `json:"notifications"`
+	Pagination    Pagination     `json:"pagination"`
 }
 
 // API响应结构

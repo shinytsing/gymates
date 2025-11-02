@@ -19,11 +19,11 @@ type DeepSeekService struct {
 
 // DeepSeekRequest 请求结构
 type DeepSeekRequest struct {
-	Model       string          `json:"model"`
-	Messages    []ChatMessage   `json:"messages"`
-	Temperature float64         `json:"temperature,omitempty"`
-	MaxTokens   int             `json:"max_tokens,omitempty"`
-	Stream      bool            `json:"stream,omitempty"`
+	Model       string        `json:"model"`
+	Messages    []ChatMessage `json:"messages"`
+	Temperature float64       `json:"temperature,omitempty"`
+	MaxTokens   int           `json:"max_tokens,omitempty"`
+	Stream      bool          `json:"stream,omitempty"`
 }
 
 // DeepSeekResponse 响应结构
@@ -48,7 +48,7 @@ type DeepSeekResponse struct {
 func NewDeepSeekService() *DeepSeekService {
 	apiKey := os.Getenv("DEEPSEEK_API_KEY")
 	baseURL := os.Getenv("DEEPSEEK_API_URL")
-	
+
 	if baseURL == "" {
 		baseURL = "https://api.deepseek.com/v1"
 	}
@@ -122,7 +122,7 @@ func (s *DeepSeekService) Chat(messages []ChatMessage, temperature float64) (*De
 // GenerateResponse 生成AI回复（简化接口）
 func (s *DeepSeekService) GenerateResponse(userMessage string, systemPrompt string) (string, error) {
 	messages := []ChatMessage{}
-	
+
 	// 添加系统提示词
 	if systemPrompt != "" {
 		messages = append(messages, ChatMessage{
@@ -130,7 +130,7 @@ func (s *DeepSeekService) GenerateResponse(userMessage string, systemPrompt stri
 			Content: systemPrompt,
 		})
 	}
-	
+
 	// 添加用户消息
 	messages = append(messages, ChatMessage{
 		Role:    "user",
@@ -227,4 +227,3 @@ func (s *DeepSeekService) ChatWithContext(messages []ChatMessage) (string, error
 
 	return resp.Choices[0].Message.Content, nil
 }
-

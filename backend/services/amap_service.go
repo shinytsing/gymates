@@ -33,7 +33,7 @@ type Gym struct {
 	Name      string   `json:"name"`
 	Address   string   `json:"address"`
 	Location  Location `json:"location"`
-	Distance  float64  `json:"distance"`   // 距离（米）
+	Distance  float64  `json:"distance"` // 距离（米）
 	Phone     string   `json:"phone"`
 	Rating    float64  `json:"rating"`
 	Photos    []string `json:"photos"`
@@ -85,10 +85,10 @@ type AmapDistanceResponse struct {
 	Status  string `json:"status"`
 	Info    string `json:"info"`
 	Results []struct {
-		OriginID    string `json:"origin_id"`
-		DestID      string `json:"dest_id"`
-		Distance    string `json:"distance"` // 米
-		Duration    string `json:"duration"` // 秒
+		OriginID string `json:"origin_id"`
+		DestID   string `json:"dest_id"`
+		Distance string `json:"distance"` // 米
+		Duration string `json:"duration"` // 秒
 	} `json:"results"`
 }
 
@@ -96,7 +96,7 @@ type AmapDistanceResponse struct {
 func NewAmapService() *AmapService {
 	apiKey := os.Getenv("AMAP_API_KEY")
 	baseURL := os.Getenv("AMAP_API_URL")
-	
+
 	if baseURL == "" {
 		baseURL = "https://restapi.amap.com/v3"
 	}
@@ -206,7 +206,7 @@ func (s *AmapService) SearchNearbyGyms(location Location, radius int) ([]Gym, er
 	for _, poi := range poiResp.Pois {
 		var lng, lat, dist float64
 		fmt.Sscanf(poi.Location, "%f,%f", &lng, &lat)
-		
+
 		if poi.Distance != "" {
 			dist, _ = strconv.ParseFloat(poi.Distance, 64)
 		}
@@ -411,4 +411,3 @@ func (s *AmapService) SearchGymsByCity(city string, page int, pageSize int) ([]G
 
 	return gyms, nil
 }
-

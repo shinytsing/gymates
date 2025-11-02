@@ -1,0 +1,241 @@
+---
+alwaysApply: true
+---
+# ===============================
+# Cursor Rules for Gymates
+# Flutter (前端) + Go (后端)
+# 目标：
+# - 自动检查代码语法和依赖
+# - 自动修复常见错误
+# - 启动前确保无报错
+# - 热重载 / 自动部署安全
+# ===============================
+
+rules:
+
+  # ------------------------------------
+  # 🔍 启动前总检查（Flutter + Go）
+  # ------------------------------------
+  - when: "user runs or asks to start project"
+    steps:
+      # 1️⃣ Flutter 前端检查
+      - name: "Flutter analyze"
+        run: "flutter analyze"
+        on_error:
+          - "Explain errors clearly"
+          - "Run 'dart fix --apply' for fixable issues"
+          - "Re-run flutter analyze"
+          - "If errors persist, stop launch and prompt user"
+
+      - name: "Flutter dependency check"
+        run: "flutter pub get"
+        on_error:
+          - "Attempt 'flutter clean && flutter pub get' and retry"
+          - "Stop if still failing"
+
+      # 2️⃣ Go 后端检查
+      - name: "Go syntax and modules check"
+        run: "go mod tidy && go build ./..."
+        on_error:
+          - "Explain errors clearly"
+          - "Attempt 'go get -u ./...' to fix dependency issues"
+          - "Rebuild and stop if errors persist"
+
+      # 3️⃣ 启动条件
+      - name: "Launch only if both Flutter and Go are clean"
+        if: "no errors from Flutter analyze and Go build"
+        run: "flutter run & go run main.go"
+        else:
+          - "Abort launch and print error summary"
+
+  # ------------------------------------
+  # 🛠️ 代码修改与提交规则
+  # ------------------------------------
+  - when: "code is edited or refactored"
+    steps:
+      - name: "Flutter static check"
+        run: "flutter analyze"
+        on_error:
+          - "Apply 'dart fix --apply'"
+          - "Re-run analyze"
+
+      - name: "Go static check"
+        run: "go vet ./..."
+        on_error:
+          - "Explain and attempt auto-fix if possible"
+
+      - name: "Code formatting"
+        run: 
+          - "dart format ."
+          - "gofmt -s -w ./..."
+
+      - name: "Linting"
+        run:
+          - "flutter analyze"
+          - "golangci-lint run ./..."
+        on_error:
+          - "Explain lint issues"
+
+  # ------------------------------------
+  # 🔄 热重载 / 自动刷新规则（Flutter）
+  # ------------------------------------
+  - when: "file save detected in Flutter project"
+    steps:
+      - run: "flutter analyze"
+      - if: "no errors"
+        then: 
+          - run: "flutter pub get"
+          - run: "flutter run --hot"
+      - else:
+          - "Abort hot reload"
+          - "Show error summary to developer"
+
+  # ------------------------------------
+  # 🧹 自动清理 & 依赖修复
+  # ------------------------------------
+  - when: "dependencies or build fail detected"
+    steps:
+      - run: "flutter clean && flutter pub get"
+      - run: "go clean -modcache && go mod tidy"
+      - run: "Rebuild both Flutter and Go"
+
+  # ------------------------------------
+  # 📊 性能/日志检查
+  # ------------------------------------
+  - when: "project is running"
+    steps:
+      - run: "Check Flutter logs for runtime errors"
+      - run: "Check Go server logs for runtime panics"
+      - if: "critical errors found"
+        then:
+          - "Automatically restart affected service"
+          - "Alert developer in console"
+
+  # ------------------------------------
+  # ✅ 启动安全总结
+  # ------------------------------------
+  - goal: |
+      1. 禁止任何代码报错启动 Flutter 或 Go
+      2. 自动修复可解决问题
+      3. 热重载只在无错误状态下执行
+      4. 自动管理依赖与缓存
+      5. 输出清晰错误与修复提示
+# ===============================
+# Cursor Rules for Gymates
+# Flutter (前端) + Go (后端)
+# 目标：
+# - 自动检查代码语法和依赖
+# - 自动修复常见错误
+# - 启动前确保无报错
+# - 热重载 / 自动部署安全
+# ===============================
+
+rules:
+
+  # ------------------------------------
+  # 🔍 启动前总检查（Flutter + Go）
+  # ------------------------------------
+  - when: "user runs or asks to start project"
+    steps:
+      # 1️⃣ Flutter 前端检查
+      - name: "Flutter analyze"
+        run: "flutter analyze"
+        on_error:
+          - "Explain errors clearly"
+          - "Run 'dart fix --apply' for fixable issues"
+          - "Re-run flutter analyze"
+          - "If errors persist, stop launch and prompt user"
+
+      - name: "Flutter dependency check"
+        run: "flutter pub get"
+        on_error:
+          - "Attempt 'flutter clean && flutter pub get' and retry"
+          - "Stop if still failing"
+
+      # 2️⃣ Go 后端检查
+      - name: "Go syntax and modules check"
+        run: "go mod tidy && go build ./..."
+        on_error:
+          - "Explain errors clearly"
+          - "Attempt 'go get -u ./...' to fix dependency issues"
+          - "Rebuild and stop if errors persist"
+
+      # 3️⃣ 启动条件
+      - name: "Launch only if both Flutter and Go are clean"
+        if: "no errors from Flutter analyze and Go build"
+        run: "flutter run & go run main.go"
+        else:
+          - "Abort launch and print error summary"
+
+  # ------------------------------------
+  # 🛠️ 代码修改与提交规则
+  # ------------------------------------
+  - when: "code is edited or refactored"
+    steps:
+      - name: "Flutter static check"
+        run: "flutter analyze"
+        on_error:
+          - "Apply 'dart fix --apply'"
+          - "Re-run analyze"
+
+      - name: "Go static check"
+        run: "go vet ./..."
+        on_error:
+          - "Explain and attempt auto-fix if possible"
+
+      - name: "Code formatting"
+        run: 
+          - "dart format ."
+          - "gofmt -s -w ./..."
+
+      - name: "Linting"
+        run:
+          - "flutter analyze"
+          - "golangci-lint run ./..."
+        on_error:
+          - "Explain lint issues"
+
+  # ------------------------------------
+  # 🔄 热重载 / 自动刷新规则（Flutter）
+  # ------------------------------------
+  - when: "file save detected in Flutter project"
+    steps:
+      - run: "flutter analyze"
+      - if: "no errors"
+        then: 
+          - run: "flutter pub get"
+          - run: "flutter run --hot"
+      - else:
+          - "Abort hot reload"
+          - "Show error summary to developer"
+
+  # ------------------------------------
+  # 🧹 自动清理 & 依赖修复
+  # ------------------------------------
+  - when: "dependencies or build fail detected"
+    steps:
+      - run: "flutter clean && flutter pub get"
+      - run: "go clean -modcache && go mod tidy"
+      - run: "Rebuild both Flutter and Go"
+
+  # ------------------------------------
+  # 📊 性能/日志检查
+  # ------------------------------------
+  - when: "project is running"
+    steps:
+      - run: "Check Flutter logs for runtime errors"
+      - run: "Check Go server logs for runtime panics"
+      - if: "critical errors found"
+        then:
+          - "Automatically restart affected service"
+          - "Alert developer in console"
+
+  # ------------------------------------
+  # ✅ 启动安全总结
+  # ------------------------------------
+  - goal: |
+      1. 禁止任何代码报错启动 Flutter 或 Go
+      2. 自动修复可解决问题
+      3. 热重载只在无错误状态下执行
+      4. 自动管理依赖与缓存
+      5. 输出清晰错误与修复提示

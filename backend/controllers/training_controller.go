@@ -335,9 +335,9 @@ func (tc *TrainingController) CompleteWorkoutSession(c *gin.Context) {
 
 	// 更新会话状态
 	updates := map[string]interface{}{
-		"status":     "completed",
-		"progress":   100,
-		"end_time":   "NOW()",
+		"status":   "completed",
+		"progress": 100,
+		"end_time": "NOW()",
 	}
 
 	if err := config.DB.Model(&session).Updates(updates).Error; err != nil {

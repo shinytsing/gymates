@@ -2,27 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:ui';
 
-/// 🎨 Gymates 完整主题系统 - 100% Figma 对齐
+/// 🎨 Gymates 完整主题系统 - 自然风格健身社交应用
 /// 
-/// 严格按照设计规范：
-/// - 主色：#6366F1
-/// - 辅助渐变：linear-gradient(135deg, #6366F1 → #A855F7 → #06B6D4)
-/// - 背景浅色：#F9FAFB；深色：#111827
-/// - 字体：SF Pro (iOS)，Roboto (Android)
-/// - 卡片圆角：16dp，柔光阴影 blurRadius: 15
+/// 设计理念：
+/// - 自然灵感配色：柔和绿色、粉蓝色、温暖橙色
+/// - Neumorphism + Glassmorphism 风格
+/// - 圆润边角，柔和阴影，毛玻璃效果
+/// - 字体：Poppins (标题)，Open Sans (正文)
+/// - 卡片圆角：12-16dp，柔光阴影
 /// - 页面内间距统一 16dp，遵循 8dp 网格系统
 
 class GymatesTheme {
-  // 🎯 核心品牌色彩 (严格按 Figma 规范)
-  static const Color primaryColor = Color(0xFF6366F1);
-  static const Color secondaryColor = Color(0xFFA855F7);
-  static const Color accentColor = Color(0xFF06B6D4);
+  // 🌿 自然风格色彩系统 (Nature-inspired Palette)
+  // Primary Colors - 健康与活力
+  static const Color primaryGreen = Color(0xFF8BC34A);      // 柔和绿色 - 健康
+  static const Color primaryBlue = Color(0xFF64B5F6);       // 粉蓝色 - 平静
+  static const Color primaryOrange = Color(0xFFFFC107);     // 温暖橙色 - 能量
   
-  // 🌈 精确渐变定义
+  // Accent Colors - 社交与放松
+  static const Color accentLavender = Color(0xFFA78DF0);   // 薰衣草紫 - 放松
+  static const Color accentCoral = Color(0xFFFF6F61);      // 珊瑚粉 - 社交互动
+  
+  // 主色保持兼容
+  static const Color primaryColor = primaryGreen;
+  static const Color secondaryColor = accentLavender;
+  static const Color accentColor = primaryBlue;
+  
+  // 🌈 自然风格渐变定义
   static const LinearGradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [primaryColor, secondaryColor, accentColor],
+    colors: [primaryGreen, primaryBlue, accentLavender],
     stops: [0.0, 0.5, 1.0],
   );
   
@@ -30,27 +40,34 @@ class GymatesTheme {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      Color(0xFF6366F1),
-      Color(0xFF8B5CF6),
-      Color(0xFFA855F7),
-      Color(0xFF06B6D4),
+      primaryGreen,      // 柔和绿色
+      primaryBlue,       // 粉蓝色
+      accentLavender,    // 薰衣草紫
+      primaryOrange,     // 温暖橙色
     ],
     stops: [0.0, 0.3, 0.7, 1.0],
+  );
+  
+  static const LinearGradient socialGradient = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [accentCoral, accentLavender],
+    stops: [0.0, 1.0],
   );
   
   static const LinearGradient backgroundGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      Color(0xFFF9FAFB),
-      Color(0xFFF3F4F6),
+      Color(0xFFF6F7FB),  // 更柔和的背景
+      Color(0xFFEAEAEA),
     ],
   );
   
   static const LinearGradient cardGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xFFFFFFFF), Color(0xFFF8FAFC)],
+    colors: [Color(0xFFFFFFFF), Color(0xFFF7F7F7)],
   );
   
   static const LinearGradient cardGradientDark = LinearGradient(
@@ -59,15 +76,17 @@ class GymatesTheme {
     colors: [Color(0xFF1F2937), Color(0xFF111827)],
   );
   
-  // 🎨 背景色彩
-  static const Color lightBackground = Color(0xFFF9FAFB);
+  // 🎨 背景色彩 (柔和中性色)
+  static const Color lightBackground = Color(0xFFF6F7FB);    // 更柔和的背景
   static const Color darkBackground = Color(0xFF111827);
   static const Color cardBackground = Colors.white;
   static const Color darkCardBackground = Color(0xFF1F2937);
+  static const Color neutralGray = Color(0xFFEAEAEA);        // 柔和灰色
   
   // 📝 文本色彩
-  static const Color lightTextPrimary = Color(0xFF111827);
-  static const Color lightTextSecondary = Color(0xFF6B7280);
+  static const Color lightTextPrimary = Color(0xFF212121);   // 更深的标题色
+  static const Color lightTextSecondary = Color(0xFF666666); // 正文色
+  static const Color lightTextMuted = Color(0xFFA9A9A9);     // 元数据色
   static const Color darkTextPrimary = Color(0xFFF9FAFB);
   static const Color darkTextSecondary = Color(0xFFD1D5DB);
   
@@ -88,29 +107,47 @@ class GymatesTheme {
   static const double spacing24 = 24.0;
   static const double spacing32 = 32.0;
   
-  // 🎯 圆角规范
-  static const double radius8 = 8.0;    // 输入框
-  static const double radius12 = 12.0;  // 按钮
+  // 🎯 圆角规范 (Neumorphism风格 - 圆润边角)
+  static const double radius8 = 8.0;    // 小组件
+  static const double radius12 = 12.0;  // 按钮、标签
   static const double radius16 = 16.0;  // 卡片
+  static const double radius20 = 20.0;  // 大卡片
+  static const double radius24 = 24.0;  // 模态框
   
   // 兼容性别名
   static const double cardRadius = radius16;
   static const double buttonRadius = radius12;
   static const double inputRadius = radius8;
+  static const double modalRadius = radius24;
   
-  // 🌟 阴影定义 (柔光阴影 blurRadius: 15)
+  // 🌟 阴影定义 (Neumorphism柔和阴影)
   static const List<BoxShadow> softShadow = [
     BoxShadow(
-      color: Color(0x1A000000),
+      color: Color(0x1A000000),  // 透明黑色阴影
       blurRadius: 15,
       offset: Offset(0, 4),
       spreadRadius: 0,
     ),
   ];
   
+  static const List<BoxShadow> neumorphismShadow = [
+    BoxShadow(
+      color: Color(0x40000000),  // 深色阴影
+      blurRadius: 10,
+      offset: Offset(4, 4),
+      spreadRadius: 0,
+    ),
+    BoxShadow(
+      color: Color(0xFFFFFFFF),  // 高光
+      blurRadius: 10,
+      offset: Offset(-4, -4),
+      spreadRadius: 0,
+    ),
+  ];
+  
   static const List<BoxShadow> glowShadow = [
     BoxShadow(
-      color: Color(0x336366F1),
+      color: Color(0x338BC34A),  // 绿色光晕
       blurRadius: 20,
       offset: Offset(0, 0),
       spreadRadius: 2,
@@ -348,32 +385,50 @@ class MaterialGymatesTheme {
   }
 }
 
-/// 🌟 平台特定视觉特效
+/// 🌟 平台特定视觉特效 (Glassmorphism + Neumorphism)
 class PlatformEffects {
-  /// iOS 毛玻璃质感层
+  /// 毛玻璃效果 (Glassmorphism)
   static Widget buildGlassEffect({
     required Widget child,
     double sigmaX = 20.0,
     double sigmaY = 20.0,
     Color tintColor = Colors.white,
     double tintOpacity = 0.1,
+    double borderRadius = 16.0,
   }) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(GymatesTheme.radius16),
+      borderRadius: BorderRadius.circular(borderRadius),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: sigmaX, sigmaY: sigmaY),
         child: Container(
           decoration: BoxDecoration(
             color: tintColor.withValues(alpha: tintOpacity),
-            borderRadius: BorderRadius.circular(GymatesTheme.radius16),
+            borderRadius: BorderRadius.circular(borderRadius),
             border: Border.all(
               color: Colors.white.withValues(alpha: 0.2),
-              width: 1,
+              width: 1.5,
             ),
+            boxShadow: GymatesTheme.softShadow,
           ),
           child: child,
         ),
       ),
+    );
+  }
+  
+  /// Neumorphism 卡片效果
+  static Widget buildNeumorphismCard({
+    required Widget child,
+    double borderRadius = 16.0,
+    Color backgroundColor = const Color(0xFFF6F7FB),
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(borderRadius),
+        boxShadow: GymatesTheme.neumorphismShadow,
+      ),
+      child: child,
     );
   }
   

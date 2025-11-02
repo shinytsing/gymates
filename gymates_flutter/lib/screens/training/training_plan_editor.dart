@@ -150,7 +150,7 @@ class _TrainingPlanEditorScreenState extends State<TrainingPlanEditorScreen> {
               const SizedBox(height: 16),
               // 难度选择
               DropdownButtonFormField<String>(
-                value: _difficulty,
+                initialValue: _difficulty,
                 decoration: const InputDecoration(
                   labelText: '难度',
                   border: OutlineInputBorder(),
@@ -166,7 +166,7 @@ class _TrainingPlanEditorScreenState extends State<TrainingPlanEditorScreen> {
               const SizedBox(height: 16),
               // 目标选择
               DropdownButtonFormField<String>(
-                value: _goal,
+                initialValue: _goal,
                 decoration: const InputDecoration(
                   labelText: '训练目标',
                   border: OutlineInputBorder(),

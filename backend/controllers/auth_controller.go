@@ -55,8 +55,8 @@ func (ac *AuthController) Login(c *gin.Context) {
 		return
 	}
 
-	// 生成token
-	token, err := middleware.GenerateToken(&user)
+	// 生成token和refresh token
+	accessToken, err := middleware.GenerateToken(&user)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.ErrorResponse{
 			Success: false,
@@ -67,12 +67,25 @@ func (ac *AuthController) Login(c *gin.Context) {
 		return
 	}
 
+	refreshToken, err := middleware.GenerateRefreshToken(&user)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, models.ErrorResponse{
+			Success: false,
+			Message: "生成刷新令牌失败",
+			Error:   err.Error(),
+			Code:    http.StatusInternalServerError,
+		})
+		return
+	}
+
 	c.JSON(http.StatusOK, models.SuccessResponse{
 		Success: true,
 		Message: "登录成功",
 		Data: models.AuthResponse{
-			Token: token,
-			User:  user,
+			AccessToken:  accessToken,
+			RefreshToken: refreshToken,
+			ExpiresIn:    1800, // 30分钟
+			User:         user,
 		},
 	})
 }
@@ -131,8 +144,8 @@ func (ac *AuthController) Register(c *gin.Context) {
 		return
 	}
 
-	// 生成token
-	token, err := middleware.GenerateToken(&user)
+	// 生成token和refresh token
+	accessToken, err := middleware.GenerateToken(&user)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.ErrorResponse{
 			Success: false,
@@ -143,12 +156,25 @@ func (ac *AuthController) Register(c *gin.Context) {
 		return
 	}
 
+	refreshToken, err := middleware.GenerateRefreshToken(&user)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, models.ErrorResponse{
+			Success: false,
+			Message: "生成刷新令牌失败",
+			Error:   err.Error(),
+			Code:    http.StatusInternalServerError,
+		})
+		return
+	}
+
 	c.JSON(http.StatusCreated, models.SuccessResponse{
 		Success: true,
 		Message: "注册成功",
 		Data: models.AuthResponse{
-			Token: token,
-			User:  user,
+			AccessToken:  accessToken,
+			RefreshToken: refreshToken,
+			ExpiresIn:    1800, // 30分钟
+			User:         user,
 		},
 	})
 }
@@ -314,12 +340,12 @@ func (ac *AuthController) GetUserStats(c *gin.Context) {
 	currentUser := user.(*models.User)
 
 	var stats struct {
-		TotalPosts       int64 `json:"total_posts"`
-		TotalWorkouts    int64 `json:"total_workouts"`
-		TotalMates       int64 `json:"total_mates"`
+		TotalPosts        int64 `json:"total_posts"`
+		TotalWorkouts     int64 `json:"total_workouts"`
+		TotalMates        int64 `json:"total_mates"`
 		TotalAchievements int64 `json:"total_achievements"`
-		TotalLikes       int64 `json:"total_likes"`
-		TotalComments    int64 `json:"total_comments"`
+		TotalLikes        int64 `json:"total_likes"`
+		TotalComments     int64 `json:"total_comments"`
 	}
 
 	// 统计用户帖子数

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:ui';
 import 'dart:math' as math;
-import '../pages/auth/login_page.dart';
+import '../pages/auth/modern_login_page.dart';
 import '../pages/training/training_page.dart';
 import '../pages/training/training_detail_page.dart';
 import '../pages/training/ai_training_detail_page.dart';
 import '../pages/ai_training/ai_training_page.dart';
 import '../pages/community/community_page.dart';
 import '../pages/community/post_detail_page.dart';
-import '../pages/partner/partner_page.dart';
+import '../pages/mates/mates_page.dart';
 import '../pages/messages/messages_page.dart';
 import '../pages/profile/profile_page.dart';
 import '../pages/profile/edit_profile_page.dart';
@@ -38,7 +39,7 @@ class AppRoutes {
   static const String aiTrainingDetail = '/ai-training-detail';
   static const String community = '/community';
   static const String postDetail = '/post-detail';
-  static const String partner = '/partner';
+  static const String mates = '/mates';
   static const String messages = '/messages';
   static const String profile = '/profile';
   static const String editProfile = '/edit-profile';
@@ -49,7 +50,7 @@ class AppRoutes {
   // 路由配置
   static Map<String, WidgetBuilder> get routes => {
     splash: (context) => const SplashScreen(),
-    login: (context) => const LoginPage(),
+    login: (context) => const ModernLoginPage(),
     main: (context) => const MainNavigationScreen(),
     training: (context) => const TrainingPage(),
     trainingDetail: (context) {
@@ -73,7 +74,7 @@ class AppRoutes {
         body: Center(child: Text('帖子参数错误')),
       );
     },
-    partner: (context) => const PartnerPage(),
+    mates: (context) => const MatesPage(),
     messages: (context) => const MessagesPage(),
     profile: (context) => const ProfilePage(),
     editProfile: (context) {
@@ -451,7 +452,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
       icon: Icons.people_alt,
       activeIcon: Icons.people_alt,
       label: '搭子',
-      page: const PartnerPage(),
+      page: const MatesPage(),
     ),
     NavigationItem(
       icon: Icons.message,
@@ -510,81 +511,91 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
         children: _navigationItems.map((item) => item.page).toList(),
       ),
       bottomNavigationBar: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
-              blurRadius: 20,
-              offset: const Offset(0, -5),
-            ),
-          ],
+          borderRadius: BorderRadius.circular(GymatesTheme.radius20),
+          boxShadow: GymatesTheme.softShadow,
         ),
-        child: SafeArea(
-          child: Container(
-            height: 65,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: _navigationItems.asMap().entries.map((entry) {
-                final index = entry.key;
-                final item = entry.value;
-                final isSelected = _currentIndex == index;
-                
-                return Expanded(
-                  child: GestureDetector(
-                    onTap: () => _onTabTapped(index),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 6,
-                        vertical: 2,
-                      ),
-                      decoration: BoxDecoration(
-                        color: isSelected 
-                            ? GymatesTheme.primaryColor.withValues(alpha: 0.1)
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
-                            padding: const EdgeInsets.all(3),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(GymatesTheme.radius20),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.85),
+                borderRadius: BorderRadius.circular(GymatesTheme.radius20),
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: 0.3),
+                  width: 1.5,
+                ),
+              ),
+              child: SafeArea(
+                child: Container(
+                  height: 65,
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: _navigationItems.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      final item = entry.value;
+                      final isSelected = _currentIndex == index;
+                      
+                      return Expanded(
+                        child: GestureDetector(
+                          onTap: () => _onTabTapped(index),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 250),
+                            curve: Curves.easeInOutCubic,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 4,
+                              vertical: 6,
+                            ),
                             decoration: BoxDecoration(
-                              color: isSelected 
-                                  ? GymatesTheme.primaryColor
-                                  : Colors.transparent,
-                              shape: BoxShape.circle,
+                              gradient: isSelected 
+                                  ? GymatesTheme.primaryGradient
+                                  : null,
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: isSelected ? [
+                                BoxShadow(
+                                  color: GymatesTheme.primaryColor.withValues(alpha: 0.3),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ] : null,
                             ),
-                            child: Icon(
-                              isSelected ? item.activeIcon : item.icon,
-                              color: isSelected 
-                                  ? Colors.white
-                                  : GymatesTheme.lightTextSecondary,
-                              size: 20,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  isSelected ? item.activeIcon : item.icon,
+                                  color: isSelected 
+                                      ? Colors.white
+                                      : GymatesTheme.lightTextSecondary,
+                                  size: 24,
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  item.label,
+                                  style: TextStyle(
+                                    color: isSelected 
+                                        ? Colors.white
+                                        : GymatesTheme.lightTextSecondary,
+                                    fontWeight: isSelected 
+                                        ? FontWeight.w600 
+                                        : FontWeight.normal,
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(height: 0),
-                          Text(
-                            item.label,
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: isSelected 
-                                  ? GymatesTheme.primaryColor
-                                  : GymatesTheme.lightTextSecondary,
-                              fontWeight: isSelected 
-                                  ? FontWeight.w600 
-                                  : FontWeight.normal,
-                              fontSize: 10,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      );
+                    }).toList(),
                   ),
-                );
-              }).toList(),
+                ),
+              ),
             ),
           ),
         ),

@@ -1,0 +1,90 @@
+---
+alwaysApply: true
+---
+
+
+# ===============================
+# 🧠 Cursor 智能规则配置
+# 目的：确保项目在启动前无编译错误
+# 适用：Flutter / Dart 项目（Gymates）
+# ===============================
+
+rules:
+
+  # ------------------------------------
+  # 🔍 启动前自动检查并修复错误
+  # ------------------------------------
+  - when: "user runs or asks to start / launch / run the project"
+    steps:
+      - name: "Run analyzer"
+        run: "flutter analyze"
+        on_error: 
+          - "Explain the error clearly"
+          - "Automatically fix all fixable issues using 'dart fix --apply'"
+          - "Re-run flutter analyze"
+          - "If there are still errors, stop and ask user for confirmation"
+      - name: "Check build integrity"
+        run: "flutter pub get && flutter doctor"
+        on_error:
+          - "Attempt to resolve dependency or version mismatch automatically"
+          - "Re-run flutter doctor"
+      - name: "Only launch when clean"
+        if: "no analyzer or build errors"
+        run: "flutter run"
+        else:
+          - "Abort launch"
+          - "Print a concise list of unresolved issues and suggest next fixes"
+
+  # ------------------------------------
+  # 🛠️ 代码修改规则
+  # ------------------------------------
+  - when: "code edit or refactor is requested"
+    steps:
+      - name: "Static check after edit"
+        run: "flutter analyze"
+        on_error:
+          - "Revert the problematic section"
+          - "Re-suggest a safer refactor"
+      - name: "Format"
+        run: "dart format ."
+
+  # ------------------------------------
+  # 🧹 自动清理缓存与依赖
+  # ------------------------------------
+  - when: "dependency or version errors are detected"
+    steps:
+      - run: "flutter clean"
+      - run: "flutter pub get"
+      - run: "dart pub upgrade"
+
+  # ------------------------------------
+  # 🔄 Commit 前检查
+  # ------------------------------------
+  - when: "user commits or saves changes"
+    steps:
+      - run: "flutter analyze"
+      - run: "dart format --set-exit-if-changed ."
+      - if: "any format or analyze error"
+        then:
+          - "Abort commit"
+          - "Request confirmation to auto-fix"
+          - "Run 'dart fix --apply' and format again"
+
+---
+alwaysApply: true
+---
+# ===============================
+# ✅ Rule Summary
+# - 禁止在存在语法或依赖错误时启动
+# - 自动尝试修复 Dart / Flutter 报错
+# - 启动前必须通过 flutter analyze
+# - 格式化、检查、启动均自动化
+# ===============================
+
+# ===============================
+# ✅ Rule Summary
+# - 禁止在存在语法或依赖错误时启动
+# - 自动尝试修复 Dart / Flutter 报错
+# - 启动前必须通过 flutter analyze
+# - 格式化、检查、启动均自动化
+# ===============================

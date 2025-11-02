@@ -63,7 +63,7 @@ func (hc *HomeController) GetHomeList(c *gin.Context) {
 		query = query.Where("status = ?", req.Status)
 	}
 	if req.Keyword != "" {
-		query = query.Where("title LIKE ? OR description LIKE ? OR tags LIKE ?", 
+		query = query.Where("title LIKE ? OR description LIKE ? OR tags LIKE ?",
 			"%"+req.Keyword+"%", "%"+req.Keyword+"%", "%"+req.Keyword+"%")
 	}
 

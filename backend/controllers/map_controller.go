@@ -255,4 +255,3 @@ func (c *MapController) SearchGymsByCity(ctx *gin.Context) {
 		"page_size": pageSize,
 	})
 }
-

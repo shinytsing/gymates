@@ -1,8 +1,8 @@
 package models
 
 import (
-	"time"
 	"gorm.io/gorm"
+	"time"
 )
 
 // WeeklyTrainingPlan 一周训练计划模型
@@ -22,58 +22,58 @@ type WeeklyTrainingPlan struct {
 
 // TrainingDay 训练日模型
 type TrainingDay struct {
-	ID                    uint           `json:"id" gorm:"primaryKey"`
-	WeeklyTrainingPlanID  uint           `json:"weekly_training_plan_id" gorm:"not null"`
-	WeeklyTrainingPlan    WeeklyTrainingPlan `json:"weekly_training_plan" gorm:"foreignKey:WeeklyTrainingPlanID"`
-	DayOfWeek             int            `json:"day_of_week" gorm:"not null"` // 1-7 (周一-周日)
-	DayName               string         `json:"day_name" gorm:"size:20;not null"`
-	Parts                 []TrainingPart `json:"parts" gorm:"foreignKey:TrainingDayID"`
-	IsRestDay             bool           `json:"is_rest_day" gorm:"default:false"`
-	Notes                 string         `json:"notes" gorm:"type:text"`
-	CreatedAt             time.Time      `json:"created_at"`
-	UpdatedAt             time.Time      `json:"updated_at"`
-	DeletedAt             gorm.DeletedAt `json:"-" gorm:"index"`
+	ID                   uint               `json:"id" gorm:"primaryKey"`
+	WeeklyTrainingPlanID uint               `json:"weekly_training_plan_id" gorm:"not null"`
+	WeeklyTrainingPlan   WeeklyTrainingPlan `json:"weekly_training_plan" gorm:"foreignKey:WeeklyTrainingPlanID"`
+	DayOfWeek            int                `json:"day_of_week" gorm:"not null"` // 1-7 (周一-周日)
+	DayName              string             `json:"day_name" gorm:"size:20;not null"`
+	Parts                []TrainingPart     `json:"parts" gorm:"foreignKey:TrainingDayID"`
+	IsRestDay            bool               `json:"is_rest_day" gorm:"default:false"`
+	Notes                string             `json:"notes" gorm:"type:text"`
+	CreatedAt            time.Time          `json:"created_at"`
+	UpdatedAt            time.Time          `json:"updated_at"`
+	DeletedAt            gorm.DeletedAt     `json:"-" gorm:"index"`
 }
 
 // TrainingPart 训练部位模型
 type TrainingPart struct {
-	ID           uint           `json:"id" gorm:"primaryKey"`
-	TrainingDayID uint          `json:"training_day_id" gorm:"not null"`
-	TrainingDay  TrainingDay   `json:"training_day" gorm:"foreignKey:TrainingDayID"`
-	MuscleGroup  string         `json:"muscle_group" gorm:"size:50;not null"`
-	MuscleGroupName string      `json:"muscle_group_name" gorm:"size:50;not null"`
-	Exercises    []Exercise     `json:"exercises" gorm:"foreignKey:TrainingPartID"`
-	Order        int            `json:"order" gorm:"not null"`
-	CreatedAt    time.Time      `json:"created_at"`
-	UpdatedAt    time.Time      `json:"updated_at"`
-	DeletedAt    gorm.DeletedAt `json:"-" gorm:"index"`
+	ID              uint           `json:"id" gorm:"primaryKey"`
+	TrainingDayID   uint           `json:"training_day_id" gorm:"not null"`
+	TrainingDay     TrainingDay    `json:"training_day" gorm:"foreignKey:TrainingDayID"`
+	MuscleGroup     string         `json:"muscle_group" gorm:"size:50;not null"`
+	MuscleGroupName string         `json:"muscle_group_name" gorm:"size:50;not null"`
+	Exercises       []Exercise     `json:"exercises" gorm:"foreignKey:TrainingPartID"`
+	Order           int            `json:"order" gorm:"not null"`
+	CreatedAt       time.Time      `json:"created_at"`
+	UpdatedAt       time.Time      `json:"updated_at"`
+	DeletedAt       gorm.DeletedAt `json:"-" gorm:"index"`
 }
 
 // 请求DTO结构
 
 // CreateWeeklyTrainingPlanRequest 创建一周训练计划请求
 type CreateWeeklyTrainingPlanRequest struct {
-	Name        string                    `json:"name" binding:"required"`
-	Description string                    `json:"description"`
+	Name        string                     `json:"name" binding:"required"`
+	Description string                     `json:"description"`
 	Days        []CreateTrainingDayRequest `json:"days" binding:"required"`
-	IsPublic    bool                      `json:"is_public"`
+	IsPublic    bool                       `json:"is_public"`
 }
 
 // CreateTrainingDayRequest 创建训练日请求
 type CreateTrainingDayRequest struct {
-	DayOfWeek int                        `json:"day_of_week" binding:"required,min=1,max=7"`
-	DayName   string                     `json:"day_name" binding:"required"`
+	DayOfWeek int                         `json:"day_of_week" binding:"required,min=1,max=7"`
+	DayName   string                      `json:"day_name" binding:"required"`
 	Parts     []CreateTrainingPartRequest `json:"parts"`
-	IsRestDay bool                       `json:"is_rest_day"`
-	Notes     string                     `json:"notes"`
+	IsRestDay bool                        `json:"is_rest_day"`
+	Notes     string                      `json:"notes"`
 }
 
 // CreateTrainingPartRequest 创建训练部位请求
 type CreateTrainingPartRequest struct {
-	MuscleGroup     string                   `json:"muscle_group" binding:"required"`
-	MuscleGroupName string                   `json:"muscle_group_name" binding:"required"`
-	Exercises       []CreateExerciseRequest   `json:"exercises"`
-	Order           int                      `json:"order"`
+	MuscleGroup     string                  `json:"muscle_group" binding:"required"`
+	MuscleGroupName string                  `json:"muscle_group_name" binding:"required"`
+	Exercises       []CreateExerciseRequest `json:"exercises"`
+	Order           int                     `json:"order"`
 }
 
 // CreateExerciseRequest 创建训练动作请求 (扩展)
@@ -96,10 +96,10 @@ type CreateExerciseRequest struct {
 
 // UpdateWeeklyTrainingPlanRequest 更新一周训练计划请求
 type UpdateWeeklyTrainingPlanRequest struct {
-	Name        string                    `json:"name"`
-	Description string                    `json:"description"`
+	Name        string                     `json:"name"`
+	Description string                     `json:"description"`
 	Days        []UpdateTrainingDayRequest `json:"days"`
-	IsPublic    *bool                     `json:"is_public"`
+	IsPublic    *bool                      `json:"is_public"`
 }
 
 // UpdateTrainingDayRequest 更新训练日请求
@@ -114,31 +114,31 @@ type UpdateTrainingDayRequest struct {
 
 // UpdateTrainingPartRequest 更新训练部位请求
 type UpdateTrainingPartRequest struct {
-	ID              uint                      `json:"id"`
-	MuscleGroup     string                    `json:"muscle_group"`
-	MuscleGroupName string                    `json:"muscle_group_name"`
-	Exercises       []UpdateExerciseRequest    `json:"exercises"`
-	Order           int                       `json:"order"`
+	ID              uint                    `json:"id"`
+	MuscleGroup     string                  `json:"muscle_group"`
+	MuscleGroupName string                  `json:"muscle_group_name"`
+	Exercises       []UpdateExerciseRequest `json:"exercises"`
+	Order           int                     `json:"order"`
 }
 
 // UpdateExerciseRequest 更新训练动作请求
 type UpdateExerciseRequest struct {
-	ID           uint     `json:"id"`
-	Name         string   `json:"name"`
-	Description  string   `json:"description"`
-	MuscleGroup  string   `json:"muscle_group"`
-	Sets         int      `json:"sets"`
-	Reps         int      `json:"reps"`
-	Weight       float64  `json:"weight"`
-	Duration     int      `json:"duration"`
-	RestTime     int      `json:"rest_time"`
-	RestSeconds  int      `json:"rest_seconds"`
-	Instructions string   `json:"instructions"`
-	ImageURL     string   `json:"image_url"`
-	VideoURL     string   `json:"video_url"`
-	Notes        string   `json:"notes"`
-	IsCompleted  *bool    `json:"is_completed"`
-	Order        int      `json:"order"`
+	ID           uint    `json:"id"`
+	Name         string  `json:"name"`
+	Description  string  `json:"description"`
+	MuscleGroup  string  `json:"muscle_group"`
+	Sets         int     `json:"sets"`
+	Reps         int     `json:"reps"`
+	Weight       float64 `json:"weight"`
+	Duration     int     `json:"duration"`
+	RestTime     int     `json:"rest_time"`
+	RestSeconds  int     `json:"rest_seconds"`
+	Instructions string  `json:"instructions"`
+	ImageURL     string  `json:"image_url"`
+	VideoURL     string  `json:"video_url"`
+	Notes        string  `json:"notes"`
+	IsCompleted  *bool   `json:"is_completed"`
+	Order        int     `json:"order"`
 }
 
 // 响应DTO结构
@@ -163,11 +163,11 @@ type AIRecommendationRequest struct {
 
 // AIRecommendationResponse AI推荐响应
 type AIRecommendationResponse struct {
-	UserID uint                    `json:"user_id"`
-	Day    string                  `json:"day"`
-	Parts  []RecommendedPart       `json:"parts"`
-	Mode   string                  `json:"mode"`
-	Target string                  `json:"target"`
+	UserID uint              `json:"user_id"`
+	Day    string            `json:"day"`
+	Parts  []RecommendedPart `json:"parts"`
+	Mode   string            `json:"mode"`
+	Target string            `json:"target"`
 }
 
 // RecommendedPart 推荐部位

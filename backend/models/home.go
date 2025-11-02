@@ -1,28 +1,28 @@
 package models
 
 import (
-	"time"
 	"gorm.io/gorm"
+	"time"
 )
 
 // HomeItem 通用首页数据项
 type HomeItem struct {
-	ID          uint           `json:"id" gorm:"primaryKey"`
-	Title       string         `json:"title" gorm:"size:200;not null"`
-	Description string         `json:"description" gorm:"type:text"`
-	Image       string         `json:"image" gorm:"size:500"`
-	Category    string         `json:"category" gorm:"size:50"`
-	Tags        string         `json:"tags" gorm:"size:500"`
-	Status      string         `json:"status" gorm:"size:20;default:'active'"`
-	Priority    int            `json:"priority" gorm:"default:0"`
-	ViewCount   int            `json:"view_count" gorm:"default:0"`
-	LikeCount   int            `json:"like_count" gorm:"default:0"`
-	CommentCount int           `json:"comment_count" gorm:"default:0"`
-	UserID      uint           `json:"user_id"`
-	User        User           `json:"user" gorm:"foreignKey:UserID"`
-	CreatedAt   time.Time      `json:"created_at"`
-	UpdatedAt   time.Time      `json:"updated_at"`
-	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`
+	ID           uint           `json:"id" gorm:"primaryKey"`
+	Title        string         `json:"title" gorm:"size:200;not null"`
+	Description  string         `json:"description" gorm:"type:text"`
+	Image        string         `json:"image" gorm:"size:500"`
+	Category     string         `json:"category" gorm:"size:50"`
+	Tags         string         `json:"tags" gorm:"size:500"`
+	Status       string         `json:"status" gorm:"size:20;default:'active'"`
+	Priority     int            `json:"priority" gorm:"default:0"`
+	ViewCount    int            `json:"view_count" gorm:"default:0"`
+	LikeCount    int            `json:"like_count" gorm:"default:0"`
+	CommentCount int            `json:"comment_count" gorm:"default:0"`
+	UserID       uint           `json:"user_id"`
+	User         User           `json:"user" gorm:"foreignKey:UserID"`
+	CreatedAt    time.Time      `json:"created_at"`
+	UpdatedAt    time.Time      `json:"updated_at"`
+	DeletedAt    gorm.DeletedAt `json:"-" gorm:"index"`
 }
 
 // HomeListRequest 首页列表请求

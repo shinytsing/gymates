@@ -22,9 +22,9 @@ func NewAIChatController() *AIChatController {
 
 // ChatRequest 聊天请求
 type ChatRequest struct {
-	Message      string                   `json:"message" binding:"required"`
-	SystemPrompt string                   `json:"system_prompt,omitempty"`
-	Messages     []services.ChatMessage   `json:"messages,omitempty"`
+	Message      string                 `json:"message" binding:"required"`
+	SystemPrompt string                 `json:"system_prompt,omitempty"`
+	Messages     []services.ChatMessage `json:"messages,omitempty"`
 }
 
 // ChatResponse 聊天响应
@@ -243,4 +243,3 @@ func (c *AIChatController) GetNutritionAdvice(ctx *gin.Context) {
 		Response: advice,
 	})
 }
-

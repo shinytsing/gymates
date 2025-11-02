@@ -29,4 +29,3 @@ func SetupAIChatRoutes(api *gin.RouterGroup) {
 		ai.POST("/nutrition-advice", middleware.AuthMiddleware(), aiChatController.GetNutritionAdvice)
 	}
 }
-

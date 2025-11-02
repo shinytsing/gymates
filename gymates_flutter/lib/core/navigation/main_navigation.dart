@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:gymates_flutter/core/theme/gymates_theme.dart';
 import '../../pages/training/training_page.dart';
 import '../../pages/community/community_page.dart';
-import '../../pages/partner/partner_page.dart';
+import '../../pages/mates/mates_page.dart';
 import '../../pages/messages/messages_page.dart';
 import '../../pages/profile/profile_page.dart';
 
@@ -48,7 +48,7 @@ class _GymatesMainNavigationState extends State<GymatesMainNavigation>
       icon: Icons.favorite,
       activeIcon: Icons.favorite,
       label: 'Mates',
-      page: const PartnerPage(),
+      page: const MatesPage(),
     ),
     NavigationItem(
       icon: Icons.message,

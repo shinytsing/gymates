@@ -1251,3 +1251,318 @@ class WeekDays {
     'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
   ];
 }
+
+/// 💬 社区帖子数据模型（增强版）
+/// Community Post Model for the Social Feed
+class CommunityPost {
+  final String id;
+  final String userName;
+  final String userAvatar;
+  final int userId;
+  final String content;
+  final List<String> mediaUrls;
+  final String mediaType; // 'text', 'image', 'video', 'mixed'
+  final List<String> tags;
+  final int likes;
+  final int comments;
+  final int collects;
+  final int shares;
+  final String timestamp;
+  final String? distance; // 距离（用于附近tab）
+  final bool isLiked;
+  final bool isCollected;
+  final bool isFollowing;
+  final double? latitude;
+  final double? longitude;
+
+  CommunityPost({
+    required this.id,
+    required this.userName,
+    required this.userAvatar,
+    required this.userId,
+    required this.content,
+    required this.mediaUrls,
+    required this.mediaType,
+    required this.tags,
+    required this.likes,
+    required this.comments,
+    required this.collects,
+    required this.shares,
+    required this.timestamp,
+    this.distance,
+    required this.isLiked,
+    required this.isCollected,
+    required this.isFollowing,
+    this.latitude,
+    this.longitude,
+  });
+
+  factory CommunityPost.fromJson(Map<String, dynamic> json) {
+    return CommunityPost(
+      id: json['id'].toString(),
+      userName: json['user']?['name'] ?? json['userName'] ?? '',
+      userAvatar: json['user']?['avatar'] ?? json['userAvatar'] ?? '',
+      userId: json['user']?['id'] ?? json['userId'] ?? 0,
+      content: json['content'] ?? '',
+      mediaUrls: json['images'] != null 
+          ? (json['images'] as String).split(',').where((s) => s.isNotEmpty).toList()
+          : (json['mediaUrls'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
+      mediaType: json['type'] ?? json['mediaType'] ?? 'text',
+      tags: (json['tags'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
+      likes: json['likes'] ?? 0,
+      comments: json['comments'] ?? 0,
+      collects: json['collects'] ?? 0,
+      shares: json['shares'] ?? 0,
+      timestamp: json['timestamp'] ?? json['created_at'] ?? '',
+      distance: json['distance'],
+      isLiked: json['isLiked'] ?? json['is_liked'] ?? false,
+      isCollected: json['isCollected'] ?? json['is_collected'] ?? false,
+      isFollowing: json['isFollowing'] ?? json['is_following'] ?? false,
+      latitude: json['latitude']?.toDouble(),
+      longitude: json['longitude']?.toDouble(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'userName': userName,
+      'userAvatar': userAvatar,
+      'userId': userId,
+      'content': content,
+      'mediaUrls': mediaUrls,
+      'mediaType': mediaType,
+      'tags': tags,
+      'likes': likes,
+      'comments': comments,
+      'collects': collects,
+      'shares': shares,
+      'timestamp': timestamp,
+      'distance': distance,
+      'isLiked': isLiked,
+      'isCollected': isCollected,
+      'isFollowing': isFollowing,
+      'latitude': latitude,
+      'longitude': longitude,
+    };
+  }
+}
+
+/// Mock 社区帖子数据
+class CommunityMockData {
+  static final List<CommunityPost> recommendedPosts = [
+    CommunityPost(
+      id: '1',
+      userName: '健身达人小王',
+      userAvatar: 'https://images.unsplash.com/photo-1541338784564-51087dabc0de?w=100',
+      userId: 1,
+      content: '今天完成了胸部训练！卧推突破80kg，感觉状态越来越好了💪 坚持就是胜利，兄弟们加油！',
+      mediaUrls: [
+        'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+      ],
+      mediaType: 'image',
+      tags: ['力量训练', '胸部', '增肌'],
+      likes: 328,
+      comments: 45,
+      collects: 67,
+      shares: 12,
+      timestamp: '2小时前',
+      isLiked: false,
+      isCollected: false,
+      isFollowing: false,
+    ),
+    CommunityPost(
+      id: '2',
+      userName: '瑜伽小仙女',
+      userAvatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100',
+      userId: 2,
+      content: '清晨瑜伽，开启美好的一天🧘‍♀️ 早起的鸟儿有虫吃，早起的人儿心情好~',
+      mediaUrls: [
+        'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800',
+        'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800',
+      ],
+      mediaType: 'image',
+      tags: ['瑜伽', '晨练', '放松'],
+      likes: 892,
+      comments: 123,
+      collects: 234,
+      shares: 45,
+      timestamp: '4小时前',
+      isLiked: true,
+      isCollected: true,
+      isFollowing: true,
+    ),
+    CommunityPost(
+      id: '3',
+      userName: '跑步狂人',
+      userAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
+      userId: 3,
+      content: '10公里晨跑打卡✅ 配速5分钟/公里，感觉越跑越爽！#坚持跑步100天',
+      mediaUrls: [
+        'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800',
+      ],
+      mediaType: 'image',
+      tags: ['跑步', '有氧', '马拉松'],
+      likes: 567,
+      comments: 89,
+      collects: 123,
+      shares: 34,
+      timestamp: '6小时前',
+      isLiked: false,
+      isCollected: false,
+      isFollowing: false,
+    ),
+    CommunityPost(
+      id: '4',
+      userName: '健身教练Lisa',
+      userAvatar: 'https://images.unsplash.com/photo-1669989179336-b2234d2878df?w=100',
+      userId: 4,
+      content: '今天教大家一个背部拉伸动作，办公室久坐必备！跟着视频一起做，缓解肩颈疲劳~',
+      mediaUrls: [],
+      mediaType: 'text',
+      tags: ['拉伸', '办公室健身', '教学'],
+      likes: 1234,
+      comments: 278,
+      collects: 567,
+      shares: 89,
+      timestamp: '8小时前',
+      isLiked: true,
+      isCollected: false,
+      isFollowing: true,
+    ),
+    CommunityPost(
+      id: '5',
+      userName: '增肌狂魔',
+      userAvatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100',
+      userId: 5,
+      content: '深蹲日来了！5组×8个，重量120kg。腿部训练虽然痛苦，但练完那种感觉太爽了！💪',
+      mediaUrls: [
+        'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800',
+        'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800',
+        'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800',
+      ],
+      mediaType: 'image',
+      tags: ['深蹲', '腿部', '力量训练'],
+      likes: 445,
+      comments: 67,
+      collects: 89,
+      shares: 23,
+      timestamp: '1天前',
+      isLiked: false,
+      isCollected: true,
+      isFollowing: false,
+    ),
+  ];
+
+  static final List<CommunityPost> followingPosts = [
+    CommunityPost(
+      id: '6',
+      userName: '瑜伽小仙女',
+      userAvatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100',
+      userId: 2,
+      content: '今天分享一套睡前拉伸动作，帮助大家更好入睡😴 每天坚持10分钟，睡眠质量明显提升！',
+      mediaUrls: [
+        'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800',
+      ],
+      mediaType: 'image',
+      tags: ['拉伸', '睡前运动', '瑜伽'],
+      likes: 678,
+      comments: 112,
+      collects: 289,
+      shares: 56,
+      timestamp: '30分钟前',
+      isLiked: false,
+      isCollected: false,
+      isFollowing: true,
+    ),
+    CommunityPost(
+      id: '7',
+      userName: '健身教练Lisa',
+      userAvatar: 'https://images.unsplash.com/photo-1669989179336-b2234d2878df?w=100',
+      userId: 4,
+      content: '新一期训练计划出炉！这次专注上半身塑形，适合女生的力量训练方案，点击查看详情👇',
+      mediaUrls: [],
+      mediaType: 'text',
+      tags: ['训练计划', '女生健身', '上半身'],
+      likes: 1567,
+      comments: 345,
+      collects: 789,
+      shares: 123,
+      timestamp: '1小时前',
+      isLiked: true,
+      isCollected: true,
+      isFollowing: true,
+    ),
+  ];
+
+  static final List<CommunityPost> nearbyPosts = [
+    CommunityPost(
+      id: '8',
+      userName: '附近的健身爱好者',
+      userAvatar: 'https://images.unsplash.com/photo-1541338784564-51087dabc0de?w=100',
+      userId: 8,
+      content: '刚在楼下健身房练完，有没有附近的小伙伴一起组队训练？',
+      mediaUrls: [
+        'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+      ],
+      mediaType: 'image',
+      tags: ['找搭子', '组队训练'],
+      likes: 45,
+      comments: 12,
+      collects: 8,
+      shares: 3,
+      timestamp: '10分钟前',
+      distance: '0.5km',
+      isLiked: false,
+      isCollected: false,
+      isFollowing: false,
+      latitude: 39.9042,
+      longitude: 116.4074,
+    ),
+    CommunityPost(
+      id: '9',
+      userName: '社区跑步团',
+      userAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
+      userId: 9,
+      content: '明早6点公园晨跑，有兴趣的朋友可以一起！配速不限，重在参与~',
+      mediaUrls: [],
+      mediaType: 'text',
+      tags: ['跑步', '晨练', '组队'],
+      likes: 89,
+      comments: 23,
+      collects: 34,
+      shares: 12,
+      timestamp: '30分钟前',
+      distance: '1.2km',
+      isLiked: false,
+      isCollected: false,
+      isFollowing: false,
+      latitude: 39.9042,
+      longitude: 116.4074,
+    ),
+    CommunityPost(
+      id: '10',
+      userName: '附近瑜伽馆',
+      userAvatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100',
+      userId: 10,
+      content: '本周六下午2点，瑜伽体验课免费开放！欢迎新朋友来体验~名额有限',
+      mediaUrls: [
+        'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800',
+        'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800',
+      ],
+      mediaType: 'image',
+      tags: ['瑜伽', '体验课', '活动'],
+      likes: 234,
+      comments: 67,
+      collects: 123,
+      shares: 45,
+      timestamp: '2小时前',
+      distance: '2.8km',
+      isLiked: true,
+      isCollected: true,
+      isFollowing: false,
+      latitude: 39.9042,
+      longitude: 116.4074,
+    ),
+  ];
+}

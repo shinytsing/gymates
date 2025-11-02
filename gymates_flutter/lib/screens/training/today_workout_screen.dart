@@ -230,7 +230,7 @@ class _TodayWorkoutScreenState extends State<TodayWorkoutScreen> {
               totalSets: exercise.totalSets,
               onStart: () => _startExercise(exercise),
             );
-          }).toList(),
+          }),
           const SizedBox(height: 24),
           // 完成按钮
           if (workout.isAllCompleted)

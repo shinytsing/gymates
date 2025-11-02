@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../shared/models/edit_training_plan_models.dart';
 import '../core/config/smart_api_config.dart';
+import '../core/token_manager.dart';
 
 /// 🏋️‍♀️ 训练计划同步服务 - TrainingPlanSyncService
 ///
@@ -10,29 +11,19 @@ import '../core/config/smart_api_config.dart';
 class TrainingPlanSyncService {
   // 使用智能API配置
   static String get _baseUrl => SmartApiConfig.apiBaseUrl;
+  static final _tokenManager = TokenManager();
 
   static Future<SharedPreferences> get _prefs async =>
       await SharedPreferences.getInstance();
 
-  /// 获取认证token
+  /// 获取认证token (使用TokenManager)
   static Future<String?> _getAuthToken() async {
-    final prefs = await _prefs;
-    // 使用测试token进行开发测试
-    return prefs.getString('auth_token') ?? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6InhpYW93YW5nQGd5bWF0ZXMuY29tIiwiZXhwIjoxNzYwOTYzNzMwLCJuYmYiOjE3NjA4NzczMzAsImlhdCI6MTc2MDg3NzMzMH0.5-idVaROmRyW1drflvNZvRO38T1Ost8TI4gFL4qqT30';
+    return await _tokenManager.getToken();
   }
 
   /// 构建请求头
   static Future<Map<String, String>> _buildHeaders() async {
-    final token = await _getAuthToken();
-    final headers = {
-      'Content-Type': 'application/json',
-    };
-    
-    if (token != null) {
-      headers['Authorization'] = 'Bearer $token';
-    }
-    
-    return headers;
+    return await _tokenManager.getAuthHeaders();
   }
 
   /// 保存一周训练计划到API

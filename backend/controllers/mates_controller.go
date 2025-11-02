@@ -1,8 +1,10 @@
 package controllers
 
 import (
+	"math"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -496,4 +498,252 @@ func (mc *MatesController) GetMateStats(c *gin.Context) {
 		Message: "获取搭子统计成功",
 		Data:    stats,
 	})
+}
+
+// GetMateRecommendations 获取搭子推荐
+func (mc *MatesController) GetMateRecommendations(c *gin.Context) {
+	user, exists := c.Get("user")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, models.ErrorResponse{
+			Success: false,
+			Message: "用户未认证",
+			Error:   "User not authenticated",
+			Code:    http.StatusUnauthorized,
+		})
+		return
+	}
+
+	currentUser := user.(*models.User)
+
+	// 解析请求参数
+	var req models.MateRecommendationRequest
+	if err := c.ShouldBindQuery(&req); err != nil {
+		c.JSON(http.StatusBadRequest, models.ErrorResponse{
+			Success: false,
+			Message: "请求参数错误",
+			Error:   err.Error(),
+			Code:    http.StatusBadRequest,
+		})
+		return
+	}
+
+	// 设置默认值
+	if req.MaxDistance == 0 {
+		req.MaxDistance = 5000 // 默认5公里
+	}
+	if req.Page == 0 {
+		req.Page = 1
+	}
+	if req.Limit == 0 {
+		req.Limit = 20
+	}
+
+	// 构建查询
+	query := config.DB.Model(&models.User{}).
+		Where("id != ? AND looking_for_mate = ?", currentUser.ID, true)
+
+	// 性别过滤
+	if req.Gender != "" {
+		query = query.Where("gender = ?", req.Gender)
+	}
+
+	// 经验等级过滤
+	if req.Experience != "" {
+		query = query.Where("experience = ?", req.Experience)
+	}
+
+	// 健身目标过滤
+	if len(req.Goals) > 0 {
+		goalConditions := make([]string, len(req.Goals))
+		for i := range req.Goals {
+			goalConditions[i] = "goal = ?"
+		}
+		goalArgs := make([]interface{}, len(req.Goals))
+		for i, goal := range req.Goals {
+			goalArgs[i] = goal
+		}
+		query = query.Where(strings.Join(goalConditions, " OR "), goalArgs...)
+	}
+
+	// 偏好时间过滤
+	if req.PreferredTime != "" {
+		query = query.Where("preferred_time LIKE ?", "%"+req.PreferredTime+"%")
+	}
+
+	// 获取候选用户
+	var candidates []models.User
+	var total int64
+
+	query.Count(&total)
+
+	offset := (req.Page - 1) * req.Limit
+	if err := query.Offset(offset).Limit(req.Limit).Find(&candidates).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, models.ErrorResponse{
+			Success: false,
+			Message: "获取推荐搭子失败",
+			Error:   err.Error(),
+			Code:    http.StatusInternalServerError,
+		})
+		return
+	}
+
+	// 计算距离和匹配度
+	recommendations := make([]models.MateProfile, 0, len(candidates))
+	for _, candidate := range candidates {
+		// 计算距离（如果有位置信息）
+		distance := mc.calculateDistance(
+			currentUser.Latitude, currentUser.Longitude,
+			candidate.Latitude, candidate.Longitude,
+		)
+
+		// 跳过超出距离限制的用户
+		if distance > float64(req.MaxDistance) {
+			continue
+		}
+
+		// 计算匹配度分数
+		matchScore := mc.calculateMatchScore(currentUser, &candidate)
+
+		// 计算共同目标和类型
+		commonGoals := mc.findCommonItems(currentUser.Goal, candidate.Goal)
+		commonTypes := mc.findCommonItems(currentUser.TrainingTypes, candidate.TrainingTypes)
+
+		profile := models.MateProfile{
+			User:         candidate,
+			Distance:     distance,
+			MatchScore:   matchScore,
+			CommonGoals:  commonGoals,
+			CommonTypes:  commonTypes,
+			IsOnline:     false, // TODO: 实现在线状态
+			LastActiveAt: candidate.UpdatedAt.Format("2006-01-02 15:04:05"),
+		}
+
+		recommendations = append(recommendations, profile)
+	}
+
+	// 按匹配度和距离排序
+	mc.sortRecommendations(recommendations)
+
+	pagination := models.Pagination{
+		Page:       req.Page,
+		Limit:      req.Limit,
+		Total:      int64(len(recommendations)),
+		TotalPages: int((int64(len(recommendations)) + int64(req.Limit) - 1) / int64(req.Limit)),
+		HasMore:    int64(req.Page*req.Limit) < int64(len(recommendations)),
+	}
+
+	c.JSON(http.StatusOK, models.SuccessResponse{
+		Success: true,
+		Message: "获取推荐搭子成功",
+		Data: map[string]interface{}{
+			"recommendations": recommendations,
+			"pagination":      pagination,
+		},
+	})
+}
+
+// calculateDistance 计算两点间距离（使用Haversine公式）
+func (mc *MatesController) calculateDistance(lat1, lon1, lat2, lon2 float64) float64 {
+	// 如果坐标不完整，返回无穷大
+	if lat1 == 0 || lon1 == 0 || lat2 == 0 || lon2 == 0 {
+		return math.MaxFloat64
+	}
+
+	const earthRadius = 6371000 // 地球半径（米）
+
+	// 转换为弧度
+	lat1Rad := lat1 * math.Pi / 180
+	lat2Rad := lat2 * math.Pi / 180
+	deltaLat := (lat2 - lat1) * math.Pi / 180
+	deltaLon := (lon2 - lon1) * math.Pi / 180
+
+	// Haversine公式
+	a := math.Sin(deltaLat/2)*math.Sin(deltaLat/2) +
+		math.Cos(lat1Rad)*math.Cos(lat2Rad)*
+			math.Sin(deltaLon/2)*math.Sin(deltaLon/2)
+	c := 2 * math.Atan2(math.Sqrt(a), math.Sqrt(1-a))
+
+	return earthRadius * c
+}
+
+// calculateMatchScore 计算匹配度分数
+func (mc *MatesController) calculateMatchScore(user *models.User, candidate *models.User) int {
+	score := 50 // 基础分数
+
+	// 相同健身目标 +20分
+	if user.Goal == candidate.Goal && user.Goal != "" {
+		score += 20
+	}
+
+	// 相同经验等级 +15分
+	if user.Experience == candidate.Experience && user.Experience != "" {
+		score += 15
+	}
+
+	// 年龄相近 +10分
+	if user.Age > 0 && candidate.Age > 0 {
+		ageDiff := math.Abs(float64(user.Age - candidate.Age))
+		if ageDiff <= 5 {
+			score += 10
+		} else if ageDiff <= 10 {
+			score += 5
+		}
+	}
+
+	// 训练类型匹配 +5分
+	if user.TrainingTypes != "" && candidate.TrainingTypes != "" {
+		userTypes := strings.Split(user.TrainingTypes, ",")
+		candTypes := strings.Split(candidate.TrainingTypes, ",")
+		for _, ut := range userTypes {
+			for _, ct := range candTypes {
+				if strings.TrimSpace(ut) == strings.TrimSpace(ct) {
+					score += 5
+					break
+				}
+			}
+		}
+	}
+
+	// 确保分数在0-100之间
+	if score > 100 {
+		score = 100
+	}
+
+	return score
+}
+
+// findCommonItems 查找共同项
+func (mc *MatesController) findCommonItems(items1, items2 string) []string {
+	if items1 == "" || items2 == "" {
+		return []string{}
+	}
+
+	list1 := strings.Split(items1, ",")
+	list2 := strings.Split(items2, ",")
+
+	common := []string{}
+	for _, item1 := range list1 {
+		for _, item2 := range list2 {
+			if strings.TrimSpace(item1) == strings.TrimSpace(item2) {
+				common = append(common, strings.TrimSpace(item1))
+				break
+			}
+		}
+	}
+
+	return common
+}
+
+// sortRecommendations 对推荐结果排序
+func (mc *MatesController) sortRecommendations(recommendations []models.MateProfile) {
+	// 按匹配度降序，匹配度相同时按距离升序
+	for i := 0; i < len(recommendations)-1; i++ {
+		for j := i + 1; j < len(recommendations); j++ {
+			if recommendations[i].MatchScore < recommendations[j].MatchScore ||
+				(recommendations[i].MatchScore == recommendations[j].MatchScore &&
+					recommendations[i].Distance > recommendations[j].Distance) {
+				recommendations[i], recommendations[j] = recommendations[j], recommendations[i]
+			}
+		}
+	}
 }

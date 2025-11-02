@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import '../constants/enhanced_theme.dart';
 import '../../pages/training/training_page.dart';
 import '../../pages/community/community_page.dart';
-import '../../pages/partner/partner_page.dart';
+import '../../pages/mates/mates_page.dart';
 import '../../pages/messages/messages_page.dart';
 import '../../pages/profile/profile_page.dart';
 
@@ -37,7 +37,7 @@ class _EnhancedMainNavigationState extends State<EnhancedMainNavigation>
   final List<Widget> _pages = [
     const TrainingPage(),
     const CommunityPage(),
-    const PartnerPage(),
+    const MatesPage(),
     const MessagesPage(),
     const ProfilePage(),
   ];

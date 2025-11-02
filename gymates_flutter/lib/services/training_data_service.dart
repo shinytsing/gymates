@@ -33,9 +33,8 @@ class TrainingDataService {
         throw Exception('Failed to load training plans: ${response.statusCode}');
       }
     } catch (e) {
-      // 网络错误时返回本地数据
-      print('Network error: $e');
-      return MockDataProvider.trainingPlans;
+      print('❌ Network error: $e');
+      rethrow;
     }
   }
 
@@ -58,9 +57,8 @@ class TrainingDataService {
         throw Exception('Failed to create training plan: ${response.statusCode}');
       }
     } catch (e) {
-      print('Network error: $e');
-      // 返回本地创建的计划
-      return plan;
+      print('❌ Network error: $e');
+      rethrow;
     }
   }
 
@@ -84,8 +82,8 @@ class TrainingDataService {
         throw Exception('Failed to update training plan: ${response.statusCode}');
       }
     } catch (e) {
-      print('Network error: $e');
-      return plan;
+      print('❌ Network error: $e');
+      rethrow;
     }
   }
 
@@ -142,8 +140,8 @@ class TrainingDataService {
         throw Exception('Failed to load workout history: ${response.statusCode}');
       }
     } catch (e) {
-      print('Network error: $e');
-      return _getLocalWorkoutHistory();
+      print('❌ Network error: $e');
+      rethrow;
     }
   }
 
@@ -192,8 +190,8 @@ class TrainingDataService {
         throw Exception('Failed to load recommended modes: ${response.statusCode}');
       }
     } catch (e) {
-      print('Network error: $e');
-      return MockDataProvider.trainingModes.where((mode) => mode.isRecommended).toList();
+      print('❌ Network error: $e');
+      rethrow;
     }
   }
 

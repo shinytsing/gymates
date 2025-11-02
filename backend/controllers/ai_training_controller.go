@@ -195,9 +195,9 @@ func (aic *AITrainingController) SaveTrainingSession(c *gin.Context) {
 	// 更新用户训练历史
 	for _, exercise := range req.CompletedExercises {
 		history := models.UserTrainingHistory{
-			UserID:     req.UserID,
+			UserID:      req.UserID,
 			MuscleGroup: aic.getMuscleGroupFromExercise(exercise.Name),
-			Sets:       exercise.SetsDone,
+			Sets:        exercise.SetsDone,
 			CompletedAt: time.Now(),
 		}
 		config.DB.Create(&history)
@@ -249,7 +249,7 @@ func (aic *AITrainingController) generateAIRecommendation(preferences models.Use
 // 生成增肌训练动作
 func (aic *AITrainingController) generateMuscleBuildingExercises(preferences models.UserTrainingPreferences, completionRate float64) []models.RecommendedExercise {
 	var exercises []models.RecommendedExercise
-	
+
 	// 根据完成率调整强度
 	intensityMultiplier := 1.0
 	if completionRate > 0.8 {
@@ -269,7 +269,7 @@ func (aic *AITrainingController) generateMuscleBuildingExercises(preferences mod
 		recommendedExercise := models.RecommendedExercise{
 			Name:        exercise.Name,
 			Sets:        int(float64(3+rand.Intn(2)) * intensityMultiplier), // 3-5组
-			Reps:        8 + rand.Intn(5), // 8-12次
+			Reps:        8 + rand.Intn(5),                                   // 8-12次
 			Weight:      aic.calculateWeight(exercise.Name, preferences.CurrentWeight),
 			RestSeconds: 90 + rand.Intn(30), // 90-120秒
 			Part:        exercise.Part,
@@ -298,9 +298,9 @@ func (aic *AITrainingController) generateFatLossExercises(preferences models.Use
 		recommendedExercise := models.RecommendedExercise{
 			Name:        exercise.Name,
 			Sets:        3,
-			Reps:        15 + rand.Intn(10), // 15-25次
+			Reps:        15 + rand.Intn(10),                                                  // 15-25次
 			Weight:      aic.calculateWeight(exercise.Name, preferences.CurrentWeight) * 0.7, // 较轻重量
-			RestSeconds: 30 + rand.Intn(15), // 30-45秒
+			RestSeconds: 30 + rand.Intn(15),                                                  // 30-45秒
 			Part:        exercise.Part,
 			Description: exercise.Description,
 			VideoURL:    fmt.Sprintf("https://cdn.gymates.com/videos/%s.mp4", exercise.Name),
@@ -341,7 +341,7 @@ func (aic *AITrainingController) generateMaintenanceExercises(preferences models
 func (aic *AITrainingController) calculateWeight(exerciseName string, userWeight float64) float64 {
 	// 根据动作类型和用户体重计算建议重量
 	baseWeight := userWeight * 0.6 // 基础重量为体重的60%
-	
+
 	// 根据动作类型调整
 	switch exerciseName {
 	case "Bench Press", "Squat":
@@ -415,12 +415,12 @@ func (aic *AITrainingController) getMuscleGroupFromExercise(exerciseName string)
 	// 简单的动作名称到肌群映射
 	muscleGroups := map[string]string{
 		"Bench Press": "chest",
-		"Squat": "legs",
-		"Deadlift": "back",
-		"Pull-up": "back",
-		"Push-up": "chest",
+		"Squat":       "legs",
+		"Deadlift":    "back",
+		"Pull-up":     "back",
+		"Push-up":     "chest",
 	}
-	
+
 	if group, exists := muscleGroups[exerciseName]; exists {
 		return group
 	}
@@ -429,8 +429,8 @@ func (aic *AITrainingController) getMuscleGroupFromExercise(exerciseName string)
 
 // 辅助函数：检查字符串包含
 func contains(s, substr string) bool {
-	return len(s) >= len(substr) && (s == substr || 
-		(len(s) > len(substr) && (s[:len(substr)] == substr || 
-		s[len(s)-len(substr):] == substr || 
-		contains(s[1:], substr))))
+	return len(s) >= len(substr) && (s == substr ||
+		(len(s) > len(substr) && (s[:len(substr)] == substr ||
+			s[len(s)-len(substr):] == substr ||
+			contains(s[1:], substr))))
 }

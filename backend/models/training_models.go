@@ -8,33 +8,33 @@ import (
 
 // UserExerciseFavorite 用户收藏的运动
 type UserExerciseFavorite struct {
-	ID         uint           `json:"id" gorm:"primaryKey"`
-	UserID     uint           `json:"user_id" gorm:"not null;index"`
-	User       User           `json:"user" gorm:"foreignKey:UserID"`
-	ExerciseID uint           `json:"exercise_id" gorm:"not null;index"`
+	ID         uint            `json:"id" gorm:"primaryKey"`
+	UserID     uint            `json:"user_id" gorm:"not null;index"`
+	User       User            `json:"user" gorm:"foreignKey:UserID"`
+	ExerciseID uint            `json:"exercise_id" gorm:"not null;index"`
 	Exercise   ExerciseLibrary `json:"exercise" gorm:"foreignKey:ExerciseID"`
-	CreatedAt  time.Time      `json:"created_at"`
-	DeletedAt  gorm.DeletedAt `json:"-" gorm:"index"`
+	CreatedAt  time.Time       `json:"created_at"`
+	DeletedAt  gorm.DeletedAt  `json:"-" gorm:"index"`
 }
 
 // TrainingPlanV2 增强的训练计划模型
 type TrainingPlanV2 struct {
-	ID                uint           `json:"id" gorm:"primaryKey"`
-	UserID            uint           `json:"user_id" gorm:"not null;index"`
-	User              User           `json:"user" gorm:"foreignKey:UserID"`
-	Name              string         `json:"name" gorm:"size:100;not null"`
-	Description       string         `json:"description" gorm:"type:text"`
-	Difficulty        string         `json:"difficulty" gorm:"size:20;default:'beginner'"`
-	Goal              string         `json:"goal" gorm:"size:50"`
-	IsAIGenerated     bool           `json:"is_ai_generated" gorm:"default:false"`
-	IsPublic          bool           `json:"is_public" gorm:"default:false"`
-	ImageURL          string         `json:"image_url" gorm:"size:255"`
-	EstimatedDuration int            `json:"estimated_duration"`
-	EstimatedCalories int            `json:"estimated_calories"`
+	ID                uint             `json:"id" gorm:"primaryKey"`
+	UserID            uint             `json:"user_id" gorm:"not null;index"`
+	User              User             `json:"user" gorm:"foreignKey:UserID"`
+	Name              string           `json:"name" gorm:"size:100;not null"`
+	Description       string           `json:"description" gorm:"type:text"`
+	Difficulty        string           `json:"difficulty" gorm:"size:20;default:'beginner'"`
+	Goal              string           `json:"goal" gorm:"size:50"`
+	IsAIGenerated     bool             `json:"is_ai_generated" gorm:"default:false"`
+	IsPublic          bool             `json:"is_public" gorm:"default:false"`
+	ImageURL          string           `json:"image_url" gorm:"size:255"`
+	EstimatedDuration int              `json:"estimated_duration"`
+	EstimatedCalories int              `json:"estimated_calories"`
 	Exercises         []PlanExerciseV2 `json:"exercises" gorm:"foreignKey:TrainingPlanID"`
-	CreatedAt         time.Time      `json:"created_at"`
-	UpdatedAt         time.Time      `json:"updated_at"`
-	DeletedAt         gorm.DeletedAt `json:"-" gorm:"index"`
+	CreatedAt         time.Time        `json:"created_at"`
+	UpdatedAt         time.Time        `json:"updated_at"`
+	DeletedAt         gorm.DeletedAt   `json:"-" gorm:"index"`
 }
 
 // PlanExerciseV2 训练计划中的运动项
@@ -56,38 +56,38 @@ type PlanExerciseV2 struct {
 
 // TodayWorkout 今日训练
 type TodayWorkout struct {
-	ID             uint                 `json:"id" gorm:"primaryKey"`
-	UserID         uint                 `json:"user_id" gorm:"not null;index"`
-	User           User                 `json:"user" gorm:"foreignKey:UserID"`
-	PlanID         *uint                `json:"plan_id"`
-	Plan           *TrainingPlanV2      `json:"plan" gorm:"foreignKey:PlanID"`
-	Date           time.Time            `json:"date" gorm:"not null;index"`
-	Status         string               `json:"status" gorm:"size:20;default:'not_started'"` // not_started, in_progress, completed
-	SessionID      *uint                `json:"session_id"`
-	Session        *WorkoutSessionV2    `json:"session" gorm:"foreignKey:SessionID"`
-	Exercises      []WorkoutExerciseV2  `json:"exercises" gorm:"foreignKey:WorkoutID"`
-	CreatedAt      time.Time            `json:"created_at"`
-	UpdatedAt      time.Time            `json:"updated_at"`
+	ID        uint                `json:"id" gorm:"primaryKey"`
+	UserID    uint                `json:"user_id" gorm:"not null;index"`
+	User      User                `json:"user" gorm:"foreignKey:UserID"`
+	PlanID    *uint               `json:"plan_id"`
+	Plan      *TrainingPlanV2     `json:"plan" gorm:"foreignKey:PlanID"`
+	Date      time.Time           `json:"date" gorm:"not null;index"`
+	Status    string              `json:"status" gorm:"size:20;default:'not_started'"` // not_started, in_progress, completed
+	SessionID *uint               `json:"session_id"`
+	Session   *WorkoutSessionV2   `json:"session" gorm:"foreignKey:SessionID"`
+	Exercises []WorkoutExerciseV2 `json:"exercises" gorm:"foreignKey:WorkoutID"`
+	CreatedAt time.Time           `json:"created_at"`
+	UpdatedAt time.Time           `json:"updated_at"`
 }
 
 // WorkoutSessionV2 训练会话 V2
 type WorkoutSessionV2 struct {
-	ID             uint           `json:"id" gorm:"primaryKey"`
-	UserID         uint           `json:"user_id" gorm:"not null;index"`
-	User           User           `json:"user" gorm:"foreignKey:UserID"`
-	PlanID         *uint          `json:"plan_id"`
+	ID             uint            `json:"id" gorm:"primaryKey"`
+	UserID         uint            `json:"user_id" gorm:"not null;index"`
+	User           User            `json:"user" gorm:"foreignKey:UserID"`
+	PlanID         *uint           `json:"plan_id"`
 	Plan           *TrainingPlanV2 `json:"plan" gorm:"foreignKey:PlanID"`
-	IsAIWorkout    bool           `json:"is_ai_workout" gorm:"default:false"`
-	StartTime      time.Time      `json:"start_time" gorm:"not null"`
-	EndTime        *time.Time     `json:"end_time"`
-	Status         string         `json:"status" gorm:"size:20;default:'ongoing'"` // ongoing, completed, abandoned
-	Duration       int            `json:"duration"` // minutes
-	CaloriesBurned int            `json:"calories_burned"`
-	Progress       int            `json:"progress" gorm:"default:0"` // 0-100
-	Notes          string         `json:"notes" gorm:"type:text"`
-	CreatedAt      time.Time      `json:"created_at"`
-	UpdatedAt      time.Time      `json:"updated_at"`
-	DeletedAt      gorm.DeletedAt `json:"-" gorm:"index"`
+	IsAIWorkout    bool            `json:"is_ai_workout" gorm:"default:false"`
+	StartTime      time.Time       `json:"start_time" gorm:"not null"`
+	EndTime        *time.Time      `json:"end_time"`
+	Status         string          `json:"status" gorm:"size:20;default:'ongoing'"` // ongoing, completed, abandoned
+	Duration       int             `json:"duration"`                                // minutes
+	CaloriesBurned int             `json:"calories_burned"`
+	Progress       int             `json:"progress" gorm:"default:0"` // 0-100
+	Notes          string          `json:"notes" gorm:"type:text"`
+	CreatedAt      time.Time       `json:"created_at"`
+	UpdatedAt      time.Time       `json:"updated_at"`
+	DeletedAt      gorm.DeletedAt  `json:"-" gorm:"index"`
 }
 
 // WorkoutExerciseV2 训练中的运动项
@@ -122,56 +122,56 @@ type SetRecord struct {
 
 // TrainingHistory 训练历史记录
 type TrainingHistory struct {
-	ID                 uint           `json:"id" gorm:"primaryKey"`
-	UserID             uint           `json:"user_id" gorm:"not null;index"`
-	User               User           `json:"user" gorm:"foreignKey:UserID"`
-	SessionID          uint           `json:"session_id" gorm:"not null"`
+	ID                 uint             `json:"id" gorm:"primaryKey"`
+	UserID             uint             `json:"user_id" gorm:"not null;index"`
+	User               User             `json:"user" gorm:"foreignKey:UserID"`
+	SessionID          uint             `json:"session_id" gorm:"not null"`
 	Session            WorkoutSessionV2 `json:"session" gorm:"foreignKey:SessionID"`
-	PlanID             *uint          `json:"plan_id"`
-	PlanName           string         `json:"plan_name" gorm:"size:100"`
-	Date               time.Time      `json:"date" gorm:"not null;index"`
-	Duration           int            `json:"duration"` // minutes
-	CaloriesBurned     int            `json:"calories_burned"`
-	CompletedExercises int            `json:"completed_exercises"`
-	TotalExercises     int            `json:"total_exercises"`
-	CompletionRate     float64        `json:"completion_rate"`
-	IsAIWorkout        bool           `json:"is_ai_workout" gorm:"default:false"`
-	Notes              string         `json:"notes" gorm:"type:text"`
-	CreatedAt          time.Time      `json:"created_at"`
-	UpdatedAt          time.Time      `json:"updated_at"`
+	PlanID             *uint            `json:"plan_id"`
+	PlanName           string           `json:"plan_name" gorm:"size:100"`
+	Date               time.Time        `json:"date" gorm:"not null;index"`
+	Duration           int              `json:"duration"` // minutes
+	CaloriesBurned     int              `json:"calories_burned"`
+	CompletedExercises int              `json:"completed_exercises"`
+	TotalExercises     int              `json:"total_exercises"`
+	CompletionRate     float64          `json:"completion_rate"`
+	IsAIWorkout        bool             `json:"is_ai_workout" gorm:"default:false"`
+	Notes              string           `json:"notes" gorm:"type:text"`
+	CreatedAt          time.Time        `json:"created_at"`
+	UpdatedAt          time.Time        `json:"updated_at"`
 }
 
 // UserTrainingStats 用户训练统计
 type UserTrainingStats struct {
-	ID                     uint      `json:"id" gorm:"primaryKey"`
-	UserID                 uint      `json:"user_id" gorm:"uniqueIndex;not null"`
-	User                   User      `json:"user" gorm:"foreignKey:UserID"`
-	TotalWorkouts          int       `json:"total_workouts" gorm:"default:0"`
-	TotalMinutes           int       `json:"total_minutes" gorm:"default:0"`
-	TotalCaloriesBurned    int       `json:"total_calories_burned" gorm:"default:0"`
-	CurrentStreak          int       `json:"current_streak" gorm:"default:0"`
-	LongestStreak          int       `json:"longest_streak" gorm:"default:0"`
-	LastWorkoutDate        *time.Time `json:"last_workout_date"`
-	MuscleGroupFrequency   string    `json:"muscle_group_frequency" gorm:"type:text"` // JSON格式
-	RecentActivities       string    `json:"recent_activities" gorm:"type:text"` // JSON格式
-	AverageIntensity       float64   `json:"average_intensity"`
-	UpdatedAt              time.Time `json:"updated_at"`
+	ID                   uint       `json:"id" gorm:"primaryKey"`
+	UserID               uint       `json:"user_id" gorm:"uniqueIndex;not null"`
+	User                 User       `json:"user" gorm:"foreignKey:UserID"`
+	TotalWorkouts        int        `json:"total_workouts" gorm:"default:0"`
+	TotalMinutes         int        `json:"total_minutes" gorm:"default:0"`
+	TotalCaloriesBurned  int        `json:"total_calories_burned" gorm:"default:0"`
+	CurrentStreak        int        `json:"current_streak" gorm:"default:0"`
+	LongestStreak        int        `json:"longest_streak" gorm:"default:0"`
+	LastWorkoutDate      *time.Time `json:"last_workout_date"`
+	MuscleGroupFrequency string     `json:"muscle_group_frequency" gorm:"type:text"` // JSON格式
+	RecentActivities     string     `json:"recent_activities" gorm:"type:text"`      // JSON格式
+	AverageIntensity     float64    `json:"average_intensity"`
+	UpdatedAt            time.Time  `json:"updated_at"`
 }
 
 // AIRecommendation AI训练推荐
 type AIRecommendation struct {
-	ID        uint           `json:"id" gorm:"primaryKey"`
-	UserID    uint           `json:"user_id" gorm:"not null;index"`
-	User      User           `json:"user" gorm:"foreignKey:UserID"`
-	PlanID    *uint          `json:"plan_id"`
+	ID        uint            `json:"id" gorm:"primaryKey"`
+	UserID    uint            `json:"user_id" gorm:"not null;index"`
+	User      User            `json:"user" gorm:"foreignKey:UserID"`
+	PlanID    *uint           `json:"plan_id"`
 	Plan      *TrainingPlanV2 `json:"plan" gorm:"foreignKey:PlanID"`
-	Reason    string         `json:"reason" gorm:"type:text"`
-	Goal      string         `json:"goal" gorm:"size:50"`
-	Level     string         `json:"level" gorm:"size:20"`
-	Exercises string         `json:"exercises" gorm:"type:text"` // JSON格式的运动列表
-	IsApplied bool           `json:"is_applied" gorm:"default:false"`
-	CreatedAt time.Time      `json:"created_at"`
-	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
+	Reason    string          `json:"reason" gorm:"type:text"`
+	Goal      string          `json:"goal" gorm:"size:50"`
+	Level     string          `json:"level" gorm:"size:20"`
+	Exercises string          `json:"exercises" gorm:"type:text"` // JSON格式的运动列表
+	IsApplied bool            `json:"is_applied" gorm:"default:false"`
+	CreatedAt time.Time       `json:"created_at"`
+	DeletedAt gorm.DeletedAt  `json:"-" gorm:"index"`
 }
 
 // TableName 指定表名
@@ -214,4 +214,3 @@ func (UserTrainingStats) TableName() string {
 func (AIRecommendation) TableName() string {
 	return "ai_recommendations"
 }
-

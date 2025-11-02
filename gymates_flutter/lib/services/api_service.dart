@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import '../core/config/smart_api_config.dart';
+import '../core/token_manager.dart';
 
 class ApiConfig {
   // 使用智能API配置
@@ -51,27 +52,32 @@ class ApiService {
   factory ApiService() => _instance;
   ApiService._internal();
 
-  String? _authToken;
+  final _tokenManager = TokenManager();
 
-  void setAuthToken(String token) {
-    _authToken = token;
+  /// 获取请求头（自动包含Token）
+  Future<Map<String, String>> get _headers async {
+    return await _tokenManager.getAuthHeaders();
   }
 
-  void clearAuthToken() {
-    _authToken = null;
-  }
-
-  Map<String, String> get _headers {
-    final headers = {
+  /// 获取请求头（同步方式，用于向后兼容）
+  @Deprecated('Use _headers instead for automatic token management')
+  Map<String, String> get _headersSync {
+    return {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     };
-    
-    if (_authToken != null) {
-      headers['Authorization'] = 'Bearer $_authToken';
-    }
-    
-    return headers;
+  }
+
+  /// 设置Auth Token (已废弃，使用TokenManager自动管理)
+  @Deprecated('Token is now managed automatically by TokenManager')
+  void setAuthToken(String token) {
+    print('⚠️ setAuthToken is deprecated. Token is now managed automatically.');
+  }
+
+  /// 清除Auth Token (已废弃，使用TokenManager)
+  @Deprecated('Use TokenManager().clearTokens() instead')
+  void clearAuthToken() {
+    print('⚠️ clearAuthToken is deprecated. Use TokenManager().clearTokens() instead.');
   }
 
   Future<ApiResponse<T>> _makeRequest<T>(
@@ -82,28 +88,29 @@ class ApiService {
   }) async {
     try {
       final uri = Uri.parse('${ApiConfig.baseUrl}$endpoint');
+      final headers = await _headers; // Get headers with token
       http.Response response;
 
       switch (method.toUpperCase()) {
         case 'GET':
-          response = await http.get(uri, headers: _headers).timeout(ApiConfig.timeout);
+          response = await http.get(uri, headers: headers).timeout(ApiConfig.timeout);
           break;
         case 'POST':
           response = await http.post(
             uri,
-            headers: _headers,
+            headers: headers,
             body: body != null ? jsonEncode(body) : null,
           ).timeout(ApiConfig.timeout);
           break;
         case 'PUT':
           response = await http.put(
             uri,
-            headers: _headers,
+            headers: headers,
             body: body != null ? jsonEncode(body) : null,
           ).timeout(ApiConfig.timeout);
           break;
         case 'DELETE':
-          response = await http.delete(uri, headers: _headers).timeout(ApiConfig.timeout);
+          response = await http.delete(uri, headers: headers).timeout(ApiConfig.timeout);
           break;
         default:
           throw Exception('Unsupported HTTP method: $method');

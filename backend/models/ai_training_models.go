@@ -1,8 +1,8 @@
 package models
 
 import (
-	"time"
 	"gorm.io/gorm"
+	"time"
 )
 
 // UserTrainingPreferences 用户训练偏好
@@ -10,8 +10,8 @@ type UserTrainingPreferences struct {
 	ID             uint           `json:"id" gorm:"primaryKey"`
 	UserID         uint           `json:"user_id" gorm:"not null"`
 	User           User           `json:"user" gorm:"foreignKey:UserID"`
-	Goal           string         `json:"goal" gorm:"size:20"` // 增肌/减脂/维持
-	Frequency      int            `json:"frequency" gorm:"default:3"` // 每周训练次数
+	Goal           string         `json:"goal" gorm:"size:20"`             // 增肌/减脂/维持
+	Frequency      int            `json:"frequency" gorm:"default:3"`      // 每周训练次数
 	PreferredParts string         `json:"preferred_parts" gorm:"size:100"` // 偏好训练部位
 	CurrentWeight  float64        `json:"current_weight"`
 	TargetWeight   float64        `json:"target_weight"`
@@ -23,10 +23,10 @@ type UserTrainingPreferences struct {
 
 // AITrainingRecommendation AI训练推荐
 type AITrainingRecommendation struct {
-	UserID    uint                `json:"user_id"`
-	Overview  TrainingOverview    `json:"overview"`
+	UserID    uint                  `json:"user_id"`
+	Overview  TrainingOverview      `json:"overview"`
 	Exercises []RecommendedExercise `json:"exercises"`
-	Generated time.Time           `json:"generated"`
+	Generated time.Time             `json:"generated"`
 }
 
 // TrainingOverview 训练概览
@@ -65,10 +65,10 @@ type SavePreferencesRequest struct {
 
 // TrainingSessionRequest 训练会话请求
 type TrainingSessionRequest struct {
-	UserID            uint                    `json:"user_id" binding:"required"`
-	Date              string                  `json:"date" binding:"required"`
-	PlanID            uint                    `json:"plan_id"`
-	CompletedExercises []CompletedExercise    `json:"completed_exercises"`
+	UserID             uint                `json:"user_id" binding:"required"`
+	Date               string              `json:"date" binding:"required"`
+	PlanID             uint                `json:"plan_id"`
+	CompletedExercises []CompletedExercise `json:"completed_exercises"`
 }
 
 // CompletedExercise 完成的动作

@@ -1,68 +1,155 @@
-● Validation Warning:
+Resolving dependencies...
+Downloading packages...
+  _fe_analyzer_shared 91.0.0 (92.0.0 available)
+  analyzer 8.4.0 (9.0.0 available)
+  audioplayers 5.2.1 (6.5.1 available)
+  audioplayers_android 4.0.3 (5.2.1 available)
+  audioplayers_darwin 5.0.2 (6.3.0 available)
+  audioplayers_linux 3.1.0 (4.2.1 available)
+  audioplayers_platform_interface 6.1.0 (7.1.1 available)
+  audioplayers_web 4.1.0 (5.1.1 available)
+  audioplayers_windows 3.1.0 (4.2.1 available)
+  build_daemon 4.0.4 (4.1.0 available)
+  build_runner 2.9.0 (2.10.1 available)
+  cached_network_image 3.4.0 (3.4.1 available)
+  cached_network_image_web 1.3.0 (1.3.1 available)
+  camera 0.10.6 (0.11.3 available)
+  characters 1.4.0 (1.4.1 available)
+  cross_file 0.3.4+2 (0.3.5 available)
+  device_info_plus 10.1.2 (12.2.0 available)
+  file_selector_macos 0.9.4+4 (0.9.4+5 available)
+  flutter_riverpod 2.6.1 (3.0.3 available)
+  flutter_secure_storage_linux 1.2.3 (2.0.1 available)
+  flutter_secure_storage_macos 3.1.3 (4.0.0 available)
+  flutter_secure_storage_platform_interface 1.1.2 (2.0.1 available)
+  flutter_secure_storage_web 1.2.1 (2.0.0 available)
+  flutter_secure_storage_windows 3.1.2 (4.0.0 available)
+  flutter_tts 3.8.5 (4.2.3 available)
+  geocoding 3.0.0 (4.0.0 available)
+  geocoding_android 3.3.1 (4.0.1 available)
+  geolocator 13.0.4 (14.0.2 available)
+  geolocator_android 4.6.2 (5.0.2 available)
+  go_router 16.2.5 (16.3.0 available)
+  image_picker_android 0.8.13+5 (0.8.13+7 available)
+  image_picker_ios 0.8.13 (0.8.13+1 available)
+  image_picker_macos 0.2.2 (0.2.2+1 available)
+  image_picker_platform_interface 2.11.0 (2.11.1 available)
+  js 0.6.7 (0.7.2 available)
+  material_color_utilities 0.11.1 (0.13.0 available)
+  meta 1.16.0 (1.17.0 available)
+  mime 1.0.6 (2.0.0 available)
+  path_provider_foundation 2.4.2 (2.4.3 available)
+  pointycastle 3.9.1 (4.0.0 available)
+  riverpod 2.6.1 (3.0.3 available)
+  share_plus 12.0.0 (12.0.1 available)
+  shared_preferences_foundation 2.5.4 (2.5.5 available)
+  test_api 0.7.6 (0.7.7 available)
+  url_launcher_ios 6.3.4 (6.3.5 available)
+  url_launcher_macos 3.2.3 (3.2.4 available)
+  video_player_platform_interface 6.5.0 (6.6.0 available)
+  web_socket_channel 2.4.0 (3.0.3 available)
+  win32_registry 1.1.5 (2.1.0 available)
+Got dependencies!
+49 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Launching lib/main.dart on sdk gphone64 arm64 in debug mode...
+Running Gradle task 'assembleDebug'...                          
+I/flutter (16158): Connecting to WebSocket: ws://10.0.2.2:8080/api/ws/connect?token=dummy_token
+I/flutter (16158): WebSocket connected successfully
+E/flutter (16158): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: WebSocketException: Connection to 'http://10.0.2.2:8080/api/ws/connect?token=dummy_token#' was not upgraded to websocket, HTTP status code: 401
+E/flutter (16158): #0      _WebSocketImpl.connect (dart:_http/websocket_impl.dart:1081:41)
+E/flutter (16158): #1      WebSocket.connect (dart:_http/websocket.dart:332:24)
+E/flutter (16158): #2      new IOWebSocketChannel.connect (package:web_socket_channel/io.dart:81:28)
+E/flutter (16158): #3      connect (package:web_socket_channel/src/_connect_io.dart:15:24)
+E/flutter (16158): #4      new WebSocketChannel.connect (package:web_socket_channel/src/channel.dart:115:16)
+E/flutter (16158): #5      WebSocketService._establishConnection (package:gymates_flutter/services/websocket_service.dart:50:35)
+E/flutter (16158): #6      WebSocketService._handleDisconnection.<anonymous closure> (package:gymates_flutter/services/websocket_service.dart:90:11)
+E/flutter (16158): #7      Timer._createTimer.<anonymous closure> (dart:async-patch/timer_patch.dart:18:15)
+E/flutter (16158): #8      _Timer._runTimers (dart:isolate-patch/timer_impl.dart:423:19)
+E/flutter (16158): #9      _Timer._handleMessage (dart:isolate-patch/timer_impl.dart:454:5)
+E/flutter (16158): #10     _RawReceivePort._handleMessage (dart:isolate-patch/isolate_patch.dart:193:12)
+E/flutter (16158): 
+I/flutter (16158): WebSocket error: WebSocketChannelException: WebSocketChannelException: WebSocketException: Connection to 'http://10.0.2.2:8080/api/ws/connect?token=dummy_token#' was not upgraded to websocket, HTTP status code: 401
+I/flutter (16158): Reconnecting in 2 seconds (attempt 1)
+I/flutter (16158): WebSocket connection closed
+I/flutter (16158): Reconnecting in 4 seconds (attempt 2)
+I/flutter (16158): Connecting to WebSocket: ws://10.0.2.2:8080/api/ws/connect?token=dummy_token
+I/flutter (16158): WebSocket connected successfully
+E/flutter (16158): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: WebSocketException: Connection to 'http://10.0.2.2:8080/api/ws/connect?token=dummy_token#' was not upgraded to websocket, HTTP status code: 401
+E/flutter (16158): #0      _WebSocketImpl.connect (dart:_http/websocket_impl.dart:1081:41)
+E/flutter (16158): #1      WebSocket.connect (dart:_http/websocket.dart:332:24)
+E/flutter (16158): #2      new IOWebSocketChannel.connect (package:web_socket_channel/io.dart:81:28)
+E/flutter (16158): #3      connect (package:web_socket_channel/src/_connect_io.dart:15:24)
+E/flutter (16158): #4      new WebSocketChannel.connect (package:web_socket_channel/src/channel.dart:115:16)
+E/flutter (16158): #5      WebSocketService._establishConnection (package:gymates_flutter/services/websocket_service.dart:50:35)
+E/flutter (16158): #6      WebSocketService._handleDisconnection.<anonymous closure> (package:gymates_flutter/services/websocket_service.dart:90:11)
+E/flutter (16158): #7      Timer._createTimer.<anonymous closure> (dart:async-patch/timer_patch.dart:18:15)
+E/flutter (16158): #8      _Timer._runTimers (dart:isolate-patch/timer_impl.dart:423:19)
+E/flutter (16158): #9      _Timer._handleMessage (dart:isolate-patch/timer_impl.dart:454:5)
+E/flutter (16158): #10     _RawReceivePort._handleMessage (dart:isolate-patch/isolate_patch.dart:193:12)
+E/flutter (16158): 
+I/flutter (16158): WebSocket error: WebSocketChannelException: WebSocketChannelException: WebSocketException: Connection to 'http://10.0.2.2:8080/api/ws/connect?token=dummy_token#' was not upgraded to websocket, HTTP status code: 401
+I/flutter (16158): Reconnecting in 2 seconds (attempt 1)
+I/flutter (16158): WebSocket connection closed
+I/flutter (16158): Reconnecting in 4 seconds (attempt 2)
+Running Gradle task 'assembleDebug'...                              7.7s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+I/flutter (16158): Connecting to WebSocket: ws://10.0.2.2:8080/api/ws/connect?token=dummy_token
+I/flutter (16158): WebSocket connected successfully
+E/flutter (16158): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: WebSocketException: Connection to 'http://10.0.2.2:8080/api/ws/connect?token=dummy_token#' was not upgraded to websocket, HTTP status code: 401
+E/flutter (16158): #0      _WebSocketImpl.connect (dart:_http/websocket_impl.dart:1081:41)
+E/flutter (16158): #1      WebSocket.connect (dart:_http/websocket.dart:332:24)
+E/flutter (16158): #2      new IOWebSocketChannel.connect (package:web_socket_channel/io.dart:81:28)
+E/flutter (16158): #3      connect (package:web_socket_channel/src/_connect_io.dart:15:24)
+E/flutter (16158): #4      new WebSocketChannel.connect (package:web_socket_channel/src/channel.dart:115:16)
+E/flutter (16158): #5      WebSocketService._establishConnection (package:gymates_flutter/services/websocket_service.dart:50:35)
+E/flutter (16158): #6      WebSocketService._handleDisconnection.<anonymous closure> (package:gymates_flutter/services/websocket_service.dart:90:11)
+E/flutter (16158): #7      Timer._createTimer.<anonymous closure> (dart:async-patch/timer_patch.dart:18:15)
+E/flutter (16158): #8      _Timer._runTimers (dart:isolate-patch/timer_impl.dart:423:19)
+E/flutter (16158): #9      _Timer._handleMessage (dart:isolate-patch/timer_impl.dart:454:5)
+E/flutter (16158): #10     _RawReceivePort._handleMessage (dart:isolate-patch/isolate_patch.dart:193:12)
+E/flutter (16158): 
+I/flutter (16158): WebSocket error: WebSocketChannelException: WebSocketChannelException: WebSocketException: Connection to 'http://10.0.2.2:8080/api/ws/connect?token=dummy_token#' was not upgraded to websocket, HTTP status code: 401
+I/flutter (16158): Reconnecting in 2 seconds (attempt 1)
+I/flutter (16158): WebSocket connection closed
+I/flutter (16158): Reconnecting in 4 seconds (attempt 2)
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,624ms
+D/FlutterJNI(16551): Beginning load of flutter...
+D/FlutterJNI(16551): flutter (null) was loaded normally!
+I/flutter (16551): [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+D/FlutterGeolocator(16551): Attaching Geolocator to activity
+Syncing files to device sdk gphone64 arm64...                   
+I/TextToSpeech(16551): Setting up the connection to TTS engine...
+D/AudioSystem(16551): onNewService: media.audio_policy service obtained 0xb400007b4121d1e0
+D/AudioSystem(16551): getService: IAudioPolicyService retrieved: 0xb400007b4121d1e0  cached: 0xb400007b4121d1e0
+I/Choreographer(16551): Skipped 74 frames!  The application may be doing too much work on its main thread.
+D/WindowOnBackDispatcher(16551): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@e3ac702
+I/WindowExtensionsImpl(16551): Initializing Window Extensions, vendor API level=9, activity embedding enabled=true
+D/VRI[MainActivity](16551): WindowInsets changed: 1080x2400 statusBars:[0,63,0,0] navigationBars:[0,0,0,63] mandatorySystemGestures:[0,63,0,84] 
+I/gymates_flutter(16551): Compiler allocated 5274KB to compile void android.view.ViewRootImpl.performTraversals()
+Syncing files to device sdk gphone64 arm64...                      107ms
 
-  Unknown option "serializer.isThirdPartyModule" with value isThirdPartyModule({ path: modulePath }) {
-        return (
-          INTERNAL_CALLSITES_REGEX.test(modulePath) ||
-          /(?:^|[/\\])node_modules[/\\]/.test(modulePath)
-        );
-      } was found.
-  This is probably a typing mistake. Fixing it will remove this message.
+Flutter run key commands.
+r Hot reload. 🔥🔥🔥
+R Hot restart.
+h List all available interactive commands.
+d Detach (terminate "flutter run" but leave application running).
+c Clear the screen
+q Quit (terminate the application on the device).
 
-● Validation Warning:
-
-  Unknown option "server.forwardClientLogs" with value true was found.
-  This is probably a typing mistake. Fixing it will remove this message.
-
-● Validation Warning:
-
-  Unknown option "symbolicator.customizeStack" with value async (stack, _) => stack was found.
-  This is probably a typing mistake. Fixing it will remove this message.
-
-● Validation Warning:
-
-  Unknown option "watcher.healthCheck" with value {"enabled": false, "filePrefix": ".metro-health-check", "interval": 30000, "timeout": 5000} was found.
-  This is probably a typing mistake. Fixing it will remove this message.
-
-● Validation Warning:
-
-  Unknown option "watcher.unstable_lazySha1" with value true was found.
-  This is probably a typing mistake. Fixing it will remove this message.
-
-● Validation Warning:
-
-  Unknown option "watcher.unstable_workerThreads" with value false was found.
-  This is probably a typing mistake. Fixing it will remove this message.
-
-● Validation Warning:
-
-  Unknown option "watcher.unstable_autoSaveCache" with value {"debounceMs": 5000, "enabled": true} was found.
-  This is probably a typing mistake. Fixing it will remove this message.
-
-● Validation Warning:
-
-  Unknown option "unstable_perfLoggerFactory" with value () => {
-  class Logger {
-    start() {}
-    end() {}
-    annotate() {}
-    point() {}
-    subSpan() {
-      return this;
-    }
-  }
-  return new Logger();
-} was found.
-  This is probably a typing mistake. Fixing it will remove this message.
-
-error listen EADDRINUSE: address already in use :::8081.
-Error: listen EADDRINUSE: address already in use :::8081
-    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
-    at listenInCluster (node:net:1997:12)
-    at Server.listen (node:net:2102:7)
-    at /Users/gaojie/Desktop/gymates/frontend/node_modules/@react-native-community/cli-plugin-metro/node_modules/metro/src/index.flow.js:398:14
-    at new Promise (<anonymous>)
-    at earlyPortCheck (/Users/gaojie/Desktop/gymates/frontend/node_modules/@react-native-community/cli-plugin-metro/node_modules/metro/src/index.flow.js:394:11)
-    at exports.runServer (/Users/gaojie/Desktop/gymates/frontend/node_modules/@react-native-community/cli-plugin-metro/node_modules/metro/src/index.flow.js:155:9)
-    at Object.runServer [as func] (/Users/gaojie/Desktop/gymates/frontend/node_modules/@react-native-community/cli-plugin-metro/build/commands/start/runServer.js:123:49)
-    at async Command.handleAction (/Users/gaojie/Desktop/gymates/frontend/node_modules/@react-native-community/cli/build/index.js:142:9)
-info Run CLI with --verbose flag for more details.
+A Dart VM Service on sdk gphone64 arm64 is available at: http://127.0.0.1:53711/1bGLC9q2tyk=/
+The Flutter DevTools debugger and profiler on sdk gphone64 arm64 is available at: http://127.0.0.1:9100?uri=http://127.0.0.1:53711/1bGLC9q2tyk=/
+D/FlutterGeolocator(16551): Creating service.
+D/FlutterGeolocator(16551): Binding to location service.
+W/FlutterWebRTCPlugin(16551): audioFocusChangeListener [Speakerphone(name=Speakerphone)] Speakerphone(name=Speakerphone)
+D/FlutterGeolocator(16551): Geolocator foreground service connected
+D/FlutterGeolocator(16551): Initializing Geolocator services
+D/FlutterGeolocator(16551): Flutter engine connected. Connected engine count 1
+D/WindowLayoutComponentImpl(16551): Register WindowLayoutInfoListener on Context=com.gymates.gymates_flutter.MainActivity@2043157, of which baseContext=android.app.ContextImpl@edb379d
+D/InsetsController(16551): hide(ime())
+I/ImeTracker(16551): com.gymates.gymates_flutter:74810a94: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+D/WindowOnBackDispatcher(16551): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@eb6b412
+D/WindowOnBackDispatcher(16551): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@e3ac702
+D/ProfileInstaller(16551): Installing profile for com.gymates.gymates_flutter
+W/gymates_flutter(16551): userfaultfd: MOVE ioctl seems unsupported: Connection timed out
+Lost connection to device.

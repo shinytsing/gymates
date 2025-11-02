@@ -403,7 +403,7 @@ class _SwipeableExerciseCardState extends State<SwipeableExerciseCard>
                 ],
               ),
             );
-          }).toList(),
+          }),
         ],
         // 训练提示
         if (widget.exercise.tips != null && widget.exercise.tips!.isNotEmpty) ...[
@@ -433,7 +433,7 @@ class _SwipeableExerciseCardState extends State<SwipeableExerciseCard>
                 ],
               ),
             );
-          }).toList(),
+          }),
         ],
       ],
     );

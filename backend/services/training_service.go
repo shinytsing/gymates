@@ -81,19 +81,19 @@ func (s *TrainingService) ToggleFavoriteExercise(userID, exerciseID uint) (bool,
 			UserID:     userID,
 			ExerciseID: exerciseID,
 		}
-	if err := s.db.Create(&favorite).Error; err != nil {
+		if err := s.db.Create(&favorite).Error; err != nil {
+			return false, err
+		}
+		return true, nil
+	} else if err != nil {
 		return false, err
 	}
-	return true, nil
-} else if err != nil {
-	return false, err
-}
 
-// 取消收藏
-if err := s.db.Delete(&favorite).Error; err != nil {
-	return false, err
-}
-return false, nil
+	// 取消收藏
+	if err := s.db.Delete(&favorite).Error; err != nil {
+		return false, err
+	}
+	return false, nil
 }
 
 // GetUserFavoriteExercises 获取用户收藏的运动
@@ -445,15 +445,15 @@ func (s *TrainingService) GetTrainingStatistics(userID uint, startDate, endDate 
 	}
 
 	return map[string]interface{}{
-		"start_date":               startDate,
-		"end_date":                 endDate,
-		"total_workouts":           totalWorkouts,
-		"total_minutes":            totalMinutes,
-		"total_calories":           totalCalories,
-		"average_workout_duration": avgDuration,
-		"workouts_by_day":          workoutsByDay,
+		"start_date":                startDate,
+		"end_date":                  endDate,
+		"total_workouts":            totalWorkouts,
+		"total_minutes":             totalMinutes,
+		"total_calories":            totalCalories,
+		"average_workout_duration":  avgDuration,
+		"workouts_by_day":           workoutsByDay,
 		"muscle_group_distribution": muscleGroups,
-		"daily_stats":              dailyStats,
+		"daily_stats":               dailyStats,
 	}, nil
 }
 
@@ -660,4 +660,3 @@ func (s *TrainingService) ApplyAIRecommendation(recommendationID uint) (*models.
 
 	return plan, nil
 }
-

@@ -21,8 +21,13 @@ type JWTConfig struct {
 
 var jwtConfig = JWTConfig{
 	SecretKey: "gymates-secret-key", // 生产环境应该从环境变量获取
-	ExpiresIn: 24 * time.Hour,
+	ExpiresIn: 30 * time.Minute,     // Access Token: 30分钟
 }
+
+// Refresh Token 配置
+const (
+	RefreshTokenExpiry = 7 * 24 * time.Hour // Refresh Token: 7天
+)
 
 // Claims JWT声明
 type Claims struct {
@@ -62,6 +67,77 @@ func ValidateToken(tokenString string) (*Claims, error) {
 	}
 
 	return nil, jwt.ErrTokenMalformed
+}
+
+// GenerateRefreshToken 生成刷新令牌
+func GenerateRefreshToken(user *models.User) (string, error) {
+	claims := Claims{
+		UserID: user.ID,
+		Email:  user.Email,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(RefreshTokenExpiry)),
+			IssuedAt:  jwt.NewNumericDate(time.Now()),
+			NotBefore: jwt.NewNumericDate(time.Now()),
+		},
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString([]byte(jwtConfig.SecretKey))
+	if err != nil {
+		return "", err
+	}
+
+	// 将刷新令牌保存到数据库
+	refreshToken := models.RefreshToken{
+		UserID:    user.ID,
+		Token:     tokenString,
+		ExpiresAt: time.Now().Add(RefreshTokenExpiry),
+	}
+
+	if err := config.DB.Create(&refreshToken).Error; err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
+}
+
+// ValidateRefreshToken 验证刷新令牌
+func ValidateRefreshToken(tokenString string) (*models.User, error) {
+	// 验证JWT签名
+	claims, err := ValidateToken(tokenString)
+	if err != nil {
+		return nil, err
+	}
+
+	// 检查数据库中的刷新令牌
+	var refreshToken models.RefreshToken
+	if err := config.DB.Where("token = ? AND is_revoked = false", tokenString).First(&refreshToken).Error; err != nil {
+		return nil, fmt.Errorf("refresh token not found or revoked")
+	}
+
+	// 检查是否过期
+	if time.Now().After(refreshToken.ExpiresAt) {
+		return nil, fmt.Errorf("refresh token expired")
+	}
+
+	// 获取用户信息
+	var user models.User
+	if err := config.DB.First(&user, claims.UserID).Error; err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
+
+// RevokeRefreshToken 撤销刷新令牌
+func RevokeRefreshToken(tokenString string) error {
+	now := time.Now()
+	return config.DB.Model(&models.RefreshToken{}).
+		Where("token = ?", tokenString).
+		Updates(map[string]interface{}{
+			"is_revoked": true,
+			"revoked_at": &now,
+		}).Error
 }
 
 // AuthMiddleware JWT认证中间件

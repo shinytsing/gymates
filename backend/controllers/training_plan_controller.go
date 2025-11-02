@@ -69,8 +69,8 @@ func (tpc *TrainingPlanController) GetTrainingPlan(c *gin.Context) {
 // POST /api/training/plan/update
 func (tpc *TrainingPlanController) UpdateTrainingPlan(c *gin.Context) {
 	var req struct {
-		UserID uint                    `json:"user_id" binding:"required"`
-		Plan   []TrainingDayRequest    `json:"plan" binding:"required"`
+		UserID uint                 `json:"user_id" binding:"required"`
+		Plan   []TrainingDayRequest `json:"plan" binding:"required"`
 	}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -150,10 +150,10 @@ func (tpc *TrainingPlanController) UpdateTrainingPlan(c *gin.Context) {
 		// 创建训练部位
 		for _, partReq := range dayReq.Parts {
 			part := models.TrainingPart{
-				TrainingDayID:     day.ID,
-				MuscleGroup:       getMuscleGroupKey(partReq.PartName),
-				MuscleGroupName:   partReq.PartName,
-				Order:             0,
+				TrainingDayID:   day.ID,
+				MuscleGroup:     getMuscleGroupKey(partReq.PartName),
+				MuscleGroupName: partReq.PartName,
+				Order:           0,
 			}
 
 			if err := tx.Create(&part).Error; err != nil {
@@ -170,17 +170,17 @@ func (tpc *TrainingPlanController) UpdateTrainingPlan(c *gin.Context) {
 			// 创建训练动作
 			for _, exerciseReq := range partReq.Exercises {
 				exercise := models.Exercise{
-					TrainingPlanID:  plan.ID,
-					TrainingPartID:  &part.ID,
-					Name:            exerciseReq.Name,
-					Description:     exerciseReq.Description,
-					MuscleGroup:     getMuscleGroupKey(partReq.PartName),
-					Sets:            exerciseReq.Sets,
-					Reps:            exerciseReq.Reps,
-					Weight:          exerciseReq.Weight,
-					RestSeconds:     exerciseReq.RestSeconds,
-					Notes:           exerciseReq.Notes,
-					Order:           0,
+					TrainingPlanID: plan.ID,
+					TrainingPartID: &part.ID,
+					Name:           exerciseReq.Name,
+					Description:    exerciseReq.Description,
+					MuscleGroup:    getMuscleGroupKey(partReq.PartName),
+					Sets:           exerciseReq.Sets,
+					Reps:           exerciseReq.Reps,
+					Weight:         exerciseReq.Weight,
+					RestSeconds:    exerciseReq.RestSeconds,
+					Notes:          exerciseReq.Notes,
+					Order:          0,
 				}
 
 				if err := tx.Create(&exercise).Error; err != nil {
@@ -243,7 +243,7 @@ type TrainingExerciseRequest struct {
 func createEmptyWeekDays() []models.TrainingDay {
 	dayNames := []string{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}
 	days := make([]models.TrainingDay, 7)
-	
+
 	for i, dayName := range dayNames {
 		days[i] = models.TrainingDay{
 			DayOfWeek: i + 1,
@@ -252,7 +252,7 @@ func createEmptyWeekDays() []models.TrainingDay {
 			IsRestDay: true,
 		}
 	}
-	
+
 	return days
 }
 

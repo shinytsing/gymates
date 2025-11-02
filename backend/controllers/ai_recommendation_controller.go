@@ -91,7 +91,7 @@ func (aic *AIRecommendationController) GetAIRecommendation(c *gin.Context) {
 		// 从动作库中筛选动作
 		var exercises []models.ExerciseLibrary
 		query := config.DB.Where("part = ?", muscleGroup)
-		
+
 		// 根据用户等级筛选
 		if trainingMode.Level == "初级" {
 			query = query.Where("level IN (?)", []string{"beginner", "intermediate"})
@@ -117,7 +117,7 @@ func (aic *AIRecommendationController) GetAIRecommendation(c *gin.Context) {
 		if trainingMode.Target == "减脂" {
 			limit = 5 // 减脂训练动作少一些
 		}
-		
+
 		query.Order("RANDOM()").Limit(limit).Find(&exercises)
 
 		// 转换为推荐动作
@@ -264,7 +264,7 @@ func (aic *AIRecommendationController) generateWeight(userID uint, exerciseName 
 		}
 		return history.Weight * (1 + variation)
 	}
-	
+
 	// 如果没有历史数据，使用默认重量
 	return 20.0 + rand.Float64()*40.0 // 20-60kg
 }

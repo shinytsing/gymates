@@ -24,27 +24,38 @@ class SmartApiConfig {
   /// 获取WebSocket URL
   static String get wsBaseUrl => baseUrl.replaceFirst('http', 'ws');
   
+  /// 获取WebSocket完整URL
+  static String get webSocketUrl => '$wsBaseUrl/api';
+  
   /// 智能检测API地址
   static String _determineApiUrl() {
+    // 优先检查环境变量
+    const envPort = String.fromEnvironment('API_PORT');
+    const envHost = String.fromEnvironment('API_HOST', defaultValue: 'localhost');
+    
+    // 如果没有设置环境变量，尝试从环境配置中获取
+    final port = envPort.isNotEmpty ? envPort : '8080'; // 默认8080，与Go后端默认端口一致
+    final host = envHost;
+    
     // 1. 检查是否在Web环境
     if (kIsWeb) {
-      return 'http://localhost:8081';
+      return 'http://$host:$port';
     }
     
     // 2. 检查是否在Android模拟器
     if (Platform.isAndroid) {
       // Android模拟器使用10.0.2.2访问宿主机
-      return 'http://10.0.2.2:8081';
+      return 'http://10.0.2.2:$port';
     }
     
     // 3. 检查是否在iOS模拟器
     if (Platform.isIOS) {
       // iOS模拟器可以直接使用localhost
-      return 'http://localhost:8081';
+      return 'http://$host:$port';
     }
     
     // 4. 其他平台默认使用localhost
-    return 'http://localhost:8081';
+    return 'http://$host:$port';
   }
   
   /// 重置缓存（用于测试或动态切换）

@@ -7,7 +7,7 @@ import 'theme/gymates_theme.dart';
 import 'animations/gymates_animations.dart';
 import 'pages/training/training_page.dart';
 import 'pages/community/community_page.dart';
-import 'pages/partner/partner_page.dart';
+import 'pages/mates/mates_page.dart';
 import 'pages/messages/messages_page.dart';
 import 'pages/profile/profile_page.dart';
 
@@ -124,7 +124,7 @@ class _GymatesMainAppState extends State<GymatesMainApp>
   final List<Widget> _pages = [
     const TrainingPage(),
     const CommunityPage(),
-    const PartnerPage(),
+    const MatesPage(),
     const MessagesPage(),
     const ProfilePage(),
   ];

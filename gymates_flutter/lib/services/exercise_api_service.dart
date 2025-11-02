@@ -46,13 +46,11 @@ class ExerciseApiService {
         final data = json.decode(response.body);
         return _parseExercisesFromGoResponse(data);
       } else {
-        // 如果API失败，返回模拟数据
-        return _getMockExercises(query: query);
+        throw Exception('搜索动作失败: ${response.statusCode}');
       }
     } catch (e) {
-      // 网络错误时返回模拟数据
-      print('API Error: $e');
-      return _getMockExercises(query: query);
+      print('❌ API Error: $e');
+      rethrow;
     }
   }
 
@@ -92,11 +90,11 @@ class ExerciseApiService {
         final data = json.decode(response.body);
         return _parseExercisesFromGoResponse(data);
       } else {
-        return MockDataProvider.exercises;
+        throw Exception('获取所有动作失败: ${response.statusCode}');
       }
     } catch (e) {
-      print('API Error: $e');
-      return MockDataProvider.exercises;
+      print('❌ API Error: $e');
+      rethrow;
     }
   }
 
@@ -110,18 +108,14 @@ class ExerciseApiService {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         return _parseExerciseFromGoResponse(data);
+      } else if (response.statusCode == 404) {
+        return null;
       } else {
-        return MockDataProvider.exercises.firstWhere(
-          (exercise) => exercise.id == id,
-          orElse: () => MockDataProvider.exercises.first,
-        );
+        throw Exception('获取动作详情失败: ${response.statusCode}');
       }
     } catch (e) {
-      print('API Error: $e');
-      return MockDataProvider.exercises.firstWhere(
-        (exercise) => exercise.id == id,
-        orElse: () => MockDataProvider.exercises.first,
-      );
+      print('❌ API Error: $e');
+      rethrow;
     }
   }
 
@@ -136,11 +130,11 @@ class ExerciseApiService {
         final data = json.decode(response.body);
         return _parseTrainingPlansFromGoResponse(data);
       } else {
-        return MockDataProvider.trainingPlans;
+        throw Exception('获取训练计划失败: ${response.statusCode}');
       }
     } catch (e) {
-      print('API Error: $e');
-      return MockDataProvider.trainingPlans;
+      print('❌ API Error: $e');
+      rethrow;
     }
   }
 
@@ -185,7 +179,7 @@ class ExerciseApiService {
         return exercises.map((json) => _parseExerciseFromGoResponse(json)).toList();
       }
     }
-    return MockDataProvider.exercises;
+    return [];
   }
 
   /// 从Go后端响应解析单个动作
@@ -218,7 +212,7 @@ class ExerciseApiService {
         return plans.map((json) => _parseTrainingPlanFromGoResponse(json)).toList();
       }
     }
-    return MockDataProvider.trainingPlans;
+    return [];
   }
 
   /// 从Go后端响应解析单个训练计划
@@ -269,18 +263,4 @@ class ExerciseApiService {
     };
   }
 
-  /// 获取模拟数据（当API不可用时）
-  static List<MockExercise> _getMockExercises({String? query}) {
-    List<MockExercise> exercises = MockDataProvider.exercises;
-    
-    if (query != null && query.isNotEmpty) {
-      exercises = exercises.where((exercise) {
-        return exercise.name.toLowerCase().contains(query.toLowerCase()) ||
-               exercise.muscleGroup.toLowerCase().contains(query.toLowerCase()) ||
-               exercise.description.toLowerCase().contains(query.toLowerCase());
-      }).toList();
-    }
-    
-    return exercises;
-  }
 }

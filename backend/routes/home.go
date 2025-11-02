@@ -14,17 +14,17 @@ func SetupHomeRoutes(r *gin.RouterGroup) {
 	home := r.Group("/home")
 	{
 		// 公开接口（无需认证）
-		home.GET("/list", homeController.GetHomeList)           // GET /api/home/list
-		home.GET("/stats", homeController.GetHomeStats)         // GET /api/home/stats
-		home.GET("/:id", homeController.GetHomeItem)            // GET /api/home/:id
-		home.POST("/:id/like", homeController.LikeHomeItem)     // POST /api/home/:id/like
+		home.GET("/list", homeController.GetHomeList)       // GET /api/home/list
+		home.GET("/stats", homeController.GetHomeStats)     // GET /api/home/stats
+		home.GET("/:id", homeController.GetHomeItem)        // GET /api/home/:id
+		home.POST("/:id/like", homeController.LikeHomeItem) // POST /api/home/:id/like
 
 		// 需要认证的接口
 		homeAuth := home.Group("")
 		homeAuth.Use(middleware.AuthMiddleware())
 		{
-			homeAuth.POST("/add", homeController.AddHomeItem)           // POST /api/home/add
-			homeAuth.PUT("/update/:id", homeController.UpdateHomeItem) // PUT /api/home/update/:id
+			homeAuth.POST("/add", homeController.AddHomeItem)             // POST /api/home/add
+			homeAuth.PUT("/update/:id", homeController.UpdateHomeItem)    // PUT /api/home/update/:id
 			homeAuth.DELETE("/delete/:id", homeController.DeleteHomeItem) // DELETE /api/home/delete/:id
 		}
 	}
@@ -51,15 +51,15 @@ func SetupTrainingRoutes(r *gin.RouterGroup) {
 		training.GET("/weekly-plans/:id", middleware.OptionalAuthMiddleware(), weeklyTrainingController.GetWeeklyTrainingPlan)
 
 		// 新的训练计划接口（按需求实现）
-		training.GET("/plan", trainingPlanController.GetTrainingPlan)                    // GET /api/training/plan?user_id={uid}
-		training.POST("/plan/update", trainingPlanController.UpdateTrainingPlan)         // POST /api/training/plan/update
-		training.GET("/ai/recommend", aiRecommendationController.GetAIRecommendation)   // GET /api/training/ai/recommend?user_id={uid}&day={Monday}
+		training.GET("/plan", trainingPlanController.GetTrainingPlan)                 // GET /api/training/plan?user_id={uid}
+		training.POST("/plan/update", trainingPlanController.UpdateTrainingPlan)      // POST /api/training/plan/update
+		training.GET("/ai/recommend", aiRecommendationController.GetAIRecommendation) // GET /api/training/ai/recommend?user_id={uid}&day={Monday}
 
 		// AI训练页面接口
 		training.GET("/ai/training", aiTrainingController.GetAIRecommendation)         // GET /api/training/ai/training?user_id={uid}
 		training.POST("/ai/preferences", aiTrainingController.SaveTrainingPreferences) // POST /api/training/ai/preferences
-		training.POST("/ai/chat", aiTrainingController.AIChat)                          // POST /api/training/ai/chat
-		training.POST("/ai/session", aiTrainingController.SaveTrainingSession)          // POST /api/training/ai/session
+		training.POST("/ai/chat", aiTrainingController.AIChat)                         // POST /api/training/ai/chat
+		training.POST("/ai/session", aiTrainingController.SaveTrainingSession)         // POST /api/training/ai/session
 
 		// 需要认证的接口
 		trainingAuth := training.Group("")
@@ -113,6 +113,7 @@ func SetupMatesRoutes(r *gin.RouterGroup) {
 	mates.Use(middleware.AuthMiddleware())
 	{
 		mates.GET("", matesController.GetMates)
+		mates.GET("/recommendations", matesController.GetMateRecommendations) // 新增：获取搭子推荐
 		mates.GET("/requests", matesController.GetMateRequests)
 		mates.POST("/requests", matesController.SendMateRequest)
 		mates.POST("/requests/:id/accept", matesController.AcceptMateRequest)

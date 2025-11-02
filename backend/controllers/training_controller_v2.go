@@ -131,8 +131,8 @@ func (ctrl *TrainingControllerV2) ToggleFavoriteExercise(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"success":     true,
-		"message":     message,
+		"success":      true,
+		"message":      message,
 		"is_favorited": isFavorited,
 	})
 }
@@ -327,7 +327,7 @@ func (ctrl *TrainingControllerV2) DeleteTrainingPlan(c *gin.Context) {
 func (ctrl *TrainingControllerV2) GetTodayWorkout(c *gin.Context) {
 	userID := c.GetUint("user_id")
 	dateStr := c.DefaultQuery("date", time.Now().Format("2006-01-02"))
-	
+
 	date, err := time.Parse("2006-01-02", dateStr)
 	if err != nil {
 		date = time.Now()
@@ -759,4 +759,3 @@ func (ctrl *TrainingControllerV2) GenerateMotivationalMessage(c *gin.Context) {
 		"message": message,
 	})
 }
-

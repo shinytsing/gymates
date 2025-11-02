@@ -29,4 +29,3 @@ func SetupMapRoutes(api *gin.RouterGroup) {
 		mapGroup.GET("/gyms/city", middleware.AuthMiddleware(), mapController.SearchGymsByCity)
 	}
 }
-

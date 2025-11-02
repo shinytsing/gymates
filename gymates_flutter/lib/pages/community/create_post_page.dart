@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import '../../theme/gymates_theme.dart';
+import '../../services/community_service.dart';
 
 /// 📝 创建帖子页面 - 完全按照 Figma 设计实现
 /// 
@@ -35,9 +38,12 @@ class _CreatePostPageState extends State<CreatePostPage>
   final _formKey = GlobalKey<FormState>();
   final _contentController = TextEditingController();
   final _titleController = TextEditingController();
+  final _imagePicker = ImagePicker();
+  final _communityService = CommunityService();
 
   final List<String> _selectedTags = [];
-  final List<String> _selectedImages = [];
+  final List<XFile> _selectedImages = []; // 改为存储 XFile 对象
+  final List<String> _selectedImagePaths = []; // 用于显示图片路径
   bool _isLocationEnabled = false;
   bool _isPublic = true;
   bool _isLoading = false;
@@ -307,7 +313,9 @@ class _CreatePostPageState extends State<CreatePostPage>
               scrollDirection: Axis.horizontal,
               itemCount: _selectedImages.length,
               itemBuilder: (context, index) {
-                return Container(
+                return Stack(
+                  children: [
+                    Container(
                   width: 100,
                   height: 100,
                   margin: const EdgeInsets.only(right: 8),
@@ -320,8 +328,8 @@ class _CreatePostPageState extends State<CreatePostPage>
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      _selectedImages[index],
+                        child: Image.file(
+                          File(_selectedImages[index].path),
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
@@ -334,6 +342,29 @@ class _CreatePostPageState extends State<CreatePostPage>
                       },
                     ),
                   ),
+                    ),
+                    // 删除按钮
+                    Positioned(
+                      top: 4,
+                      right: 12,
+                      child: GestureDetector(
+                        onTap: () => _removeImage(index),
+                        child: Container(
+                          width: 24,
+                          height: 24,
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.6),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.close,
+                            color: Colors.white,
+                            size: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               },
             ),
@@ -583,15 +614,90 @@ class _CreatePostPageState extends State<CreatePostPage>
     );
   }
 
-  void _addImage() {
+  void _addImage() async {
     HapticFeedback.lightImpact();
-    // TODO: 实现图片选择逻辑
+    
+    try {
+      // 显示选择对话框：相机或相册
+      final source = await showModalBottomSheet<ImageSource>(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) => Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 12),
+                Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ListTile(
+                  leading: const Icon(Icons.camera_alt, color: GymatesTheme.primaryColor),
+                  title: const Text('拍照'),
+                  onTap: () => Navigator.pop(context, ImageSource.camera),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.photo_library, color: GymatesTheme.primaryColor),
+                  title: const Text('从相册选择'),
+                  onTap: () => Navigator.pop(context, ImageSource.gallery),
+                ),
+                const SizedBox(height: 8),
+              ],
+            ),
+          ),
+        ),
+      );
+
+      if (source != null) {
+        final XFile? pickedFile = await _imagePicker.pickImage(
+          source: source,
+          maxWidth: 1920,
+          maxHeight: 1920,
+          imageQuality: 85,
+        );
+
+        if (pickedFile != null) {
+          setState(() {
+            _selectedImages.add(pickedFile);
+            _selectedImagePaths.add(pickedFile.path);
+          });
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('已添加图片 (${_selectedImages.length}/9)'),
+              backgroundColor: GymatesTheme.successColor,
+              duration: const Duration(seconds: 1),
+            ),
+          );
+        }
+      }
+    } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('图片选择功能待实现'),
-        backgroundColor: GymatesTheme.primaryColor,
+        SnackBar(
+          content: Text('选择图片失败: $e'),
+          backgroundColor: GymatesTheme.errorColor,
       ),
     );
+    }
+  }
+
+  // 移除图片
+  void _removeImage(int index) {
+    HapticFeedback.lightImpact();
+    setState(() {
+      _selectedImages.removeAt(index);
+      _selectedImagePaths.removeAt(index);
+    });
   }
 
   void _handlePublish() async {
@@ -615,32 +721,53 @@ class _CreatePostPageState extends State<CreatePostPage>
 
     HapticFeedback.lightImpact();
 
-    // TODO: 实现发布逻辑
-    await Future.delayed(const Duration(seconds: 2));
+    try {
+      // 准备图片URL列表（实际项目中需要先上传图片到服务器获取URL）
+      // 这里暂时使用本地路径，后续需要实现图片上传功能
+      final imageUrls = _selectedImagePaths;
+
+      // 调用API发布帖子
+      final response = await _communityService.createPost(
+        content: _contentController.text.trim(),
+        type: widget.postType,
+        images: imageUrls.isNotEmpty ? imageUrls : null,
+        tags: _selectedTags,
+      );
 
     setState(() {
       _isLoading = false;
     });
 
-    final postData = {
-      'title': _titleController.text,
-      'content': _contentController.text,
-      'images': _selectedImages,
-      'tags': _selectedTags,
-      'isLocationEnabled': _isLocationEnabled,
-      'isPublic': _isPublic,
-      'type': widget.postType,
-    };
+      // 通知父组件
+      if (widget.onPublish != null) {
+        widget.onPublish!(response);
+      }
 
-    widget.onPublish?.call(postData);
-
+      // 显示成功消息
+      if (mounted) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('发布成功'),
+            content: Text('发布成功！'),
         backgroundColor: GymatesTheme.successColor,
       ),
     );
 
-    Navigator.pop(context);
+        // 返回上一页
+        Navigator.pop(context, true);
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('发布失败: $e'),
+            backgroundColor: GymatesTheme.errorColor,
+          ),
+        );
+      }
+    }
   }
 }

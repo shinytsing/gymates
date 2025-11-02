@@ -1,312 +1,361 @@
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.246ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="users"
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.226ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="users"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.072ms] [34;1m[rows:3][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "users" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.055ms] [34;1m[rows:7][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "users" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.023ms] [34;1m[rows:-][0m SELECT * FROM `users` LIMIT 1
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.027ms] [34;1m[rows:-][0m SELECT * FROM `users` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.009ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "users" AND name = "idx_users_email"
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.010ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "users" AND name = "idx_users_email"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.006ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "users" AND name = "idx_users_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="training_plans"
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="training_plans"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.035ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "training_plans" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.030ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "training_plans" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.009ms] [34;1m[rows:-][0m SELECT * FROM `training_plans` LIMIT 1
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.008ms] [34;1m[rows:-][0m SELECT * FROM `training_plans` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.010ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "training_plans" AND (sql LIKE "%CONSTRAINT \"fk_training_plans_user\" %" OR sql LIKE "%CONSTRAINT fk_training_plans_user %" OR sql LIKE "%CONSTRAINT `fk_training_plans_user`%" OR sql LIKE "%CONSTRAINT [fk_training_plans_user]%" OR sql LIKE "%CONSTRAINT 	fk_training_plans_user	%")
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.018ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "training_plans" AND (sql LIKE "%CONSTRAINT \"fk_training_plans_user\" %" OR sql LIKE "%CONSTRAINT fk_training_plans_user %" OR sql LIKE "%CONSTRAINT `fk_training_plans_user`%" OR sql LIKE "%CONSTRAINT [fk_training_plans_user]%" OR sql LIKE "%CONSTRAINT 	fk_training_plans_user	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "training_plans" AND name = "idx_training_plans_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="exercises"
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.039ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="weekly_training_plans"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.017ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "exercises" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.044ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "weekly_training_plans" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.006ms] [34;1m[rows:-][0m SELECT * FROM `exercises` LIMIT 1
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.012ms] [34;1m[rows:-][0m SELECT * FROM `weekly_training_plans` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.006ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "exercises" AND (sql LIKE "%CONSTRAINT \"fk_training_plans_exercises\" %" OR sql LIKE "%CONSTRAINT fk_training_plans_exercises %" OR sql LIKE "%CONSTRAINT `fk_training_plans_exercises`%" OR sql LIKE "%CONSTRAINT [fk_training_plans_exercises]%" OR sql LIKE "%CONSTRAINT 	fk_training_plans_exercises	%")
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.012ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "weekly_training_plans" AND (sql LIKE "%CONSTRAINT \"fk_weekly_training_plans_user\" %" OR sql LIKE "%CONSTRAINT fk_weekly_training_plans_user %" OR sql LIKE "%CONSTRAINT `fk_weekly_training_plans_user`%" OR sql LIKE "%CONSTRAINT [fk_weekly_training_plans_user]%" OR sql LIKE "%CONSTRAINT 	fk_weekly_training_plans_user	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "weekly_training_plans" AND name = "idx_weekly_training_plans_deleted_at"
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="training_days"
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.020ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "training_days" AND sql IS NOT NULL order by type = "table" desc
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.006ms] [34;1m[rows:-][0m SELECT * FROM `training_days` LIMIT 1
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.010ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "training_days" AND (sql LIKE "%CONSTRAINT \"fk_weekly_training_plans_days\" %" OR sql LIKE "%CONSTRAINT fk_weekly_training_plans_days %" OR sql LIKE "%CONSTRAINT `fk_weekly_training_plans_days`%" OR sql LIKE "%CONSTRAINT [fk_weekly_training_plans_days]%" OR sql LIKE "%CONSTRAINT 	fk_weekly_training_plans_days	%")
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "training_days" AND name = "idx_training_days_deleted_at"
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="training_parts"
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.015ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "training_parts" AND sql IS NOT NULL order by type = "table" desc
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT * FROM `training_parts` LIMIT 1
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "training_parts" AND (sql LIKE "%CONSTRAINT \"fk_training_days_parts\" %" OR sql LIKE "%CONSTRAINT fk_training_days_parts %" OR sql LIKE "%CONSTRAINT `fk_training_days_parts`%" OR sql LIKE "%CONSTRAINT [fk_training_days_parts]%" OR sql LIKE "%CONSTRAINT 	fk_training_days_parts	%")
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "training_parts" AND name = "idx_training_parts_deleted_at"
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="exercises"
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.015ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "exercises" AND sql IS NOT NULL order by type = "table" desc
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.008ms] [34;1m[rows:-][0m SELECT * FROM `exercises` LIMIT 1
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "exercises" AND (sql LIKE "%CONSTRAINT \"fk_training_parts_exercises\" %" OR sql LIKE "%CONSTRAINT fk_training_parts_exercises %" OR sql LIKE "%CONSTRAINT `fk_training_parts_exercises`%" OR sql LIKE "%CONSTRAINT [fk_training_parts_exercises]%" OR sql LIKE "%CONSTRAINT 	fk_training_parts_exercises	%")
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "exercises" AND (sql LIKE "%CONSTRAINT \"fk_training_plans_exercises\" %" OR sql LIKE "%CONSTRAINT fk_training_plans_exercises %" OR sql LIKE "%CONSTRAINT `fk_training_plans_exercises`%" OR sql LIKE "%CONSTRAINT [fk_training_plans_exercises]%" OR sql LIKE "%CONSTRAINT 	fk_training_plans_exercises	%")
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "exercises" AND name = "idx_exercises_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="workout_sessions"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.014ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "workout_sessions" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.007ms] [34;1m[rows:-][0m SELECT * FROM `workout_sessions` LIMIT 1
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT * FROM `workout_sessions` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.015ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "workout_sessions" AND (sql LIKE "%CONSTRAINT \"fk_workout_sessions_user\" %" OR sql LIKE "%CONSTRAINT fk_workout_sessions_user %" OR sql LIKE "%CONSTRAINT `fk_workout_sessions_user`%" OR sql LIKE "%CONSTRAINT [fk_workout_sessions_user]%" OR sql LIKE "%CONSTRAINT 	fk_workout_sessions_user	%")
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "workout_sessions" AND (sql LIKE "%CONSTRAINT \"fk_workout_sessions_user\" %" OR sql LIKE "%CONSTRAINT fk_workout_sessions_user %" OR sql LIKE "%CONSTRAINT `fk_workout_sessions_user`%" OR sql LIKE "%CONSTRAINT [fk_workout_sessions_user]%" OR sql LIKE "%CONSTRAINT 	fk_workout_sessions_user	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.008ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "workout_sessions" AND (sql LIKE "%CONSTRAINT \"fk_workout_sessions_training_plan\" %" OR sql LIKE "%CONSTRAINT fk_workout_sessions_training_plan %" OR sql LIKE "%CONSTRAINT `fk_workout_sessions_training_plan`%" OR sql LIKE "%CONSTRAINT [fk_workout_sessions_training_plan]%" OR sql LIKE "%CONSTRAINT 	fk_workout_sessions_training_plan	%")
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "workout_sessions" AND (sql LIKE "%CONSTRAINT \"fk_workout_sessions_training_plan\" %" OR sql LIKE "%CONSTRAINT fk_workout_sessions_training_plan %" OR sql LIKE "%CONSTRAINT `fk_workout_sessions_training_plan`%" OR sql LIKE "%CONSTRAINT [fk_workout_sessions_training_plan]%" OR sql LIKE "%CONSTRAINT 	fk_workout_sessions_training_plan	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.007ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "workout_sessions" AND name = "idx_workout_sessions_deleted_at"
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "workout_sessions" AND name = "idx_workout_sessions_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="posts"
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="posts"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.026ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "posts" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.016ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "posts" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.009ms] [34;1m[rows:-][0m SELECT * FROM `posts` LIMIT 1
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT * FROM `posts` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.008ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "posts" AND (sql LIKE "%CONSTRAINT \"fk_posts_user\" %" OR sql LIKE "%CONSTRAINT fk_posts_user %" OR sql LIKE "%CONSTRAINT `fk_posts_user`%" OR sql LIKE "%CONSTRAINT [fk_posts_user]%" OR sql LIKE "%CONSTRAINT 	fk_posts_user	%")
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "posts" AND (sql LIKE "%CONSTRAINT \"fk_posts_user\" %" OR sql LIKE "%CONSTRAINT fk_posts_user %" OR sql LIKE "%CONSTRAINT `fk_posts_user`%" OR sql LIKE "%CONSTRAINT [fk_posts_user]%" OR sql LIKE "%CONSTRAINT 	fk_posts_user	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "posts" AND name = "idx_posts_deleted_at"
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "posts" AND name = "idx_posts_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="comments"
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="comments"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.019ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "comments" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.015ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "comments" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.006ms] [34;1m[rows:-][0m SELECT * FROM `comments` LIMIT 1
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT * FROM `comments` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.006ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "comments" AND (sql LIKE "%CONSTRAINT \"fk_comments_post\" %" OR sql LIKE "%CONSTRAINT fk_comments_post %" OR sql LIKE "%CONSTRAINT `fk_comments_post`%" OR sql LIKE "%CONSTRAINT [fk_comments_post]%" OR sql LIKE "%CONSTRAINT 	fk_comments_post	%")
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "comments" AND (sql LIKE "%CONSTRAINT \"fk_comments_post\" %" OR sql LIKE "%CONSTRAINT fk_comments_post %" OR sql LIKE "%CONSTRAINT `fk_comments_post`%" OR sql LIKE "%CONSTRAINT [fk_comments_post]%" OR sql LIKE "%CONSTRAINT 	fk_comments_post	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "comments" AND (sql LIKE "%CONSTRAINT \"fk_comments_user\" %" OR sql LIKE "%CONSTRAINT fk_comments_user %" OR sql LIKE "%CONSTRAINT `fk_comments_user`%" OR sql LIKE "%CONSTRAINT [fk_comments_user]%" OR sql LIKE "%CONSTRAINT 	fk_comments_user	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "comments" AND name = "idx_comments_deleted_at"
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "comments" AND name = "idx_comments_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="post_likes"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.029ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "post_likes" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.015ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "post_likes" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.004ms] [34;1m[rows:-][0m SELECT * FROM `post_likes` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "post_likes" AND (sql LIKE "%CONSTRAINT \"fk_post_likes_post\" %" OR sql LIKE "%CONSTRAINT fk_post_likes_post %" OR sql LIKE "%CONSTRAINT `fk_post_likes_post`%" OR sql LIKE "%CONSTRAINT [fk_post_likes_post]%" OR sql LIKE "%CONSTRAINT 	fk_post_likes_post	%")
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "post_likes" AND (sql LIKE "%CONSTRAINT \"fk_post_likes_user\" %" OR sql LIKE "%CONSTRAINT fk_post_likes_user %" OR sql LIKE "%CONSTRAINT `fk_post_likes_user`%" OR sql LIKE "%CONSTRAINT [fk_post_likes_user]%" OR sql LIKE "%CONSTRAINT 	fk_post_likes_user	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "post_likes" AND (sql LIKE "%CONSTRAINT \"fk_post_likes_post\" %" OR sql LIKE "%CONSTRAINT fk_post_likes_post %" OR sql LIKE "%CONSTRAINT `fk_post_likes_post`%" OR sql LIKE "%CONSTRAINT [fk_post_likes_post]%" OR sql LIKE "%CONSTRAINT 	fk_post_likes_post	%")
-
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "post_likes" AND name = "idx_post_likes_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="mates"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.014ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "mates" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.015ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "mates" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.004ms] [34;1m[rows:-][0m SELECT * FROM `mates` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.006ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "mates" AND (sql LIKE "%CONSTRAINT \"fk_mates_user\" %" OR sql LIKE "%CONSTRAINT fk_mates_user %" OR sql LIKE "%CONSTRAINT `fk_mates_user`%" OR sql LIKE "%CONSTRAINT [fk_mates_user]%" OR sql LIKE "%CONSTRAINT 	fk_mates_user	%")
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "mates" AND (sql LIKE "%CONSTRAINT \"fk_mates_mate\" %" OR sql LIKE "%CONSTRAINT fk_mates_mate %" OR sql LIKE "%CONSTRAINT `fk_mates_mate`%" OR sql LIKE "%CONSTRAINT [fk_mates_mate]%" OR sql LIKE "%CONSTRAINT 	fk_mates_mate	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "mates" AND (sql LIKE "%CONSTRAINT \"fk_mates_user\" %" OR sql LIKE "%CONSTRAINT fk_mates_user %" OR sql LIKE "%CONSTRAINT `fk_mates_user`%" OR sql LIKE "%CONSTRAINT [fk_mates_user]%" OR sql LIKE "%CONSTRAINT 	fk_mates_user	%")
-
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "mates" AND name = "idx_mates_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="chats"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.013ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "chats" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.015ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "chats" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT * FROM `chats` LIMIT 1
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT * FROM `chats` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "chats" AND name = "idx_chats_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.002ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="chat_participants"
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="chat_participants"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.013ms] [34;1m[rows:1][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "chat_participants" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.015ms] [34;1m[rows:1][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "chat_participants" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT * FROM `chat_participants` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.007ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "chat_participants" AND (sql LIKE "%CONSTRAINT \"fk_chat_participants_user\" %" OR sql LIKE "%CONSTRAINT fk_chat_participants_user %" OR sql LIKE "%CONSTRAINT `fk_chat_participants_user`%" OR sql LIKE "%CONSTRAINT [fk_chat_participants_user]%" OR sql LIKE "%CONSTRAINT 	fk_chat_participants_user	%")
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "chat_participants" AND (sql LIKE "%CONSTRAINT \"fk_chat_participants_chat\" %" OR sql LIKE "%CONSTRAINT fk_chat_participants_chat %" OR sql LIKE "%CONSTRAINT `fk_chat_participants_chat`%" OR sql LIKE "%CONSTRAINT [fk_chat_participants_chat]%" OR sql LIKE "%CONSTRAINT 	fk_chat_participants_chat	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.007ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "chat_participants" AND (sql LIKE "%CONSTRAINT \"fk_chat_participants_chat\" %" OR sql LIKE "%CONSTRAINT fk_chat_participants_chat %" OR sql LIKE "%CONSTRAINT `fk_chat_participants_chat`%" OR sql LIKE "%CONSTRAINT [fk_chat_participants_chat]%" OR sql LIKE "%CONSTRAINT 	fk_chat_participants_chat	%")
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "chat_participants" AND (sql LIKE "%CONSTRAINT \"fk_chat_participants_user\" %" OR sql LIKE "%CONSTRAINT fk_chat_participants_user %" OR sql LIKE "%CONSTRAINT `fk_chat_participants_user`%" OR sql LIKE "%CONSTRAINT [fk_chat_participants_user]%" OR sql LIKE "%CONSTRAINT 	fk_chat_participants_user	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="messages"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.017ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "messages" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.014ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "messages" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.004ms] [34;1m[rows:-][0m SELECT * FROM `messages` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.006ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "messages" AND (sql LIKE "%CONSTRAINT \"fk_messages_sender\" %" OR sql LIKE "%CONSTRAINT fk_messages_sender %" OR sql LIKE "%CONSTRAINT `fk_messages_sender`%" OR sql LIKE "%CONSTRAINT [fk_messages_sender]%" OR sql LIKE "%CONSTRAINT 	fk_messages_sender	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "messages" AND (sql LIKE "%CONSTRAINT \"fk_chats_last_message\" %" OR sql LIKE "%CONSTRAINT fk_chats_last_message %" OR sql LIKE "%CONSTRAINT `fk_chats_last_message`%" OR sql LIKE "%CONSTRAINT [fk_chats_last_message]%" OR sql LIKE "%CONSTRAINT 	fk_chats_last_message	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "messages" AND name = "idx_messages_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="achievements"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.014ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "achievements" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.016ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "achievements" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.004ms] [34;1m[rows:-][0m SELECT * FROM `achievements` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "achievements" AND (sql LIKE "%CONSTRAINT \"fk_achievements_user\" %" OR sql LIKE "%CONSTRAINT fk_achievements_user %" OR sql LIKE "%CONSTRAINT `fk_achievements_user`%" OR sql LIKE "%CONSTRAINT [fk_achievements_user]%" OR sql LIKE "%CONSTRAINT 	fk_achievements_user	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "achievements" AND name = "idx_achievements_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="notifications"
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="notifications"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.014ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "notifications" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.013ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "notifications" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.004ms] [34;1m[rows:-][0m SELECT * FROM `notifications` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "notifications" AND (sql LIKE "%CONSTRAINT \"fk_notifications_user\" %" OR sql LIKE "%CONSTRAINT fk_notifications_user %" OR sql LIKE "%CONSTRAINT `fk_notifications_user`%" OR sql LIKE "%CONSTRAINT [fk_notifications_user]%" OR sql LIKE "%CONSTRAINT 	fk_notifications_user	%")
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.007ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "notifications" AND (sql LIKE "%CONSTRAINT \"fk_notifications_user\" %" OR sql LIKE "%CONSTRAINT fk_notifications_user %" OR sql LIKE "%CONSTRAINT `fk_notifications_user`%" OR sql LIKE "%CONSTRAINT [fk_notifications_user]%" OR sql LIKE "%CONSTRAINT 	fk_notifications_user	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "notifications" AND name = "idx_notifications_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="home_items"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.013ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "home_items" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.015ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "home_items" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.005ms] [34;1m[rows:-][0m SELECT * FROM `home_items` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "home_items" AND (sql LIKE "%CONSTRAINT \"fk_home_items_user\" %" OR sql LIKE "%CONSTRAINT fk_home_items_user %" OR sql LIKE "%CONSTRAINT `fk_home_items_user`%" OR sql LIKE "%CONSTRAINT [fk_home_items_user]%" OR sql LIKE "%CONSTRAINT 	fk_home_items_user	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "home_items" AND name = "idx_home_items_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="detail_items"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.012ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "detail_items" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.015ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "detail_items" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.007ms] [34;1m[rows:-][0m SELECT * FROM `detail_items` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "detail_items" AND (sql LIKE "%CONSTRAINT \"fk_detail_items_children\" %" OR sql LIKE "%CONSTRAINT fk_detail_items_children %" OR sql LIKE "%CONSTRAINT `fk_detail_items_children`%" OR sql LIKE "%CONSTRAINT [fk_detail_items_children]%" OR sql LIKE "%CONSTRAINT 	fk_detail_items_children	%")
-
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "detail_items" AND (sql LIKE "%CONSTRAINT \"fk_detail_items_user\" %" OR sql LIKE "%CONSTRAINT fk_detail_items_user %" OR sql LIKE "%CONSTRAINT `fk_detail_items_user`%" OR sql LIKE "%CONSTRAINT [fk_detail_items_user]%" OR sql LIKE "%CONSTRAINT 	fk_detail_items_user	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "detail_items" AND name = "idx_detail_items_deleted_at"
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "detail_items" AND (sql LIKE "%CONSTRAINT \"fk_detail_items_children\" %" OR sql LIKE "%CONSTRAINT fk_detail_items_children %" OR sql LIKE "%CONSTRAINT `fk_detail_items_children`%" OR sql LIKE "%CONSTRAINT [fk_detail_items_children]%" OR sql LIKE "%CONSTRAINT 	fk_detail_items_children	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "detail_items" AND name = "idx_detail_items_deleted_at"
+
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="post_details"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.029ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "post_details" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.013ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "post_details" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.007ms] [34;1m[rows:-][0m SELECT * FROM `post_details` LIMIT 1
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.008ms] [34;1m[rows:-][0m SELECT * FROM `post_details` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "post_details" AND (sql LIKE "%CONSTRAINT \"fk_post_details_user\" %" OR sql LIKE "%CONSTRAINT fk_post_details_user %" OR sql LIKE "%CONSTRAINT `fk_post_details_user`%" OR sql LIKE "%CONSTRAINT [fk_post_details_user]%" OR sql LIKE "%CONSTRAINT 	fk_post_details_user	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "post_details" AND name = "idx_post_details_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="profile_details"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.023ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "profile_details" AND sql IS NOT NULL order by type = "table" desc
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.015ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "profile_details" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.009ms] [34;1m[rows:-][0m SELECT * FROM `profile_details` LIMIT 1
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.010ms] [34;1m[rows:-][0m SELECT * FROM `profile_details` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "profile_details" AND (sql LIKE "%CONSTRAINT \"fk_profile_details_user\" %" OR sql LIKE "%CONSTRAINT fk_profile_details_user %" OR sql LIKE "%CONSTRAINT `fk_profile_details_user`%" OR sql LIKE "%CONSTRAINT [fk_profile_details_user]%" OR sql LIKE "%CONSTRAINT 	fk_profile_details_user	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "profile_details" AND name = "idx_profile_details_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="chat_details"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.014ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "chat_details" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.010ms] [34;1m[rows:-][0m SELECT * FROM `chat_details` LIMIT 1
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.006ms] [34;1m[rows:-][0m SELECT * FROM `chat_details` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "chat_details" AND (sql LIKE "%CONSTRAINT \"fk_chat_details_reply_to\" %" OR sql LIKE "%CONSTRAINT fk_chat_details_reply_to %" OR sql LIKE "%CONSTRAINT `fk_chat_details_reply_to`%" OR sql LIKE "%CONSTRAINT [fk_chat_details_reply_to]%" OR sql LIKE "%CONSTRAINT 	fk_chat_details_reply_to	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "chat_details" AND (sql LIKE "%CONSTRAINT \"fk_chat_details_user\" %" OR sql LIKE "%CONSTRAINT fk_chat_details_user %" OR sql LIKE "%CONSTRAINT `fk_chat_details_user`%" OR sql LIKE "%CONSTRAINT [fk_chat_details_user]%" OR sql LIKE "%CONSTRAINT 	fk_chat_details_user	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "chat_details" AND name = "idx_chat_details_deleted_at"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.003ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type='table' AND name="achievement_details"
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
 [0m[33m[0.014ms] [34;1m[rows:2][0m SELECT sql FROM sqlite_master WHERE type IN ("table","index") AND tbl_name = "achievement_details" AND sql IS NOT NULL order by type = "table" desc
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.011ms] [34;1m[rows:-][0m SELECT * FROM `achievement_details` LIMIT 1
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.098ms] [34;1m[rows:-][0m SELECT * FROM `achievement_details` LIMIT 1
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.005ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "achievement_details" AND (sql LIKE "%CONSTRAINT \"fk_achievement_details_user\" %" OR sql LIKE "%CONSTRAINT fk_achievement_details_user %" OR sql LIKE "%CONSTRAINT `fk_achievement_details_user`%" OR sql LIKE "%CONSTRAINT [fk_achievement_details_user]%" OR sql LIKE "%CONSTRAINT 	fk_achievement_details_user	%")
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.017ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "table" AND tbl_name = "achievement_details" AND (sql LIKE "%CONSTRAINT \"fk_achievement_details_user\" %" OR sql LIKE "%CONSTRAINT fk_achievement_details_user %" OR sql LIKE "%CONSTRAINT `fk_achievement_details_user`%" OR sql LIKE "%CONSTRAINT [fk_achievement_details_user]%" OR sql LIKE "%CONSTRAINT 	fk_achievement_details_user	%")
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
-[0m[33m[0.004ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "achievement_details" AND name = "idx_achievement_details_deleted_at"
-2025/10/17 23:55:52 🔄 Initializing mock data...
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:130
+[0m[33m[0.006ms] [34;1m[rows:-][0m SELECT count(*) FROM sqlite_master WHERE type = "index" AND tbl_name = "achievement_details" AND name = "idx_achievement_details_deleted_at"
+2025/11/02 20:34:13 🔄 Initializing mock data...
 
-2025/10/17 23:55:52 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:159
+2025/11/02 20:34:13 [32m/Users/gaojie/Desktop/gymates/backend/config/config.go:159
 [0m[33m[0.022ms] [34;1m[rows:1][0m SELECT count(*) FROM `users` WHERE `users`.`deleted_at` IS NULL
-2025/10/17 23:55:52 📊 Mock data already exists, skipping initialization
-2025/10/17 23:55:52 ✅ Database connected successfully: sqlite
+2025/11/02 20:34:13 📊 Mock data already exists, skipping initialization
+2025/11/02 20:34:13 ✅ Database connected successfully: sqlite
+2025/11/02 20:34:13 🤖 AI Services initialized
 [GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
  - using env:	export GIN_MODE=release
  - using code:	gin.SetMode(gin.ReleaseMode)
@@ -327,11 +376,26 @@
 [GIN-debug] DELETE /api/home/delete/:id      --> gymates-backend/controllers.(*HomeController).DeleteHomeItem-fm (8 handlers)
 [GIN-debug] GET    /api/training/plans       --> gymates-backend/controllers.(*TrainingController).GetTrainingPlans-fm (8 handlers)
 [GIN-debug] GET    /api/training/plans/:id   --> gymates-backend/controllers.(*TrainingController).GetTrainingPlan-fm (8 handlers)
+[GIN-debug] GET    /api/training/exercises/search --> gymates-backend/controllers.(*TrainingController).SearchExercises-fm (7 handlers)
+[GIN-debug] GET    /api/training/weekly-plans --> gymates-backend/controllers.(*WeeklyTrainingPlanController).GetWeeklyTrainingPlans-fm (8 handlers)
+[GIN-debug] GET    /api/training/weekly-plans/:id --> gymates-backend/controllers.(*WeeklyTrainingPlanController).GetWeeklyTrainingPlan-fm (8 handlers)
+[GIN-debug] GET    /api/training/plan        --> gymates-backend/controllers.(*TrainingPlanController).GetTrainingPlan-fm (7 handlers)
+[GIN-debug] POST   /api/training/plan/update --> gymates-backend/controllers.(*TrainingPlanController).UpdateTrainingPlan-fm (7 handlers)
+[GIN-debug] GET    /api/training/ai/recommend --> gymates-backend/controllers.(*AIRecommendationController).GetAIRecommendation-fm (7 handlers)
+[GIN-debug] GET    /api/training/ai/training --> gymates-backend/controllers.(*AITrainingController).GetAIRecommendation-fm (7 handlers)
+[GIN-debug] POST   /api/training/ai/preferences --> gymates-backend/controllers.(*AITrainingController).SaveTrainingPreferences-fm (7 handlers)
+[GIN-debug] POST   /api/training/ai/chat     --> gymates-backend/controllers.(*AITrainingController).AIChat-fm (7 handlers)
+[GIN-debug] POST   /api/training/ai/session  --> gymates-backend/controllers.(*AITrainingController).SaveTrainingSession-fm (7 handlers)
 [GIN-debug] POST   /api/training/plans       --> gymates-backend/controllers.(*TrainingController).CreateTrainingPlan-fm (8 handlers)
 [GIN-debug] POST   /api/training/sessions    --> gymates-backend/controllers.(*TrainingController).StartWorkoutSession-fm (8 handlers)
 [GIN-debug] PUT    /api/training/sessions/:id/progress --> gymates-backend/controllers.(*TrainingController).UpdateWorkoutProgress-fm (8 handlers)
 [GIN-debug] POST   /api/training/sessions/:id/complete --> gymates-backend/controllers.(*TrainingController).CompleteWorkoutSession-fm (8 handlers)
 [GIN-debug] GET    /api/training/history     --> gymates-backend/controllers.(*TrainingController).GetWorkoutHistory-fm (8 handlers)
+[GIN-debug] POST   /api/training/weekly-plans --> gymates-backend/controllers.(*WeeklyTrainingPlanController).CreateWeeklyTrainingPlan-fm (8 handlers)
+[GIN-debug] PUT    /api/training/weekly-plans/:id --> gymates-backend/controllers.(*WeeklyTrainingPlanController).UpdateWeeklyTrainingPlan-fm (8 handlers)
+[GIN-debug] DELETE /api/training/weekly-plans/:id --> gymates-backend/controllers.(*WeeklyTrainingPlanController).DeleteWeeklyTrainingPlan-fm (8 handlers)
+[GIN-debug] GET    /api/training/today       --> gymates-backend/controllers.(*WeeklyTrainingPlanController).GetTodayTraining-fm (8 handlers)
+[GIN-debug] POST   /api/training/ai-recommendations --> gymates-backend/controllers.(*WeeklyTrainingPlanController).GetAIRecommendations-fm (8 handlers)
 [GIN-debug] GET    /api/community/posts      --> gymates-backend/controllers.(*CommunityController).GetPosts-fm (8 handlers)
 [GIN-debug] GET    /api/community/posts/:id  --> gymates-backend/controllers.(*CommunityController).GetPost-fm (8 handlers)
 [GIN-debug] GET    /api/community/posts/:id/comments --> gymates-backend/controllers.(*CommunityController).GetComments-fm (8 handlers)
@@ -341,6 +405,7 @@
 [GIN-debug] DELETE /api/community/posts/:id/like --> gymates-backend/controllers.(*CommunityController).UnlikePost-fm (8 handlers)
 [GIN-debug] POST   /api/community/posts/:id/comments --> gymates-backend/controllers.(*CommunityController).CreateComment-fm (8 handlers)
 [GIN-debug] GET    /api/mates                --> gymates-backend/controllers.(*MatesController).GetMates-fm (8 handlers)
+[GIN-debug] GET    /api/mates/recommendations --> gymates-backend/controllers.(*MatesController).GetMateRecommendations-fm (8 handlers)
 [GIN-debug] GET    /api/mates/requests       --> gymates-backend/controllers.(*MatesController).GetMateRequests-fm (8 handlers)
 [GIN-debug] POST   /api/mates/requests       --> gymates-backend/controllers.(*MatesController).SendMateRequest-fm (8 handlers)
 [GIN-debug] POST   /api/mates/requests/:id/accept --> gymates-backend/controllers.(*MatesController).AcceptMateRequest-fm (8 handlers)
@@ -355,6 +420,12 @@
 [GIN-debug] POST   /api/messages/chats/:id/messages --> gymates-backend/controllers.(*MessagesController).SendMessage-fm (8 handlers)
 [GIN-debug] PUT    /api/messages/chats/:id/read --> gymates-backend/controllers.(*MessagesController).MarkAsRead-fm (8 handlers)
 [GIN-debug] GET    /api/messages/unread      --> gymates-backend/controllers.(*MessagesController).GetUnreadCount-fm (8 handlers)
+[GIN-debug] GET    /api/notifications        --> gymates-backend/controllers.(*NotificationsController).GetNotifications-fm (8 handlers)
+[GIN-debug] GET    /api/notifications/unread-count --> gymates-backend/controllers.(*NotificationsController).GetUnreadNotificationsCount-fm (8 handlers)
+[GIN-debug] POST   /api/notifications/:id/read --> gymates-backend/controllers.(*NotificationsController).MarkNotificationAsRead-fm (8 handlers)
+[GIN-debug] POST   /api/notifications/read-all --> gymates-backend/controllers.(*NotificationsController).MarkAllNotificationsAsRead-fm (8 handlers)
+[GIN-debug] DELETE /api/notifications/:id    --> gymates-backend/controllers.(*NotificationsController).DeleteNotification-fm (8 handlers)
+[GIN-debug] POST   /api/notifications        --> gymates-backend/controllers.(*NotificationsController).CreateNotification-fm (8 handlers)
 [GIN-debug] GET    /api/profile/me           --> gymates-backend/controllers.(*AuthController).GetCurrentUser-fm (8 handlers)
 [GIN-debug] PUT    /api/profile/update       --> gymates-backend/controllers.(*AuthController).UpdateProfile-fm (8 handlers)
 [GIN-debug] GET    /api/profile/stats        --> gymates-backend/controllers.(*AuthController).GetUserStats-fm (8 handlers)
@@ -402,39 +473,727 @@
 [GIN-debug] POST   /api/mates-detail/submit  --> gymates-backend/controllers.(*DetailController).SubmitDetail-fm (8 handlers)
 [GIN-debug] PUT    /api/mates-detail/update/:id --> gymates-backend/controllers.(*DetailController).UpdateDetail-fm (8 handlers)
 [GIN-debug] DELETE /api/mates-detail/delete/:id --> gymates-backend/controllers.(*DetailController).DeleteDetail-fm (8 handlers)
-2025/10/17 23:55:52 🚀 Gymates Backend Server Starting...
-2025/10/17 23:55:52 📍 Host: 0.0.0.0
-2025/10/17 23:55:52 🔌 Port: 8080
-2025/10/17 23:55:52 🌐 API Base URL: http://0.0.0.0:8080/api
-2025/10/17 23:55:52 🏥 Health Check: http://0.0.0.0:8080/health
-2025/10/17 23:55:52 📚 API Docs: http://0.0.0.0:8080/api
-2025/10/17 23:55:52 🗄️  Database: sqlite
-2025/10/17 23:55:52 🔧 Environment: debug
-2025/10/17 23:55:52 =====================================
-2025/10/17 23:55:52 Failed to start server:listen tcp 0.0.0.0:8080: bind: address already in use
-exit status 1
-5/10/17 23:55:52] ::1 GET 200 2.957083ms /health 
-[2025/10/18 00:11:25] ::1 GET 200 518.5µs /health 
-[2025/10/18 00:12:23] ::1 GET 200 36.875µs /health 
-[2025/10/18 00:12:49] ::1 GET 200 49.875µs /health 
-[2025/10/18 00:15:32] ::1 GET 200 26.291µs /health 
-[2025/10/18 00:16:05] ::1 GET 200 40.125µs /health 
-[2025/10/18 00:32:06] ::1 GET 200 1.433167ms /health 
-[2025/10/18 00:53:45] ::1 GET 404 3.053125ms / 
-[2025/10/18 00:53:48] ::1 GET 404 14.042µs / 
-[2025/10/18 00:53:51] ::1 GET 404 85.875µs / 
-[2025/10/18 00:55:23] ::1 GET 404 54.125µs / 
-[2025/10/18 00:57:45] ::1 GET 404 1.396333ms / 
-[2025/10/18 16:51:41] ::1 HEAD 404 2.014042ms / 
-[2025/10/18 16:54:18] ::1 GET 200 3.797084ms /health 
-[2025/10/18 16:54:33] ::1 GET 200 33.25µs /health 
-[2025/10/18 16:54:34] ::1 GET 200 632.25µs /health 
-[2025/10/18 16:54:47] ::1 GET 200 350.166µs /health 
-[2025/10/19 15:26:25] ::1 GET 200 4.358584ms /health 
-[2025/10/19 15:26:25] ::1 GET 404 6.417µs /api/training/plan?user_id=1 
-[2025/10/19 15:26:25] ::1 POST 404 475.125µs /api/training/plan/update 
-[2025/10/19 15:26:25] ::1 GET 404 6.625µs /api/training/ai/recommend?user_id=1&day=Monday 
-[2025/10/19 15:26:25] ::1 GET 404 11.417µs /api/training/exercises 
-[2025/10/19 15:26:25] ::1 GET 404 15.959µs /api/training/exercises/search?q=bench 
-[2025/10/19 15:26:30] ::1 GET 200 1.401917ms /health 
-[2025/10/19 15:26:31] ::1 GET 404 6.083µs /api/training/exercises 
+[GIN-debug] POST   /api/ai/coach             --> gymates-backend/controllers.(*AICoachController).CoachChat-fm (8 handlers)
+[GIN-debug] POST   /api/ai/progress          --> gymates-backend/controllers.(*AICoachController).TrainingProgress-fm (8 handlers)
+[GIN-debug] GET    /api/ai/status            --> gymates-backend/controllers.(*AICoachController).GetServiceStatus-fm (7 handlers)
+[GIN-debug] POST   /api/ai/switch-provider   --> gymates-backend/controllers.(*AICoachController).SwitchProvider-fm (7 handlers)
+[GIN-debug] POST   /api/ai/chat              --> gymates-backend/controllers.(*AIChatController).Chat-fm (8 handlers)
+[GIN-debug] POST   /api/ai/fitness-advice    --> gymates-backend/controllers.(*AIChatController).GetFitnessAdvice-fm (8 handlers)
+[GIN-debug] POST   /api/ai/workout-plan      --> gymates-backend/controllers.(*AIChatController).GenerateWorkoutPlan-fm (8 handlers)
+[GIN-debug] POST   /api/ai/analyze-form      --> gymates-backend/controllers.(*AIChatController).AnalyzeWorkoutForm-fm (8 handlers)
+[GIN-debug] POST   /api/ai/nutrition-advice  --> gymates-backend/controllers.(*AIChatController).GetNutritionAdvice-fm (8 handlers)
+[GIN-debug] POST   /api/map/geocode          --> gymates-backend/controllers.(*MapController).GeocodeAddress-fm (8 handlers)
+[GIN-debug] POST   /api/map/gyms/nearby      --> gymates-backend/controllers.(*MapController).SearchNearbyGyms-fm (8 handlers)
+[GIN-debug] POST   /api/map/distance         --> gymates-backend/controllers.(*MapController).CalculateDistance-fm (8 handlers)
+[GIN-debug] GET    /api/map/gyms/:id         --> gymates-backend/controllers.(*MapController).GetGymDetails-fm (8 handlers)
+[GIN-debug] GET    /api/map/gyms/city        --> gymates-backend/controllers.(*MapController).SearchGymsByCity-fm (8 handlers)
+[GIN-debug] GET    /api/ws/connect           --> gymates-backend/controllers.(*WebSocketController).HandleWebSocket-fm (8 handlers)
+[GIN-debug] GET    /api/ws/online-users      --> gymates-backend/controllers.(*WebSocketController).GetOnlineUsers-fm (8 handlers)
+[GIN-debug] GET    /api/ws/user/:user_id/online --> gymates-backend/controllers.(*WebSocketController).CheckUserOnline-fm (8 handlers)
+2025/11/02 20:34:13 🚀 Gymates Backend Server Starting...
+2025/11/02 20:34:13 📍 Host: 0.0.0.0
+2025/11/02 20:34:13 🔌 Port: 8080
+2025/11/02 20:34:13 🌐 API Base URL: http://0.0.0.0:8080/api
+2025/11/02 20:34:13 🏥 Health Check: http://0.0.0.0:8080/health
+2025/11/02 20:34:13 📚 API Docs: http://0.0.0.0:8080/api
+2025/11/02 20:34:13 🗄️  Database: sqlite
+2025/11/02 20:34:13 🔧 Environment: debug
+2025/11/02 20:34:13 =====================================
+[2025/11/02 20:34:15] 127.0.0.1 GET 401 901.792µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:34:16] ::1 GET 200 62.5µs /health 
+
+2025/11/02 20:34:17 [32m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:37
+[0m[33m[0.593ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE email = "xiaowang@gymates.com" AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:34:17] ::1 POST 401 54.013667ms /api/auth/login 
+[2025/11/02 20:34:19] 127.0.0.1 GET 401 22.834µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:34:23] 127.0.0.1 GET 401 25.167µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:34:27] 127.0.0.1 GET 401 36.833µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:34:31] 127.0.0.1 GET 401 25.708µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:34:35] 127.0.0.1 GET 401 23.041µs /api/ws/connect?token=dummy_token 
+
+2025/11/02 20:34:38 [32m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:37
+[0m[33m[0.142ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE email = "xiaowang@gymates.com" AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:34:38] ::1 POST 401 48.789083ms /api/auth/login 
+
+2025/11/02 20:34:38 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:60
+[0m[33m[0.114ms] [34;1m[rows:1][0m SELECT count(*) FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL
+
+2025/11/02 20:34:38 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:65
+[0m[33m[0.117ms] [34;1m[rows:5][0m SELECT * FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL ORDER BY likes DESC, created_at DESC LIMIT 5
+[2025/11/02 20:34:38] ::1 GET 200 379.541µs /api/community/posts?tab=recommended&page=1&limit=5 
+
+2025/11/02 20:34:38 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:40
+[0m[33m[0.108ms] [34;1m[rows:1][0m SELECT count(*) FROM `training_plans` WHERE is_public = true AND `training_plans`.`deleted_at` IS NULL
+
+2025/11/02 20:34:38 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:45
+[0m[33m[0.071ms] [34;1m[rows:2][0m SELECT * FROM `exercises` WHERE `exercises`.`training_plan_id` IN (30,29,28,27,26,25,24,23,22,21) AND `exercises`.`deleted_at` IS NULL
+
+2025/11/02 20:34:38 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:45
+[0m[33m[0.251ms] [34;1m[rows:10][0m SELECT * FROM `training_plans` WHERE is_public = true AND `training_plans`.`deleted_at` IS NULL ORDER BY created_at DESC LIMIT 10
+[2025/11/02 20:34:38] ::1 GET 200 577.833µs /api/training/plans 
+[2025/11/02 20:34:39] 127.0.0.1 GET 401 18.917µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:34:43] 127.0.0.1 GET 401 21.875µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:34:47] 127.0.0.1 GET 401 23.583µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:34:51] 127.0.0.1 GET 401 23.292µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:34:55] 127.0.0.1 GET 401 85.041µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:34:59] 127.0.0.1 GET 401 23.125µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:35:03] 127.0.0.1 GET 401 19.625µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:35:07] 127.0.0.1 GET 401 33.209µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:35:11] 127.0.0.1 GET 401 24.167µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:35:15] 127.0.0.1 GET 401 39.834µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:35:19] 127.0.0.1 GET 401 61.375µs /api/ws/connect?token=dummy_token 
+
+2025/11/02 20:35:23 [32m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:37
+[0m[33m[0.382ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE email = "xiaowang@gymates.com" AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:35:23] ::1 POST 200 49.2055ms /api/auth/login 
+
+2025/11/02 20:35:23 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:60
+[0m[33m[0.126ms] [34;1m[rows:1][0m SELECT count(*) FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL
+
+2025/11/02 20:35:23 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:65
+[0m[33m[0.117ms] [34;1m[rows:5][0m SELECT * FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL ORDER BY likes DESC, created_at DESC LIMIT 5
+[2025/11/02 20:35:23] ::1 GET 200 340.209µs /api/community/posts?tab=recommended&page=1&limit=5 
+
+2025/11/02 20:35:23 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:40
+[0m[33m[0.106ms] [34;1m[rows:1][0m SELECT count(*) FROM `training_plans` WHERE is_public = true AND `training_plans`.`deleted_at` IS NULL
+
+2025/11/02 20:35:23 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:45
+[0m[33m[0.088ms] [34;1m[rows:2][0m SELECT * FROM `exercises` WHERE `exercises`.`training_plan_id` IN (41,40,39,38,37,36,35,34,33,32) AND `exercises`.`deleted_at` IS NULL
+
+2025/11/02 20:35:23 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:45
+[0m[33m[0.038ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 2 AND `users`.`deleted_at` IS NULL
+
+2025/11/02 20:35:23 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:45
+[0m[33m[0.343ms] [34;1m[rows:10][0m SELECT * FROM `training_plans` WHERE is_public = true AND `training_plans`.`deleted_at` IS NULL ORDER BY created_at DESC LIMIT 10
+[2025/11/02 20:35:23] ::1 GET 200 601.75µs /api/training/plans 
+[2025/11/02 20:35:23] 127.0.0.1 GET 401 41.042µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:35:27] 127.0.0.1 GET 401 55.416µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:35:31] 127.0.0.1 GET 401 40µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:35:35] 127.0.0.1 GET 401 37.916µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:35:39] 127.0.0.1 GET 401 47.791µs /api/ws/connect?token=dummy_token 
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:37
+[0m[33m[0.143ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE email = "xiaowang@gymates.com" AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:35:43] ::1 POST 200 58.1665ms /api/auth/login 
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/middleware/auth.go:150
+[0m[33m[0.119ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 2 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:40
+[0m[33m[0.030ms] [34;1m[rows:1][0m SELECT count(*) FROM `training_plans` WHERE is_public = true AND `training_plans`.`deleted_at` IS NULL
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:45
+[0m[33m[0.114ms] [34;1m[rows:2][0m SELECT * FROM `exercises` WHERE `exercises`.`training_plan_id` IN (41,40,39,38,37,36,35,34,33,32) AND `exercises`.`deleted_at` IS NULL
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:45
+[0m[33m[0.068ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 2 AND `users`.`deleted_at` IS NULL
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:45
+[0m[33m[0.593ms] [34;1m[rows:10][0m SELECT * FROM `training_plans` WHERE is_public = true AND `training_plans`.`deleted_at` IS NULL ORDER BY created_at DESC LIMIT 10
+[2025/11/02 20:35:43] ::1 GET 200 1.210541ms /api/training/plans 
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/middleware/auth.go:150
+[0m[33m[0.098ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 2 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:60
+[0m[33m[0.030ms] [34;1m[rows:1][0m SELECT count(*) FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:65
+[0m[33m[0.087ms] [34;1m[rows:10][0m SELECT * FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL ORDER BY likes DESC, created_at DESC LIMIT 10
+[2025/11/02 20:35:43] ::1 GET 200 356.375µs /api/community/posts?tab=recommended&page=1&limit=10 
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/middleware/auth.go:150
+[0m[33m[0.112ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 2 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:60
+[0m[33m[0.033ms] [34;1m[rows:1][0m SELECT count(*) FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:65
+[0m[33m[0.062ms] [34;1m[rows:1][0m SELECT * FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL ORDER BY likes DESC, created_at DESC LIMIT 1
+[2025/11/02 20:35:43] ::1 GET 200 370.333µs /api/community/posts?tab=recommended&page=1&limit=1 
+[GIN-debug] redirecting request 301: /api/community/posts --> /api/community/posts
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/middleware/auth.go:110
+[0m[33m[0.096ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 2 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:35:43] ::1 GET 200 185.666µs /api/auth/me 
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/middleware/auth.go:110
+[0m[33m[0.108ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 2 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/controllers/mates_controller.go:50
+[0m[33m[0.037ms] [34;1m[rows:1][0m SELECT count(*) FROM `users` JOIN mates ON users.id = mates.mate_id WHERE mates.user_id = 2 AND mates.status = "accepted"
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/controllers/mates_controller.go:54
+[0m[33m[0.043ms] [34;1m[rows:0][0m SELECT `users`.`id`,`users`.`name`,`users`.`email`,`users`.`password`,`users`.`avatar`,`users`.`bio`,`users`.`location`,`users`.`latitude`,`users`.`longitude`,`users`.`age`,`users`.`gender`,`users`.`height`,`users`.`weight`,`users`.`goal`,`users`.`experience`,`users`.`preferred_time`,`users`.`training_types`,`users`.`looking_for_mate`,`users`.`created_at`,`users`.`updated_at`,`users`.`deleted_at` FROM `users` JOIN mates ON users.id = mates.mate_id WHERE (mates.user_id = 2 AND mates.status = "accepted") AND `users`.`deleted_at` IS NULL LIMIT 10
+[2025/11/02 20:35:43] ::1 GET 200 332.208µs /api/mates 
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/middleware/auth.go:110
+[0m[33m[0.093ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 2 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:35:43] ::1 GET 500 169.042µs /api/notifications 
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/middleware/auth.go:110
+[0m[33m[0.114ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 2 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:507
+[0m[33m[0.046ms] [34;1m[rows:1][0m SELECT count(*) FROM `workout_sessions` WHERE user_id = 2 AND `workout_sessions`.`deleted_at` IS NULL
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:513
+[0m[33m[0.054ms] [34;1m[rows:7][0m SELECT * FROM `training_plans` WHERE `training_plans`.`id` IN (38,37,36,35,34,33,32) AND `training_plans`.`deleted_at` IS NULL
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:513
+[0m[33m[0.033ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 2 AND `users`.`deleted_at` IS NULL
+
+2025/11/02 20:35:43 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:513
+[0m[33m[0.219ms] [34;1m[rows:7][0m SELECT * FROM `workout_sessions` WHERE user_id = 2 AND `workout_sessions`.`deleted_at` IS NULL ORDER BY created_at DESC LIMIT 10
+[2025/11/02 20:35:43] ::1 GET 200 585.042µs /api/training/history?page=1&limit=10 
+[2025/11/02 20:35:43] 127.0.0.1 GET 401 24.125µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:35:47] 127.0.0.1 GET 401 21.459µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:35:51] 127.0.0.1 GET 401 25µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:35:55] 127.0.0.1 GET 401 30.625µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:35:59] 127.0.0.1 GET 401 26.417µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:36:03] 127.0.0.1 GET 401 29.459µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:36:07] 127.0.0.1 GET 401 24.375µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:36:11] 127.0.0.1 GET 401 62.459µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:36:15] 127.0.0.1 GET 401 31.5µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:36:19] 127.0.0.1 GET 401 32.084µs /api/ws/connect?token=dummy_token 
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:37
+[0m[33m[0.280ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE email = "xiaowang@gymates.com" AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:36:20] ::1 POST 200 54.377791ms /api/auth/login 
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/middleware/auth.go:150
+[0m[33m[0.145ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 4 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:40
+[0m[33m[0.045ms] [34;1m[rows:1][0m SELECT count(*) FROM `training_plans` WHERE is_public = true AND `training_plans`.`deleted_at` IS NULL
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:45
+[0m[33m[0.092ms] [34;1m[rows:2][0m SELECT * FROM `exercises` WHERE `exercises`.`training_plan_id` IN (63,62,61,60,59,58,57,56,55,54) AND `exercises`.`deleted_at` IS NULL
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:45
+[0m[33m[0.095ms] [34;1m[rows:5][0m SELECT * FROM `users` WHERE `users`.`id` IN (9,7,6,5,4) AND `users`.`deleted_at` IS NULL
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:45
+[0m[33m[0.456ms] [34;1m[rows:10][0m SELECT * FROM `training_plans` WHERE is_public = true AND `training_plans`.`deleted_at` IS NULL ORDER BY created_at DESC LIMIT 10
+[2025/11/02 20:36:20] ::1 GET 200 877.417µs /api/training/plans 
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/middleware/auth.go:150
+[0m[33m[0.123ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 4 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:60
+[0m[33m[0.048ms] [34;1m[rows:1][0m SELECT count(*) FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:65
+[0m[33m[0.034ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 9 AND `users`.`deleted_at` IS NULL
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:65
+[0m[33m[0.172ms] [34;1m[rows:10][0m SELECT * FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL ORDER BY likes DESC, created_at DESC LIMIT 10
+[2025/11/02 20:36:20] ::1 GET 200 528.833µs /api/community/posts?tab=recommended&page=1&limit=10 
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/middleware/auth.go:150
+[0m[33m[0.118ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 4 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:60
+[0m[33m[0.041ms] [34;1m[rows:1][0m SELECT count(*) FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:65
+[0m[33m[0.068ms] [34;1m[rows:1][0m SELECT * FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL ORDER BY likes DESC, created_at DESC LIMIT 1
+[2025/11/02 20:36:20] ::1 GET 200 403.291µs /api/community/posts?tab=recommended&page=1&limit=1 
+[GIN-debug] redirecting request 301: /api/community/posts --> /api/community/posts
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/middleware/auth.go:110
+[0m[33m[0.113ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 4 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:36:20] ::1 GET 200 202.375µs /api/auth/me 
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/middleware/auth.go:110
+[0m[33m[0.117ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 4 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/mates_controller.go:50
+[0m[33m[0.041ms] [34;1m[rows:1][0m SELECT count(*) FROM `users` JOIN mates ON users.id = mates.mate_id WHERE mates.user_id = 4 AND mates.status = "accepted"
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/mates_controller.go:54
+[0m[33m[0.081ms] [34;1m[rows:3][0m SELECT `users`.`id`,`users`.`name`,`users`.`email`,`users`.`password`,`users`.`avatar`,`users`.`bio`,`users`.`location`,`users`.`latitude`,`users`.`longitude`,`users`.`age`,`users`.`gender`,`users`.`height`,`users`.`weight`,`users`.`goal`,`users`.`experience`,`users`.`preferred_time`,`users`.`training_types`,`users`.`looking_for_mate`,`users`.`created_at`,`users`.`updated_at`,`users`.`deleted_at` FROM `users` JOIN mates ON users.id = mates.mate_id WHERE (mates.user_id = 4 AND mates.status = "accepted") AND `users`.`deleted_at` IS NULL LIMIT 10
+[2025/11/02 20:36:20] ::1 GET 200 363.583µs /api/mates 
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/middleware/auth.go:110
+[0m[33m[0.118ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 4 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:36:20] ::1 GET 500 211.834µs /api/notifications 
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/middleware/auth.go:110
+[0m[33m[0.125ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 4 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:507
+[0m[33m[0.056ms] [34;1m[rows:1][0m SELECT count(*) FROM `workout_sessions` WHERE user_id = 4 AND `workout_sessions`.`deleted_at` IS NULL
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:513
+[0m[33m[0.074ms] [34;1m[rows:7][0m SELECT * FROM `training_plans` WHERE `training_plans`.`id` IN (60,59,58,57,56,55,54) AND `training_plans`.`deleted_at` IS NULL
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:513
+[0m[33m[0.046ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 4 AND `users`.`deleted_at` IS NULL
+
+2025/11/02 20:36:20 [32m/Users/gaojie/Desktop/gymates/backend/controllers/training_controller.go:513
+[0m[33m[0.285ms] [34;1m[rows:7][0m SELECT * FROM `workout_sessions` WHERE user_id = 4 AND `workout_sessions`.`deleted_at` IS NULL ORDER BY created_at DESC LIMIT 10
+[2025/11/02 20:36:20] ::1 GET 200 636.042µs /api/training/history?page=1&limit=10 
+[2025/11/02 20:36:23] 127.0.0.1 GET 401 24.709µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:36:27] 127.0.0.1 GET 401 59.75µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:36:31] 127.0.0.1 GET 401 27.708µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:36:35] 127.0.0.1 GET 401 48.5µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:36:39] 127.0.0.1 GET 401 47.625µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:36:43] 127.0.0.1 GET 401 48.958µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:36:47] 127.0.0.1 GET 401 47.5µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:36:51] 127.0.0.1 GET 401 36.625µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:36:55] 127.0.0.1 GET 401 46.458µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:36:59] 127.0.0.1 GET 401 20.625µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:37:03] 127.0.0.1 GET 401 36.958µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:37:07] 127.0.0.1 GET 401 22.208µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:37:11] 127.0.0.1 GET 401 39.167µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:37:15] 127.0.0.1 GET 401 50.209µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:37:19] 127.0.0.1 GET 401 56.042µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:37:23] 127.0.0.1 GET 401 66.125µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:37:27] 127.0.0.1 GET 401 21.542µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:37:31] 127.0.0.1 GET 401 21.625µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:37:35] 127.0.0.1 GET 401 47.541µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:37:39] 127.0.0.1 GET 401 22.292µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:37:43] 127.0.0.1 GET 401 20.416µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:37:47] 127.0.0.1 GET 401 23.75µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:37:51] 127.0.0.1 GET 401 22.917µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:37:55] 127.0.0.1 GET 401 26.291µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:37:59] 127.0.0.1 GET 401 28.208µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:38:03] 127.0.0.1 GET 401 45.209µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:38:07] 127.0.0.1 GET 401 28.417µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:38:11] 127.0.0.1 GET 401 22.042µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:38:15] 127.0.0.1 GET 401 42.917µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:38:19] 127.0.0.1 GET 401 53.208µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:38:23] 127.0.0.1 GET 401 32.458µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:38:27] 127.0.0.1 GET 401 40.958µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:38:31] 127.0.0.1 GET 401 25.5µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:38:35] 127.0.0.1 GET 401 51.959µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:38:39] 127.0.0.1 GET 401 25.125µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:38:43] 127.0.0.1 GET 401 69.458µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:38:48] 127.0.0.1 GET 401 38.084µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:38:52] 127.0.0.1 GET 401 25.417µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:38:56] 127.0.0.1 GET 401 48.625µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:39:00] 127.0.0.1 GET 401 38.125µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:39:31] ::1 GET 200 107.583µs /health 
+[2025/11/02 20:58:09] 127.0.0.1 GET 401 61.25µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:58:10] 127.0.0.1 GET 404 16.75µs /community/posts?tab=recommend&page=1&limit=10 
+[2025/11/02 20:58:10] 127.0.0.1 GET 401 61.5µs /api/mates/recommendations?max_distance=5000&page=1&limit=20 
+[2025/11/02 20:58:10] 127.0.0.1 GET 401 51.084µs /api/messages/chats?page=1&limit=20 
+[2025/11/02 20:58:10] 127.0.0.1 GET 401 177.541µs /api/notifications?page=1&limit=20 
+[2025/11/02 20:58:10] 127.0.0.1 GET 401 50.541µs /api/messages/unread 
+
+2025/11/02 20:58:10 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.506ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:58:10] 127.0.0.1 GET 404 674.833µs /api/users/1 
+[2025/11/02 20:58:10] 127.0.0.1 GET 404 3.417µs /api/users/1/training/stats 
+[2025/11/02 20:58:10] 127.0.0.1 GET 404 4.375µs /api/users/1/achievements 
+[2025/11/02 20:58:10] 127.0.0.1 GET 404 3µs /api/users/1/records 
+[2025/11/02 20:58:10] 127.0.0.1 GET 404 3µs /api/users/1/social/stats 
+[2025/11/02 20:58:13] 127.0.0.1 GET 401 25.458µs /api/ws/connect?token=dummy_token 
+
+2025/11/02 20:58:16 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.153ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:58:16] 127.0.0.1 GET 404 250.792µs /api/users/1 
+[2025/11/02 20:58:16] 127.0.0.1 GET 404 28.208µs /api/users/1/training/stats 
+[2025/11/02 20:58:16] 127.0.0.1 GET 404 3.5µs /api/users/1/achievements 
+[2025/11/02 20:58:16] 127.0.0.1 GET 404 10.833µs /api/users/1/records 
+[2025/11/02 20:58:16] 127.0.0.1 GET 404 5.875µs /api/users/1/social/stats 
+[2025/11/02 20:58:18] 127.0.0.1 GET 401 25.25µs /api/ws/connect?token=dummy_token 
+
+2025/11/02 20:58:18 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.126ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:58:18] 127.0.0.1 GET 404 215.125µs /api/users/1 
+[2025/11/02 20:58:18] 127.0.0.1 GET 404 1.416µs /api/users/1/training/stats 
+[2025/11/02 20:58:18] 127.0.0.1 GET 404 3.25µs /api/users/1/achievements 
+[2025/11/02 20:58:18] 127.0.0.1 GET 404 3.042µs /api/users/1/records 
+[2025/11/02 20:58:18] 127.0.0.1 GET 404 9.083µs /api/users/1/social/stats 
+
+2025/11/02 20:58:18 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.132ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:58:18] 127.0.0.1 GET 404 216.166µs /api/users/1 
+[2025/11/02 20:58:18] 127.0.0.1 GET 404 4.375µs /api/users/1/training/stats 
+[2025/11/02 20:58:18] 127.0.0.1 GET 404 4.5µs /api/users/1/achievements 
+[2025/11/02 20:58:18] 127.0.0.1 GET 404 3.167µs /api/users/1/records 
+[2025/11/02 20:58:18] 127.0.0.1 GET 404 4.083µs /api/users/1/social/stats 
+
+2025/11/02 20:58:19 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.143ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:58:19] 127.0.0.1 GET 404 234.292µs /api/users/1 
+[2025/11/02 20:58:19] 127.0.0.1 GET 404 1.709µs /api/users/1/training/stats 
+[2025/11/02 20:58:19] 127.0.0.1 GET 404 3.167µs /api/users/1/achievements 
+[2025/11/02 20:58:19] 127.0.0.1 GET 404 21.959µs /api/users/1/records 
+[2025/11/02 20:58:19] 127.0.0.1 GET 404 26.792µs /api/users/1/social/stats 
+
+2025/11/02 20:58:19 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.134ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:58:19] 127.0.0.1 GET 404 213.542µs /api/users/1 
+[2025/11/02 20:58:19] 127.0.0.1 GET 404 2.042µs /api/users/1/training/stats 
+[2025/11/02 20:58:19] 127.0.0.1 GET 404 3.959µs /api/users/1/achievements 
+[2025/11/02 20:58:19] 127.0.0.1 GET 404 3.125µs /api/users/1/records 
+[2025/11/02 20:58:19] 127.0.0.1 GET 404 3.334µs /api/users/1/social/stats 
+[2025/11/02 20:58:22] 127.0.0.1 GET 401 26.833µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:58:26] 127.0.0.1 GET 401 27.167µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:58:30] 127.0.0.1 GET 401 24.208µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:58:34] 127.0.0.1 GET 401 21.459µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:58:38] 127.0.0.1 GET 401 30.125µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:58:42] 127.0.0.1 GET 401 22.5µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:58:46] 127.0.0.1 GET 401 22.625µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:58:50] 127.0.0.1 GET 401 37.042µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:58:54] 127.0.0.1 GET 401 23.667µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:58:57] 127.0.0.1 GET 404 4.333µs /community/posts?tab=nearby&page=1&limit=10 
+[2025/11/02 20:58:58] 127.0.0.1 GET 401 21.958µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:59:00] 127.0.0.1 GET 404 3.875µs /community/posts?tab=gym&page=1&limit=10 
+[2025/11/02 20:59:01] 127.0.0.1 GET 404 4.667µs /community/posts?tab=nearby&page=1&limit=10 
+[2025/11/02 20:59:02] 127.0.0.1 GET 401 23.25µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:59:02] 127.0.0.1 GET 404 11.917µs /community/posts?tab=recommend&page=1&limit=10 
+[2025/11/02 20:59:02] 127.0.0.1 GET 404 4.083µs /community/posts?tab=nearby&page=1&limit=10 
+[2025/11/02 20:59:03] 127.0.0.1 GET 404 4.042µs /community/posts?tab=gym&page=1&limit=10 
+[2025/11/02 20:59:04] 127.0.0.1 GET 404 3.875µs /community/posts?tab=nearby&page=1&limit=10 
+[2025/11/02 20:59:05] 127.0.0.1 GET 404 3.875µs /community/posts?tab=gym&page=1&limit=10 
+[2025/11/02 20:59:06] 127.0.0.1 GET 401 31.458µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:59:10] 127.0.0.1 GET 401 24.959µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:59:14] 127.0.0.1 GET 401 26.208µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:59:18] 127.0.0.1 GET 401 23.5µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:59:22] 127.0.0.1 GET 401 39.875µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:59:26] 127.0.0.1 GET 401 23.625µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:59:27] 127.0.0.1 POST 401 25.208µs /api/map/gyms/nearby 
+[2025/11/02 20:59:30] 127.0.0.1 GET 401 22.125µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:59:34] 127.0.0.1 GET 401 25.416µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:59:35] 127.0.0.1 GET 404 3.625µs /community/posts?tab=nearby&page=1&limit=10 
+[2025/11/02 20:59:36] 127.0.0.1 GET 404 21.042µs /community/posts?tab=recommend&page=1&limit=10 
+[2025/11/02 20:59:38] 127.0.0.1 GET 401 26.417µs /api/ws/connect?token=dummy_token 
+
+2025/11/02 20:59:40 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.169ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:59:40] 127.0.0.1 GET 404 281.583µs /api/users/1 
+[2025/11/02 20:59:40] 127.0.0.1 GET 404 1.5µs /api/users/1/training/stats 
+[2025/11/02 20:59:40] 127.0.0.1 GET 404 1.417µs /api/users/1/achievements 
+[2025/11/02 20:59:40] 127.0.0.1 GET 404 3.209µs /api/users/1/records 
+[2025/11/02 20:59:40] 127.0.0.1 GET 404 2.875µs /api/users/1/social/stats 
+
+2025/11/02 20:59:41 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.186ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 20:59:41] 127.0.0.1 GET 404 317.583µs /api/users/1 
+[2025/11/02 20:59:41] 127.0.0.1 GET 404 3.833µs /api/users/1/training/stats 
+[2025/11/02 20:59:41] 127.0.0.1 GET 404 5.417µs /api/users/1/achievements 
+[2025/11/02 20:59:41] 127.0.0.1 GET 404 2.792µs /api/users/1/records 
+[2025/11/02 20:59:41] 127.0.0.1 GET 404 3.875µs /api/users/1/social/stats 
+[2025/11/02 20:59:42] 127.0.0.1 GET 401 20.708µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:59:46] 127.0.0.1 GET 401 22.5µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:59:50] 127.0.0.1 GET 401 33.791µs /api/ws/connect?token=dummy_token 
+
+2025/11/02 20:59:52 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:60
+[0m[33m[0.145ms] [34;1m[rows:1][0m SELECT count(*) FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL
+
+2025/11/02 20:59:52 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:65
+[0m[33m[0.054ms] [34;1m[rows:1][0m SELECT * FROM `users` WHERE `users`.`id` = 9 AND `users`.`deleted_at` IS NULL
+
+2025/11/02 20:59:52 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:65
+[0m[33m[0.283ms] [34;1m[rows:10][0m SELECT * FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL ORDER BY likes DESC, created_at DESC LIMIT 10
+[2025/11/02 20:59:52] ::1 GET 200 696.125µs /api/community/posts 
+[2025/11/02 20:59:54] 127.0.0.1 GET 401 25.75µs /api/ws/connect?token=dummy_token 
+[2025/11/02 20:59:58] 127.0.0.1 GET 401 31.792µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:00:02] 127.0.0.1 GET 401 31.916µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:00:13] 127.0.0.1 GET 401 34.833µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:00:13] 127.0.0.1 GET 404 9.292µs /community/posts?tab=recommend&page=1&limit=10 
+[2025/11/02 21:00:13] 127.0.0.1 GET 401 39.625µs /api/mates/recommendations?max_distance=5000&page=1&limit=20 
+[2025/11/02 21:00:13] 127.0.0.1 GET 401 25.542µs /api/messages/chats?page=1&limit=20 
+[2025/11/02 21:00:13] 127.0.0.1 GET 401 47.25µs /api/notifications?page=1&limit=20 
+[2025/11/02 21:00:13] 127.0.0.1 GET 401 40.709µs /api/messages/unread 
+
+2025/11/02 21:00:13 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.290ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 21:00:13] 127.0.0.1 GET 404 401.5µs /api/users/1 
+[2025/11/02 21:00:13] 127.0.0.1 GET 404 3.542µs /api/users/1/training/stats 
+[2025/11/02 21:00:13] 127.0.0.1 GET 404 4µs /api/users/1/achievements 
+[2025/11/02 21:00:13] 127.0.0.1 GET 404 42µs /api/users/1/records 
+[2025/11/02 21:00:13] 127.0.0.1 GET 404 4.25µs /api/users/1/social/stats 
+[2025/11/02 21:00:16] 127.0.0.1 GET 404 40.083µs /community/posts?tab=nearby&page=1&limit=10 
+[2025/11/02 21:00:17] 127.0.0.1 GET 404 3.875µs /community/posts?tab=gym&page=1&limit=10 
+[2025/11/02 21:00:17] 127.0.0.1 GET 401 24.292µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:00:21] 127.0.0.1 GET 401 34.958µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:00:25] 127.0.0.1 GET 401 69.417µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:00:29] 127.0.0.1 GET 401 23.291µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:00:33] 127.0.0.1 GET 401 21.625µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:00:37] 127.0.0.1 GET 401 26.958µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:00:41] 127.0.0.1 GET 401 24.458µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:00:45] 127.0.0.1 GET 401 25.917µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:00:47] 127.0.0.1 GET 404 16.042µs /community/posts?tab=gym&page=1&limit=10 
+[2025/11/02 21:00:49] 127.0.0.1 GET 401 22.916µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:00:49] 127.0.0.1 GET 404 4.083µs /community/posts?tab=nearby&page=1&limit=10 
+[2025/11/02 21:00:50] 127.0.0.1 GET 404 14.792µs /community/posts?tab=recommend&page=1&limit=10 
+[2025/11/02 21:00:50] 127.0.0.1 GET 404 4.125µs /community/posts?tab=nearby&page=1&limit=10 
+[2025/11/02 21:00:51] 127.0.0.1 GET 404 3.833µs /community/posts?tab=gym&page=1&limit=10 
+[2025/11/02 21:00:51] 127.0.0.1 GET 404 4.208µs /community/posts?tab=recommend&page=1&limit=10 
+[2025/11/02 21:00:53] 127.0.0.1 GET 401 23.583µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:00:57] 127.0.0.1 GET 401 35.125µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:01:01] 127.0.0.1 GET 401 26.709µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:01:05] 127.0.0.1 GET 401 23.667µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:01:09] 127.0.0.1 GET 401 21.5µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:01:13] 127.0.0.1 GET 401 26.834µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:01:17] 127.0.0.1 GET 401 32.125µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:01:21] 127.0.0.1 GET 401 19.459µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:01:25] 127.0.0.1 GET 401 25.875µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:01:29] 127.0.0.1 GET 401 25.083µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:01:33] 127.0.0.1 GET 401 26.667µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:01:37] 127.0.0.1 GET 401 22.25µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:01:41] 127.0.0.1 GET 401 41µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:01:45] 127.0.0.1 GET 401 194.625µs /api/ws/connect?token=dummy_token 
+[2025/11/02 21:01:49] 127.0.0.1 GET 401 36.125µs /api/ws/connect?token=dummy_token 
+
+2025/11/02 21:03:04 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:60
+[0m[33m[0.319ms] [34;1m[rows:1][0m SELECT count(*) FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL
+
+2025/11/02 21:03:04 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:65
+[0m[33m[0.097ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` IN (1,2,3) AND `users`.`deleted_at` IS NULL
+
+2025/11/02 21:03:04 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:65
+[0m[33m[0.278ms] [34;1m[rows:10][0m SELECT * FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL LIMIT 10
+[2025/11/02 21:03:04] 127.0.0.1 GET 200 1.53875ms /api/community/posts?tab=recommend&page=1&limit=10 
+[2025/11/02 21:03:04] 127.0.0.1 GET 401 45.375µs /api/mates/recommendations?max_distance=5000&page=1&limit=20 
+[2025/11/02 21:03:04] 127.0.0.1 GET 401 30.584µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:03:04] 127.0.0.1 GET 401 83.458µs /api/messages/chats?page=1&limit=20 
+[2025/11/02 21:03:04] 127.0.0.1 GET 401 34.625µs /api/notifications?page=1&limit=20 
+[2025/11/02 21:03:04] 127.0.0.1 GET 401 25.167µs /api/messages/unread 
+
+2025/11/02 21:03:04 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.148ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 21:03:04] 127.0.0.1 GET 404 213.916µs /api/users/1 
+[2025/11/02 21:03:04] 127.0.0.1 GET 404 9.167µs /api/users/1/training/stats 
+[2025/11/02 21:03:04] 127.0.0.1 GET 404 4.416µs /api/users/1/achievements 
+[2025/11/02 21:03:04] 127.0.0.1 GET 404 2.791µs /api/users/1/records 
+[2025/11/02 21:03:04] 127.0.0.1 GET 404 1.833µs /api/users/1/social/stats 
+[2025/11/02 21:03:08] 127.0.0.1 GET 401 22.458µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:03:12] 127.0.0.1 GET 401 42.208µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:03:16] 127.0.0.1 GET 401 26.75µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:03:20] 127.0.0.1 GET 401 34.792µs /api/ws/connect?token=mock_phone_token_1762088580913 
+
+2025/11/02 21:03:23 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.141ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 21:03:23] 127.0.0.1 GET 404 243.625µs /api/users/1 
+[2025/11/02 21:03:23] 127.0.0.1 GET 404 2.959µs /api/users/1/training/stats 
+[2025/11/02 21:03:23] 127.0.0.1 GET 404 4.875µs /api/users/1/achievements 
+[2025/11/02 21:03:23] 127.0.0.1 GET 404 3.958µs /api/users/1/records 
+[2025/11/02 21:03:23] 127.0.0.1 GET 404 2.541µs /api/users/1/social/stats 
+
+2025/11/02 21:03:24 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.146ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 282.292µs /api/users/1 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 3.083µs /api/users/1/training/stats 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 3.875µs /api/users/1/achievements 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 4.542µs /api/users/1/records 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 4.583µs /api/users/1/social/stats 
+
+2025/11/02 21:03:24 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.113ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 186.709µs /api/users/1 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 1.292µs /api/users/1/training/stats 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 4.084µs /api/users/1/achievements 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 3.667µs /api/users/1/records 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 1.875µs /api/users/1/social/stats 
+
+2025/11/02 21:03:24 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.129ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 207.916µs /api/users/1 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 2.25µs /api/users/1/training/stats 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 1µs /api/users/1/achievements 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 5.458µs /api/users/1/records 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 3.416µs /api/users/1/social/stats 
+
+2025/11/02 21:03:24 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.132ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 211.708µs /api/users/1 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 32.333µs /api/users/1/training/stats 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 5.583µs /api/users/1/achievements 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 2.208µs /api/users/1/records 
+[2025/11/02 21:03:24] 127.0.0.1 GET 404 18.584µs /api/users/1/social/stats 
+[2025/11/02 21:03:24] 127.0.0.1 GET 401 20.708µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:03:28] 127.0.0.1 GET 401 26.75µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:03:32] 127.0.0.1 GET 401 33.917µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:03:36] 127.0.0.1 GET 401 61.417µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:03:40] 127.0.0.1 GET 401 26.459µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:03:44] 127.0.0.1 GET 401 23.25µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:03:48] 127.0.0.1 GET 401 57µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:03:52] 127.0.0.1 GET 401 39.167µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:03:56] 127.0.0.1 GET 401 31.666µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:04:00] 127.0.0.1 GET 401 23.416µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:04:04] 127.0.0.1 GET 401 33.083µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:04:08] 127.0.0.1 GET 401 39.833µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:04:12] 127.0.0.1 GET 401 37.209µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:04:16] 127.0.0.1 GET 401 26µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:04:21] 127.0.0.1 GET 401 24.209µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:04:25] 127.0.0.1 GET 401 37µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:04:29] 127.0.0.1 GET 401 31.25µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:04:33] 127.0.0.1 GET 401 23µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:04:37] 127.0.0.1 GET 401 38.042µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:04:41] 127.0.0.1 GET 401 31.917µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:04:45] 127.0.0.1 GET 401 23.959µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:04:49] 127.0.0.1 GET 401 25.5µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:04:53] 127.0.0.1 GET 401 24.667µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:04:57] 127.0.0.1 GET 401 35.083µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:05:01] 127.0.0.1 GET 401 27.333µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:05:05] 127.0.0.1 GET 401 41.834µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:05:09] 127.0.0.1 GET 401 34.167µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:05:13] 127.0.0.1 GET 401 21.667µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:05:17] 127.0.0.1 GET 401 38.75µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:05:21] 127.0.0.1 GET 401 25.834µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:05:25] 127.0.0.1 GET 401 38.708µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:05:29] 127.0.0.1 GET 401 30.833µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:05:33] 127.0.0.1 GET 401 40.083µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:05:37] 127.0.0.1 GET 401 32.792µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:05:41] 127.0.0.1 GET 401 44.583µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:05:45] 127.0.0.1 GET 401 22.458µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:05:49] 127.0.0.1 GET 401 29.333µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:05:53] 127.0.0.1 GET 401 28.834µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:05:57] 127.0.0.1 GET 401 39.333µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:06:01] 127.0.0.1 GET 401 45.541µs /api/ws/connect?token=mock_phone_token_1762088580913 
+[2025/11/02 21:06:05] 127.0.0.1 GET 401 19.417µs /api/ws/connect?token=mock_phone_token_1762088580913 
+
+2025/11/02 21:06:12 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:60
+[0m[33m[0.241ms] [34;1m[rows:1][0m SELECT count(*) FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL
+
+2025/11/02 21:06:12 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:65
+[0m[33m[0.107ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` IN (1,2,3) AND `users`.`deleted_at` IS NULL
+
+2025/11/02 21:06:12 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:65
+[0m[33m[0.245ms] [34;1m[rows:10][0m SELECT * FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL LIMIT 10
+[2025/11/02 21:06:12] 127.0.0.1 GET 200 646.292µs /api/community/posts?tab=recommend&page=1&limit=10 
+[2025/11/02 21:06:12] 127.0.0.1 GET 401 24.583µs /api/mates/recommendations?max_distance=5000&page=1&limit=20 
+[2025/11/02 21:06:12] 127.0.0.1 GET 401 33.292µs /api/ws/connect?token=mock_phone_token_1762088768938 
+[2025/11/02 21:06:12] 127.0.0.1 GET 401 29.917µs /api/messages/chats?page=1&limit=20 
+[2025/11/02 21:06:12] 127.0.0.1 GET 401 29.875µs /api/notifications?page=1&limit=20 
+[2025/11/02 21:06:12] 127.0.0.1 GET 401 26.583µs /api/messages/unread 
+
+2025/11/02 21:06:12 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.151ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 21:06:12] 127.0.0.1 GET 404 435.916µs /api/users/1 
+[2025/11/02 21:06:12] 127.0.0.1 GET 404 4.084µs /api/users/1/training/stats 
+[2025/11/02 21:06:12] 127.0.0.1 GET 404 3µs /api/users/1/achievements 
+[2025/11/02 21:06:12] 127.0.0.1 GET 404 4.125µs /api/users/1/records 
+[2025/11/02 21:06:12] 127.0.0.1 GET 404 4.458µs /api/users/1/social/stats 
+[2025/11/02 21:06:16] 127.0.0.1 GET 401 21.75µs /api/ws/connect?token=mock_phone_token_1762088768938 
+[2025/11/02 21:06:20] 127.0.0.1 GET 401 20.125µs /api/ws/connect?token=mock_phone_token_1762088768938 
+[2025/11/02 21:06:24] 127.0.0.1 GET 401 23.917µs /api/ws/connect?token=mock_phone_token_1762088768938 
+[2025/11/02 21:06:28] 127.0.0.1 GET 401 23.625µs /api/ws/connect?token=mock_phone_token_1762088768938 
+[2025/11/02 21:06:32] 127.0.0.1 GET 401 22.25µs /api/ws/connect?token=mock_phone_token_1762088768938 
+[2025/11/02 21:06:36] 127.0.0.1 GET 401 22µs /api/ws/connect?token=mock_phone_token_1762088768938 
+[2025/11/02 21:06:40] 127.0.0.1 GET 401 24.084µs /api/ws/connect?token=mock_phone_token_1762088768938 
+[2025/11/02 21:06:44] 127.0.0.1 GET 401 22.375µs /api/ws/connect?token=mock_phone_token_1762088768938 
+[2025/11/02 21:06:48] 127.0.0.1 GET 401 29.167µs /api/ws/connect?token=mock_phone_token_1762088768938 
+[2025/11/02 21:06:52] 127.0.0.1 GET 401 29.125µs /api/ws/connect?token=mock_phone_token_1762088768938 
+[2025/11/02 21:06:56] 127.0.0.1 GET 401 31.208µs /api/ws/connect?token=mock_phone_token_1762088768938 
+
+2025/11/02 21:07:04 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:60
+[0m[33m[0.176ms] [34;1m[rows:1][0m SELECT count(*) FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL
+
+2025/11/02 21:07:04 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:65
+[0m[33m[0.068ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` IN (1,2,3) AND `users`.`deleted_at` IS NULL
+
+2025/11/02 21:07:04 [32m/Users/gaojie/Desktop/gymates/backend/controllers/community_controller.go:65
+[0m[33m[0.260ms] [34;1m[rows:10][0m SELECT * FROM `posts` WHERE is_public = true AND `posts`.`deleted_at` IS NULL LIMIT 10
+[2025/11/02 21:07:04] 127.0.0.1 GET 200 798.084µs /api/community/posts?tab=recommend&page=1&limit=10 
+[2025/11/02 21:07:04] 127.0.0.1 GET 401 28µs /api/mates/recommendations?max_distance=5000&page=1&limit=20 
+[2025/11/02 21:07:04] 127.0.0.1 GET 401 21.708µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:07:04] 127.0.0.1 GET 401 30.084µs /api/messages/chats?page=1&limit=20 
+[2025/11/02 21:07:04] 127.0.0.1 GET 401 31.125µs /api/notifications?page=1&limit=20 
+[2025/11/02 21:07:04] 127.0.0.1 GET 401 22.25µs /api/messages/unread 
+
+2025/11/02 21:07:04 [31;1m/Users/gaojie/Desktop/gymates/backend/controllers/auth_controller.go:281 [35;1mrecord not found
+[0m[33m[0.128ms] [34;1m[rows:0][0m SELECT * FROM `users` WHERE `users`.`id` = 1 AND `users`.`deleted_at` IS NULL ORDER BY `users`.`id` LIMIT 1
+[2025/11/02 21:07:04] 127.0.0.1 GET 404 234.792µs /api/users/1 
+[2025/11/02 21:07:04] 127.0.0.1 GET 404 4.125µs /api/users/1/training/stats 
+[2025/11/02 21:07:04] 127.0.0.1 GET 404 4.291µs /api/users/1/achievements 
+[2025/11/02 21:07:04] 127.0.0.1 GET 404 29.667µs /api/users/1/records 
+[2025/11/02 21:07:04] 127.0.0.1 GET 404 2.958µs /api/users/1/social/stats 
+[2025/11/02 21:07:08] 127.0.0.1 GET 401 35.125µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:07:12] 127.0.0.1 GET 401 22.708µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:07:16] 127.0.0.1 GET 401 32.5µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:07:20] 127.0.0.1 GET 401 21.875µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:07:24] 127.0.0.1 GET 401 70.208µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:07:28] 127.0.0.1 GET 401 28.917µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:07:32] 127.0.0.1 GET 401 38.417µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:07:36] 127.0.0.1 GET 401 30.75µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:07:40] 127.0.0.1 GET 401 37.959µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:07:43] ::1 POST 404 17.375µs /api/auth/guest/login 
+[2025/11/02 21:07:44] 127.0.0.1 GET 401 33.375µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:07:47] ::1 POST 404 5.625µs /api/auth/guest/login 
+[2025/11/02 21:07:48] 127.0.0.1 GET 401 24.041µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:07:52] 127.0.0.1 GET 401 22.458µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:07:54] ::1 POST 404 4.084µs /api/auth/phone/login 
+[2025/11/02 21:07:56] 127.0.0.1 GET 401 37.791µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:08:00] 127.0.0.1 GET 401 26µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:08:04] 127.0.0.1 GET 401 23.875µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:08:08] 127.0.0.1 GET 401 21.416µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:08:09] ::1 POST 404 4.541µs /api/auth/guest/login 
+[2025/11/02 21:08:12] 127.0.0.1 GET 401 24.833µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:08:16] 127.0.0.1 GET 401 21.792µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:08:20] 127.0.0.1 GET 401 40.292µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:08:24] 127.0.0.1 GET 401 20.667µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:08:28] 127.0.0.1 GET 401 31.958µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:08:32] 127.0.0.1 GET 401 31.792µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:08:36] 127.0.0.1 GET 401 24.291µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:08:40] 127.0.0.1 GET 401 23.417µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:08:44] 127.0.0.1 GET 401 21.709µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:08:48] 127.0.0.1 GET 401 325.667µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:08:52] 127.0.0.1 GET 401 24.666µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:08:56] 127.0.0.1 GET 401 49.208µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:09:00] 127.0.0.1 GET 401 27.792µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:09:04] 127.0.0.1 GET 401 22.709µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:09:08] 127.0.0.1 GET 401 41.834µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:09:12] 127.0.0.1 GET 401 32.584µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:09:16] 127.0.0.1 GET 401 21.25µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:09:20] 127.0.0.1 GET 401 23.708µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:09:24] 127.0.0.1 GET 401 24.375µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:09:28] 127.0.0.1 GET 401 24.333µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:09:32] 127.0.0.1 GET 401 43.417µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:09:36] 127.0.0.1 GET 401 23.625µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:09:40] 127.0.0.1 GET 401 27.791µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:09:44] 127.0.0.1 GET 401 22.125µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:09:48] 127.0.0.1 GET 401 25.416µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:09:52] 127.0.0.1 GET 401 28.25µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:09:57] 127.0.0.1 GET 401 26.958µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:10:01] 127.0.0.1 GET 401 32.875µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:10:05] 127.0.0.1 GET 401 38.541µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:10:09] 127.0.0.1 GET 401 21.334µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:10:13] 127.0.0.1 GET 401 35.792µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:10:17] 127.0.0.1 GET 401 28.792µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:10:21] 127.0.0.1 GET 401 25.709µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:10:25] 127.0.0.1 GET 401 29.292µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:10:29] 127.0.0.1 GET 401 27.333µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:10:33] 127.0.0.1 GET 401 27.625µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:10:37] 127.0.0.1 GET 401 38.125µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:10:41] 127.0.0.1 GET 401 46.791µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:10:45] 127.0.0.1 GET 401 23.5µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:10:49] 127.0.0.1 GET 401 25.125µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:10:53] 127.0.0.1 GET 401 39.542µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:10:57] 127.0.0.1 GET 401 37.292µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:11:01] 127.0.0.1 GET 401 34.625µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:11:05] 127.0.0.1 GET 401 38.833µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:11:09] 127.0.0.1 GET 401 67.333µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:11:13] 127.0.0.1 GET 401 22.666µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:11:17] 127.0.0.1 GET 401 20.166µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:11:21] 127.0.0.1 GET 401 24.792µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:11:25] 127.0.0.1 GET 401 22.208µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:11:29] 127.0.0.1 GET 401 40.625µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:11:33] 127.0.0.1 GET 401 34.834µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:11:37] 127.0.0.1 GET 401 48.25µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:11:41] 127.0.0.1 GET 401 24.75µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:11:45] 127.0.0.1 GET 401 49.5µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:11:49] 127.0.0.1 GET 401 54.791µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:11:53] 127.0.0.1 GET 401 21.75µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:11:57] 127.0.0.1 GET 401 48.333µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:12:01] 127.0.0.1 GET 401 38.834µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:12:05] 127.0.0.1 GET 401 22.833µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:12:09] 127.0.0.1 GET 401 32.167µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:12:13] 127.0.0.1 GET 401 24.208µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:12:14] 127.0.0.1 POST 401 44.5µs /api/map/gyms/nearby 
+[2025/11/02 21:12:17] 127.0.0.1 GET 401 22.125µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:12:21] 127.0.0.1 GET 401 19.958µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:12:25] 127.0.0.1 GET 401 50.375µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:12:29] 127.0.0.1 GET 401 20.542µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:12:33] 127.0.0.1 GET 401 40.792µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:12:37] ::1 POST 404 3.541µs /api/auth/phone/login 
+[2025/11/02 21:12:37] 127.0.0.1 GET 401 22.583µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:12:41] 127.0.0.1 GET 401 29.958µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:12:45] 127.0.0.1 GET 401 31.959µs /api/ws/connect?token=mock_phone_token_1762088820710 
+[2025/11/02 21:12:49] 127.0.0.1 GET 401 22.708µs /api/ws/connect?token=mock_phone_token_1762088820710 

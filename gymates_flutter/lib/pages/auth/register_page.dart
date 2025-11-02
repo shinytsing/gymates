@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../theme/gymates_theme.dart';
 import '../../routes/app_routes.dart';
+import '../../services/auth_service.dart';
 
 /// 📝 注册页面 - 完全按照 Figma 设计实现
 /// 
@@ -25,10 +26,13 @@ class _RegisterPageState extends State<RegisterPage>
   late Animation<double> _formAnimation;
 
   final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _verificationController = TextEditingController();
+  final _authService = AuthService();
 
   bool _agreedToTerms = false;
   bool _obscurePassword = true;
@@ -65,6 +69,8 @@ class _RegisterPageState extends State<RegisterPage>
   @override
   void dispose() {
     _formController.dispose();
+    _emailController.dispose();
+    _usernameController.dispose();
     _phoneController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
@@ -172,19 +178,19 @@ class _RegisterPageState extends State<RegisterPage>
   Widget _buildForm() {
     return Column(
       children: [
-        // 手机号
+        // 邮箱
         _buildTextField(
-          controller: _phoneController,
-          label: '手机号',
-          hint: '请输入手机号',
-          keyboardType: TextInputType.phone,
-          prefixIcon: Icons.phone,
+          controller: _emailController,
+          label: '邮箱',
+          hint: '请输入邮箱地址',
+          keyboardType: TextInputType.emailAddress,
+          prefixIcon: Icons.email,
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return '请输入手机号';
+              return '请输入邮箱';
             }
-            if (!RegExp(r'^1[3-9]\d{9}$').hasMatch(value)) {
-              return '请输入正确的手机号';
+            if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+              return '请输入正确的邮箱格式';
             }
             return null;
           },
@@ -192,54 +198,48 @@ class _RegisterPageState extends State<RegisterPage>
         
         const SizedBox(height: 16),
         
-        // 验证码
-        Row(
-          children: [
-            Expanded(
-              child: _buildTextField(
-                controller: _verificationController,
-                label: '验证码',
-                hint: '请输入验证码',
-                keyboardType: TextInputType.number,
-                prefixIcon: Icons.security,
+        // 用户名
+        _buildTextField(
+          controller: _usernameController,
+          label: '用户名',
+          hint: '请输入用户名',
+          keyboardType: TextInputType.text,
+          prefixIcon: Icons.person,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return '请输入验证码';
+              return '请输入用户名';
                   }
-                  if (value.length != 6) {
-                    return '验证码为6位数字';
+            if (value.length < 3) {
+              return '用户名至少3个字符';
                   }
                   return null;
                 },
               ),
-            ),
-            const SizedBox(width: 12),
-            SizedBox(
-              width: 100,
-              child: ElevatedButton(
-                onPressed: _sendVerificationCode,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: GymatesTheme.primaryColor,
-                  foregroundColor: Colors.white,
-                  elevation: 0,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: const Text(
-                  '获取验证码',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
-          ],
+        
+        const SizedBox(height: 16),
+        
+        // 手机号（可选）
+        _buildTextField(
+          controller: _phoneController,
+          label: '手机号（可选）',
+          hint: '请输入手机号',
+          keyboardType: TextInputType.phone,
+          prefixIcon: Icons.phone,
+          validator: (value) {
+            // 手机号现在是可选的
+            if (value != null && value.isNotEmpty) {
+              if (!RegExp(r'^1[3-9]\d{9}$').hasMatch(value)) {
+                return '请输入正确的手机号';
+              }
+            }
+            return null;
+          },
         ),
         
         const SizedBox(height: 16),
+        
+        // 验证码功能暂时移除，使用邮箱注册
+        // TODO: 后续可以添加邮箱验证功能
         
         // 密码
         _buildTextField(
@@ -516,18 +516,10 @@ class _RegisterPageState extends State<RegisterPage>
     );
   }
 
-  void _sendVerificationCode() {
-    HapticFeedback.lightImpact();
-    // TODO: 实现发送验证码逻辑
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('验证码已发送'),
-        backgroundColor: GymatesTheme.primaryColor,
-      ),
-    );
-  }
+  // 验证码功能已移除，使用邮箱直接注册
+  // void _sendVerificationCode() { ... }
 
-  void _handleRegister() async {
+  Future<void> _handleRegister() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -548,21 +540,62 @@ class _RegisterPageState extends State<RegisterPage>
 
     HapticFeedback.lightImpact();
 
-    // TODO: 实现注册逻辑
-    await Future.delayed(const Duration(seconds: 2));
+    try {
+      // 调用真实 API 注册
+      final result = await _authService.register(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+        username: _usernameController.text.trim(),
+        phone: _phoneController.text.trim().isNotEmpty 
+            ? _phoneController.text.trim() 
+            : null,
+      );
 
-    setState(() {
-      _isLoading = false;
-    });
+      if (!mounted) return;
 
+      if (result.success) {
+        // 注册成功
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('注册成功'),
+          SnackBar(
+            content: Text(result.message),
         backgroundColor: GymatesTheme.successColor,
+            duration: const Duration(seconds: 2),
       ),
     );
 
+        // 延迟跳转
+        await Future.delayed(const Duration(milliseconds: 500));
+        
+        if (!mounted) return;
+
     // 跳转到主页面
     AppRoutes.pushReplacementNamed(context, AppRoutes.main);
+      } else {
+        // 注册失败
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(result.message),
+            backgroundColor: GymatesTheme.errorColor,
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('注册失败: $e'),
+          backgroundColor: GymatesTheme.errorColor,
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 }
