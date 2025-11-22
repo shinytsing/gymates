@@ -6,16 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// UserExerciseFavorite 用户收藏的运动
-type UserExerciseFavorite struct {
-	ID         uint            `json:"id" gorm:"primaryKey"`
-	UserID     uint            `json:"user_id" gorm:"not null;index"`
-	User       User            `json:"user" gorm:"foreignKey:UserID"`
-	ExerciseID uint            `json:"exercise_id" gorm:"not null;index"`
-	Exercise   ExerciseLibrary `json:"exercise" gorm:"foreignKey:ExerciseID"`
-	CreatedAt  time.Time       `json:"created_at"`
-	DeletedAt  gorm.DeletedAt  `json:"-" gorm:"index"`
-}
+// UserExerciseFavorite 已在 exercise_library.go 中定义
 
 // TrainingPlanV2 增强的训练计划模型
 type TrainingPlanV2 struct {
@@ -175,9 +166,7 @@ type AIRecommendation struct {
 }
 
 // TableName 指定表名
-func (UserExerciseFavorite) TableName() string {
-	return "user_exercise_favorites"
-}
+// TableName 方法已在 exercise_library.go 中定义
 
 func (TrainingPlanV2) TableName() string {
 	return "training_plans_v2"

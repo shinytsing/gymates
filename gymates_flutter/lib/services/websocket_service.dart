@@ -116,6 +116,20 @@ class WebSocketService {
     }
   }
 
+  /// 发送原始消息（用于 WebRTC 信令等）
+  void send(Map<String, dynamic> data) {
+    if (!_isConnected || _channel == null) {
+      print('WebSocket not connected');
+      return;
+    }
+
+    try {
+      _channel!.sink.add(jsonEncode(data));
+    } catch (e) {
+      print('Failed to send data: $e');
+    }
+  }
+
   /// 发送消息
   void sendMessage({
     required String type,

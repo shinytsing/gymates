@@ -3,11 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:gymates_flutter/core/theme/gymates_theme.dart';
-import '../../pages/training/training_page.dart';
-import '../../pages/community/community_page.dart';
-import '../../pages/mates/mates_page.dart';
-import '../../pages/messages/messages_page.dart';
-import '../../pages/profile/profile_page.dart';
+import '../../modules/training/main_page_3d.dart';
+import '../../modules/community/main_page_3d.dart';
+import '../../modules/mates/main_page_3d.dart';
+import '../../modules/messages/main_page_3d.dart';
+import '../../modules/profile/main_page_3d.dart';
 
 /// 🧭 Gymates Main Navigation - Platform-Adaptive Bottom Navigation
 /// 
@@ -36,31 +36,31 @@ class _GymatesMainNavigationState extends State<GymatesMainNavigation>
       icon: Icons.fitness_center,
       activeIcon: Icons.fitness_center,
       label: 'Training',
-      page: const TrainingPage(),
+      page: const TrainingMainPage3D(),
     ),
     NavigationItem(
       icon: Icons.people,
       activeIcon: Icons.people,
       label: 'Community',
-      page: const CommunityPage(),
+      page: const CommunityMainPage3D(),
     ),
     NavigationItem(
       icon: Icons.favorite,
       activeIcon: Icons.favorite,
       label: 'Mates',
-      page: const MatesPage(),
+      page: const MatesMainPage3D(),
     ),
     NavigationItem(
       icon: Icons.message,
       activeIcon: Icons.message,
       label: 'Messages',
-      page: const MessagesPage(),
+      page: const MessagesMainPage3D(),
     ),
     NavigationItem(
       icon: Icons.person,
       activeIcon: Icons.person,
       label: 'Profile',
-      page: const ProfilePage(),
+      page: const ProfileMainPage3D(),
     ),
   ];
 

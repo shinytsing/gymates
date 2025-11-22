@@ -169,7 +169,7 @@ func initMockData() {
 			Name:       "健身达人小王",
 			Email:      "xiaowang@gymates.com",
 			Password:   "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi", // password
-			Avatar:     "https://via.placeholder.com/150/FF6B6B/FFFFFF?text=小王",
+			Avatar:     "", // Empty avatar to avoid network errors
 			Bio:        "热爱健身，追求健康生活",
 			Location:   "北京市朝阳区",
 			Age:        25,
@@ -183,7 +183,7 @@ func initMockData() {
 			Name:       "瑜伽女神小李",
 			Email:      "xiaoli@gymates.com",
 			Password:   "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi", // password
-			Avatar:     "https://via.placeholder.com/150/4ECDC4/FFFFFF?text=小李",
+			Avatar:     "", // Empty avatar to avoid network errors
 			Bio:        "瑜伽教练，专注身心平衡",
 			Location:   "上海市浦东新区",
 			Age:        28,
@@ -197,7 +197,7 @@ func initMockData() {
 			Name:       "跑步爱好者小张",
 			Email:      "xiaozhang@gymates.com",
 			Password:   "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi", // password
-			Avatar:     "https://via.placeholder.com/150/45B7D1/FFFFFF?text=小张",
+			Avatar:     "", // Empty avatar to avoid network errors
 			Bio:        "马拉松跑者，享受跑步的快乐",
 			Location:   "广州市天河区",
 			Age:        30,

@@ -80,21 +80,21 @@ func (ac *EnhancedAuthController) PhoneLogin(c *gin.Context) {
 		return
 	}
 
-	// 验证验证码
-	valid, err := ac.smsService.VerifyCode(req.Phone, req.Code, "login")
-	if err != nil || !valid {
-		c.JSON(http.StatusUnauthorized, models.ErrorResponse{
-			Success: false,
-			Message: "验证码无效或已过期",
-			Error:   "Invalid verification code",
-			Code:    http.StatusUnauthorized,
-		})
-		return
-	}
+	// 跳过验证码验证（开发模式）
+	// valid, err := ac.smsService.VerifyCode(req.Phone, req.Code, "login")
+	// if err != nil || !valid {
+	// 	c.JSON(http.StatusUnauthorized, models.ErrorResponse{
+	// 		Success: false,
+	// 		Message: "验证码无效或已过期",
+	// 		Error:   "Invalid verification code",
+	// 		Code:    http.StatusUnauthorized,
+	// 	})
+	// 	return
+	// }
 
 	// 查找用户
 	var user models.User
-	err = config.DB.Where("phone = ?", req.Phone).First(&user).Error
+	err := config.DB.Where("phone = ?", req.Phone).First(&user).Error
 	if err != nil {
 		// 用户不存在，自动注册
 		user = models.User{

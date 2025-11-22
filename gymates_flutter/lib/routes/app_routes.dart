@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:ui';
 import 'dart:math' as math;
-import '../pages/auth/modern_login_page.dart';
-import '../pages/training/training_page.dart';
+import '../modules/auth/modern_login_page.dart';
+import '../modules/training/main_page_3d.dart';
 import '../pages/training/training_detail_page.dart';
 import '../pages/training/ai_training_detail_page.dart';
-import '../pages/ai_training/ai_training_page.dart';
-import '../pages/community/community_page.dart';
+import '../modules/ai/ai_training_page.dart';
+import '../modules/community/main_page_3d.dart';
 import '../pages/community/post_detail_page.dart';
-import '../pages/mates/mates_page.dart';
-import '../pages/messages/messages_page.dart';
-import '../pages/profile/profile_page.dart';
+import '../modules/mates/main_page_3d.dart';
+import '../modules/messages/main_page_3d.dart';
+import '../modules/profile/main_page_3d.dart';
 import '../pages/profile/edit_profile_page.dart';
-import '../pages/achievements/achievements_page.dart';
-import '../pages/achievements/achievement_detail_page.dart';
-import '../pages/settings/settings_page.dart';
+import '../modules/achievements/achievements_page.dart';
+import '../modules/achievements/achievement_detail_page.dart';
+import '../modules/settings/settings_3d_page.dart';
+import '../pages/cartoon_3d_home_page.dart';
 import '../animations/gymates_animations.dart';
 import '../theme/gymates_theme.dart';
 
@@ -33,6 +34,7 @@ class AppRoutes {
   static const String login = '/login';
   static const String register = '/register';
   static const String main = '/main';
+  static const String cartoon3DHome = '/cartoon-3d-home';
   static const String training = '/training';
   static const String trainingDetail = '/training-detail';
   static const String aiTraining = '/ai-training';
@@ -52,7 +54,8 @@ class AppRoutes {
     splash: (context) => const SplashScreen(),
     login: (context) => const ModernLoginPage(),
     main: (context) => const MainNavigationScreen(),
-    training: (context) => const TrainingPage(),
+    cartoon3DHome: (context) => const Cartoon3DHomePage(),
+    training: (context) => const TrainingMainPage3D(),
     trainingDetail: (context) {
       final args = ModalRoute.of(context)?.settings.arguments;
       if (args is Map<String, dynamic> && args['trainingPlan'] != null) {
@@ -64,7 +67,7 @@ class AppRoutes {
     },
     aiTraining: (context) => const AITrainingPage(),
     aiTrainingDetail: (context) => const AITrainingDetailPage(),
-    community: (context) => const CommunityPage(),
+    community: (context) => const CommunityMainPage3D(),
     postDetail: (context) {
       final args = ModalRoute.of(context)?.settings.arguments;
       if (args is Map<String, dynamic> && args['post'] != null) {
@@ -74,9 +77,9 @@ class AppRoutes {
         body: Center(child: Text('帖子参数错误')),
       );
     },
-    mates: (context) => const MatesPage(),
-    messages: (context) => const MessagesPage(),
-    profile: (context) => const ProfilePage(),
+    mates: (context) => const MatesMainPage3D(),
+    messages: (context) => const MessagesMainPage3D(),
+    profile: (context) => const ProfileMainPage3D(),
     editProfile: (context) {
       final args = ModalRoute.of(context)?.settings.arguments;
       if (args is Map<String, dynamic> && args['user'] != null) {
@@ -88,7 +91,7 @@ class AppRoutes {
     },
     achievements: (context) => const AchievementsPage(),
     achievementDetail: (context) => const AchievementDetailPage(),
-    settings: (context) => const SettingsPage(),
+    settings: (context) => const Settings3DPage(),
   };
   
   // 页面切换方法
@@ -244,8 +247,12 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _navigateToMain() {
     if (mounted) {
-      // TODO: 检查用户登录状态，这里暂时跳转到登录页
-      AppRoutes.pushReplacementNamed(context, AppRoutes.login);
+      // 跳转到主导航（统一使用MainNavigationScreen）
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const MainNavigationScreen(),
+        ),
+      );
     }
   }
 
@@ -440,31 +447,31 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
       icon: Icons.fitness_center,
       activeIcon: Icons.fitness_center,
       label: '训练',
-      page: const TrainingPage(),
+      page: const TrainingMainPage3D(),
     ),
     NavigationItem(
       icon: Icons.people,
       activeIcon: Icons.people,
       label: '社区',
-      page: const CommunityPage(),
+      page: const CommunityMainPage3D(),
     ),
     NavigationItem(
       icon: Icons.people_alt,
       activeIcon: Icons.people_alt,
       label: '搭子',
-      page: const MatesPage(),
+      page: const MatesMainPage3D(),
     ),
     NavigationItem(
       icon: Icons.message,
       activeIcon: Icons.message,
       label: '消息',
-      page: const MessagesPage(),
+      page: const MessagesMainPage3D(),
     ),
     NavigationItem(
       icon: Icons.person,
       activeIcon: Icons.person,
       label: '我的',
-      page: const ProfilePage(),
+      page: const ProfileMainPage3D(),
     ),
   ];
 

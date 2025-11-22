@@ -39,7 +39,7 @@ func (h *MessagesHandler) GetConversations(c *gin.Context) {
 
 	currentUser := user.(*models.User)
 
-	conversations, err := h.messageRepo.GetUserConversations(currentUser.ID)
+	chats, err := h.messageRepo.GetUserConversations(currentUser.ID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, models.ErrorResponse{
 			Success: false,
@@ -50,10 +50,15 @@ func (h *MessagesHandler) GetConversations(c *gin.Context) {
 		return
 	}
 
+	// Return empty array if no chats found
+	if chats == nil {
+		chats = []models.Chat{}
+	}
+
 	c.JSON(http.StatusOK, models.SuccessResponse{
 		Success: true,
 		Message: "获取会话列表成功",
-		Data:    conversations,
+		Data:    chats,
 	})
 }
 

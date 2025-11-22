@@ -97,6 +97,23 @@ type CreatePostRequest struct {
 	Type    string   `json:"type"`
 }
 
+// UpdatePostRequest 更新帖子请求
+type UpdatePostRequest struct {
+	Content string   `json:"content"`
+	Images  []string `json:"images"`
+}
+
+// UpdateTrainingPlanRequest 更新训练计划请求
+type UpdateTrainingPlanRequest struct {
+	Name           string     `json:"name"`
+	Description    string     `json:"description"`
+	Exercises      []Exercise `json:"exercises"`
+	Duration       int        `json:"duration"`
+	CaloriesBurned int        `json:"calories_burned"`
+	Difficulty     string     `json:"difficulty"`
+	IsPublic       bool       `json:"is_public"`
+}
+
 // CreateCommentRequest 创建评论请求
 type CreateCommentRequest struct {
 	Content string `json:"content" binding:"required"`

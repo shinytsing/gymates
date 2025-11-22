@@ -83,10 +83,12 @@ class SmartApiConfig {
   /// 打印环境信息（调试用）
   static void printEnvironmentInfo() {
     final info = getEnvironmentInfo();
-    print('🌍 API Environment Info:');
+    debugPrint('🌍 API Environment Info:');
     info.forEach((key, value) {
-      print('  $key: $value');
+      debugPrint('  $key: $value');
     });
+    debugPrint('  baseUrl: $baseUrl');
+    debugPrint('  apiBaseUrl: $apiBaseUrl');
   }
 }
 

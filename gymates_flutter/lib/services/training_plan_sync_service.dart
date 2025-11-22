@@ -9,7 +9,7 @@ import '../core/token_manager.dart';
 ///
 /// 直接使用API数据，不依赖Mock数据
 class TrainingPlanSyncService {
-  // 使用智能API配置
+  // 使用智能API配置 (apiBaseUrl 已包含 /api 前缀)
   static String get _baseUrl => SmartApiConfig.apiBaseUrl;
   static final _tokenManager = TokenManager();
 

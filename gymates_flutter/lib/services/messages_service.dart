@@ -34,10 +34,15 @@ class MessagesService {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         if (data['success'] == true) {
-          final chats = (data['data']['chats'] as List)
-              .map((chat) => ChatConversation.fromJson(chat))
-              .toList();
-          return chats;
+          // Backend returns data directly as array, not wrapped in 'chats' key
+          final chatData = data['data'];
+          if (chatData is List) {
+            final chats = chatData
+                .map((chat) => ChatConversation.fromJson(chat as Map<String, dynamic>))
+                .toList();
+            return chats;
+          }
+          return [];
         }
       }
       throw Exception('获取聊天列表失败');

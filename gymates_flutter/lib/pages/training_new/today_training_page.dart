@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../training_new/secondary/exercise_library_page.dart';
-import '../training_new/secondary/training_plan_detail_page.dart';
+import '../training_new/secondary/training_plan_3d_detail_page.dart';
+import '../../modules/training/pages/today_page_3d.dart' as today_3d show TodayExercise;
 import '../training_new/secondary/workout_running_page.dart';
 import '../training_new/secondary/ai_training_page.dart';
 import 'widgets/today_plan_card.dart';
@@ -400,9 +401,14 @@ class _TodayTrainingPageState extends State<TodayTrainingPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => TrainingPlanDetailPage(
+        builder: (context) => TrainingPlan3DDetailPage(
           planId: _todayPlanId!,
-          exercises: _todayExercises,
+          exercises: _todayExercises.map((e) => today_3d.TodayExercise(
+            name: e.name,
+            sets: e.sets,
+            reps: e.reps,
+            muscleGroup: e.muscleGroup,
+          )).toList(),
         ),
       ),
     );

@@ -85,6 +85,86 @@ type Exercise struct {
 	DeletedAt      gorm.DeletedAt `json:"-" gorm:"index"`
 }
 
+// Conversation 对话模型
+type Conversation struct {
+	ID               uint       `json:"id" gorm:"primaryKey"`
+	User1ID          uint       `json:"user1_id" gorm:"not null"`
+	User2ID          uint       `json:"user2_id" gorm:"not null"`
+	LastMessageID    *uint      `json:"last_message_id"`
+	LastMessageAt    *time.Time `json:"last_message_at"`
+	UnreadCount1     int        `json:"unread_count_1" gorm:"default:0"`  // User1未读数
+	UnreadCount2     int        `json:"unread_count_2" gorm:"default:0"`  // User2未读数
+	CreatedAt        time.Time  `json:"created_at"`
+	UpdatedAt        time.Time  `json:"updated_at"`
+}
+
+// MateRequest 好友请求模型
+type MateRequest struct {
+	ID         uint           `json:"id" gorm:"primaryKey"`
+	SenderID   uint           `json:"sender_id" gorm:"not null"`
+	ReceiverID uint           `json:"receiver_id" gorm:"not null"`
+	Status     string         `json:"status" gorm:"size:20;default:'pending'"` // pending, accepted, rejected
+	Message    string         `json:"message" gorm:"type:text"`
+	CreatedAt  time.Time      `json:"created_at"`
+	UpdatedAt  time.Time      `json:"updated_at"`
+	DeletedAt  gorm.DeletedAt `json:"-" gorm:"index"`
+}
+
+// UserProfile 用户资料扩展
+type UserProfile struct {
+	UserID            uint      `json:"user_id" gorm:"primaryKey"`
+	FitnessLevel      string    `json:"fitness_level"`
+	TrainingFrequency int       `json:"training_frequency"`
+	Injuries          string    `json:"injuries" gorm:"type:text"`
+	Medications       string    `json:"medications" gorm:"type:text"`
+	DietaryType       string    `json:"dietary_type"`
+	Allergies         string    `json:"allergies" gorm:"type:text"`
+	CreatedAt         time.Time `json:"created_at"`
+	UpdatedAt         time.Time `json:"updated_at"`
+}
+
+// ExerciseGuidance AI动作指导
+type ExerciseGuidance struct {
+	ExerciseID     uint     `json:"exercise_id"`
+	ExerciseName   string   `json:"exercise_name"`
+	Description    string   `json:"description"`
+	Instructions   []string `json:"instructions"`
+	CommonMistakes []string `json:"common_mistakes"`
+	SafetyTips     []string `json:"safety_tips"`
+	VideoURL       string   `json:"video_url"`
+}
+
+// FormAnalysis 动作分析结果
+type FormAnalysis struct {
+	VideoURL       string   `json:"video_url"`
+	OverallScore   float64  `json:"overall_score"`
+	Feedback       string   `json:"feedback"`
+	Corrections    []string `json:"corrections"`
+	GoodPoints     []string `json:"good_points"`
+	InjuryRisks    []string `json:"injury_risks"`
+}
+
+// NutritionAdvice 营养建议
+type NutritionAdvice struct {
+	DailyCalories      int               `json:"daily_calories"`
+	Protein            int               `json:"protein"`
+	Carbs              int               `json:"carbs"`
+	Fat                int               `json:"fat"`
+	MealPlan           []Meal            `json:"meal_plan"`
+	Supplements        []string          `json:"supplements"`
+	HydrationGoal      float64           `json:"hydration_goal"`
+	Recommendations    string            `json:"recommendations"`
+}
+
+// Meal 餐食
+type Meal struct {
+	Name        string   `json:"name"`
+	Time        string   `json:"time"`
+	Calories    int      `json:"calories"`
+	Description string   `json:"description"`
+	Foods       []string `json:"foods"`
+}
+
 // WorkoutSession 训练会话模型
 type WorkoutSession struct {
 	ID             uint           `json:"id" gorm:"primaryKey"`

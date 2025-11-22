@@ -140,7 +140,7 @@ class _GymatesTextFieldState extends State<GymatesTextField> {
                       ),
                       onPressed: () {
                         setState(() {
-                          _obscureText = !_obscureText,
+                          _obscureText = !_obscureText;
                         });
                       },
                     )

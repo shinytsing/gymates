@@ -40,7 +40,7 @@ func (nc *NotificationsController) GetNotifications(c *gin.Context) {
 	var notifications []models.Notification
 	var total int64
 
-	query := config.DB.Where("user_id = ?", currentUser.ID)
+	query := config.DB.Model(&models.Notification{}).Where("user_id = ?", currentUser.ID)
 
 	// 按类型过滤
 	if notifType != "" {

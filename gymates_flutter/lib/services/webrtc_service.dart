@@ -193,7 +193,7 @@ class WebRTCService {
             'sdpMLineIndex': candidate.sdpMLineIndex,
           },
         });
-      })
+      };
 
       // 设置远程描述
       await _peerConnection!.setRemoteDescription(
@@ -267,7 +267,8 @@ class WebRTCService {
         candidateData['candidate']['sdpMLineIndex'],
       );
 
-      if (_peerConnection?.remoteDescription != null) {
+      final remoteDesc = await _peerConnection?.getRemoteDescription();
+      if (remoteDesc != null) {
         await _peerConnection?.addCandidate(candidate);
       } else {
         _iceCandidates.add(candidate);

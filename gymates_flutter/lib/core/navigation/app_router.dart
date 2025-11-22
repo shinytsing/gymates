@@ -6,7 +6,7 @@ import '../../shared/providers/auth_provider.dart';
 import '../../features/auth/screens/login_screen.dart';
 import '../../features/auth/screens/register_screen.dart';
 import '../../features/auth/screens/onboarding_screen.dart';
-import '../../pages/training/training_page.dart';
+import '../../modules/training/main_page_3d.dart';
 import '../../features/community/screens/community_screen.dart';
 import '../../features/community/screens/create_post_screen.dart';
 import '../../features/mates/screens/mates_screen.dart';
@@ -89,13 +89,13 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: AppRoutes.main,
             name: 'main',
-            builder: (context, state) => const TrainingPage(),
+            builder: (context, state) => const TrainingMainPage3D(),
             routes: [
               // Training routes
               GoRoute(
                 path: 'training',
                 name: 'training',
-                builder: (context, state) => const TrainingPage(),
+                builder: (context, state) => const TrainingMainPage3D(),
               ),
               
               // Community routes

@@ -352,17 +352,12 @@ class _EnhancedTabBarState extends State<EnhancedTabBar>
         unselectedLabelColor: widget.unselectedLabelColor ?? AppColors.textSecondary,
         labelStyle: AppTextStyles.buttonMedium,
         unselectedLabelStyle: AppTextStyles.bodyMedium,
-        indicator: AnimatedBuilder(
-          animation: _indicatorAnimation,
-          builder: (context, child) {
-            return UnderlineTabIndicator(
-              borderSide: BorderSide(
-                color: widget.indicatorColor ?? AppColors.primary,
-                width: 3,
-              ),
-              insets: const EdgeInsets.symmetric(horizontal: AppSizes.spacingM),
-            );
-          },
+        indicator: UnderlineTabIndicator(
+          borderSide: BorderSide(
+            color: widget.indicatorColor ?? AppColors.primary,
+            width: 3,
+          ),
+          insets: const EdgeInsets.symmetric(horizontal: AppSizes.spacingM),
         ),
         tabs: widget.tabs.map((tab) {
           return Tab(

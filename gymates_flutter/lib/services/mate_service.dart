@@ -77,7 +77,7 @@ class MateService {
 
   /// 发送搭子请求
   Future<void> sendMateRequest(int mateId) async {
-    final url = Uri.parse('$baseUrl/api/mates/requests');
+    final url = Uri.parse('$baseUrl/api/mates/request');
 
     final response = await http.post(
       url,
@@ -98,7 +98,7 @@ class MateService {
 
   /// 接受搭子请求
   Future<void> acceptMateRequest(int requestId) async {
-    final url = Uri.parse('$baseUrl/api/mates/requests/$requestId/accept');
+    final url = Uri.parse('$baseUrl/api/mates/$requestId/accept');
 
     final response = await http.post(
       url,
@@ -116,7 +116,7 @@ class MateService {
 
   /// 拒绝搭子请求
   Future<void> rejectMateRequest(int requestId) async {
-    final url = Uri.parse('$baseUrl/api/mates/requests/$requestId/reject');
+    final url = Uri.parse('$baseUrl/api/mates/$requestId/reject');
 
     final response = await http.post(
       url,
@@ -138,7 +138,7 @@ class MateService {
     int page = 1,
     int limit = 20,
   }) async {
-    final uri = Uri.parse('$baseUrl/api/mates/requests').replace(
+    final uri = Uri.parse('$baseUrl/api/mates/pending').replace(
       queryParameters: {
         'type': type,
         'page': page.toString(),
@@ -191,7 +191,7 @@ class MateService {
     int page = 1,
     int limit = 20,
   }) async {
-    final uri = Uri.parse('$baseUrl/api/mates/search').replace(
+    final uri = Uri.parse('$baseUrl/mates/search').replace(
       queryParameters: {
         'q': query,
         'page': page.toString(),
@@ -222,7 +222,7 @@ class MateService {
 
   /// 获取搭子统计
   Future<Map<String, dynamic>> getMateStats() async {
-    final url = Uri.parse('$baseUrl/api/mates/stats');
+    final url = Uri.parse('$baseUrl/mates/stats');
 
     final response = await http.get(
       url,

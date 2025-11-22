@@ -1,6 +1,7 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import '../services/auth_service_enhanced.dart';
+import '../services/unified_auth_service.dart';
 
 /// 🔐 HTTP拦截器
 /// 自动添加认证头，自动刷新过期Token
@@ -9,7 +10,7 @@ class HttpInterceptor {
   factory HttpInterceptor() => _instance;
   HttpInterceptor._internal();
 
-  final _authService = AuthServiceEnhanced();
+  final _authService = UnifiedAuthService();
   bool _isRefreshing = false;
   final List<Function> _pendingRequests = [];
 
@@ -131,11 +132,11 @@ class HttpInterceptor {
   ) async {
     // 如果是 401 未授权错误，尝试刷新Token
     if (response.statusCode == 401) {
-      print('🔒 收到401错误，尝试刷新Token...');
+      debugPrint('🔒 收到401错误，尝试刷新Token...');
 
       // 防止多个请求同时刷新Token
       if (_isRefreshing) {
-        print('⏳ Token正在刷新中，等待完成...');
+        debugPrint('⏳ Token正在刷新中，等待完成...');
         // 将请求加入队列
         return await _waitForRefresh(retryRequest);
       }
@@ -147,7 +148,7 @@ class HttpInterceptor {
         final success = await _authService.refreshAccessToken();
 
         if (success) {
-          print('✅ Token刷新成功，重试请求');
+          debugPrint('✅ Token刷新成功，重试请求');
           _isRefreshing = false;
           
           // 执行所有待处理的请求
@@ -156,7 +157,7 @@ class HttpInterceptor {
           // 重试原始请求
           return await retryRequest();
         } else {
-          print('❌ Token刷新失败，需要重新登录');
+          debugPrint('❌ Token刷新失败，需要重新登录');
           _isRefreshing = false;
           _clearPendingRequests();
           
@@ -165,7 +166,7 @@ class HttpInterceptor {
           return response;
         }
       } catch (e) {
-        print('❌ Token刷新异常: $e');
+        debugPrint('❌ Token刷新异常: $e');
         _isRefreshing = false;
         _clearPendingRequests();
         return response;

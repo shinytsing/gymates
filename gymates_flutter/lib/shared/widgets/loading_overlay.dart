@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../theme/app_colors.dart';
+import '../theme/app_typography.dart';
 
 class LoadingOverlay extends StatelessWidget {
   final Widget child;
@@ -34,10 +36,10 @@ class LoadingOverlay extends StatelessWidget {
                       valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
                     ),
                     if (loadingText != null) ...[
-                      const SizedBox(height: AppSizes.spacingM),
+                      const SizedBox(height: 16),
                       Text(
                         loadingText!,
-                        style: AppTextStyles.bodyMedium,
+                        style: AppTypography.bodyMedium,
                         textAlign: TextAlign.center,
                       ),
                     ],

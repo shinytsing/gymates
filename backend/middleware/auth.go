@@ -143,29 +143,36 @@ func RevokeRefreshToken(tokenString string) error {
 // AuthMiddleware JWT认证中间件
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		authHeader := c.GetHeader("Authorization")
-		if authHeader == "" {
-			c.JSON(http.StatusUnauthorized, models.ErrorResponse{
-				Success: false,
-				Message: "缺少认证token",
-				Error:   "Authorization header is required",
-				Code:    http.StatusUnauthorized,
-			})
-			c.Abort()
-			return
-		}
+		var tokenString string
 
-		// 检查Bearer前缀
-		tokenString := strings.TrimPrefix(authHeader, "Bearer ")
-		if tokenString == authHeader {
-			c.JSON(http.StatusUnauthorized, models.ErrorResponse{
-				Success: false,
-				Message: "无效的token格式",
-				Error:   "Bearer token format required",
-				Code:    http.StatusUnauthorized,
-			})
-			c.Abort()
-			return
+		// 首先尝试从 Header 获取 token
+		authHeader := c.GetHeader("Authorization")
+		if authHeader != "" {
+			// 检查Bearer前缀
+			tokenString = strings.TrimPrefix(authHeader, "Bearer ")
+			if tokenString == authHeader {
+				c.JSON(http.StatusUnauthorized, models.ErrorResponse{
+					Success: false,
+					Message: "无效的token格式",
+					Error:   "Bearer token format required",
+					Code:    http.StatusUnauthorized,
+				})
+				c.Abort()
+				return
+			}
+		} else {
+			// 如果 Header 中没有，尝试从查询参数获取（用于 WebSocket）
+			tokenString = c.Query("token")
+			if tokenString == "" {
+				c.JSON(http.StatusUnauthorized, models.ErrorResponse{
+					Success: false,
+					Message: "缺少认证token",
+					Error:   "Authorization header or token query parameter is required",
+					Code:    http.StatusUnauthorized,
+				})
+				c.Abort()
+				return
+			}
 		}
 
 		// 验证token

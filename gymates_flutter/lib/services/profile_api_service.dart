@@ -138,6 +138,38 @@ class ProfileApiService {
     return [];
   }
 
+  /// 获取用户成就列表（包含进度）
+  Future<Map<String, dynamic>> getUserAchievements(String userId) async {
+    try {
+      final headers = await _headers;
+      final response = await http.get(
+        Uri.parse('$_baseUrl/users/$userId/achievements'),
+        headers: headers,
+      ).timeout(_timeout);
+
+      print('🏆 获取成就列表: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data['success'] == true && data['data'] != null) {
+          return {
+            'achievements': data['data']['achievements'] ?? [],
+            'total': data['data']['total'] ?? 0,
+            'unlocked': data['data']['unlocked'] ?? 0,
+          };
+        }
+      }
+    } catch (e) {
+      print('❌ 获取成就列表失败: $e');
+    }
+    
+    return {
+      'achievements': [],
+      'total': 0,
+      'unlocked': 0,
+    };
+  }
+
   /// 获取用户个人记录
   Future<List<PersonalRecord>> getUserPersonalRecords(String userId) async {
     try {

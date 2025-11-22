@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../constants/enhanced_theme.dart';
-import '../../pages/training/training_page.dart';
-import '../../pages/community/community_page.dart';
-import '../../pages/mates/mates_page.dart';
-import '../../pages/messages/messages_page.dart';
-import '../../pages/profile/profile_page.dart';
+import '../../modules/training/main_page_3d.dart';
+import '../../modules/community/main_page_3d.dart';
+import '../../modules/mates/main_page_3d.dart';
+import '../../modules/messages/main_page_3d.dart';
+import '../../modules/profile/main_page_3d.dart';
 
 /// 🧭 Enhanced Main Navigation
 /// 
@@ -35,11 +35,11 @@ class _EnhancedMainNavigationState extends State<EnhancedMainNavigation>
   
   // 页面列表
   final List<Widget> _pages = [
-    const TrainingPage(),
-    const CommunityPage(),
-    const MatesPage(),
-    const MessagesPage(),
-    const ProfilePage(),
+    const TrainingMainPage3D(),
+    const CommunityMainPage3D(),
+    const MatesMainPage3D(),
+    const MessagesMainPage3D(),
+    const ProfileMainPage3D(),
   ];
   
   // Tab 配置

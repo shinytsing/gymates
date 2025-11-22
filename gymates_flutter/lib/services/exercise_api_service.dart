@@ -9,7 +9,7 @@ import '../core/config/smart_api_config.dart';
 /// 使用Go后端API
 
 class ExerciseApiService {
-  // 使用智能API配置
+  // 使用智能API配置 (apiBaseUrl 已包含 /api 前缀)
   static String get _baseUrl => SmartApiConfig.apiBaseUrl;
   static const Duration _timeout = Duration(seconds: 10);
 

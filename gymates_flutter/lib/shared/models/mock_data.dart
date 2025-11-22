@@ -1323,6 +1323,36 @@ class CommunityPost {
     );
   }
 
+  // Getters for compatibility
+  List<String>? get images => mediaUrls;
+  String get timeAgo => timestamp;
+  bool get isBookmarked => isCollected;
+  
+  // User object getter
+  MockUser get user => MockUser(
+    id: userId.toString(),
+    name: userName,
+    avatar: userAvatar,
+    bio: '',
+    age: 0,
+    location: '',
+    isVerified: false,
+    followers: 0,
+    following: 0,
+    posts: 0,
+    joinDate: '',
+    workoutDays: 0,
+    caloriesBurned: 0,
+    achievements: 0,
+    rating: 0.0,
+    preferences: [],
+    goal: '',
+    experience: '',
+    workoutTime: '',
+    distance: '',
+    username: userName,
+  );
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,

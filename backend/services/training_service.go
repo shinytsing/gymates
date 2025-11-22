@@ -35,10 +35,10 @@ func (s *TrainingService) GetExerciseLibrary(muscleGroup, difficulty, equipment,
 
 	// 应用过滤
 	if muscleGroup != "" {
-		query = query.Where("muscle_group = ?", muscleGroup)
+		query = query.Where("part = ?", muscleGroup)
 	}
 	if difficulty != "" {
-		query = query.Where("difficulty = ?", difficulty)
+		query = query.Where("level = ?", difficulty)
 	}
 	if equipment != "" {
 		query = query.Where("equipment = ?", equipment)

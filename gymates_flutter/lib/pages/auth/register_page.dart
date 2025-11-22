@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../theme/gymates_theme.dart';
 import '../../routes/app_routes.dart';
-import '../../services/auth_service.dart';
+import '../../services/unified_auth_service.dart';
 
 /// 📝 注册页面 - 完全按照 Figma 设计实现
 /// 
@@ -32,7 +32,7 @@ class _RegisterPageState extends State<RegisterPage>
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _verificationController = TextEditingController();
-  final _authService = AuthService();
+  final _authService = UnifiedAuthService();
 
   bool _agreedToTerms = false;
   bool _obscurePassword = true;

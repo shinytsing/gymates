@@ -42,7 +42,7 @@ class GymatesAppTheme {
       ),
       
       // Card
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 4,
         shadowColor: AppColors.shadow,
         color: AppColors.cardLight,
@@ -166,7 +166,7 @@ class GymatesAppTheme {
       ),
       
       // Dialog Theme
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         backgroundColor: AppColors.surfaceLight,
         elevation: 24,
         shape: RoundedRectangleBorder(
@@ -224,7 +224,7 @@ class GymatesAppTheme {
       ),
       
       // Card
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 4,
         shadowColor: Colors.black45,
         color: AppColors.cardDark,
@@ -348,7 +348,7 @@ class GymatesAppTheme {
       ),
       
       // Dialog Theme
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         backgroundColor: AppColors.surfaceDark,
         elevation: 24,
         shape: RoundedRectangleBorder(

@@ -57,25 +57,19 @@ func (r *MessageRepository) GetConversation(user1ID, user2ID uint, page, limit i
 }
 
 // GetUserConversations retrieves all conversation partners for a user
-func (r *MessageRepository) GetUserConversations(userID uint) ([]models.User, error) {
-	var users []models.User
+func (r *MessageRepository) GetUserConversations(userID uint) ([]models.Chat, error) {
+	var chats []models.Chat
 	
-	// Get distinct conversation partners
-	err := r.db.Raw(`
-		SELECT DISTINCT u.* FROM users u
-		INNER JOIN (
-			SELECT DISTINCT 
-				CASE 
-					WHEN sender_id = ? THEN receiver_id 
-					ELSE sender_id 
-				END as partner_id
-			FROM messages
-			WHERE sender_id = ? OR receiver_id = ?
-		) as conversations ON u.id = conversations.partner_id
-		ORDER BY u.name ASC
-	`, userID, userID, userID).Scan(&users).Error
+	// Get all chats where user is a participant
+	err := r.db.
+		Joins("JOIN chat_participants ON chat_participants.chat_id = chats.id").
+		Where("chat_participants.user_id = ?", userID).
+		Preload("Participants").
+		Preload("Participants.User").
+		Order("chats.updated_at DESC").
+		Find(&chats).Error
 	
-	return users, err
+	return chats, err
 }
 
 // MarkAsRead marks messages as read

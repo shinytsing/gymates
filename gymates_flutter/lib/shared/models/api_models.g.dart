@@ -6,24 +6,39 @@ part of 'api_models.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ApiResponse _$ApiResponseFromJson(Map<String, dynamic> json) => ApiResponse(
+ApiResponse<T> _$ApiResponseFromJson<T>(
+  Map<String, dynamic> json,
+  T Function(Object? json) fromJsonT,
+) => ApiResponse<T>(
   success: json['success'] as bool,
   message: json['message'] as String?,
-  data: json['data'] as Map<String, dynamic>?,
+  data: _$nullableGenericFromJson(json['data'], fromJsonT),
   error: json['error'] as String?,
   code: (json['code'] as num?)?.toInt(),
   timestamp: json['timestamp'] as String?,
 );
 
-Map<String, dynamic> _$ApiResponseToJson(ApiResponse instance) =>
-    <String, dynamic>{
-      'success': instance.success,
-      'message': instance.message,
-      'data': instance.data,
-      'error': instance.error,
-      'code': instance.code,
-      'timestamp': instance.timestamp,
-    };
+Map<String, dynamic> _$ApiResponseToJson<T>(
+  ApiResponse<T> instance,
+  Object? Function(T value) toJsonT,
+) => <String, dynamic>{
+  'success': instance.success,
+  'message': instance.message,
+  'data': _$nullableGenericToJson(instance.data, toJsonT),
+  'error': instance.error,
+  'code': instance.code,
+  'timestamp': instance.timestamp,
+};
+
+T? _$nullableGenericFromJson<T>(
+  Object? input,
+  T Function(Object? json) fromJson,
+) => input == null ? null : fromJson(input);
+
+Object? _$nullableGenericToJson<T>(
+  T? input,
+  Object? Function(T value) toJson,
+) => input == null ? null : toJson(input);
 
 PaginationParams _$PaginationParamsFromJson(Map<String, dynamic> json) =>
     PaginationParams(
@@ -60,7 +75,7 @@ Map<String, dynamic> _$PaginationResponseToJson(PaginationResponse instance) =>
     };
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
-  id: json['id'] as String,
+  id: (json['id'] as num).toInt(),
   name: json['name'] as String,
   email: json['email'] as String,
   avatar: json['avatar'] as String?,
@@ -73,9 +88,9 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       ?.map((e) => e as String)
       .toList(),
   experience: json['experience'] as String?,
-  followers: (json['followers'] as num).toInt(),
-  following: (json['following'] as num).toInt(),
-  posts: (json['posts'] as num).toInt(),
+  followers: (json['followers'] as num?)?.toInt() ?? 0,
+  following: (json['following'] as num?)?.toInt() ?? 0,
+  posts: (json['posts'] as num?)?.toInt() ?? 0,
   createdAt: json['created_at'] as String,
   updatedAt: json['updated_at'] as String,
 );

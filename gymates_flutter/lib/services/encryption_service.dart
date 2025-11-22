@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
@@ -53,7 +54,7 @@ class EncryptionService {
     );
     
     final secureRandom = pc.FortunaRandom();
-    final random = pc.Random.secure();
+    final random = Random.secure();
     final seeds = List<int>.generate(32, (i) => random.nextInt(256));
     secureRandom.seed(pc.KeyParameter(Uint8List.fromList(seeds)));
 
@@ -94,7 +95,7 @@ class EncryptionService {
   /// 生成会话密钥（AES）
   encrypt.Key _generateSessionKey() {
     final secureRandom = pc.FortunaRandom();
-    final random = pc.Random.secure();
+    final random = Random.secure();
     final seeds = List<int>.generate(32, (i) => random.nextInt(256));
     secureRandom.seed(pc.KeyParameter(Uint8List.fromList(seeds)));
     

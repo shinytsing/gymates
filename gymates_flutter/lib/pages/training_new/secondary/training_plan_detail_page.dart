@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../today_training_page.dart';
+import '../../../../modules/training/pages/today_page_3d.dart';
 
 /// 📋 训练计划详情页面（二级页面）
 /// 用于编辑今日训练计划
@@ -95,7 +95,7 @@ class TrainingPlanDetailPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${exercise.sets}组 × ${exercise.reps}次 • 休息${exercise.restSeconds}秒',
+                  '${exercise.sets}组 × ${exercise.reps}次',
                   style: const TextStyle(
                     fontSize: 12,
                     color: Color(0xFF6B7280),

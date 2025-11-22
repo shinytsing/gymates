@@ -262,7 +262,7 @@ class _UIDemoScreenState extends State<UIDemoScreen>
               Expanded(
                 child: EnhancedButton(
                   text: '次要按钮',
-                  isSecondary: true,
+                  type: ButtonType.secondary,
                   onPressed: () {
                     HapticFeedback.lightImpact();
                   },
@@ -276,7 +276,7 @@ class _UIDemoScreenState extends State<UIDemoScreen>
               Expanded(
                 child: EnhancedButton(
                   text: '轮廓按钮',
-                  isOutlined: true,
+                  type: ButtonType.outline,
                   onPressed: () {
                     HapticFeedback.lightImpact();
                   },
@@ -298,7 +298,7 @@ class _UIDemoScreenState extends State<UIDemoScreen>
           EnhancedButton(
             text: '加载状态',
             isLoading: true,
-            width: double.infinity,
+            fullWidth: true,
           ),
         ],
       ),
@@ -310,23 +310,23 @@ class _UIDemoScreenState extends State<UIDemoScreen>
       child: Column(
         children: [
           const EnhancedTextField(
-            label: '邮箱地址',
+            labelText: '邮箱地址',
             hintText: '请输入您的邮箱',
-            prefixIcon: Icons.email_outlined,
+            prefixIcon: Icon(Icons.email_outlined),
           ),
           const SizedBox(height: AppSizes.spacingM),
           const EnhancedTextField(
-            label: '密码',
+            labelText: '密码',
             hintText: '请输入密码',
-            prefixIcon: Icons.lock_outlined,
+            prefixIcon: Icon(Icons.lock_outlined),
             obscureText: true,
           ),
           const SizedBox(height: AppSizes.spacingM),
-          const EnhancedTextField(
-            label: '带错误提示',
+          EnhancedTextField(
+            labelText: '带错误提示',
             hintText: '输入错误内容',
-            errorText: '这是一个错误提示',
-            prefixIcon: Icons.error_outline,
+            prefixIcon: const Icon(Icons.error_outline),
+            validator: (value) => '这是一个错误提示',
           ),
         ],
       ),

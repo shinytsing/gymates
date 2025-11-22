@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../services/auth_service_enhanced.dart';
+import '../../services/unified_auth_service.dart';
 import '../../core/theme/gymates_colors.dart';
 
 /// 🎨 现代化登录页面
@@ -12,7 +12,7 @@ class ModernLoginPage extends StatefulWidget {
 }
 
 class _ModernLoginPageState extends State<ModernLoginPage> {
-  final _authService = AuthServiceEnhanced();
+  final _authService = UnifiedAuthService();
   bool _isLoading = false;
 
   /// 手机号登录（Mock版本，点击即登录）

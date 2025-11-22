@@ -87,7 +87,7 @@ class PaginationResponse {
 // User Model
 @JsonSerializable()
 class User {
-  final String id;
+  final int id;
   final String name;
   final String email;
   final String? avatar;
@@ -119,14 +119,35 @@ class User {
     this.weight,
     this.fitnessGoals,
     this.experience,
-    required this.followers,
-    required this.following,
-    required this.posts,
+    this.followers = 0,
+    this.following = 0,
+    this.posts = 0,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory User.fromJson(Map<String, dynamic> json) {
+    // Handle flexible type conversion for id, email, and timestamps
+    return User(
+      id: json['id'] is int ? json['id'] : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
+      name: json['name']?.toString() ?? '',
+      email: json['email']?.toString() ?? '',
+      avatar: json['avatar']?.toString(),
+      bio: json['bio']?.toString(),
+      location: json['location']?.toString(),
+      age: json['age'] is int ? json['age'] : (json['age'] != null ? int.tryParse(json['age'].toString()) : null),
+      height: json['height'] is double ? json['height'] : (json['height'] != null ? double.tryParse(json['height'].toString()) : null),
+      weight: json['weight'] is double ? json['weight'] : (json['weight'] != null ? double.tryParse(json['weight'].toString()) : null),
+      fitnessGoals: (json['fitness_goals'] as List<dynamic>?)?.map((e) => e.toString()).toList(),
+      experience: json['experience']?.toString(),
+      followers: json['followers'] is int ? json['followers'] : (int.tryParse(json['followers']?.toString() ?? '0') ?? 0),
+      following: json['following'] is int ? json['following'] : (int.tryParse(json['following']?.toString() ?? '0') ?? 0),
+      posts: json['posts'] is int ? json['posts'] : (int.tryParse(json['posts']?.toString() ?? '0') ?? 0),
+      createdAt: json['created_at']?.toString() ?? DateTime.now().toIso8601String(),
+      updatedAt: json['updated_at']?.toString() ?? DateTime.now().toIso8601String(),
+    );
+  }
+  
   Map<String, dynamic> toJson() => _$UserToJson(this);
 }
 

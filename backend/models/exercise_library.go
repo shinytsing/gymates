@@ -9,6 +9,7 @@ import (
 type ExerciseLibrary struct {
 	ID                uint           `json:"id" gorm:"primaryKey"`
 	Name              string         `json:"name" gorm:"size:100;not null"`
+	NameZh            string         `json:"name_zh" gorm:"size:200"` // 中文名称
 	Part              string         `json:"part" gorm:"size:50;not null"`
 	Level             string         `json:"level" gorm:"size:20;default:'intermediate'"`
 	Type              string         `json:"type" gorm:"size:30"`
@@ -24,6 +25,11 @@ type ExerciseLibrary struct {
 	CreatedAt         time.Time      `json:"created_at"`
 	UpdatedAt         time.Time      `json:"updated_at"`
 	DeletedAt         gorm.DeletedAt `json:"-" gorm:"index"`
+}
+
+// TableName 指定表名
+func (ExerciseLibrary) TableName() string {
+	return "exercise_libraries"
 }
 
 // TrainingMode 训练模式
@@ -57,4 +63,17 @@ type UserTrainingHistory struct {
 	CreatedAt   time.Time       `json:"created_at"`
 	UpdatedAt   time.Time       `json:"updated_at"`
 	DeletedAt   gorm.DeletedAt  `json:"-" gorm:"index"`
+}
+
+// UserExerciseFavorite 用户收藏的动作
+type UserExerciseFavorite struct {
+	ID         uint      `json:"id" gorm:"primaryKey"`
+	UserID     uint      `json:"user_id" gorm:"not null;index:idx_user_exercise,unique"`
+	ExerciseID uint      `json:"exercise_id" gorm:"not null;index:idx_user_exercise,unique"`
+	CreatedAt  time.Time `json:"created_at"`
+}
+
+// TableName 指定表名
+func (UserExerciseFavorite) TableName() string {
+	return "user_exercise_favorites"
 }

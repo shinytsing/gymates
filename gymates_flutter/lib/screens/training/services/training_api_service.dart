@@ -406,7 +406,39 @@ class TrainingApiService {
 
   // ==================== AI训练接口 ====================
 
-  /// 生成AI训练计划
+  /// 生成AI训练计划（完整版）
+  Future<Map<String, dynamic>> generateAIPlan({
+    required String goal,
+    required int frequency,
+    required String experience,
+    required String preferredParts,
+    required double currentWeight,
+    required double targetWeight,
+  }) async {
+    try {
+      final response = await _dio.post(
+        '/api/training/ai/generate-plan',
+        data: {
+          'goal': goal,
+          'frequency': frequency,
+          'experience': experience,
+          'preferred_parts': preferredParts,
+          'current_weight': currentWeight,
+          'target_weight': targetWeight,
+        },
+      );
+
+      if (response.data['success']) {
+        return response.data['data'];
+      } else {
+        throw Exception(response.data['message'] ?? '生成训练计划失败');
+      }
+    } on DioException catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  /// 生成AI训练计划（旧版接口保留兼容性）
   Future<TrainingPlan> generateAIWorkoutPlan({
     Map<String, dynamic>? preferences,
   }) async {

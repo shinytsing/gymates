@@ -22,12 +22,12 @@ class ChatUser {
 
   factory ChatUser.fromJson(Map<String, dynamic> json) {
     return ChatUser(
-      id: json['id'] ?? 0,
-      name: json['name'] ?? '',
-      avatar: json['avatar'] ?? '',
-      bio: json['bio'],
-      isOnline: json['is_online'] ?? false,
-      lastSeen: json['last_seen'],
+      id: json['id'] is int ? json['id'] : (int.tryParse(json['id']?.toString() ?? '0') ?? 0),
+      name: json['name']?.toString() ?? '',
+      avatar: json['avatar']?.toString() ?? '',
+      bio: json['bio']?.toString(),
+      isOnline: json['is_online'] == true || json['is_online'] == 1,
+      lastSeen: json['last_seen']?.toString(),
     );
   }
 
@@ -63,19 +63,29 @@ class ChatConversation {
   });
 
   factory ChatConversation.fromJson(Map<String, dynamic> json) {
+    // Safely parse participants
+    List<ChatUser> participantsList = [];
+    if (json['participants'] != null && json['participants'] is List) {
+      try {
+        participantsList = (json['participants'] as List)
+            .whereType<Map<String, dynamic>>()
+            .map((p) => ChatUser.fromJson(p))
+            .toList();
+      } catch (e) {
+        print('Error parsing participants: $e');
+      }
+    }
+
     return ChatConversation(
-      id: json['id'] ?? 0,
-      participants: (json['participants'] as List?)
-              ?.map((p) => ChatUser.fromJson(p))
-              .toList() ??
-          [],
-      lastMessage: json['last_message'] != null
-          ? ChatMessage.fromJson(json['last_message'])
+      id: json['id'] is int ? json['id'] : (int.tryParse(json['id']?.toString() ?? '0') ?? 0),
+      participants: participantsList,
+      lastMessage: json['last_message'] != null && json['last_message'] is Map
+          ? ChatMessage.fromJson(json['last_message'] as Map<String, dynamic>)
           : null,
-      unreadCount: json['unread_count'] ?? 0,
-      createdAt: DateTime.parse(json['created_at'] ?? DateTime.now().toIso8601String()),
-      updatedAt: DateTime.parse(json['updated_at'] ?? DateTime.now().toIso8601String()),
-      chatType: json['chat_type'] ?? 'private',
+      unreadCount: json['unread_count'] is int ? json['unread_count'] : (int.tryParse(json['unread_count']?.toString() ?? '0') ?? 0),
+      createdAt: DateTime.tryParse(json['created_at']?.toString() ?? '') ?? DateTime.now(),
+      updatedAt: DateTime.tryParse(json['updated_at']?.toString() ?? '') ?? DateTime.now(),
+      chatType: json['chat_type']?.toString() ?? 'private',
     );
   }
 
@@ -135,16 +145,18 @@ class ChatMessage {
 
   factory ChatMessage.fromJson(Map<String, dynamic> json) {
     return ChatMessage(
-      id: json['id'] ?? 0,
-      chatId: json['chat_id'] ?? 0,
-      senderId: json['sender_id'] ?? 0,
-      sender: json['sender'] != null ? ChatUser.fromJson(json['sender']) : null,
-      content: json['content'] ?? '',
-      type: json['type'] ?? 'text',
-      isRead: json['is_read'] ?? false,
-      createdAt: DateTime.parse(json['created_at'] ?? DateTime.now().toIso8601String()),
-      updatedAt: DateTime.parse(json['updated_at'] ?? DateTime.now().toIso8601String()),
-      metadata: json['metadata'],
+      id: json['id'] is int ? json['id'] : (int.tryParse(json['id']?.toString() ?? '0') ?? 0),
+      chatId: json['chat_id'] is int ? json['chat_id'] : (int.tryParse(json['chat_id']?.toString() ?? '0') ?? 0),
+      senderId: json['sender_id'] is int ? json['sender_id'] : (int.tryParse(json['sender_id']?.toString() ?? '0') ?? 0),
+      sender: json['sender'] != null && json['sender'] is Map
+          ? ChatUser.fromJson(json['sender'] as Map<String, dynamic>)
+          : null,
+      content: json['content']?.toString() ?? '',
+      type: json['type']?.toString() ?? 'text',
+      isRead: json['is_read'] == true || json['is_read'] == 1,
+      createdAt: DateTime.tryParse(json['created_at']?.toString() ?? '') ?? DateTime.now(),
+      updatedAt: DateTime.tryParse(json['updated_at']?.toString() ?? '') ?? DateTime.now(),
+      metadata: json['metadata'] is Map ? Map<String, dynamic>.from(json['metadata']) : null,
     );
   }
 

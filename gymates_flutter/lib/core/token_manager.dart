@@ -1,5 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../services/auth_service_enhanced.dart';
+import '../services/unified_auth_service.dart';
 
 /// 🔑 统一Token管理器
 /// 
@@ -10,7 +10,7 @@ class TokenManager {
   factory TokenManager() => _instance;
   TokenManager._internal();
 
-  final _authService = AuthServiceEnhanced();
+  final _authService = UnifiedAuthService();
   final _storage = const FlutterSecureStorage();
 
   /// 获取有效的访问令牌（自动刷新）

@@ -104,3 +104,93 @@ type VoiceSettings struct {
 	UpdatedAt time.Time      `json:"updated_at"`
 	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
 }
+
+// VoiceGuidance 语音指导
+type VoiceGuidance struct {
+	ExerciseID       uint     `json:"exercise_id"`
+	ExerciseName     string   `json:"exercise_name"`
+	GuidanceText     string   `json:"guidance_text"`
+	SpeechURL        string   `json:"speech_url"`
+	CountdownPrompts []string `json:"countdown_prompts"`
+	RestPrompts      []string `json:"rest_prompts"`
+	Duration         int      `json:"duration"` // 秒
+	CreatedAt        time.Time `json:"created_at"`
+}
+
+// CorrectionAdvice 纠正建议
+type CorrectionAdvice struct {
+	CorrectionText string    `json:"correction_text"`
+	SpeechURL      string    `json:"speech_url"`
+	Severity       string    `json:"severity"` // info, warning, error
+	Timestamp      time.Time `json:"timestamp"`
+}
+
+// TrainingSessionData 训练会话数据
+type TrainingSessionData struct {
+	UserID             uint                    `json:"user_id"`
+	PlanID             uint                    `json:"plan_id"`
+	StartTime          time.Time               `json:"start_time"`
+	EndTime            time.Time               `json:"end_time"`
+	Duration           int                     `json:"duration"` // 分钟
+	CompletedExercises []CompletedExerciseData `json:"completed_exercises"`
+	TotalSets          int                     `json:"total_sets"`
+	TotalReps          int                     `json:"total_reps"`
+	CaloriesBurned     int                     `json:"calories_burned"`
+	Notes              string                  `json:"notes"`
+}
+
+// CompletedExerciseData 完成的动作数据
+type CompletedExerciseData struct {
+	ExerciseID   uint      `json:"exercise_id"`
+	ExerciseName string    `json:"exercise_name"`
+	SetsDone     int       `json:"sets_done"`
+	RepsPerSet   []int     `json:"reps_per_set"`
+	WeightUsed   []float64 `json:"weight_used"`
+	RestTime     []int     `json:"rest_time"`
+	Notes        string    `json:"notes"`
+}
+
+// TrainingSummaryResponse 训练总结响应
+type TrainingSummaryResponse struct {
+	OverallSummary     string    `json:"overall_summary"`
+	Strengths          string    `json:"strengths"`
+	Improvements       string    `json:"improvements"`
+	NextRecommendation string    `json:"next_recommendation"`
+	Rating             int       `json:"rating"` // 1-5
+	SpeechURL          string    `json:"speech_url"`
+	Timestamp          time.Time `json:"timestamp"`
+}
+
+// GeneratePlanRequest 生成训练计划请求
+type GeneratePlanRequest struct {
+	UserID         uint    `json:"user_id" binding:"required"`
+	Goal           string  `json:"goal" binding:"required"`           // 增肌/减脂/力量/耐力
+	Frequency      int     `json:"frequency" binding:"required"`      // 每周训练次数
+	Experience     string  `json:"experience" binding:"required"`     // 初级/中级/高级
+	PreferredParts string  `json:"preferred_parts"`                   // 偏好部位
+	CurrentWeight  float64 `json:"current_weight"`
+	TargetWeight   float64 `json:"target_weight"`
+	Gender         string  `json:"gender"`
+	Age            int     `json:"age"`
+	Height         float64 `json:"height"`
+}
+
+// StartTrainingRequest 开始训练请求
+type StartTrainingRequest struct {
+	UserID     uint `json:"user_id" binding:"required"`
+	PlanID     uint `json:"plan_id" binding:"required"`
+	ExerciseID uint `json:"exercise_id" binding:"required"`
+}
+
+// UploadTrainingDataRequest 上传训练数据请求
+type UploadTrainingDataRequest struct {
+	UserID       uint                    `json:"user_id" binding:"required"`
+	SessionData  TrainingSessionData     `json:"session_data" binding:"required"`
+}
+
+// GetCorrectionRequest 获取纠正建议请求
+type GetCorrectionRequest struct {
+	UserID     uint                   `json:"user_id" binding:"required"`
+	ExerciseID uint                   `json:"exercise_id" binding:"required"`
+	SensorData map[string]interface{} `json:"sensor_data"`
+}

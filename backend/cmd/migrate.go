@@ -57,7 +57,7 @@ func createSampleData() {
 		Name:       "测试用户",
 		Email:      "test@example.com",
 		Password:   "password123", // 实际应用中应该加密
-		Avatar:     "https://via.placeholder.com/150",
+		Avatar:     "", // Empty avatar to avoid network errors
 		Bio:        "健身爱好者",
 		Location:   "北京",
 		Age:        25,

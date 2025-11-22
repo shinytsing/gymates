@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import '../../models/user_achievement_data.dart';
 
 /// 👤 个人资料编辑页 - EditProfilePage
@@ -40,6 +42,8 @@ class _EditProfilePageState extends State<EditProfilePage>
   List<String> _selectedPreferences = [];
   
   String _avatarUrl = '';
+  File? _avatarFile; // 本地选择的图片文件
+  final ImagePicker _imagePicker = ImagePicker();
 
   final List<String> _goals = ['减脂', '增肌', '塑形', '健康', '力量提升'];
   final List<String> _experiences = ['初级', '中级', '高级'];
@@ -306,10 +310,39 @@ class _EditProfilePageState extends State<EditProfilePage>
                   height: 100,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: NetworkImage(_avatarUrl),
-                      fit: BoxFit.cover,
+                    color: const Color(0xFFF3F4F6),
+                    border: Border.all(
+                      color: const Color(0xFFE5E7EB),
+                      width: 2,
                     ),
+                  ),
+                  child: ClipOval(
+                    child: _avatarFile != null
+                        ? Image.file(
+                            _avatarFile!,
+                            fit: BoxFit.cover,
+                            width: 100,
+                            height: 100,
+                          )
+                        : (_avatarUrl.isNotEmpty
+                            ? Image.network(
+                                _avatarUrl,
+                                fit: BoxFit.cover,
+                                width: 100,
+                                height: 100,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Icon(
+                                    Icons.person,
+                                    size: 50,
+                                    color: Color(0xFF9CA3AF),
+                                  );
+                                },
+                              )
+                            : const Icon(
+                                Icons.person,
+                                size: 50,
+                                color: Color(0xFF9CA3AF),
+                              )),
                   ),
                 ),
                 Positioned(
@@ -321,6 +354,13 @@ class _EditProfilePageState extends State<EditProfilePage>
                     decoration: const BoxDecoration(
                       color: Color(0xFF6366F1),
                       shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0x336366F1),
+                          blurRadius: 8,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
                     ),
                     child: const Icon(
                       Icons.camera_alt,
@@ -885,63 +925,263 @@ class _EditProfilePageState extends State<EditProfilePage>
             topRight: Radius.circular(20),
           ),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // 拖拽指示器
-            Container(
-              margin: const EdgeInsets.only(top: 12),
-              width: 40,
-              height: 4,
-              decoration: BoxDecoration(
-                color: const Color(0xFFE5E7EB),
-                borderRadius: BorderRadius.circular(2),
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // 拖拽指示器
+              Container(
+                margin: const EdgeInsets.only(top: 12),
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE5E7EB),
+                  borderRadius: BorderRadius.circular(2),
+                ),
               ),
-            ),
-            
-            // 选项
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  _buildOptionItem(Icons.camera_alt, '拍照', () {
-                    Navigator.of(context).pop();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('拍照功能待实现'),
-                        backgroundColor: Color(0xFF6366F1),
-                      ),
-                    );
-                  }),
-                  _buildOptionItem(Icons.photo_library, '从相册选择', () {
-                    Navigator.of(context).pop();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('相册选择功能待实现'),
-                        backgroundColor: Color(0xFF6366F1),
-                      ),
-                    );
-                  }),
-                ],
+              
+              // 标题
+              const Padding(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  '选择头像',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF1F2937),
+                  ),
+                ),
               ),
-            ),
-          ],
+              
+              // 选项
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                child: Column(
+                  children: [
+                    _buildOptionItem(
+                      Icons.camera_alt,
+                      '拍照',
+                      '使用相机拍摄新照片',
+                      () {
+                        Navigator.of(context).pop();
+                        _pickImageFromCamera();
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                    _buildOptionItem(
+                      Icons.photo_library,
+                      '从相册选择',
+                      '从手机相册中选择照片',
+                      () {
+                        Navigator.of(context).pop();
+                        _pickImageFromGallery();
+                      },
+                    ),
+                    if (_avatarFile != null || _avatarUrl.isNotEmpty) ...[
+                      const SizedBox(height: 8),
+                      _buildOptionItem(
+                        Icons.delete_outline,
+                        '删除头像',
+                        '移除当前头像',
+                        () {
+                          Navigator.of(context).pop();
+                          _deleteAvatar();
+                        },
+                        color: const Color(0xFFEF4444),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildOptionItem(IconData icon, String label, VoidCallback onTap) {
-    return ListTile(
-      leading: Icon(icon, color: const Color(0xFF6B7280)),
-      title: Text(
-        label,
-        style: const TextStyle(
-          fontSize: 16,
-          color: Color(0xFF1F2937),
+  /// 从相机拍照
+  Future<void> _pickImageFromCamera() async {
+    try {
+      final XFile? image = await _imagePicker.pickImage(
+        source: ImageSource.camera,
+        maxWidth: 1024,
+        maxHeight: 1024,
+        imageQuality: 85,
+      );
+
+      if (image != null) {
+        setState(() {
+          _avatarFile = File(image.path);
+        });
+        
+        HapticFeedback.mediumImpact();
+        
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Row(
+                children: [
+                  Icon(Icons.check_circle, color: Colors.white),
+                  SizedBox(width: 12),
+                  Text('头像已更新，记得保存'),
+                ],
+              ),
+              backgroundColor: Color(0xFF10B981),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      print('拍照失败: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('拍照失败: $e'),
+            backgroundColor: const Color(0xFFEF4444),
+          ),
+        );
+      }
+    }
+  }
+
+  /// 从相册选择图片
+  Future<void> _pickImageFromGallery() async {
+    try {
+      final XFile? image = await _imagePicker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 1024,
+        maxHeight: 1024,
+        imageQuality: 85,
+      );
+
+      if (image != null) {
+        setState(() {
+          _avatarFile = File(image.path);
+        });
+        
+        HapticFeedback.mediumImpact();
+        
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Row(
+                children: [
+                  Icon(Icons.check_circle, color: Colors.white),
+                  SizedBox(width: 12),
+                  Text('头像已更新，记得保存'),
+                ],
+              ),
+              backgroundColor: Color(0xFF10B981),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      print('选择图片失败: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('选择图片失败: $e'),
+            backgroundColor: const Color(0xFFEF4444),
+          ),
+        );
+      }
+    }
+  }
+
+  /// 删除头像
+  void _deleteAvatar() {
+    HapticFeedback.lightImpact();
+    
+    setState(() {
+      _avatarFile = null;
+      _avatarUrl = '';
+    });
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Row(
+          children: [
+            Icon(Icons.check_circle, color: Colors.white),
+            SizedBox(width: 12),
+            Text('头像已删除，记得保存'),
+          ],
+        ),
+        backgroundColor: Color(0xFF6366F1),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
+  Widget _buildOptionItem(
+    IconData icon,
+    String label,
+    String subtitle,
+    VoidCallback onTap, {
+    Color color = const Color(0xFF1F2937),
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: const Color(0xFFF9FAFB),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: const Color(0xFFE5E7EB),
+            width: 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                icon,
+                color: color,
+                size: 24,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: color,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFF6B7280),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.chevron_right,
+              color: color.withValues(alpha: 0.5),
+            ),
+          ],
         ),
       ),
-      onTap: onTap,
     );
   }
 
@@ -955,19 +1195,109 @@ class _EditProfilePageState extends State<EditProfilePage>
     );
   }
 
-  void _saveProfile() {
+  void _saveProfile() async {
     if (_formKey.currentState!.validate()) {
       HapticFeedback.lightImpact();
       
-      // 这里应该保存到后端
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('资料保存成功'),
-          backgroundColor: Color(0xFF10B981),
+      // 显示加载对话框
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(
+          child: Card(
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text('正在保存...'),
+                ],
+              ),
+            ),
+          ),
         ),
       );
       
-      Navigator.of(context).pop();
+      try {
+        // TODO: 实际上传图片到服务器
+        // if (_avatarFile != null) {
+        //   // 上传图片到服务器并获取URL
+        //   final avatarUrl = await _uploadAvatar(_avatarFile!);
+        //   _avatarUrl = avatarUrl;
+        // }
+        
+        // TODO: 保存用户信息到后端
+        // await _profileService.updateProfile({
+        //   'name': _nameController.text,
+        //   'bio': _bioController.text,
+        //   'age': int.parse(_ageController.text),
+        //   'height': int.parse(_heightController.text),
+        //   'weight': double.parse(_weightController.text),
+        //   'location': _locationController.text,
+        //   'goal': _selectedGoal,
+        //   'experience': _selectedExperience,
+        //   'preferences': _selectedPreferences,
+        //   'avatar': _avatarUrl,
+        // });
+        
+        // 模拟网络请求
+        await Future.delayed(const Duration(seconds: 1));
+        
+        if (mounted) {
+          Navigator.of(context).pop(); // 关闭加载对话框
+          
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Row(
+                children: [
+                  Icon(Icons.check_circle, color: Colors.white),
+                  SizedBox(width: 12),
+                  Text('资料保存成功'),
+                ],
+              ),
+              backgroundColor: Color(0xFF10B981),
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+          
+          Navigator.of(context).pop(); // 返回上一页
+        }
+      } catch (e) {
+        if (mounted) {
+          Navigator.of(context).pop(); // 关闭加载对话框
+          
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('保存失败: $e'),
+              backgroundColor: const Color(0xFFEF4444),
+            ),
+          );
+        }
+      }
     }
+  }
+  
+  /// 上传头像到服务器
+  /// TODO: 实现实际的上传逻辑
+  Future<String> _uploadAvatar(File imageFile) async {
+    // 这里应该调用后端API上传图片
+    // 示例代码：
+    // final request = http.MultipartRequest(
+    //   'POST',
+    //   Uri.parse('$apiBaseUrl/api/user/upload-avatar'),
+    // );
+    // request.headers['Authorization'] = 'Bearer $token';
+    // request.files.add(
+    //   await http.MultipartFile.fromPath('avatar', imageFile.path),
+    // );
+    // final response = await request.send();
+    // final responseData = await response.stream.bytesToString();
+    // final jsonData = json.decode(responseData);
+    // return jsonData['data']['avatar_url'];
+    
+    // 暂时返回本地路径（实际应返回服务器URL）
+    return imageFile.path;
   }
 }

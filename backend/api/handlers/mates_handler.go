@@ -309,3 +309,62 @@ func (h *MatesHandler) FindPotentialMates(c *gin.Context) {
 	})
 }
 
+// GetMateRecommendations gets mate recommendations based on user preferences
+func (h *MatesHandler) GetMateRecommendations(c *gin.Context) {
+	user, exists := c.Get("user")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, models.ErrorResponse{
+			Success: false,
+			Message: "未认证",
+			Error:   "Unauthorized",
+			Code:    http.StatusUnauthorized,
+		})
+		return
+	}
+
+	currentUser := user.(*models.User)
+
+	// Build preferences from query parameters
+	preferences := make(map[string]interface{})
+	if location := c.Query("location"); location != "" {
+		preferences["location"] = location
+	}
+	if trainingTypes := c.Query("training_types"); trainingTypes != "" {
+		preferences["training_types"] = trainingTypes
+	}
+	if experience := c.Query("experience"); experience != "" {
+		preferences["experience"] = experience
+	}
+	if gender := c.Query("gender"); gender != "" {
+		preferences["gender"] = gender
+	}
+	if ageMin := c.Query("age_min"); ageMin != "" {
+		preferences["age_min"] = ageMin
+	}
+	if ageMax := c.Query("age_max"); ageMax != "" {
+		preferences["age_max"] = ageMax
+	}
+
+	// Use FindPotentialMates as the recommendation engine
+	recommendations, err := h.mateRepo.FindPotentialMates(currentUser.ID, preferences)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, models.ErrorResponse{
+			Success: false,
+			Message: "获取推荐搭子失败",
+			Error:   err.Error(),
+			Code:    http.StatusInternalServerError,
+		})
+		return
+	}
+
+	// Format response to match frontend expectations
+	c.JSON(http.StatusOK, models.SuccessResponse{
+		Success: true,
+		Message: "获取推荐搭子成功",
+		Data: gin.H{
+			"recommendations": recommendations,
+			"total":           len(recommendations),
+		},
+	})
+}
+

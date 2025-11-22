@@ -4,7 +4,7 @@ library;
 import 'package:flutter/material.dart';
 
 /// 圆形进度指示器
-class CircularProgressIndicator extends StatelessWidget {
+class CustomCircularProgressIndicator extends StatelessWidget {
   final double progress; // 0.0 - 1.0
   final double size;
   final double strokeWidth;
@@ -12,7 +12,7 @@ class CircularProgressIndicator extends StatelessWidget {
   final Color backgroundColor;
   final Widget? child;
 
-  const CircularProgressIndicator({
+  const CustomCircularProgressIndicator({
     super.key,
     required this.progress,
     this.size = 100,
@@ -272,7 +272,7 @@ class WorkoutSessionProgress extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            CircularProgressIndicator(
+            CustomCircularProgressIndicator(
               progress: progress,
               size: 120,
               strokeWidth: 12,
